@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="kr.ac.ju.dao.EmployeeDao">
+	
+	<resultMap type="employee" id="employeeResultMap">
+		<result property="no" column="employee_no"/>
+		<result property="department.id" column="department_no"/>
+		<result property="position.id" column="position_id"/>
+		<result property="name" column="employee_name"/>
+		<result property="password" column="employee_password"/>
+		<result property="birth" column="employee_birth"/>
+		<result property="gender" column="employee_gender"/>
+		<result property="email" column="employee_email"/>
+		<result property="phoneNumber" column="employee_phone_number"/>
+		<result property="address" column="employee_address"/>
+		<result property="hireDate" column="employee_hire_date"/>
+		<result property="salary" column="employee_salary"/>
+		<result property="status" column="employee_status"/>
+		<result property="manager.no" column="manager_no"/>
+		<result property="createDate" column="employee_create_date"/>
+		<result property="photoName" column="employee_photo_name"/>
+	</resultMap>
+	
+	<select id="getEmployeeByNo" parameterType="int" resultMap="employeeResultMap">
+		select *
+		from employees
+		where employee_no = #value#
+	</select>
+	
+</mapper>
