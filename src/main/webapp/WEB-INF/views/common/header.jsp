@@ -20,6 +20,7 @@
 		color: #333;
 	}
 	.nav-sub {
+		width: 810px;
 		float: right;
 		position: absolute;
 		top: 50%;
