@@ -47,3 +47,6 @@ RemoteSystemsTempFiles/
 *.mp4
 *.jpg
 *.png
+*.hwp
+*.xlsx
+*.pdf
