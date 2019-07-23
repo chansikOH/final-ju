@@ -16,15 +16,15 @@
 .course-table p{text-align: right; font-size: 15px; color: #0000ff;}
 .course-table th{background: #faf6f0; }
 .course-table th,td{text-align: center; }
-.course-table .table .btn-view{padding: 15px !important;}
+.course-table .table .btn-update{padding: 18px 10px !important;}
 .course-table .table{border: 1px solid #ccc;}
 .course-table .table .border-top{border: none; padding-top: 25px}
 .course-table .table>tbody>tr>td, 
-.course-table .table>tbody>tr>th,  
+.course-table .table>tbody>tr>th, 
+.course-table .table>tfoot>tr>td, 
+.course-table .table>tfoot>tr>th, 
 .course-table .table>thead>tr>td, 
 .course-table .table>thead>tr>th{padding:25px 20px;}
-.course-table .table .class-view>td,
-.course-table .table .class-view>th{padding: 15px;}
 </style>
 </head>
 <body>
@@ -36,50 +36,41 @@
 			</div>
 			
 			<div class="col-sm-10">
-				<h1>교과목 보기</h1>
+				<h1>강의 수강</h1>
 				<div class="row">
 					<div class="col-sm-12">
-						<span style="font-size: 20px; color: #402600;"><strong>[컴퓨터공학개론]</strong></span>
+						<span style="font-size: 20px; color: #402600;"><strong>[수강 중인 교과목]</strong></span>
 					</div>
 				</div>
 				
 				<div class="row course-table">
 					<div class="col-sm-12">
+						<p>총 <span>10</span>건 조회</p>
+					</div>
+					<div class="col-sm-12">
 						<table class="table">
-							<colgroup>
-								<col width="10%">
-								<col width="10%">
-								<col width="70%">
-								<col width="10%">
-							</colgroup>
 							<thead>
 								<tr>
-									<th>주차</th>
-									<th colspan="3">단원명</th>
+									<th>NO</th>
+									<th>교과목번호</th>
+									<th>수강년도</th>
+									<th>수강학기</th>
+									<th>학과</th>
+									<th>교과목명</th>
+									<th>담당교수</th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
 									<td>1</td>
-									<td colspan="3"><strong>컴퓨터공학이란 무엇인가?</strong></td>
-								</tr>
-								<tr class="class-view">
-									<td></td>
-									<th>강의</th>
-									<td>컴퓨터의이해</td>
-									<td class="btn-view"><a href="#" class="btn btn-default btn-xs">강의보기</a></td>
-								</tr>
-								<tr class="class-view">
-									<td></td>
-									<th>강의</th>
-									<td>컴퓨터의이해</td>
-									<td class="btn-view"><a href="#" class="btn btn-default btn-xs">강의보기</a></td>
-								</tr>
-								<tr class="class-view">
-									<td></td>
-									<th>강의</th>
-									<td>컴퓨터의이해</td>
-									<td class="btn-view"><a href="#" class="btn btn-default btn-xs">강의보기</a></td>
+									<td>10000</td>
+									<td>2019</td>
+									<td>1</td>
+									<td>컴퓨터공학</td>
+									<td>컴퓨터공학개론</td>
+									<td>이응수</td>
+									<td class="btn-update"><a href="#" class="btn btn-default">보기</a></td>
 								</tr>
 							</tbody>
 						</table>

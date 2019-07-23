@@ -20,6 +20,7 @@
 		color: #333;
 	}
 	.nav-sub {
+		width: 810px;
 		float: right;
 		position: absolute;
 		top: 50%;
@@ -82,7 +83,7 @@
 				<ul class="nav-sub navbar-nav">
 					<li><a href="#" id="menu1">학적관리</a></li>
 					<li><a href="#" id="menu2">강의</a></li>
-					<li><a href="#" id="menu3">개인정보관리</a></li>
+					<li><a href="/ju/student/mypage" id="menu3">개인정보관리</a></li>
 					<li><a href="#" id="menu4">성적</a></li>
 					<li><a href="#" id="menu5">등록금</a></li>
 					<li><a href="#" id="menu6">휴/복학 신청</a></li>
@@ -97,9 +98,8 @@
 		<div class="col-sm-12 sub-menu header-under">
 			<div id="sub-menu1">
 				<ul>
-					<li><a href="#">수강 신청</a></li>
-					<li><a href="#">수강 변경</a></li>
-					<li><a href="#">수강 조회</a></li>
+					<li><a href="/ju/student/course/apply">수강 신청</a></li>
+					<li><a href="/ju/student/course/select">수강 조회</a></li>
 				</ul>
 			</div>
 			<div id="sub-menu2">
