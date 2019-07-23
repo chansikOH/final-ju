@@ -10,83 +10,58 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style type="text/css">
-.course-table{padding: 0 15px;}
-.course-table div:first-child{margin: 35px 0 5px 0; padding: 0;}
-.course-table div:nth-child(2){padding: 0;}
-.course-table p{text-align: right; font-size: 15px; color: #0000ff;}
-.course-table th{background: #faf6f0; }
-.course-table th,td{text-align: center; }
-.course-table .table .btn-view{padding: 15px !important;}
-.course-table .table{border: 1px solid #ccc;}
-.course-table .table .border-top{border: none; padding-top: 25px}
-.course-table .table>tbody>tr>td, 
-.course-table .table>tbody>tr>th,  
-.course-table .table>thead>tr>td, 
-.course-table .table>thead>tr>th{padding:25px 20px;}
-.course-table .table .class-view>td,
-.course-table .table .class-view>th{padding: 15px;}
+.check {
+	border: 1px dashed red;
+}
+.box {
+	border: 1px solid blue;
+}
+.big-box{
+	border: 1px dashed yellow;
+	background-color: black;
+}
+#pause{
+	display: none;
+}
 </style>
 </head>
 <body>
-	<div class="container-fluid">
-	<%@ include file="/WEB-INF/views/common/header.jsp" %>
-		<div class="row">
-			<div class="col-sm-2 shadow">
-				<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
-			</div>
-			
-			<div class="col-sm-10">
-				<h1>교과목 보기</h1>
-				<div class="row">
-					<div class="col-sm-12">
-						<span style="font-size: 20px; color: #402600;"><strong>[컴퓨터공학개론]</strong></span>
-					</div>
+<div class="container-fluid">
+	<div class="row big-box" style="height: 100vh">
+		<div class="col-sm-9 box" style="height: 100%">
+			<div class="row check" style="height: 90vh; position: relative;">
+				<div class="col-sm-12" style="position: absolute; transform: translateY(5%)">
+					<video id="video1" width="100%" height="100%">
+						<source src="/ju/resources/video/Flowers - 7924.mp4" type="video/mp4">
+					</video>
 				</div>
-				
-				<div class="row course-table">
-					<div class="col-sm-12">
-						<table class="table">
-							<colgroup>
-								<col width="10%">
-								<col width="10%">
-								<col width="70%">
-								<col width="10%">
-							</colgroup>
-							<thead>
-								<tr>
-									<th>주차</th>
-									<th colspan="3">단원명</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>1</td>
-									<td colspan="3"><strong>컴퓨터공학이란 무엇인가?</strong></td>
-								</tr>
-								<tr class="class-view">
-									<td></td>
-									<th>강의</th>
-									<td>컴퓨터의이해</td>
-									<td class="btn-view"><a href="#" class="btn btn-default btn-xs">강의보기</a></td>
-								</tr>
-								<tr class="class-view">
-									<td></td>
-									<th>강의</th>
-									<td>컴퓨터의이해</td>
-									<td class="btn-view"><a href="#" class="btn btn-default btn-xs">강의보기</a></td>
-								</tr>
-								<tr class="class-view">
-									<td></td>
-									<th>강의</th>
-									<td>컴퓨터의이해</td>
-									<td class="btn-view"><a href="#" class="btn btn-default btn-xs">강의보기</a></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+			</div>
+			<div class="row check" style="height: 10vh">
+				<div class="col-sm-12">
+					<img id="play" alt="play" src="/ju/resources/images/play.png" width="50" height="50">
+					<img id="pause" alt="pause" src="/ju/resources/images/pause.png" width="50" height="50">
 				</div>
 			</div>
 		</div>
+		<div class="col-sm-3 box" style="height: 100%">
+		
+		</div>
 	</div>
+</div>
+<script type="text/javascript">
+$(function() {
+	$('#play').click(function() {
+		$(this).hide();
+		$('#pause').show();
+		$('#video1').get(0).play();
+	});
+	
+	$('#pause').click(function() {
+		$(this).hide();
+		$('#play').show();
+		$('#video1').get(0).pause();
+	});
+})
+</script>
 </body>
 </html>

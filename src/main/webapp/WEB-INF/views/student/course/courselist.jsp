@@ -15,7 +15,7 @@
 .course-table div:nth-child(2){padding: 0;}
 .course-table p{text-align: right; font-size: 15px; color: #0000ff;}
 .course-table th{background: #faf6f0; }
-.course-table th,td{text-align: center; }
+.course-table th,.course-table td{text-align: center; }
 .course-table .table .btn-update{padding: 18px 10px !important;}
 .course-table .table{border: 1px solid #ccc;}
 .course-table .table .border-top{border: none; padding-top: 25px}
