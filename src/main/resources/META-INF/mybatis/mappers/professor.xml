@@ -26,7 +26,7 @@
 	<select id="getProfessorByNo" parameterType="int" resultMap="professorResultMap">
 		select *
 		from professors
-		where professor_no = #value#
+		where professor_no = #{value}
 	</select>
 	
 </mapper>

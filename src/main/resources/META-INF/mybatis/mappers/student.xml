@@ -27,7 +27,7 @@
 	<select id="getStudentByNo" parameterType="int" resultMap="studentResultMap">
 		select *
 		from students
-		where student_no = #value#
+		where student_no = #{value}
 	</select>
 	
 </mapper>

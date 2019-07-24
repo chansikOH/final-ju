@@ -27,7 +27,7 @@
 	<select id="getEmployeeByNo" parameterType="int" resultMap="employeeResultMap">
 		select *
 		from employees
-		where employee_no = #value#
+		where employee_no = #{value}
 	</select>
 	
 </mapper>

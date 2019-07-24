@@ -39,7 +39,14 @@
 				<div style="margin: 0 auto; width: 180px; padding: 10px;">
 					<span>중앙사이버대학교</span>
 				</div>
-				<form method="post" action="#">
+				
+				<c:if test="${not empty param.result && param.result eq 'fail'}">
+					<div class="alert alert-danger">
+						<strong>로그인 실패</strong> 아이디 혹은 비밀번호가 올바르지 않습니다.
+					</div>
+				</c:if>
+				
+				<form method="post" action="loginCheck">
 					<div class="input-group">
 						<span class="input-group-addon glyphicon glyphicon-user" id="basic-addon1"></span>
 						<input type="text" id="user-id" name="id" class="form-control" placeholder="아이디" aria-describedby="basic-addon1">
