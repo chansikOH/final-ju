@@ -75,68 +75,197 @@
 		color: #402600;
 	}
 </style>
+	<c:if test="${not empty LOGIN_STUDENT }">
+		<div class="row">
+			<div class="col-sm-12 header-nav navbar-default">
+				<div class="navbar-header">
+					<a href="#" class="logo">중앙사이버대학교</a>
+					<ul class="nav-sub navbar-nav">
+						<li><a href="#" id="menu1">학적관리</a></li>
+						<li><a href="#" id="menu2">강의</a></li>
+						<li><a href="/ju/student/mypage" id="menu3">개인정보관리</a></li>
+						<li><a href="#" id="menu4">성적</a></li>
+						<li><a href="#" id="menu5">등록금</a></li>
+						<li><a href="#" id="menu6">휴/복학 신청</a></li>
+						<li><a href="#" id="menu7">학사일정</a></li>
+						<li><a href="#" id="menu8">공지사항</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	
-	<div class="row">
-		<div class="col-sm-12 header-nav navbar-default">
-			<div class="navbar-header">
-				<a href="#" class="logo">중앙사이버대학교</a>
-				<ul class="nav-sub navbar-nav">
-					<li><a href="#" id="menu1">학적관리</a></li>
-					<li><a href="#" id="menu2">강의</a></li>
-					<li><a href="/ju/student/mypage" id="menu3">개인정보관리</a></li>
-					<li><a href="#" id="menu4">성적</a></li>
-					<li><a href="#" id="menu5">등록금</a></li>
-					<li><a href="#" id="menu6">휴/복학 신청</a></li>
-					<li><a href="#" id="menu7">학사일정</a></li>
-					<li><a href="#" id="menu8">공지사항</a></li>
-				</ul>
+		<div class="row">
+			<div class="col-sm-12 sub-menu header-under">
+				<div id="sub-menu1">
+					<ul>
+						<li><a href="/ju/student/course/apply">수강 신청</a></li>
+						<li><a href="/ju/student/course/select">수강 조회</a></li>
+					</ul>
+				</div>
+				<div id="sub-menu2">
+					<ul>
+						<li><a href="#">소메뉴1</a></li>
+						<li><a href="#">소메뉴2</a></li>
+						<li><a href="#">소메뉴3</a></li>
+						<li><a href="#">시험보기</a></li>
+					</ul>
+				</div>		
+				<div id="sub-menu3">
+				</div>
+				<div id="sub-menu4">
+					<ul>
+						<li><a href="#">성적 조회</a></li>
+						<li><a href="#">강의 평가</a></li>
+					</ul>
+				</div>
+				<div id="sub-menu5">
+					<ul>
+						<li><a href="#">등록금 납부내역</a></li>
+						<li><a href="#">통지서 조회</a></li>
+					</ul>
+				</div>
+				<div id="sub-menu6">
+					<ul>
+						<li><a href="#">휴학 신청</a></li>
+						<li><a href="#">복학 신청</a></li>
+						<li><a href="#">자퇴 신청</a></li>
+					</ul>
+				</div>
+				<div id="sub-menu7">
+				</div>
+				<div id="sub-menu8">
+				</div>
 			</div>
 		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-sm-12 sub-menu header-under">
-			<div id="sub-menu1">
-				<ul>
-					<li><a href="/ju/student/course/apply">수강 신청</a></li>
-					<li><a href="/ju/student/course/select">수강 조회</a></li>
-				</ul>
-			</div>
-			<div id="sub-menu2">
-				<ul>
-					<li><a href="#">소메뉴1</a></li>
-					<li><a href="#">소메뉴2</a></li>
-					<li><a href="#">소메뉴3</a></li>
-					<li><a href="#">시험보기</a></li>
-				</ul>
-			</div>		
-			<div id="sub-menu3">
-			</div>
-			<div id="sub-menu4">
-				<ul>
-					<li><a href="#">성적 조회</a></li>
-					<li><a href="#">강의 평가</a></li>
-				</ul>
-			</div>
-			<div id="sub-menu5">
-				<ul>
-					<li><a href="#">등록금 납부내역</a></li>
-					<li><a href="#">통지서 조회</a></li>
-				</ul>
-			</div>
-			<div id="sub-menu6">
-				<ul>
-					<li><a href="#">휴학 신청</a></li>
-					<li><a href="#">복학 신청</a></li>
-					<li><a href="#">자퇴 신청</a></li>
-				</ul>
-			</div>
-			<div id="sub-menu7">
-			</div>
-			<div id="sub-menu8">
+	</c:if>
+	
+	<c:if test="${not empty LOGIN_PROFESSOR }">
+		<div class="row">
+			<div class="col-sm-12 header-nav navbar-default">
+				<div class="navbar-header">
+					<a href="#" class="logo">중앙사이버대학교</a>
+					<ul class="nav-sub navbar-nav">
+						<li><a href="#" id="menu1">학적관리</a></li>
+						<li><a href="#" id="menu2">강의</a></li>
+						<li><a href="/ju/student/mypage" id="menu3">개인정보관리</a></li>
+						<li><a href="#" id="menu4">성적</a></li>
+						<li><a href="#" id="menu5">등록금</a></li>
+						<li><a href="#" id="menu6">휴/복학 신청</a></li>
+						<li><a href="#" id="menu7">학사일정</a></li>
+						<li><a href="#" id="menu8">공지사항</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
-	</div>
+	
+		<div class="row">
+			<div class="col-sm-12 sub-menu header-under">
+				<div id="sub-menu1">
+					<ul>
+						<li><a href="/ju/student/course/apply">수강 신청</a></li>
+						<li><a href="/ju/student/course/select">수강 조회</a></li>
+					</ul>
+				</div>
+				<div id="sub-menu2">
+					<ul>
+						<li><a href="#">소메뉴1</a></li>
+						<li><a href="#">소메뉴2</a></li>
+						<li><a href="#">소메뉴3</a></li>
+						<li><a href="#">시험보기</a></li>
+					</ul>
+				</div>		
+				<div id="sub-menu3">
+				</div>
+				<div id="sub-menu4">
+					<ul>
+						<li><a href="#">성적 조회</a></li>
+						<li><a href="#">강의 평가</a></li>
+					</ul>
+				</div>
+				<div id="sub-menu5">
+					<ul>
+						<li><a href="#">등록금 납부내역</a></li>
+						<li><a href="#">통지서 조회</a></li>
+					</ul>
+				</div>
+				<div id="sub-menu6">
+					<ul>
+						<li><a href="#">휴학 신청</a></li>
+						<li><a href="#">복학 신청</a></li>
+						<li><a href="#">자퇴 신청</a></li>
+					</ul>
+				</div>
+				<div id="sub-menu7">
+				</div>
+				<div id="sub-menu8">
+				</div>
+			</div>
+		</div>
+	</c:if>
+	
+	<c:if test="${not empty LOGIN_EMPLOYEE }">
+		<div class="row">
+			<div class="col-sm-12 header-nav navbar-default">
+				<div class="navbar-header">
+					<a href="#" class="logo">중앙사이버대학교</a>
+					<ul class="nav-sub navbar-nav">
+						<li><a href="#" id="menu1">학적관리</a></li>
+						<li><a href="#" id="menu2">강의</a></li>
+						<li><a href="/ju/student/mypage" id="menu3">개인정보관리</a></li>
+						<li><a href="#" id="menu4">성적</a></li>
+						<li><a href="#" id="menu5">등록금</a></li>
+						<li><a href="#" id="menu6">휴/복학 신청</a></li>
+						<li><a href="#" id="menu7">학사일정</a></li>
+						<li><a href="#" id="menu8">공지사항</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	
+		<div class="row">
+			<div class="col-sm-12 sub-menu header-under">
+				<div id="sub-menu1">
+					<ul>
+						<li><a href="/ju/student/course/apply">수강 신청</a></li>
+						<li><a href="/ju/student/course/select">수강 조회</a></li>
+					</ul>
+				</div>
+				<div id="sub-menu2">
+					<ul>
+						<li><a href="#">소메뉴1</a></li>
+						<li><a href="#">소메뉴2</a></li>
+						<li><a href="#">소메뉴3</a></li>
+						<li><a href="#">시험보기</a></li>
+					</ul>
+				</div>		
+				<div id="sub-menu3">
+				</div>
+				<div id="sub-menu4">
+					<ul>
+						<li><a href="#">성적 조회</a></li>
+						<li><a href="#">강의 평가</a></li>
+					</ul>
+				</div>
+				<div id="sub-menu5">
+					<ul>
+						<li><a href="#">등록금 납부내역</a></li>
+						<li><a href="#">통지서 조회</a></li>
+					</ul>
+				</div>
+				<div id="sub-menu6">
+					<ul>
+						<li><a href="#">휴학 신청</a></li>
+						<li><a href="#">복학 신청</a></li>
+						<li><a href="#">자퇴 신청</a></li>
+					</ul>
+				</div>
+				<div id="sub-menu7">
+				</div>
+				<div id="sub-menu8">
+				</div>
+			</div>
+		</div>
+	</c:if>
 	
 <script type="text/javascript">
 	$(function() {

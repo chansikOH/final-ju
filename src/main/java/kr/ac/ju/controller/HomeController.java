@@ -17,7 +17,7 @@ public class HomeController {
 	@Autowired
 	private HomeService homeService;
 
-	@RequestMapping("/login")
+	@RequestMapping("/")
 	public String login() {
 		
 		return "login";
@@ -40,7 +40,7 @@ public class HomeController {
 			if(("교수").equals(person.getGubun())) {
 				if (digestPwd.toUpperCase().equals(person.getPassword())) {
 					session.setAttribute("LOGIN_PROFESSOR", person);
-					return "redirect:/student/mypage";
+					return "redirect:student/mypage";
 				}
 			}
 			
@@ -50,8 +50,15 @@ public class HomeController {
 					return "redirect:student/mypage";
 				}
 			}
-			return "redirect:login?result=fail";
+			return "redirect:/ju?result=fail";
 		}
-		return "redirect:login?result=fail";
+		return "redirect:/ju?result=fail";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		
+		return "redirect:/";
 	}
 }

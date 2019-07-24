@@ -6,7 +6,7 @@ public class Employee extends Person{
 
 	private Department department;  // 부서아이디
 	private Position  position;     // 직위아이디 
-	private String phone;
+	private String phoneNumber;
 	private String address;
 	private Date hireDate;
 	private Integer salary;
@@ -33,12 +33,12 @@ public class Employee extends Person{
 		this.position = position;
 	}
 
-	public String getPhone() {
-		return phone;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public String getAddress() {
