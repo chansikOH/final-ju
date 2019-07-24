@@ -71,7 +71,6 @@
                                     <th class="border-top">학적상태</th>
                                     <td class="border-top">
                                         <select>
-                                            <option>전체</option>
                                             <option>재학</option>
                                             <option>휴학</option>
                                             <option>졸업</option>
@@ -92,9 +91,8 @@
                                     <td class="border-top">
                                         <select>
                                             <option>전체</option>
-                                            <c:forEach var="major" items="${majors }">
-                                            <option>${major.name }</option>
-                                            </c:forEach>
+                                            <option>컴퓨터공학과</option>
+                                            <option>국문학과</option>
                                         </select>
                                     </td>
                                 </tr>
