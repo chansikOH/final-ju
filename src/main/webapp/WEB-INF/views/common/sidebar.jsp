@@ -25,9 +25,7 @@
 		background-color: #E3DCCC;
 	}
 	
-	div {
-		padding: 0;
-	}
+	#student-info-table td {text-align: left;}
 </style>
 <div class="sidebar" style="height: 100vh;">
 
@@ -41,7 +39,7 @@
 		
 		<div class="row">
 			<div class="col-sm-12">
-				<p class="center">
+				<p class="text-center">
 					<strong>${LOGIN_STUDENT.name }</strong>님 환영합니다.
 					<a href="/ju/logout" class="btn btn-default btn-xs">로그아웃</a>
 				</p>
@@ -50,7 +48,11 @@
 		
 		<div class="row">
 			<div class="col-sm-12">
-				<table class="table">
+				<table class="table" id="student-info-table">
+					<colgroup>
+						<col width="25%">
+						<col width="*">
+					</colgroup>
 					<tbody>
 						<tr>
 							<td class="bg-color-gray">학번</td>

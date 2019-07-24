@@ -20,6 +20,11 @@
 	.auto {
 		overflow: auto;
 	}
+	
+	.result{padding: 0 15px;}
+	.result div:first-child{margin: 15px 0 5px 0; padding: 0;}
+	.result th{background: #faf6f0; }
+	.result th,td{text-align: center; }
 </style>
 </head>
 <body>
@@ -44,10 +49,10 @@
 					<div class="col-sm-3">
 						<label>년도-학기</label>
 						<select name="year-term">
-							<option value="">1학년 1학기</option>
-							<option value="">1학년 2학기</option>
-							<option value="">2학년 1학기</option>
-							<option value="">2학년 2학기</option>
+							<option value="" selected> --- 전체 --- </option>
+							<c:forEach var="term" items="${terms }">
+								<option value="">${term.year }년 ${term.term }학기</option>
+							</c:forEach>
 						</select>
 					</div>
 					<div class="col-sm-2" style="font-weight: bold;">
@@ -64,7 +69,7 @@
 					</div>
 				</div>
 				
-				<div class="row">
+				<div class="row result">
 					<div class="col-sm-12 box-top auto">
 						<table class="table table-striped">
 							<thead>
@@ -83,97 +88,21 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1</td>
-									<td>2019</td>
-									<td>1학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>전필</td>
-									<td>3</td>
-									<td>김다윤</td>
-									<td>B+</td>
-									<td>3.5</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>2019</td>
-									<td>2학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>전선</td>
-									<td>3</td>
-									<td>김다윤</td>
-									<td>B+</td>
-									<td>3.5</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>2019</td>
-									<td>1학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>교필</td>
-									<td>2</td>
-									<td>김다윤</td>
-									<td>B+</td>
-									<td>3.5</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>4</td>
-									<td>2019</td>
-									<td>2학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>교선</td>
-									<td>2</td>
-									<td>김다윤</td>
-									<td>B+</td>
-									<td>3.5</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td>2019</td>
-									<td>2학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>교선</td>
-									<td>2</td>
-									<td>김다윤</td>
-									<td>B+</td>
-									<td>3.5</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>6</td>
-									<td>2019</td>
-									<td>2학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>교선</td>
-									<td>2</td>
-									<td>김다윤</td>
-									<td>B+</td>
-									<td>3.5</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>7</td>
-									<td>2019</td>
-									<td>2학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>교선</td>
-									<td>2</td>
-									<td>김다윤</td>
-									<td>B+</td>
-									<td>3.5</td>
-									<td></td>
-								</tr>
+								<c:forEach var="CA" items="${courseAttends }" varStatus="index">
+									<tr>
+										<td>${index.count }</td>
+										<td>${CA.course.year }</td>
+										<td>${CA.course.term }학기</td>
+										<td>${CA.course.no }</td>
+										<td>${CA.course.name }</td>
+										<td>${CA.course.must }</td>
+										<td>${CA.course.credit }</td>
+										<td>${CA.course.professor.name }</td>
+										<td>${CA.record }</td>
+										<td>${CA.recordScore }</td>
+										<td></td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>
