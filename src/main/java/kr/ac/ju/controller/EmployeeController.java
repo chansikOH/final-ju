@@ -12,9 +12,9 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 	
-	@GetMapping("stu/register.do")
+	@GetMapping("/stu/register.do")
 	public String sturegister() {
 		
-		return "stud/register";
+		return "employee/stud/register";
 	}
 }

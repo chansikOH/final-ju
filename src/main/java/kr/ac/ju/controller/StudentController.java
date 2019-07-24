@@ -26,4 +26,10 @@ public class StudentController {
 	public String courselist() {
 		return "student/course/courselist";
 	}
+	
+	@RequestMapping("/course/coursedetail")
+	public String coursedetail() {
+		return "student/course/coursedetail";
+	}
+	
 }

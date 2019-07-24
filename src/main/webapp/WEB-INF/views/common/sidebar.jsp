@@ -29,7 +29,7 @@
 		padding: 0;
 	}
 </style>
-<div class="sidebar" style="height: 100vh;">
+<div class="sidebar" style="height: 94vh;">
 	<div class="row">
 		<div class="col-sm-12">
 			<br>
