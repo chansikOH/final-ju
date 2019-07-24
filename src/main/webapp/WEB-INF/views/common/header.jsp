@@ -14,7 +14,7 @@
 	.navbar-header .logo {
 		position: absolute;
 		left: 235px;
-		padding: 10px 0;
+		padding: 0;
 		display: inline-block;
 		font-size: 20px;
 		color: #333;
@@ -79,7 +79,9 @@
 	<div class="row">
 		<div class="col-sm-12 header-nav navbar-default">
 			<div class="navbar-header">
-				<a href="#" class="logo">중앙사이버대학교</a>
+				<a href="#" class="logo">
+					<img alt="로고" src="/ju/resources/images/logo.png" height="50">
+				</a>
 				<ul class="nav-sub navbar-nav">
 					<li><a href="#" id="menu1">학적관리</a></li>
 					<li><a href="#" id="menu2">강의</a></li>
