@@ -2,16 +2,10 @@ package kr.ac.ju.vo;
 
 import java.util.Date;
 
-public class Professor {
+public class Professor extends Person{
 
-	private Integer no;
 	private Major major;
 	private Position position;
-	private String name;
-	private String password;
-	private Date birth;
-	private String gender;
-	private String email;
 	private String phoneNumber;
 	private String address;
 	private Date hireDate;
@@ -22,14 +16,6 @@ public class Professor {
 
 	public Professor() {
 
-	}
-
-	public Integer getNo() {
-		return no;
-	}
-
-	public void setNo(Integer no) {
-		this.no = no;
 	}
 
 	public Major getMajor() {
@@ -46,46 +32,6 @@ public class Professor {
 
 	public void setPosition(Position position) {
 		this.position = position;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Date getBirth() {
-		return birth;
-	}
-
-	public void setBirth(Date birth) {
-		this.birth = birth;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getPhoneNumber() {

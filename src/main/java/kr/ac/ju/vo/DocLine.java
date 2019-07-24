@@ -6,7 +6,7 @@ public class DocLine {
 
 	private Integer no;
 	private Doc doc;
-	private Member member;
+	private Person person;
 	private String status;
 	private Date createDate;
 
@@ -30,12 +30,12 @@ public class DocLine {
 		this.doc = doc;
 	}
 
-	public Member getMember() {
-		return member;
+	public Person getPerson() {
+		return person;
 	}
 
-	public void setMember(Member member) {
-		this.member = member;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
 	public String getStatus() {

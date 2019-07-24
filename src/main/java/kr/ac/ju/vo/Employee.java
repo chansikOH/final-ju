@@ -2,16 +2,10 @@ package kr.ac.ju.vo;
 
 import java.util.Date;
 
-public class Employee {
+public class Employee extends Person{
 
-	private Integer no; 
 	private Department department;  // 부서아이디
 	private Position  position;     // 직위아이디 
-	private String name;
-	private Integer password;
-	private Date birth;
-	private String gender;
-	private String email;
 	private String phone;
 	private String address;
 	private Date hireDate;
@@ -22,14 +16,6 @@ public class Employee {
 	private String photoName; 
 	
 	public Employee() {}
-
-	public Integer getNo() {
-		return no;
-	}
-
-	public void setNo(Integer no) {
-		this.no = no;
-	}
 
 	public Department getDepartment() {
 		return department;
@@ -45,46 +31,6 @@ public class Employee {
 
 	public void setPosition(Position position) {
 		this.position = position;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Integer getPassword() {
-		return password;
-	}
-
-	public void setPassword(Integer password) {
-		this.password = password;
-	}
-
-	public Date getBirth() {
-		return birth;
-	}
-
-	public void setBirth(Date birth) {
-		this.birth = birth;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getPhone() {
@@ -150,7 +96,4 @@ public class Employee {
 	public void setPhotoName(String photoName) {
 		this.photoName = photoName;
 	}
-	
-	
-	
 }

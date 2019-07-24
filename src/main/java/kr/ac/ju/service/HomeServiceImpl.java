@@ -7,7 +7,6 @@ import kr.ac.ju.dao.EmployeeDao;
 import kr.ac.ju.dao.ProfessorDao;
 import kr.ac.ju.dao.StudentDao;
 import kr.ac.ju.vo.Employee;
-import kr.ac.ju.vo.Member;
 import kr.ac.ju.vo.Professor;
 import kr.ac.ju.vo.Student;
 

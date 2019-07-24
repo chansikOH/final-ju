@@ -5,9 +5,9 @@ import java.util.Date;
 public class Message {
 
 	private Integer no;
-	private Member receiver;
+	private Person receiver;
 	private String contents;
-	private Member caller;
+	private Person caller;
 	private Message reply;
 	private Date createDate;
 
@@ -23,11 +23,11 @@ public class Message {
 		this.no = no;
 	}
 
-	public Member getReceiver() {
+	public Person getReceiver() {
 		return receiver;
 	}
 
-	public void setReceiver(Member receiver) {
+	public void setReceiver(Person receiver) {
 		this.receiver = receiver;
 	}
 
@@ -39,11 +39,11 @@ public class Message {
 		this.contents = contents;
 	}
 
-	public Member getCaller() {
+	public Person getCaller() {
 		return caller;
 	}
 
-	public void setCaller(Member caller) {
+	public void setCaller(Person caller) {
 		this.caller = caller;
 	}
 
