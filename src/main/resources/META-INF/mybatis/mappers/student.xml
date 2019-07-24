@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="kr.ac.ju.dao.StudentDao">
+	
+	<resultMap type="student" id="studentResultMap">
+		<result property="no" column="student_no"/>
+		<result property="major.no" column="major_no"/>
+		<result property="professor.no" column="professor_no"/>
+		<result property="name" column="student_name"/>
+		<result property="password" column="student_password"/>
+		<result property="birth" column="student_birth"/>
+		<result property="gender" column="student_gender"/>
+		<result property="email" column="student_email"/>
+		<result property="phoneNumber" column="student_phone_number"/>
+		<result property="address" column="student_address"/>
+		<result property="grade" column="student_grade"/>
+		<result property="transferYn" column="transfer_yn"/>
+		<result property="status.no" column="status_no"/>
+		<result property="createDate" column="student_create_date"/>
+		<result property="div" column="student_div"/>
+		<result property="photoName" column="student_photo_name"/>
+	</resultMap>
+	
+	<select id="getStudentByNo" parameterType="int" resultMap="studentResultMap">
+		select *
+		from students
+		where student_no = #value#
+	</select>
+	
+</mapper>
