@@ -14,13 +14,40 @@
 	background-color: black;
 	height: 100vh;
 }
-.box {
+.left-box {
+	height: 100%;
+}
+.right-box {
 	border-left: 1px solid white;
 	height: 100%;
 }
-.video-box {
+.video-wrapper {
 	height: 90vh;
 	position: relative;
+}
+.video-box {
+	position: absolute;
+	transform: translateY(5%);
+}
+#video {
+	width: 100%;
+	height: 100%;
+}
+.video-ctrl {
+	height: 10vh;
+}
+#play {
+	cursor: pointer;
+	padding-top: 4px;
+	margin-right: 10px;
+}
+#rewind {
+	cursor: pointer;
+}
+#sound {
+	cursor: pointer;
+	float: right;
+	margin-top: 15px;
 }
 #currentTime, #duration, #percent {
 	color: white;
@@ -47,8 +74,12 @@
 	height: 100%;
 	background-color: red;
 }
-#play, #rewind, #sound {
-	cursor: pointer;
+.list-name {
+	text-align: center;
+	color: white;
+}
+.scroll {
+	overflow: auto;
 }
 .class-table, .class-table a {
 	color: white;
@@ -57,35 +88,32 @@
 .class-table a:hover {
 	color: yellow;
 }
-.scroll {
-	overflow: auto;
-}
 </style>
 </head>
 <body>
 <div class="container-fluid">
 	<div class="row big-box">
-		<div class="col-sm-9 box">
-			<div class="row video-box">
-				<div class="col-sm-12" style="position: absolute; transform: translateY(5%)">
-					<video id="video1" width="100%" height="100%">
+		<div class="col-sm-9 left-box">
+			<div class="row video-wrapper">
+				<div class="col-sm-12 video-box">
+					<video id="video">
 						<source src="/ju/resources/video/정보처리기사(산업기사) 실기_OT_실기소개 및 합격전략.mp4" type="video/mp4">
 					</video>
 				</div>
 			</div>
-			<div class="row" style="height: 10vh">
+			<div class="row video-ctrl">
 				<div class="col-sm-12">
 					<img id="rewind" alt="rewind" src="/ju/resources/images/rewind.png" width="50" height="50">
-					<img id="play" alt="play" src="/ju/resources/images/play.png" width="50" height="50" style="padding-top: 4px; margin-right: 10px;">
+					<img id="play" alt="play" src="/ju/resources/images/play.png" width="50" height="50">
 					<span id="pBar"><span id="cBar"></span></span>
 					<span id="currentTime">00:00</span><span id="duration"></span>
 					<span id="percent">진행도 0%</span>
-					<img id="sound" alt="sound" src="/ju/resources/images/speak.png" width="20" height="20" style="float: right; margin-top: 15px;">
+					<img id="sound" alt="sound" src="/ju/resources/images/speak.png" width="20" height="20">
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-3 box scroll" style="height: 100%">
-			<h4 style="text-align: center; color: white;">컴퓨터공학개론 강의목록</h4>
+		<div class="col-sm-3 right-box scroll">
+			<h4 class="list-name">컴퓨터공학개론 강의목록</h4>
 			<table class="class-table">
 				<colgroup>
 					<col width="40%">
@@ -268,27 +296,27 @@
 <script type="text/javascript">
 $(function() {
 	$('#play').click(function() {
-		if($('#video1').get(0).paused) {
+		if($('#video').get(0).paused) {
 			$(this).attr('src', '/ju/resources/images/pause.png');
-			$('#video1').get(0).play();
+			$('#video').get(0).play();
 		} else {
 			$(this).attr('src', '/ju/resources/images/play.png');
-			$('#video1').get(0).pause();
+			$('#video').get(0).pause();
 		}
 	});
 
 	$('#rewind').click(function() {
-		var cur = $('#video1').get(0).currentTime;
+		var cur = $('#video').get(0).currentTime;
 		if (cur - 5 < 0) {
-			$('#video1').get(0).currentTime=0;
+			$('#video').get(0).currentTime=0;
 		} else {
-			$('#video1').get(0).currentTime=cur-5;
+			$('#video').get(0).currentTime=cur-5;
 		}
 	});
 	
 	$('#sound').click(function() {
-		$('#video1').get(0).muted = !$('#video1').get(0).muted;
-		var sound = $('#video1').get(0).muted;
+		$('#video').get(0).muted = !$('#video').get(0).muted;
+		var sound = $('#video').get(0).muted;
 		if(sound) {
 			$(this).attr('src', '/ju/resources/images/silence.png');
 		} else {
@@ -307,12 +335,11 @@ $(function() {
 		return res;
 	}
 	
-	$('#video1').on('loadedmetadata', function() {
-		console.log('로드')
+	$('#video').on('loadedmetadata', function() {
 		$('#duration').text(' / '+changeTime(Math.floor($(this).get(0).duration)));
 	});
 	
-	$('#video1').on('timeupdate', function() {
+	$('#video').on('timeupdate', function() {
 		var current = $(this).get(0).currentTime;
 		var max = $(this).get(0).duration;
 		var percent = current / max*100;

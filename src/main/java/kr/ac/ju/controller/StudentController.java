@@ -32,4 +32,9 @@ public class StudentController {
 		return "student/course/coursedetail";
 	}
 	
+	@RequestMapping("/course/courseview")
+	public String courseview() {
+		return "student/course/courseview";
+	}
+	
 }

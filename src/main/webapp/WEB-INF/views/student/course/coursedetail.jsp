@@ -16,7 +16,6 @@
 .course-table p{text-align: right; font-size: 15px; color: #0000ff;}
 .course-table th{background: #faf6f0; }
 .course-table th,.course-table td{text-align: center; }
-.course-table .table .btn-view{padding: 15px !important;}
 .course-table .table{border: 1px solid #ccc;}
 .course-table .table .border-top{border: none; padding-top: 25px}
 .course-table .table>tbody>tr>td, 
@@ -26,6 +25,7 @@
 .course-table .table .class-view>td,
 .course-table .table .class-view>th{padding: 15px;}
 .course-table .table .class-view{display: none;}
+.course-part{cursor: pointer;}
 </style>
 </head>
 <body>
@@ -60,7 +60,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr id="course-part-1">
+								<tr id="course-part-1" class="course-part">
 									<td>1</td>
 									<td colspan="3"><strong>컴퓨터공학이란 무엇인가?</strong></td>
 								</tr>
@@ -68,41 +68,19 @@
 									<td></td>
 									<th>강의</th>
 									<td>컴퓨터의이해</td>
-									<td class="btn-view"><a href="#" class="btn btn-default btn-xs">강의보기</a></td>
+									<td><button type="button" class="btn btn-default btn-xs btn-view">강의보기</button></td>
 								</tr>
 								<tr class="class-view course-part-1-view">
 									<td></td>
 									<th>강의</th>
 									<td>컴퓨터의이해</td>
-									<td class="btn-view"><a href="#" class="btn btn-default btn-xs">강의보기</a></td>
+									<td><button type="button" class="btn btn-default btn-xs btn-view">강의보기</button></td>
 								</tr>
 								<tr class="class-view course-part-1-view">
 									<td></td>
 									<th>강의</th>
 									<td>컴퓨터의이해</td>
-									<td class="btn-view"><a href="#" class="btn btn-default btn-xs">강의보기</a></td>
-								</tr>
-								<tr id="course-part-2">
-									<td>2</td>
-									<td colspan="3"><strong>컴퓨터공학이란 무엇인가?</strong></td>
-								</tr>
-								<tr class="class-view course-part-2-view">
-									<td></td>
-									<th>강의</th>
-									<td>컴퓨터의이해</td>
-									<td class="btn-view"><a href="#" class="btn btn-default btn-xs">강의보기</a></td>
-								</tr>
-								<tr class="class-view course-part-2-view">
-									<td></td>
-									<th>강의</th>
-									<td>컴퓨터의이해</td>
-									<td class="btn-view"><a href="#" class="btn btn-default btn-xs">강의보기</a></td>
-								</tr>
-								<tr class="class-view course-part-2-view">
-									<td></td>
-									<th>강의</th>
-									<td>컴퓨터의이해</td>
-									<td class="btn-view"><a href="#" class="btn btn-default btn-xs">강의보기</a></td>
+									<td><button type="button" class="btn btn-default btn-xs btn-view">강의보기</button></td>
 								</tr>
 							</tbody>
 						</table>
@@ -118,7 +96,7 @@ $(function() {
 		$('.'+id+'-view').toggle();
 	})
 	
-	$('.btn').click(function() {
+	$('.btn-view').click(function() {
 		window.open('/ju/', '_blank', 'width=1200, height=600');
 	})
 })

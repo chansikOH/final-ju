@@ -70,7 +70,7 @@
 									<td>컴퓨터공학</td>
 									<td>컴퓨터공학개론</td>
 									<td>이응수</td>
-									<td class="btn-update"><a href="#" class="btn btn-default">보기</a></td>
+									<td class="btn-update"><a href="coursedetail" class="btn btn-default">보기</a></td>
 								</tr>
 							</tbody>
 						</table>

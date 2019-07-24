@@ -106,9 +106,7 @@
 			</div>
 			<div id="sub-menu2">
 				<ul>
-					<li><a href="#">소메뉴1</a></li>
-					<li><a href="#">소메뉴2</a></li>
-					<li><a href="#">소메뉴3</a></li>
+					<li><a href="/ju/student/course/courselist">수강교과</a></li>
 					<li><a href="#">시험보기</a></li>
 				</ul>
 			</div>		
