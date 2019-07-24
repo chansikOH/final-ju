@@ -49,6 +49,16 @@
 					</div>
 					<div class="col-sm-12">
 						<table class="table">
+							<colgroup>
+								<col width="5%">
+								<col width="8%">
+								<col width="7%">
+								<col width="7%">
+								<col width="10%">
+								<col width="*">
+								<col width="10%">
+								<col width="6%">
+							</colgroup>
 							<thead>
 								<tr>
 									<th>NO</th>
