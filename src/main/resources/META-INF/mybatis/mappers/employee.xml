@@ -42,7 +42,7 @@
 			majors	
 	</select>
 	
-<!-- 	<select id="searchStudents" parameterType="map" resultType="student" >
+	<select id="searchStudents" parameterType="map" resultType="student" >
 		select 
 			student_no 				as no,
 			major_no				as "major.no",
@@ -61,12 +61,8 @@
 			student_div				as div,
 			student_photo_name 		as photoName
 		from 
-			students
-		<where>
-			
-		
-		</where>		
-	</select> -->
+				
+	</select> 
 	
 	
 	

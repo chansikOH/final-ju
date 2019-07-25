@@ -110,6 +110,16 @@
                                         <input>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th></th>
+                                    <td></td>
+                                    <th></th>
+                                    <td></td>
+                                    <th></th>
+                                    <td class="search"> 
+                                        <button type="submit" class="search-btn btn btn-default">조회</button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </form>

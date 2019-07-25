@@ -70,7 +70,7 @@
                                 <tr>
                                     <th class="border-top">학적상태</th>
                                     <td class="border-top">
-                                        <select>
+                                        <select name="status">
                                             <option>전체</option>
                                             <option>재학</option>
                                             <option>휴학</option>
@@ -80,7 +80,7 @@
                                     </td>
                                     <th class="border-top">학년</th>
                                     <td class="border-top">
-                                        <select>
+                                        <select name="grade">
                                             <option>전체</option>
                                             <option>1학년</option>
                                             <option>2학년</option>
@@ -90,7 +90,7 @@
                                     </td>
                                     <th class="border-top">학과</th>
                                     <td class="border-top">
-                                        <select>
+                                        <select name="major">
                                             <option>전체</option>
                                             <c:forEach var="major" items="${majors }">
                                             <option>${major.name }</option>
@@ -101,15 +101,25 @@
                                 <tr>
                                     <th>학생명</th>
                                     <td>
-                                        <input>
+                                        <input name="name">
                                     </td>
                                     <th>학번</th>
                                     <td>
-                                        <input>
+                                        <input name="studentNo">
                                     </td>
                                     <th>전화번호</th>
                                     <td>
-                                        <input>
+                                        <input name="tel"> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td></td>
+                                    <th></th>
+                                    <td></td>
+                                    <th></th>
+                                    <td class="search"> 
+                                        <button type="submit" class="search-btn btn btn-default">조회</button>
                                     </td>
                                 </tr>
                             </tbody>

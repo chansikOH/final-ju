@@ -11,5 +11,5 @@ public interface EmployeeDao {
 
 	Employee getEmployeeByNo(int employeeNo);
 	List<Major> getAllMajors(); 
-	/* List<Student> searchStudents(Map<String, Object> ????? ) */
+	List<Student> searchStudents(Map<String, Object> searchOption ); 
 }
