@@ -1,4 +1,4 @@
-package kr.ac.ju.dao;
+package kr.ac.ju.service;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CoursePart;
 import kr.ac.ju.vo.Professor;
 
-public interface ProfessorDao {
+public interface ProfessorService {
 
 	Professor getProfessorByNo(int professorNo);
 	List<Course> getAllClassByProfId(int professorNo);

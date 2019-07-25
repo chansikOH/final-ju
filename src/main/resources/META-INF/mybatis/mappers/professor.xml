@@ -23,10 +23,97 @@
 		<result property="photoName" column="professor_photo_name"/>
 	</resultMap>
 	
+	<!-- 번호로 교수조회 -->
 	<select id="getProfessorByNo" parameterType="int" resultMap="professorResultMap">
 		select *
 		from professors
-		where professor_no = #value#
+		where professor_no = #{value}
+	</select>
+	
+	<!-- 강의 갯수 조회 -->
+	<select id="getAllClassCount" parameterType="int" resultType="int">
+		select count(*)
+		from courses
+		where professor_no = #{value}
+	</select>
+	<!-- 교수번호로 교과목 조회 -->
+	<select id="getAllClassByProfId" parameterType="int" resultType="course">
+		select 
+			c.course_no no,
+			c.professor_no "professor.no",
+			f.professor_name "professor.name",
+			c.major_no "major.no",
+			m.major_name "major.name",
+			c.course_name name,
+			c.course_credit credit,
+			c.course_year year,
+			c.course_term term,
+			c.course_must_yn mustYn,
+			c.course_pass_yn passYn,
+			c.course_create_date createDate,
+			c.course_quota quota,
+			c.course_count count
+		from
+			courses c, majors m, professors f
+		where
+			c.professor_no = #{value}
+		and
+			c.major_no = m.major_no
+		and
+			c.professor_no = f.professor_no
+	</select>
+	<!-- 교과목 번호로 단원조회 -->
+	<select id="getCoursePartByCourseNo" parameterType="int" resultType="coursePart">
+		select 
+			c.course_no "course.no",
+			c.professor_no "course.professor.no",
+			c.major_no "course.major.no",
+			c.course_name "course.name",
+			c.course_credit "course.credit",
+			c.course_year "course.year",
+			c.course_term "course.term",
+			c.course_must_yn "course.mustYn",
+			c.course_pass_yn "course.passYn",
+			c.course_create_date "course.createDate",
+			c.course_quota "course.quota",
+			c.course_count "course.count",
+            p.course_part_no no,
+            p.course_part_name name,
+            p.course_part_week week
+            
+		from
+			courses c, course_parts p
+		where
+			c.course_no = 2018101
+        and
+            c.course_no = p.course_no
+	</select>
+	
+	<select id="getCourseByCourseNo" resultType="course" parameterType="int">
+		select 
+			c.course_no no,
+			c.professor_no "professor.no",
+			f.professor_name "professor.name",
+			c.major_no "major.no",
+			m.major_name "major.name",
+			c.course_name name,
+			c.course_credit credit,
+			c.course_year year,
+			c.course_term term,
+			c.course_must_yn mustYn,
+			c.course_pass_yn passYn,
+			c.course_create_date createDate,
+			c.course_quota quota,
+			c.course_count count
+		from
+			courses c, majors m, professors f
+		where
+			c.course_no = #{value}
+		and
+			c.major_no = m.major_no
+		and
+			c.professor_no = f.professor_no
+			
 	</select>
 	
 </mapper>
