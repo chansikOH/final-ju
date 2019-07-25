@@ -37,9 +37,16 @@ public class StudentController {
 		List<CourseAttend> courseAttends = studentService.getAllCoursesByStudentNo(student.getNo());
 		model.addAttribute("courseAttends", courseAttends);
 		
+		int count = 0;
+		for (CourseAttend ca : courseAttends) {
+			count++;
+		}
+		
+		model.addAttribute("count", count);
+		
 		return "student/course/courseselect";
 	}
-
+	
 	@RequestMapping("/mypage")
 	public String mypage() {
 		return "student/mypage";
