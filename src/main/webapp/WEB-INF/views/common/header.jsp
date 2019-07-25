@@ -79,7 +79,9 @@
 		<div class="row">
 			<div class="col-sm-12 header-nav navbar-default">
 				<div class="navbar-header">
-					<a href="#" class="logo">중앙사이버대학교</a>
+					<a href="#" class="logo">
+						<img alt="logo" src="/ju/resources/images/logo.png" width="200" height="50">
+					</a>
 					<ul class="nav-sub navbar-nav">
 						<li><a href="#" id="menu1">학적관리</a></li>
 						<li><a href="#" id="menu2">강의</a></li>
@@ -141,7 +143,9 @@
 		<div class="row">
 			<div class="col-sm-12 header-nav navbar-default">
 				<div class="navbar-header">
-					<a href="#" class="logo">중앙사이버대학교</a>
+					<a href="#" class="logo">
+						<img alt="logo" src="/ju/resources/images/logo.png" width="200" height="50">
+					</a>
 					<ul class="nav-sub navbar-nav">
 						<li><a href="#" id="menu1">학적관리</a></li>
 						<li><a href="#" id="menu2">강의</a></li>
@@ -205,7 +209,9 @@
 		<div class="row">
 			<div class="col-sm-12 header-nav navbar-default">
 				<div class="navbar-header">
-					<a href="#" class="logo">중앙사이버대학교</a>
+					<a href="#" class="logo">
+						<img alt="logo" src="/ju/resources/images/logo.png" width="200" height="50">
+					</a>
 					<ul class="nav-sub navbar-nav">
 						<li><a href="#" id="menu1">학적관리</a></li>
 						<li><a href="#" id="menu2">강의</a></li>

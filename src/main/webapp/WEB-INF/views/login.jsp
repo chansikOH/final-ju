@@ -63,4 +63,15 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+$(function() {
+	$('.btn-primary').click(function(event) {
+		var id = parseInt($('#user-id').val());
+		if(isNaN(id)) {
+			event.preventDefault();
+			alert('아이디는 숫자만 입력하시기 바랍니다.');
+		}
+	});
+})
+</script>
 </html>

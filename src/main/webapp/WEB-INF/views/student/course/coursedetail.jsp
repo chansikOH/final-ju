@@ -97,7 +97,13 @@ $(function() {
 	})
 	
 	$('.btn-view').click(function() {
-		window.open('/ju/', '_blank', 'width=1200, height=600');
+		var win = window.open('/ju/student/course/courseview', '_blank', 'width=1200, height=600');
+		var pollTimer = window.setInterval(function() {
+		    if (win.closed !== false) {
+		        window.clearInterval(pollTimer);
+		        alert("aaaaaaaaaaaaaaaaaa")
+		    }
+		}, 200);
 	})
 })
 </script>

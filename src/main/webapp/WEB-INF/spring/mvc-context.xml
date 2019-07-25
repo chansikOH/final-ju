@@ -21,5 +21,34 @@
 	
 	<context:annotation-config/>
 	<context:component-scan base-package="kr.ac.ju.controller"/>
+	
+	<bean id="loginCheckInterceptor" class="kr.ac.ju.interceptor.LoginCheckInterceptor"></bean>
+	<bean id="studentCheckInterceptor" class="kr.ac.ju.interceptor.StudentCheckInterceptor"></bean>
+	<bean id="professorCheckInterceptor" class="kr.ac.ju.interceptor.ProfessorCheckInterceptor"></bean>
+	<bean id="employeeCheckInterceptor" class="kr.ac.ju.interceptor.EmployeeCheckInterceptor"></bean>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/"/>
+			<mvc:exclude-mapping path="/loginCheck"/>
+			<ref bean="loginCheckInterceptor"/>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/student/**"/>
+			<ref bean="studentCheckInterceptor"/>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/professor/**"/>
+			<ref bean="professorCheckInterceptor"/>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/employee/**"/>
+			<ref bean="employeeCheckInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
 
 </beans>
