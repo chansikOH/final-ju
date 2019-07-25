@@ -10,27 +10,13 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style type="text/css">
-	 .img-rounded {
-	 	width: 150px; 
-	 	height: 150px;
-	 }
-	 .header {
-	 	margin: 30px; 
-	 }
-	 .btn-success {
-	 	margin: 30px;
-	 }
-	 .form-group {
-	 	width: 750px;	
-	 }
-	 .input-group {
-	 	width: 750px;	
-	 	margin: 10px; 
-	 }
-	 .shadow {
-      padding:0;
-      box-shadow: 1px 1px 1px 1px #999;
-  	 }
+	 .img-rounded {width: 150px; height: 150px;}
+	 .header {margin: 30px;}
+	 .btn-success {margin: 30px;}
+	 .form-group {width: 750px;}
+	 .input-group {width: 750px; margin: 10px; margin-left: 0; margin-top: 0;}
+	 .shadow {padding:0; box-shadow: 1px 1px 1px 1px #999;}
+  	 .submit {margin: 0 auto 15px;}
 </style>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js""></script>
 </head>
@@ -75,6 +61,9 @@
 						<label>전화번호</label> 
 						<input type="text" class="form-control" name="phone" placeholder="전화번호를 입력하세요">
 					</div>
+					<div>
+						<label>주소</label>
+					</div>
 					<div class="input-group">
 				    	<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-home"></i></span>
 					    <input type="text" name="userpostalcode" readonly="readonly" class="form-control" style="width: 15%;" placeholder="우편번호" aria-describedby="basic-addon1">
@@ -101,7 +90,7 @@
 					<div class="form-group">
 						<label>프로필사진</label> <input type="file" class="form-control" name="photofile">
 			 		</div>
-					<div class="form-group">
+					<div class="form-group submit">
 						<button type="submit" class="btn btn-success btn-lg">학생등록</button>
 					</div>
 				</form>
