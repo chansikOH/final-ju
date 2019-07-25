@@ -27,8 +27,8 @@
 	
 	<select id="getEmployeeByNo" parameterType="int" resultMap="employeeResultMap">
 		select *
-		from employees
-		where employee_no = #value#
+		from employees E
+		where employee_no = #{value}
 	</select>
 	
 	<select id="getAllMajors" resultType="major">

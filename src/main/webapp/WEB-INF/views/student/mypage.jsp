@@ -47,11 +47,11 @@ div {
 						<form method="post" action="#" enctype="multipart/form-data">
 							<div class="form-group">
 								<label>이름</label>
-								<input type="text" class="form-control" value="김다윤" name="name" disabled>
+								<input type="text" class="form-control" value="${LOGIN_STUDENT.name }" name="name" disabled>
 							</div>
 							<div class="form-group">
 								<label>아이디</label>
-								<input type="text" class="form-control" value="20173868" name="no" disabled>
+								<input type="text" class="form-control" value="${LOGIN_STUDENT.no }" name="no" disabled>
 							</div>
 							<div class="form-group">
 								<label>비밀번호</label>
@@ -63,15 +63,15 @@ div {
 							</div>
 							<div class="form-group">
 								<label>생일</label>
-								<input type="date" class="form-control" value="1999-01-05" name="birth" disabled>
+								<input type="date" class="form-control" value="${LOGIN_STUDENT.birth }" name="birth" disabled>
 							</div>
 							<div class="form-group">
 								<label>이메일</label>
-								<input type="email" class="form-control" value="linda7567@naver.com" name="email">
+								<input type="email" class="form-control" value="${LOGIN_STUDENT.email }" name="email">
 							</div>
 							<div class="form-group">
 								<label>전화번호</label>
-								<input type="text" class="form-control" name="phone" value="010-0000-0000">
+								<input type="text" class="form-control" name="phone" value="${LOGIN_STUDENT.phoneNumber }">
 							</div>
 							<div>
 								<label>주소</label>

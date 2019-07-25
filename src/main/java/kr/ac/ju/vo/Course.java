@@ -80,6 +80,9 @@ public class Course {
 	public String getMustYn() {
 		return mustYn;
 	}
+	public String getMust() {
+		return "Y".equals(mustYn) ? "전필" : "전선";
+	}
 
 	public void setMustYn(String mustYn) {
 		this.mustYn = mustYn;

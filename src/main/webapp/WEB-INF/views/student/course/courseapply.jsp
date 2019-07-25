@@ -24,6 +24,11 @@
 	.auto {
 		overflow: auto;
 	}
+	
+	.result{padding: 0 15px;}
+	.result div:first-child{margin: 15px 0 5px 0; padding: 0;}
+	.result th{background: #faf6f0; }
+	.result th,td{text-align: center; }
 </style>
 </head>
 
@@ -37,13 +42,13 @@
 			
 			<div class="col-sm-10">
 				<h1>수강신청</h1>
+				<br>
 				<div class="row">
 					<div class="col-sm-12">
-						<span style="font-size: 20px; color: blue;"><strong>[개설과목]</strong></span>
+						<span style="font-size: 20px; color: #333;"><strong>개설과목</strong></span>
 					</div>
 				</div>
-				
-				<div class="row">
+				<div class="row result">
 					<div class="col-sm-12 box-top auto">
 						<table class="table table-striped">
 							<thead>
@@ -176,7 +181,7 @@
 				
 				<div class="row">
 					<div class="col-sm-3">
-						<span style="font-size: 20px; color: blue;"><strong>[수강신청내역]</strong></span>
+						<span style="font-size: 20px; color: #333;"><strong>수강신청내역</strong></span>
 					</div>
 					<div class="col-sm-2" style="font-weight: bold;">
 						<span>수강가능학점 : 24</span>
@@ -189,7 +194,7 @@
 					</div>
 				</div>
 				
-				<div class="row">
+				<div class="row result">
 					<div class="col-sm-12 box-bottom auto">
 						<table class="table table-striped">
 							<thead>

@@ -24,10 +24,58 @@
 		<result property="photoName" column="student_photo_name"/>
 	</resultMap>
 	
-	<select id="getStudentByNo" parameterType="int" resultMap="studentResultMap">
+	<resultMap type="student" id="studentWithMajorResultMap">
+		<result property="no" column="student_no"/>
+		<result property="major.no" column="major_no"/>
+		<result property="major.name" column="major_name"/>
+		<result property="professor.no" column="professor_no"/>
+		<result property="name" column="student_name"/>
+		<result property="password" column="student_password"/>
+		<result property="birth" column="student_birth"/>
+		<result property="gender" column="student_gender"/>
+		<result property="email" column="student_email"/>
+		<result property="phoneNumber" column="student_phone_number"/>
+		<result property="address" column="student_address"/>
+		<result property="grade" column="student_grade"/>
+		<result property="transferYn" column="transfer_yn"/>
+		<result property="status.no" column="status_no"/>
+		<result property="createDate" column="student_create_date"/>
+		<result property="div" column="student_div"/>
+		<result property="photoName" column="student_photo_name"/>
+	</resultMap>
+	
+	<select id="getStudentByNo" parameterType="int" resultMap="studentWithMajorResultMap">
 		select *
-		from students
-		where student_no = #value#
+		from students S, majors M
+		where student_no = #{value}
+		and S.major_no = M.major_no
+	</select>
+	
+	<select id="getYearTermsByStudentNo" parameterType="int" resultType="course">
+		select distinct	C.course_year as year, 
+						C.course_term as term
+		from course_attends CA, courses C
+		where CA.course_no = C.course_no
+			and student_no = #{value}
+	</select>
+	
+	<select id="getAllCoursesByStudentNo" parameterType="int" resultType="courseAttend">
+		select	S.student_no as "student.no",
+				P.professor_name as "course.professor.name",
+				C.course_no as "course.no",
+				C.course_name as "course.name",
+				C.course_credit as "course.credit",
+				C.course_year as "course.year",
+				C.course_term as "course.term",
+				C.course_must_yn as "course.mustYn",
+				CA.course_attend_record as record
+		from course_attends CA, students S, courses C, professors P
+		where S.student_no = CA.student_no
+			and C.course_no = CA.course_no
+			and P.professor_no = C.professor_no
+			and C.course_pass_yn = 'Y'
+			and S.student_no = #{value}
+		order by C.course_no
 	</select>
 	
 </mapper>

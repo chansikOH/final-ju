@@ -62,4 +62,39 @@ public class CourseAttend {
 	public void setRecord(String record) {
 		this.record = record;
 	}
+	
+	public double getRecordScore() {
+		double score = 0;
+		
+		switch (record) {
+			case "A+":
+				score = 4.5;
+				break;
+			case "A":
+				score = 4.0;
+				break;
+			case "B+":
+				score = 3.5;
+				break;
+			case "B":
+				score = 3.0;
+				break;
+			case "C+":
+				score = 2.5;
+				break;
+			case "C":
+				score = 2.0;
+				break;
+			case "D+":
+				score = 1.5;
+				break;
+			case "D":
+				score = 1.0;
+				break;
+			case "F":
+				score = 0.0;
+				break;
+		}
+		return score;
+	}
 }
