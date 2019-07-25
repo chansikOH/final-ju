@@ -64,7 +64,7 @@
                     <h1>학생 조회</h1>
                 </div>
                 <div class="col-sm-12 table-wrap">
-                    <form method="get">
+                    <form method="get" action="checklist.json">
                         <table class="table">
                             <tbody>
                                 <tr>
@@ -81,11 +81,11 @@
                                     <th class="border-top">학년</th>
                                     <td class="border-top">
                                         <select name="grade">
-                                            <option>전체</option>
-                                            <option>1학년</option>
-                                            <option>2학년</option>
-                                            <option>3학년</option>
-                                            <option>4학년</option>
+                                            <option value="전체">전체</option>
+                                            <option value="1">1학년</option>
+                                            <option value="2">2학년</option>
+                                            <option value="3">3학년</option>
+                                            <option value="4">4학년</option>
                                         </select>
                                     </td>
                                     <th class="border-top">학과</th>
@@ -93,7 +93,7 @@
                                         <select name="major">
                                             <option>전체</option>
                                             <c:forEach var="major" items="${majors }">
-                                            <option>${major.name }</option>
+                                            <option value="${major.no }">${major.name }</option>
                                             </c:forEach>
                                         </select>
                                     </td>
@@ -130,7 +130,7 @@
                             <p>총 <span>10</span>건 조회</p>
                         </div>
                         <div class="col-sm-12">
-                            <table class="table">
+                            <table class="table" id="search-result-table">
                                 <thead>
                                     <tr>
                                         <th>순번</th>
@@ -147,10 +147,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr class="hiden">
                                         <td>1</td>
                                         <td></td>
-                                        <td></td>
+                                        <td></td> 
                                         <td>1학년</td>
                                         <td>컴퓨터공학과</td>
                                         <td>20119111</td>
@@ -253,5 +253,15 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+    	$(function() {
+    		
+    		$("#search-result-table tbody tr").hide()
+    		
+    		/* $("search-btn").on('click', "#search-result-table tbody tr", function() {
+    			var 
+    		}); */
+    	})
+    </script>
 </body>
 </html>

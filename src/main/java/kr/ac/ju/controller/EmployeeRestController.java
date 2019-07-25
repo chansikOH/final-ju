@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -32,6 +31,17 @@ public class EmployeeRestController {
 		
 		Map<String, Object> searchOption = new HashMap<String, Object>();
 		
+		// pagination 관련 
+		int size = 15;									
+		int beginIndex  = (pageNo - 1)*size + 1 ;		
+		int endIndex   = pageNo*size ; 					
+		
+		searchOption.put("pageNo", pageNo); 
+		searchOption.put("beginIndex",beginIndex);
+		searchOption.put("endIndex",endIndex);
+		
+		
+		// search 관련
 		if(!status.isEmpty() && !status.equals("") && !status.equals("전체")) {
 			searchOption.put("status",status); 
 		} 
@@ -47,13 +57,13 @@ public class EmployeeRestController {
 		if(studentNo != 0) {
 			searchOption.put("studentNo",studentNo);
 		}
-		if(!tel.equals("")) {
+		if(!tel.isEmpty() && !name.equals("")) {
 			searchOption.put("tel",tel);
 		}
 		
-		model.addAttribute("majors",employeeService.getAllMajors()); 
 		model.addAttribute("students",employeeService.searchStudents(searchOption)); 
 		
+		System.out.println(employeeService.searchStudents(searchOption));
 		return "employee/stud/checklist";
 	}
 }

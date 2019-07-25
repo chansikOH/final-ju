@@ -42,26 +42,78 @@
 			majors	
 	</select>
 	
+	<select id="searchStudentsCount" parameterType="map" resultType="int">
+		select count(*)
+		from students
+		<where>
+			<if test="status != null">
+				student_div = #{status}
+			</if>
+			<if test="grade != null">
+				and student_grade = #{grade}
+			</if>
+			<if test="major != null">
+				and major_no = #{major}
+			</if>
+			<if test="name != null">
+				and student_name = #{name}
+			</if>
+			<if test="studentNo != null">
+				and student_no = #{studentNo}
+			</if>
+			<if test="tel != null">
+				and student_phone_number = #{tel}
+			</if>
+		</where> 
+	</select>
+	
 	<select id="searchStudents" parameterType="map" resultType="student" >
-		select 
-			student_no 				as no,
-			major_no				as "major.no",
-			professor_no			as "professor.no",
-			student_name			as name,
-			student_password		as password,
-			student_birth			as birth,
-			student_gender			as gender,
-			student_email			as email, 
-			student_phone_number	as phoneNumber,
-			student_address			as address,
-			student_grade			as grade,
-			transfer_yn				as transferYn,
-			status_no				as "studentStatus.no",
-			student_create_date		as createDate,
-			student_div				as div,
-			student_photo_name 		as photoName
-		from 
-				
+		select *
+		from(
+			select 
+				student_no 				as no,
+				major_no				as "major.no",
+				professor_no			as "professor.no",
+				student_name			as name,
+				student_password		as password,
+				student_birth			as birth,
+				student_gender			as gender,
+				student_email			as email, 
+				student_phone_number	as phoneNumber,
+				student_address			as address,
+				student_grade			as grade,
+				transfer_yn				as transferYn,
+				status_no				as "studentStatus.no",
+				student_create_date		as createDate,
+				student_div				as div,
+				student_photo_name 		as photoName,
+				row_number() over (order by student_no desc) as rn
+			from 
+					students
+			<where>
+				<if test="status != null">
+					student_div = #{status}
+				</if>
+				<if test="grade != null">
+					and student_grade = #{grade}
+				</if>
+				<if test="major != null">
+					and major_no = #{major}
+				</if>
+				<if test="name != null">
+					and student_name = #{name}
+				</if>
+				<if test="studentNo != null">
+					and student_no = #{studentNo}
+				</if>
+				<if test="tel != null">
+					and student_phone_number = #{tel}
+				</if>
+			</where> 
+			)
+		where 
+			rn >= #{beginIndex}
+			and rn &lt;= #{endIndex}		
 	</select> 
 	
 	
