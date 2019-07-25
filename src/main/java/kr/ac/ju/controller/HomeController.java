@@ -29,31 +29,29 @@ public class HomeController {
 		
 		String digestPwd = new DigestUtils(MessageDigestAlgorithms.MD5).digestAsHex(password);
 		
-		String path = "redirect:/?result=fail";
 		if(person != null) {
 			if(("학생").equals(person.getGubun())) {
 				if (digestPwd.toUpperCase().equals(person.getPassword())) {
 					session.setAttribute("LOGIN_STUDENT", person);
-					path = "redirect:student/mypage";
+					return "redirect:student/mypage";
 				}
 			}
 			
 			if(("교수").equals(person.getGubun())) {
 				if (digestPwd.toUpperCase().equals(person.getPassword())) {
 					session.setAttribute("LOGIN_PROFESSOR", person);
-					path = "redirect:student/mypage";
+					return "redirect:professor/class/list";
 				}
 			}
 			
 			if(("직원").equals(person.getGubun())) {
 				if (digestPwd.toUpperCase().equals(person.getPassword())) {
 					session.setAttribute("LOGIN_EMPLOYEE", person);
-					path = "redirect:student/mypage";
+					return "redirect:employee/stud/register.do";
 				}
 			}
 		}
-		System.out.println(path);
-		return path;
+		return "redirect:/?result=fail";
 	}
 	
 	@RequestMapping("/logout")

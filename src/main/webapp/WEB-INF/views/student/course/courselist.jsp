@@ -10,6 +10,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style type="text/css">
+.major-name{font-size: 20px; color: #402600}
 .course-table{padding: 0 15px;}
 .course-table div:first-child{margin: 35px 0 5px 0; padding: 0;}
 .course-table div:nth-child(2){padding: 0;}
@@ -39,13 +40,13 @@
 				<h1>강의 수강</h1>
 				<div class="row">
 					<div class="col-sm-12">
-						<span style="font-size: 20px; color: #402600;"><strong>[수강 중인 교과목]</strong></span>
+						<span><strong class="major-name">[수강 중인 교과목]</strong></span>
 					</div>
 				</div>
 				
 				<div class="row course-table">
 					<div class="col-sm-12">
-						<p>총 <span>10</span>건 조회</p>
+						<p>총 <span>${countCourses }</span>건 조회</p>
 					</div>
 					<div class="col-sm-12">
 						<table class="table">
@@ -72,16 +73,27 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1</td>
-									<td>10000</td>
-									<td>2019</td>
-									<td>1</td>
-									<td>컴퓨터공학</td>
-									<td>컴퓨터공학개론</td>
-									<td>이응수</td>
-									<td class="btn-update"><a href="coursedetail" class="btn btn-default">보기</a></td>
-								</tr>
+							<c:choose>
+								<c:when test="${not empty courses }">
+									<c:forEach var="course" items="${courses }" varStatus="loop">
+										<tr>
+											<td>${loop.count }</td>
+											<td>${course.no }</td>
+											<td>${course.year }</td>
+											<td>${course.term }</td>
+											<td>${course.major.name }</td>
+											<td>${course.name }</td>
+											<td>${course.professor.name }</td>
+											<td class="btn-update"><a href="coursedetail?courNo=${course.no }" class="btn btn-default">보기</a></td>
+										</tr>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr class="text-center">
+										<td colspan="8">조회된 교과목 정보가 없습니다.</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
 							</tbody>
 						</table>
 					</div>

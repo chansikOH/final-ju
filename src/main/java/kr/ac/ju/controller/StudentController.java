@@ -46,12 +46,20 @@ public class StudentController {
 	}
 	
 	@RequestMapping("/course/courselist")
-	public String courselist() {
+	public String courselist(HttpSession session, Model model) {
+		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
+		
+		List<Course> courses = studentService.getAllCoursesWithProfessorAndMajorByStudentNo(student.getNo());
+		Integer countCourses = studentService.countCurrentCoursesByStudentNo(student.getNo());
+		
+		model.addAttribute("courses", courses);
+		model.addAttribute("countCourses", countCourses);
 		return "student/course/courselist";
 	}
 	
 	@RequestMapping("/course/coursedetail")
-	public String coursedetail() {
+	public String coursedetail(HttpSession session, Model model, @RequestParam("courNo") int courseNo) {
+		
 		return "student/course/coursedetail";
 	}
 	

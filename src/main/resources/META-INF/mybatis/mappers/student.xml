@@ -78,4 +78,51 @@
 		order by C.course_no
 	</select>
 	
+	<select id="getAllCoursesWithProfessorAndMajorByStudentNo" parameterType="map" resultType="course">
+		select
+			C.course_no no,
+			P.professor_name "professor.name",
+			M.major_name "major.name",
+			C.course_name name,
+			C.course_credit credit,
+			C.course_year year,
+			C.course_term term,
+			C.course_must_yn mustYn,
+			C.course_pass_yn passYn,
+			C.course_create_date createDate,
+			C.course_quota quota,
+			C.course_count count
+		from
+			courses C, course_attends CA, professors P, majors M
+		where
+			C.course_no = CA.course_no
+		and
+			C.professor_no = P.professor_no
+		and
+			C.major_no = M.major_no
+		and 
+			CA.student_no = #{studentNo}
+		and
+			C.course_year = ${year}
+		and
+			C.course_term = #{term}
+		order by 
+			C.course_no
+	</select>
+	
+	<select id="countCurrentCoursesByStudentNo" parameterType="map" resultType="int">
+		select
+			count(*)
+		from
+			courses C, course_attends CA
+		where
+			C.course_no = CA.course_no
+		and
+			CA.student_no = #{studentNo}
+		and
+			C.course_year = #{year}
+		and 
+			C.course_term = #{term}
+	</select>
+	
 </mapper>
