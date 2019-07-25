@@ -119,11 +119,10 @@
 				
 				var year = yearTerm.substring(0,4);
 				var term = yearTerm.substring(5,6);
-				console.log(year);
-				console.log(term);
 				$.ajax({
 					type:"GET",
-					url:year + "/" + term,
+					url:"../course.json",
+					data: {year:yearTerm.substring(0,4), term:yearTerm.substring(5,6)},
 					dataType:"json",
 					success:function(courseAttends) {
 						$("#course-attend-list tbody").empty();

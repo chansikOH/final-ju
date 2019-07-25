@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.ac.ju.service.StudentService;
@@ -23,17 +24,24 @@ public class StudentRestController {
 	@Autowired
 	private StudentService studentService;
 
-	@GetMapping("/course/{year}/{term}")
-	public List<CourseAttend> courseAttends(@PathVariable("year") int year, @PathVariable("term") int term, HttpSession session) {
+	@GetMapping("/course.json")
+	public List<CourseAttend> courseAttends(@RequestParam(value = "year", required = false, defaultValue = "0") int year,
+			@RequestParam(value = "term", required = false, defaultValue = "0") int term, HttpSession session) {
 		Map<String, Object> maps = new HashMap<String, Object>();
 		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
-		
-		maps.put("year", year);
-		maps.put("term", term);
-		maps.put("studentNo", student.getNo());
-		
-		List<CourseAttend> courseAttends = studentService.getCoursesByStudentNoAndYearTerm(maps);
-		
-		return courseAttends;
+
+		if(year == 0 && term == 0) {
+			List<CourseAttend> courseAttends = studentService.getAllCoursesByStudentNo(student.getNo());
+			
+			return courseAttends;
+		} else {
+			maps.put("year", year);
+			maps.put("term", term);
+			maps.put("studentNo", student.getNo());
+			
+			List<CourseAttend> courseAttends = studentService.getCoursesByStudentNoAndYearTerm(maps);
+			
+			return courseAttends;
+		}
 	}
 }
