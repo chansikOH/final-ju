@@ -1,6 +1,7 @@
 package kr.ac.ju.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,12 @@ public class StudentServiceImpl implements StudentService{
 		List<CourseAttend> courseAttends = studentDao.getAllCoursesByStudentNo(studentNo);
 		
 		return courseAttends;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getAllRecordesByStudentNo(Map<String, Object> map) {
+		List<Map<String, Object>> records = studentDao.getAllRecordesByStudentNo(map);
+		
+		return records;
 	}
 }
