@@ -46,7 +46,7 @@
 					<div class="col-sm-2">
 						<span><strong>[학기별성적]</strong></span>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-5">
 						<label>년도-학기</label>
 						<select name="year-term">
 							<option value="" selected> --- 전체 --- </option>
@@ -57,16 +57,13 @@
 						<button class="btn btn-default btn-xs" id="btn-select-courses">조회</button>
 					</div>
 					<div class="col-sm-2" style="font-weight: bold;">
-						<span>학점계 : 16</span>
+						<span>학점계 : <span id="creditCount">${creditCount }</span></span>
 					</div>
 					<div class="col-sm-2" style="font-weight: bold;">
-						<span>평점계 : 77.7</span>
-					</div>
-					<div class="col-sm-2" style="font-weight: bold;">
-						<span>평점 평균 : 4.44 / 4.5</span>
+						<span>평점 평균 : <span id="avgScore">${avgScore }</span> / 4.5</span>
 					</div>
 					<div class="col-sm-1" style="font-weight: bold;">
-						<span>총 ${count } 건</span>
+						<span>총 <span id="totalCourses">${totalCourses }</span> 건</span>
 					</div>
 				</div>
 				
@@ -124,10 +121,14 @@
 					url:"../course.json",
 					data: {year:yearTerm.substring(0,4), term:yearTerm.substring(5,6)},
 					dataType:"json",
-					success:function(courseAttends) {
+					success:function(result) {
 						$("#course-attend-list tbody").empty();
-						$.each(courseAttends, function(index, ca) {
-							console.log(ca)
+						
+						$("#creditCount").text(result.creditCount);
+						$("#avgScore").text(result.avgScore);
+						$("#totalCourses").text(result.totalCourses);
+						
+						$.each(result.courseAttends, function(index, ca) {
 							var row = "<tr>";
 							row += "<td>" + (index + 1) + "</td>";
 							row += "<td>" + ca.course.year + "</td>";

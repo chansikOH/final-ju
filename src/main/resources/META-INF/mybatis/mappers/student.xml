@@ -57,6 +57,7 @@
 		from course_attends CA, courses C
 		where CA.course_no = C.course_no
 			and student_no = #{value}
+		order by C.course_year asc
 	</select>
 	
 	<select id="getAllCoursesByStudentNo" parameterType="int" resultType="courseAttend">

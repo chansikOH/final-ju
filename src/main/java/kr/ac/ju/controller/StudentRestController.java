@@ -25,23 +25,37 @@ public class StudentRestController {
 	private StudentService studentService;
 
 	@GetMapping("/course.json")
-	public List<CourseAttend> courseAttends(@RequestParam(value = "year", required = false, defaultValue = "0") int year,
+	public Map<String, Object> courseAttends(@RequestParam(value = "year", required = false, defaultValue = "0") int year,
 			@RequestParam(value = "term", required = false, defaultValue = "0") int term, HttpSession session) {
+		
+		Map<String, Object> results = new HashMap<String, Object>();
 		Map<String, Object> maps = new HashMap<String, Object>();
 		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
+		List<CourseAttend> courseAttends;
+		
+		int creditCount = 0;
+		double totalScore = 0;
 
 		if(year == 0 && term == 0) {
-			List<CourseAttend> courseAttends = studentService.getAllCoursesByStudentNo(student.getNo());
-			
-			return courseAttends;
+			courseAttends = studentService.getAllCoursesByStudentNo(student.getNo());
 		} else {
 			maps.put("year", year);
 			maps.put("term", term);
 			maps.put("studentNo", student.getNo());
 			
-			List<CourseAttend> courseAttends = studentService.getCoursesByStudentNoAndYearTerm(maps);
-			
-			return courseAttends;
+			courseAttends = studentService.getCoursesByStudentNoAndYearTerm(maps);
 		}
+		
+		for (CourseAttend ca : courseAttends) {
+			creditCount += ca.getCourse().getCredit();
+			totalScore += ca.getRecordScore();
+		}
+		
+		results.put("courseAttends", courseAttends);
+		results.put("creditCount", creditCount);
+		results.put("avgScore", String.format("%.2f", (double) totalScore/courseAttends.size()));
+		results.put("totalCourses", courseAttends.size());
+
+		return results;
 	}
 }

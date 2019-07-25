@@ -50,9 +50,9 @@ public class HomeController {
 					return "redirect:student/mypage";
 				}
 			}
-			return "redirect:/ju?result=fail";
+			return "redirect:/?result=fail";
 		}
-		return "redirect:/ju?result=fail";
+		return "redirect:/?result=fail";
 	}
 	
 	@RequestMapping("/logout")
