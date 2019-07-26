@@ -25,4 +25,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Student> searchStudents(Map<String, Object> searchOption) {
 		return employeedao.searchStudents(searchOption);
 	}
+	
+	@Override
+	public int searchStudentsCount(Map<String, Object> searchOption) {
+		return employeedao.searchStudentsCount(searchOption); 
+	}
 }

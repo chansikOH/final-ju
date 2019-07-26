@@ -10,6 +10,11 @@ import kr.ac.ju.vo.Student;
 public interface EmployeeDao {
 
 	Employee getEmployeeByNo(int employeeNo);
+	
+	// Controller
 	List<Major> getAllMajors(); 
+	
+	// RestController
 	List<Student> searchStudents(Map<String, Object> searchOption ); 
+	int searchStudentsCount(Map<String, Object> searchOption); 
 }

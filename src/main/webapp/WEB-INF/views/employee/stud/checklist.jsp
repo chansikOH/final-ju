@@ -71,11 +71,11 @@
                                     <th class="border-top">학적상태</th>
                                     <td class="border-top">
                                         <select name="status">
-                                            <option>전체</option>
-                                            <option>재학</option>
-                                            <option>휴학</option>
-                                            <option>졸업</option>
-                                            <option>자퇴</option>
+                                            <option value="전체">전체</option>
+                                            <option value="재학">재학</option>
+                                            <option value="휴학">휴학</option>
+                                            <option value="졸업">졸업</option>
+                                            <option value="자퇴">자퇴</option>
                                         </select>
                                     </td>
                                     <th class="border-top">학년</th>
@@ -154,7 +154,7 @@
                     </div>
                 </div>
                 
-                <div class="row pagination">
+                <!-- <div class="row pagination">
                     <div class="col-sm-12 page">
                         <span class="glyphicon glyphicon-menu-left"></span>
                         <a href="#" class="page-active">1</a>
@@ -162,7 +162,14 @@
                         <a href="#">3</a>
                         <span class="glyphicon glyphicon-menu-right"></span>
                     </div>
-                </div>
+                </div> -->
+                <div class="row pagination">
+					<div class="col-sm-12 page">
+						<ul class="pagination" id="pagination-box">
+							
+						</ul>
+					</div>
+				</div>
             </div>
         </div>
     </div>
@@ -258,16 +265,26 @@
     		
     		$("#search-result-table tbody tr").hide();
     		
+    		/* 조회버튼 클릭 */
     	    $(".search-btn").click(function() {
     	    	$("#search-result-table tbody tr").empty();
+    	    	
+    	    	var status = $("[name=status]").val(); 
+    	    	var grade = $("[name=grade]").val(); 
+    	    	var major = $("[name=major]").val(); 
+    	    	var name = $("[name=name]").val(); 
+    	    	var studentNo = $("[name=studentNo]").val(); 
+    	    	var tel = $("[name=tel]").val(); 
     	    	
     	    	$.ajax({
  	               type:"GET",
  	               url:"checklist.json",
+ 	               data:{status:status, grade:grade, major:major, name:name, studentNo:studentNo, tel:tel},
  	               dataType:"json", 
- 	               success:function(students) {
+ 	               success:function(data) {
+ 	            	  /* student 표현  */
+ 	            	  var students = data.searchStudents;
  	                  if(students.length != 0) {
- 	                	  console.log("if");
  	                     $.each(students, function(index, stud) {
  	                        var row = "<tr>";
  	                        row += "<td>"+stud.no+"</td>";
@@ -282,18 +299,61 @@
  	                        row += "<td class='btn-update'><a href='#' class='btn btn-default' data-toggle='modal' data-target='.bs-detail-modal-lg'>상세정보</a></td>";
  	                        row += "<td class='btn-update'><a href='#' class='btn btn-default' data-toggle='modal' data-target='.bs-change-modal-lg'>학적상태변경</a></td>";
  	                        row += "</tr>";
- 	                    	 console.log("if-2");
  	                        $("#search-result-table tbody").append(row);
  	                     })
  	                  } else {
  	                     var row = "<tr>";
- 	                     row += "<td colspan='4' class='text-center'>소속된 사원이 없습니다.</td>";
+ 	                     row += "<td colspan='12' class='text-center'소속된 사원이 없습니다.></td>";
  	                     row += "</tr>";
- 	                     $("#emp-list-table tbody").append(row);
+ 	                     $("#search-result-table tbody").append(row);
  	                  }
+ 	                  /* pagination */
+ 	                 	var pagination = data.pagination;
+ 	                  
+ 	                  	var page = pagination.page;		/* 현재 페이지*/
+ 	                  	var begin = pagination.begin;	/* 화면에 보여질 첫번째 번호 */
+ 	                  	var end = pagination.end;		/* 화면에 보여질 마지막 번호 */
+ 	                  	var first = pagination.first;	/* ture or false*/
+ 	                  	var last = pagination.last;		/* ture or false*/
+ 	                  	
+ 	                  	/* <span class="glyphicon glyphicon-menu-left"></span>
+                        <a href="#" class="page-active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <span class="glyphicon glyphicon-menu-right"></span> */
+                    	
+                        /*    var pagination = data.pagination;   
+                        var row = "";
+                        
+                        if (!pagination.first) {
+                           row += "<li><a href='' data-pno='"+(pagination.page -1 )+"'>이전</li>";
+                        }
+                        for (var i=pagination.begin; i<=pagination.end; i++) {
+                           row += "<li><a href=''>"+i+"</li>";
+                        }
+                        $("#pagination-box").html(row);   
+                        if (!pagination.last) {
+                           row += "<li><a href='' data-pno='"+(pagination.page +1 )+"'>다음</li>";
+                        } */
+                        
+                   /*      var row = "";
+ 	                  	if(first){
+ 	                  		<span class="glyphicon glyphicon-menu-left" data-pno='"+(pagination.page +1 )+"'></span>
+ 	                  	} 
+                        for(var i=begin; i<= end; i++){
+                        	row += "<li><a href=''>"+i+"</li>"
+ 	                 	 } 	                  	
+ 	                  	if(last){
+ 	                  		<span class="glyphicon glyphicon-menu-right" data-pno='"+(pagination.page +1 )+"'></span>
+ 	                  	}  */
+ 	                  	
+ 	                  	
  	               }
  	            });
+    	    	
+    	    	
     		}); 
+    	    
     	})
     </script>
 </body>
