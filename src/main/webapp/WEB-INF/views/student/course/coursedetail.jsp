@@ -69,7 +69,7 @@
 										<tr id="course-part-${partInfo.NO }" class="course-part">
 											<td>${partInfo.WEEK }</td>
 											<td colspan="2"><strong>${partInfo.NAME }</strong></td>
-											<td><strong>${partInfo.AVG } %</strong></td>
+											<td><strong id="percentage-${partInfo.NO }">${partInfo.AVG } %</strong></td>
 											<td></td>
 										</tr>
 										<c:forEach var="classInfo" items="${sources.classInfos }">
@@ -78,8 +78,8 @@
 													<td></td>
 													<th>강의</th>
 													<td>${classInfo.CLASSNAME }</td>
-													<td>${classInfo.PERCENTAGE } %</td>
-													<td><button type="button" class="btn btn-default btn-xs btn-view" value="${classInfo.VIDEO }">강의보기</button></td>
+													<td class="percentage-${classInfo.PARTNO }-class">${classInfo.PERCENTAGE } %</td>
+													<td><button type="button" class="btn btn-default btn-xs btn-view" value="${classInfo.VIDEO }" disabled>강의보기</button></td>
 												</tr>
 											</c:if>
 										</c:forEach>
@@ -100,6 +100,44 @@
 	</div>
 <script type="text/javascript">
 $(function() {
+	$('[class^=percentage-]').each(function(index, per) {
+		var percentage = $(per).text().replace(' %', '');
+		if(percentage == 100) {
+			$(per).css('color', 'green');
+		} else if (percentage >= 85) {
+			$(per).css('color', 'orange');
+		} else if (percentage < 85) {
+			$(per).css('color', 'red');
+		}
+		
+		if(index == 0) {
+			$(this).parent().find(':last-child').removeAttr('disabled');
+		}
+		
+		if(percentage >= 85) {
+			$(this).parent().nextAll().not('[id^=course-part-]').first().find(':last-child').removeAttr('disabled')
+		}
+	});
+	
+	$('[id^=percentage-]').each(function(index, el) {
+		var id = $(el).attr('id');
+		var total = parseInt(0);
+		var length = parseInt($('.'+id+'-class').length);
+		$('.'+id+'-class').each(function(index, per) {
+			var percentage = $(per).text().replace(' %', '');
+			total += parseInt(percentage);
+		});
+		var avg = total / length;
+		
+		if(avg == 100) {
+			$(this).css('color', 'green');	
+		} else if (avg == 0) {
+			$(this).css('color', 'red');
+		} else {
+			$(this).css('color', 'orange');
+		}
+	});
+		
 	$('[id^=course-part-]').click(function() {
 		var id = $(this).attr('id');
 		$('.'+id+'-view').toggle();
