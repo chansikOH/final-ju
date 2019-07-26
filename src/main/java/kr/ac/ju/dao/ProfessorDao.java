@@ -13,4 +13,7 @@ public interface ProfessorDao {
 	int getAllClassCount(int professorNo);
 	List<CoursePart>getCoursePartByCourseNo(int courseNo);
 	Course getCourseByCourseNo(int courseNo);
+	
+	List<Course> getYearByProfessorNo(int professorNo);
+	List<Course> getMajorByProfessorNo(int professorNo);
 }

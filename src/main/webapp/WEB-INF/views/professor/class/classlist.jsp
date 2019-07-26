@@ -69,51 +69,54 @@
                     <h1>강의 조회</h1>
                 </div>
                 <div class="col-sm-12 table-wrap">
-                    <form method="get">
+                    <form method="get" action="#">
                         <table class="table">
                             <tbody>
                                 <tr>
                                     <th class="border-top">년도</th>
                                     <td class="border-top">
-                                        <select>
-                                            <option>2019</option>
-                                            <option>2018</option>
-                                            <option>2017</option>
+                                        <select id="search-year" name="year">
+                                            <option>전체</option>
+                                        <c:forEach var="course" items="${years }">
+                                        	<option value="${course.year }">${course.year }</option>
+                                        </c:forEach>
                                         </select>
                                     </td>
                                     <th class="border-top">학기</th>
                                     <td class="border-top">
-                                        <select>
+                                        <select id="search-term" name="term">
                                             <option>전체</option>
-                                            <option>1학기</option>
-                                            <option>2학기</option>
+                                            <option value="1">1학기</option>
+                                            <option value="2">2학기</option>
                                         </select>
                                     </td>
-                                    <th class="border-top">교과목구분</th>
+                                    <th class="border-top">학점</th>
                                     <td class="border-top">
-                                        <select>
+                                        <select id="search-credit" name="credit">
                                             <option>전체</option>
-                                            <option>전공</option>
-                                            <option>교양</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>학과</th>
                                     <td>
-                                        <select>
+                                        <select id="search-part" name="part">
                                             <option>전체</option>
-                                            <option>컴퓨터공학과</option>
-                                            <option>국문학과</option>
+                                        <c:forEach var="course" items="${majors }">
+                                            <option value="${course.major.name }">${course.major.name }</option>
+                                        </c:forEach>
                                         </select>
                                     </td>
                                     <th>교과목번호</th>
                                     <td>
-                                        <input>
+                                        <input type="text" id="search-courseNum" name="courseNum">
                                     </td>
                                     <th>교과목명</th>
                                     <td>
-                                        <input>
+                                        <input type="text" id="search-courseName" name="courseName">
                                     </td>
                                 </tr>
                                 <tr>
@@ -123,7 +126,7 @@
                                     <td></td>
                                     <td></td>
                                     <td class="search">
-                                        <button type="submit" class="search-btn btn btn-default">조회</button>
+                                        <button type="button" id="search-button" class="search-btn btn btn-default">조회</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -134,7 +137,7 @@
                             <p>총 <span>${counts }</span>건 조회</p>
                         </div>
                         <div class="col-sm-12">
-                            <table class="table">
+                            <table class="table" id="course-list-table">
                                 <thead>
                                     <tr>
                                         <th>순번</th>
@@ -182,7 +185,7 @@
                                        	</c:choose>
                                        	<td>${course.year }</td>
                                        	<td>${course.term }</td>
-                                        <td><a href="#"  class="course-detail" data-value="${loop.count }"data-toggle="modal" data-target=".bs-example-modal-lg">${course.name }</a></td>
+                                        <td><a href="#"  class="course-detail" data-value="${course.no }">${course.name }</a></td>
                                         <td>${course.major.name }</td>
                                         <td>${course.professor.name}</td>
                                         <td>${course.credit }</td>
@@ -213,37 +216,29 @@
         </div>
     </div>
     <!-- Large modal -->
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div id="course-detail-modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <h3>교과목정보 조회</h3>
-                <table class="table">
+                <table class="table course-detail-modal">
                     <thead>
                         <tr>
                             <th>교과목번호</th>
                             <th>년도</th>
                             <th>학기</th>
-                            <th>학과</th>
+                            <th>교과목명</th>
                             <th>교수명</th>
                             <th>강의계획서</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>${courseByNo.no }</td>
-                            <td>${courseByNo.year }</td>
-                            <td>${courseByNo.term }</td>
-                            <td>${courseByNo.major.name }</td>
-                            <td>${courseByNo.professor.name }</td>
-                            <td class="move-btn"><a href="#" class="btn btn-default">보기</a></td>
-                            <td class="move-btn"><a href="plansupdate.html" class="btn btn-default">수정</a></td>
-                        </tr>
+                       
                     </tbody>
                 </table>
                 <h3>강의 목차</h3>
                 <form method="post" action="#">
-                    <table class="table">
+                    <table class="table coursepart-modal">
                         <thead>
                             <tr>
                                 <th>단원번호</th>
@@ -253,21 +248,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="courseparts" items="${courseParts}">
-                            <tr>
-                                <td>${courseparts.no }</td>
-                                <td>${courseparts.name }</td>
-                                <td>${courseparts.week }</td>
-                                <td class="file-control"><input type="file" class="form-control input-sm"></td>
-                            </tr>
-                         </c:forEach>
-                           <tr>
+								<%-- <tr>
+											<td>${coursepart.no }</td>
+											<td>${coursepart.name }</td>
+											<td>${coursepart.week }</td>
+											<td class="file-control"><input type="file"
+												class="form-control input-sm"></td>
+								</tr> --%>
+                        </tbody>
+						<tfoot>
+							<tr>
                                <td></td>
                                <td></td>
                                <td></td>
                                <td class="save-btn"><button type="submit" class="btn btn-default">저장</button></td>
                            </tr>
-                        </tbody>
+                         </tfoot>
                     </table>
                 </form>
             </div>
@@ -322,14 +318,72 @@
         </div>
     </div>
     <script type="text/javascript">
+    
+    	$("#search-year").change(function(){
+    		var year = $(this).val();
+    		alert(year);
+    	});
+    	$("#search-term").change(function(){
+    		var term = $(this).val();
+    		alert(term)
+    	});
+    	$("#search-credit").change(function(){
+    		var credit = $(this).val();
+    		alert(credit)
+    	});
+    	$("#search-part").change(function(){
+    		var part = $(this).val();
+    		alert(part)
+    	});
+    	
+    	
+    
+    /* 모달 상세조회 */
     	$('.course-detail').click(function(){
-	    	var aaa = $(this).attr('data-value');
-	    	console.log(aaa);
-	    	alert(a);
-    		
+	    	var courseNo = $(this).attr('data-value');
+	    	
+	    	$.ajax({
+	    		type:"GET",
+	    		url: "listdetail",
+	    		data : {no:courseNo},
+	    		dataType:"json",
+	    		success: function(data) {
+	    			$("#course-detail-modal .course-detail-modal tbody").empty();
+	    			$("#course-detail-modal .coursepart-modal tbody").empty();
+	    			
+    				var course = data.courseDetail;
+    				var parts = data.courseParts;
+    				
+    				var courseRow = "<tr>";
+    				courseRow += "<td>"+course.no+"</td>";
+    				courseRow += "<td>"+course.year+"</td>";
+    				courseRow += "<td>"+course.term+"</td>";
+    				courseRow += "<td>"+course.name+"</td>";
+    				courseRow += "<td>"+course.professor.name+"</td>";
+    				courseRow += "<td class='move-btn'><a href='#' class='btn btn-default'>보기</a></td>";
+    				courseRow += "<td class='move-btn'><a href='#' class='btn btn-default'>수정</a></td>";
+    				$("#course-detail-modal .course-detail-modal tbody").append(courseRow); 
+	    				
+	    			$.each(parts, function(index, part){
+	    				var partRow = "<tr>";
+	    				partRow += "<td>"+part.no+"</td>";
+	    				partRow += "<td>"+part.name+"</td>";
+	    				partRow += "<td>"+part.week+"</td>";
+	    				partRow += "<td class='file-control'><input type='file' class='form-control input-sm'></td>";
+	    				$("#course-detail-modal .coursepart-modal tbody").append(partRow);
+	    			});
+	    			
+	    			
+	    		}
+	    	});
+	    	
+	    	$('#course-detail-modal').modal('show');
+	 		return false;
+	 		$("#course-detail-modal").on('hide', function(){
+	 			
+	 		});
     	})
     	
-    	$()
     </script>
 </body>
 </html>

@@ -45,5 +45,15 @@ public class ProfessorServiceImpl implements ProfessorService{
 		
 		return professorDao.getCourseByCourseNo(courseNo);
 	}
+	@Override
+	public List<Course> getYearByProfessorNo(int professorNo) {
+		return professorDao.getYearByProfessorNo(professorNo);
+	}
+
+	@Override
+	public List<Course> getMajorByProfessorNo(int professorNo) {
+		return professorDao.getMajorByProfessorNo(professorNo);
+	}
+	
 	
 }
