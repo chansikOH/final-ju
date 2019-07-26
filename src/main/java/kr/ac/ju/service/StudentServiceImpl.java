@@ -84,4 +84,10 @@ public class StudentServiceImpl implements StudentService{
 		
 		return studentDao.countCurrentCoursesByStudentNo(search);
 	}
+	
+	public List<CourseAttend> getCoursesByStudentNoAndYearTerm(Map<String, Object> maps) {
+		List<CourseAttend> courseAttends = studentDao.getCoursesByStudentNoAndYearTerm(maps);
+		
+		return courseAttends;
+	}
 }

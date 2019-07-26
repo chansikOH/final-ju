@@ -14,4 +14,5 @@ public interface StudentDao {
 	List<CourseAttend> getAllCoursesByStudentNo(int studentNo);
 	List<Course> getAllCoursesWithProfessorAndMajorByStudentNo(Map<String, Object> search);
 	Integer countCurrentCoursesByStudentNo(Map<String, Object> search);
+	List<CourseAttend> getCoursesByStudentNoAndYearTerm(Map<String, Object> maps);
 }

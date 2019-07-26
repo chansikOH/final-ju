@@ -57,6 +57,7 @@
 		from course_attends CA, courses C
 		where CA.course_no = C.course_no
 			and student_no = #{value}
+		order by C.course_year asc
 	</select>
 	
 	<select id="getAllCoursesByStudentNo" parameterType="int" resultType="courseAttend">
@@ -123,6 +124,27 @@
 			C.course_year = #{year}
 		and 
 			C.course_term = #{term}
+	</select>
+
+	<select id="getCoursesByStudentNoAndYearTerm" parameterType="map" resultType="courseAttend">
+		select	S.student_no as "student.no",
+				P.professor_name as "course.professor.name",
+				C.course_no as "course.no",
+				C.course_name as "course.name",
+				C.course_credit as "course.credit",
+				C.course_year as "course.year",
+				C.course_term as "course.term",
+				C.course_must_yn as "course.mustYn",
+				CA.course_attend_record as record
+		from course_attends CA, students S, courses C, professors P
+		where S.student_no = CA.student_no
+			and C.course_no = CA.course_no
+			and P.professor_no = C.professor_no
+			and C.course_pass_yn = 'Y'
+			and S.student_no = #{studentNo}
+			and C.course_year = #{year}
+			and C.course_term = #{term}
+		order by C.course_no
 	</select>
 	
 </mapper>

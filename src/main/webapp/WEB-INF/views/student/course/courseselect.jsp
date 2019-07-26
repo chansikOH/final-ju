@@ -46,32 +46,30 @@
 					<div class="col-sm-2">
 						<span><strong>[학기별성적]</strong></span>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-5">
 						<label>년도-학기</label>
 						<select name="year-term">
 							<option value="" selected> --- 전체 --- </option>
 							<c:forEach var="term" items="${terms }">
-								<option value="">${term.year }년 ${term.term }학기</option>
+								<option value="${term.year }-${term.term}">${term.year }년 ${term.term }학기</option>
 							</c:forEach>
 						</select>
+						<button class="btn btn-default btn-xs" id="btn-select-courses">조회</button>
 					</div>
 					<div class="col-sm-2" style="font-weight: bold;">
-						<span>학점계 : 16</span>
+						<span>학점계 : <span id="creditCount">${creditCount }</span></span>
 					</div>
 					<div class="col-sm-2" style="font-weight: bold;">
-						<span>평점계 : 77.7</span>
-					</div>
-					<div class="col-sm-2" style="font-weight: bold;">
-						<span>평점 평균 : 4.44 / 4.5</span>
+						<span>평점 평균 : <span id="avgScore">${avgScore }</span> / 4.5</span>
 					</div>
 					<div class="col-sm-1" style="font-weight: bold;">
-						<span>총 5 건</span>
+						<span>총 <span id="totalCourses">${totalCourses }</span> 건</span>
 					</div>
 				</div>
 				
 				<div class="row result">
 					<div class="col-sm-12 box-top auto">
-						<table class="table table-striped">
+						<table class="table table-striped" id="course-attend-list">
 							<thead>
 								<tr>
 									<th>NO</th>
@@ -110,5 +108,47 @@
 			</div>
 		</div>
 	</div>
+	
+	<script type="text/javascript">
+		$(function() {
+			$("#btn-select-courses").click(function() {
+				var yearTerm = $("[name=year-term]").val();
+				
+				var year = yearTerm.substring(0,4);
+				var term = yearTerm.substring(5,6);
+				$.ajax({
+					type:"GET",
+					url:"../course.json",
+					data: {year:yearTerm.substring(0,4), term:yearTerm.substring(5,6)},
+					dataType:"json",
+					success:function(result) {
+						$("#course-attend-list tbody").empty();
+						
+						$("#creditCount").text(result.creditCount);
+						$("#avgScore").text(result.avgScore);
+						$("#totalCourses").text(result.totalCourses);
+						
+						$.each(result.courseAttends, function(index, ca) {
+							var row = "<tr>";
+							row += "<td>" + (index + 1) + "</td>";
+							row += "<td>" + ca.course.year + "</td>";
+							row += "<td>" + ca.course.term + "학기</td>";
+							row += "<td>" + ca.course.no + "</td>";
+							row += "<td>" + ca.course.name + "</td>";
+							row += "<td>" + ca.course.must + "</td>";
+							row += "<td>" + ca.course.credit + "</td>";
+							row += "<td>" + ca.course.professor.name + "</td>";
+							row += "<td>" + ca.record + "</td>";
+							row += "<td>" + ca.recordScore  + "</td>";
+							row += "<td></td>";
+							row += "</tr>";
+							
+							$("#course-attend-list tbody").append(row);
+						});
+					}
+				});
+			});
+		})
+	</script>
 </body>
 </html>

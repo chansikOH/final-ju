@@ -37,9 +37,21 @@ public class StudentController {
 		List<CourseAttend> courseAttends = studentService.getAllCoursesByStudentNo(student.getNo());
 		model.addAttribute("courseAttends", courseAttends);
 		
+		int creditCount = 0;
+		double totalScore = 0.0;
+		
+		for (CourseAttend ca : courseAttends) {
+			creditCount += ca.getCourse().getCredit();
+			totalScore += ca.getRecordScore();
+		}
+		
+		model.addAttribute("creditCount", creditCount);
+		model.addAttribute("avgScore", String.format("%.2f", (double) totalScore/courseAttends.size()));
+		model.addAttribute("totalCourses", courseAttends.size());
+		
 		return "student/course/courseselect";
 	}
-
+	
 	@RequestMapping("/mypage")
 	public String mypage() {
 		return "student/mypage";

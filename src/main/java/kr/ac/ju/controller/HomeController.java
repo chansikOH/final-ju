@@ -50,6 +50,7 @@ public class HomeController {
 					return "redirect:employee/stud/register.do";
 				}
 			}
+			return "redirect:/?result=fail";
 		}
 		return "redirect:/?result=fail";
 	}
