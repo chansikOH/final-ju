@@ -16,4 +16,29 @@ public class DocController {
 	public String draft() {
 		return "doc/draft/detail";
 	}
+	
+	@RequestMapping("/draft/update")
+	public String draftUpdate() {
+		return "doc/draft/update";
+	}
+	
+	@RequestMapping("/retire/detail")
+	public String retireDetail() {
+		return "doc/retire/detail";
+	}
+	
+	@RequestMapping("/retire/update")
+	public String retireuUpdate() {
+		return "doc/retire/update";
+	}
+	
+	@RequestMapping("/vacation/detail")
+	public String vacationDetail() {
+		return "doc/vacation/detail";
+	}
+	
+	@RequestMapping("/vacation/update")
+	public String vacationUpdate() {
+		return "doc/vacation/update";
+	}
 }

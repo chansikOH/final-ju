@@ -3,6 +3,20 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <mapper namespace="kr.ac.ju.dao.DocDao">
-  
-  </mapper>
+<mapper namespace="kr.ac.ju.dao.DocDao">
+
+	<!-- 직원 결재문 등록 insert -->
+	<!-- 직원 휴가계획서 등록 insert -->
+	<!-- 직원 결재문 등록 insert -->
+	
+	<!-- 직원 로그인시 모든 결재 정보 조회  -->
+	<!-- <select id="getEmployeeDocNo" parameterType="int" resultType="int">
+		select *
+		from docs A, drafts B
+		where A.doc_no = B.docs_no
+		and A.employee_no = #{value}
+	</select> -->
+	
+	<!-- 교수 로그인시 모든 결재 정보 조회 -->
+	
+</mapper>
