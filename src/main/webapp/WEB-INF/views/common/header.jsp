@@ -166,10 +166,8 @@
 				</div>
 				<div id="sub-menu2">
 					<ul>
-						<li><a href="#">소메뉴1</a></li>
-						<li><a href="#">소메뉴2</a></li>
-						<li><a href="#">소메뉴3</a></li>
-						<li><a href="#">시험보기</a></li>
+						<li><a href="/ju/professor/class/list">강의조회</a></li>
+						<li><a href="/ju/professor/class/form">강의개설</a></li>
 					</ul>
 				</div>		
 				<div id="sub-menu3">

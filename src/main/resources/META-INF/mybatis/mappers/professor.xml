@@ -62,6 +62,7 @@
 		and
 			c.professor_no = f.professor_no
 	</select>
+	
 	<!-- 교과목 번호로 단원조회 -->
 	<select id="getCoursePartByCourseNo" parameterType="int" resultType="coursePart">
 		select 
@@ -84,7 +85,7 @@
 		from
 			courses c, course_parts p
 		where
-			c.course_no = 2018101
+			c.course_no = #{value}
         and
             c.course_no = p.course_no
 	</select>
@@ -114,5 +115,26 @@
 		and
 			c.professor_no = f.professor_no
 	</select>
+	<select id="getYearByProfessorNo" resultType="course" parameterType="int">
+		select 
+			distinct c.course_year year
+		from
+			courses c, majors m
+		where
+			c.professor_no = #{value}
+		and
+			c.major_no = m.major_no
+	</select>
+	<select id="getMajorByProfessorNo" resultType="course" parameterType="int">
+		select    
+		    distinct m.major_name "major.name"
+		from
+			courses c, majors m
+		where
+			c.professor_no = #{value}
+		and
+			c.major_no = m.major_no
+	</select>
+	
 	
 </mapper>
