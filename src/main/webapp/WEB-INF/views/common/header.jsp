@@ -79,7 +79,7 @@
 		<div class="row">
 			<div class="col-sm-12 header-nav navbar-default">
 				<div class="navbar-header">
-					<a href="#" class="logo">
+					<a href="" class="logo">
 						<img alt="logo" src="/ju/resources/images/logo.png" width="200" height="50">
 					</a>
 					<ul class="nav-sub navbar-nav">

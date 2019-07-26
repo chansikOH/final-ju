@@ -83,7 +83,6 @@
 				student_address			as address,
 				student_grade			as grade,
 				transfer_yn				as transferYn,
-				status_no				as "studentStatus.no",
 				student_create_date		as createDate,
 				student_div				as div,
 				student_photo_name 		as photoName,

@@ -1,6 +1,7 @@
 package kr.ac.ju.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.ju.service.EmployeeService;
+import kr.ac.ju.vo.Student;
 
 @Controller
 @RequestMapping("/employee")
@@ -20,7 +23,8 @@ public class EmployeeRestController {
 	private EmployeeService employeeService;
 
 	@GetMapping("/stud/checklist.json")
-	public String studentselect(@RequestParam(value = "pageNo", required = false, defaultValue = "1" ) int pageNo, 
+	@ResponseBody
+	public List<Student> studentselect(@RequestParam(value = "pageNo", required = false, defaultValue = "1" ) int pageNo, 
 			                    @RequestParam(value = "status", required = false, defaultValue = "") String status,
 								@RequestParam(value = "grade", required = false, defaultValue = "") String grade, 
 								@RequestParam(value = "major", required = false, defaultValue = "") String major,
@@ -31,7 +35,7 @@ public class EmployeeRestController {
 		
 		Map<String, Object> searchOption = new HashMap<String, Object>();
 		
-		// pagination 관련 
+		// pagination 관련
 		int size = 15;									
 		int beginIndex  = (pageNo - 1)*size + 1 ;		
 		int endIndex   = pageNo*size ; 					
@@ -39,7 +43,6 @@ public class EmployeeRestController {
 		searchOption.put("pageNo", pageNo); 
 		searchOption.put("beginIndex",beginIndex);
 		searchOption.put("endIndex",endIndex);
-		
 		
 		// search 관련
 		if(!status.isEmpty() && !status.equals("") && !status.equals("전체")) {
@@ -61,9 +64,7 @@ public class EmployeeRestController {
 			searchOption.put("tel",tel);
 		}
 		
-		model.addAttribute("students",employeeService.searchStudents(searchOption)); 
+		return employeeService.searchStudents(searchOption);
 		
-		System.out.println(employeeService.searchStudents(searchOption));
-		return "employee/stud/checklist";
 	}
 }
