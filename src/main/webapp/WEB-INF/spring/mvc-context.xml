@@ -26,6 +26,7 @@
 	<bean id="studentCheckInterceptor" class="kr.ac.ju.interceptor.StudentCheckInterceptor"></bean>
 	<bean id="professorCheckInterceptor" class="kr.ac.ju.interceptor.ProfessorCheckInterceptor"></bean>
 	<bean id="employeeCheckInterceptor" class="kr.ac.ju.interceptor.EmployeeCheckInterceptor"></bean>
+	<bean id="docCheckInterceptor" class="kr.ac.ju.interceptor.DocCheckInterceptor"></bean>
 	
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -48,6 +49,11 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/employee/**"/>
 			<ref bean="employeeCheckInterceptor"/>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/doc/**"/>
+			<ref bean="docCheckInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
 

@@ -14,4 +14,5 @@ public interface StudentService {
 	Integer countCurrentCoursesByStudentNo(int studentNo);
 	List<CourseAttend> getCoursesByStudentNoAndYearTerm(Map<String, Object> maps);
 	List<Map<String, Object>> getAllRecordesByStudentNo(Map<String, Object> map);
+	Map<String, Object> getCoursedetailSource(int studentNo, int courseNo);
 }

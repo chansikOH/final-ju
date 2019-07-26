@@ -97,7 +97,7 @@
 			<div class="row video-wrapper">
 				<div class="col-sm-12 video-box">
 					<video id="video">
-						<source src="/ju/resources/video/정보처리기사(산업기사) 실기_OT_실기소개 및 합격전략.mp4" type="video/mp4">
+						<source src="/ju/resources/video/${video }" type="video/mp4">
 					</video>
 				</div>
 			</div>

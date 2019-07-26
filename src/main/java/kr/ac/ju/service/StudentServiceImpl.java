@@ -96,4 +96,24 @@ public class StudentServiceImpl implements StudentService{
 		
 		return records;
 	}
+	
+	@Override
+	public Map<String, Object> getCoursedetailSource(int studentNo, int courseNo) {
+		Map<String, Object> search = new HashMap<String, Object>();
+		search.put("studentNo", studentNo);
+		search.put("courseNo", courseNo);
+		
+		List<Map<String, Object>> classInfos = studentDao.getCoursedetailSource(search);
+		String courseName = (String) classInfos.get(0).get("COURSENAME");
+		Integer courseAvg = studentDao.getAvgCourseView(search);
+		List<Map<String, Object>> partInfos = studentDao.getPartInfos(search);
+		
+		Map<String, Object> sources = new HashMap<String, Object>();
+		sources.put("classInfos", classInfos);
+		sources.put("courseName", courseName);
+		sources.put("courseAvg", courseAvg);
+		sources.put("partInfos", partInfos);
+		
+		return sources;
+	}
 }

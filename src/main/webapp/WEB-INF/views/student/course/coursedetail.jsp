@@ -40,7 +40,7 @@
 				<h1>강의 보기</h1>
 				<div class="row">
 					<div class="col-sm-12">
-						<span style="font-size: 20px; color: #402600;"><strong>[컴퓨터공학개론]</strong></span>
+						<span style="font-size: 20px; color: #402600;"><strong>[${sources.courseName }] 진행도 ${sources.courseAvg } %</strong></span>
 					</div>
 				</div>
 				
@@ -50,38 +50,47 @@
 							<colgroup>
 								<col width="10%">
 								<col width="10%">
-								<col width="70%">
+								<col width="60%">
+								<col width="10%">
 								<col width="10%">
 							</colgroup>
 							<thead>
 								<tr>
 									<th>주차</th>
-									<th colspan="3">단원명</th>
+									<th colspan="2">단원명</th>
+									<th>진행도</th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr id="course-part-1" class="course-part">
-									<td>1</td>
-									<td colspan="3"><strong>컴퓨터공학이란 무엇인가?</strong></td>
-								</tr>
-								<tr class="class-view course-part-1-view">
-									<td></td>
-									<th>강의</th>
-									<td>컴퓨터의이해</td>
-									<td><button type="button" class="btn btn-default btn-xs btn-view">강의보기</button></td>
-								</tr>
-								<tr class="class-view course-part-1-view">
-									<td></td>
-									<th>강의</th>
-									<td>컴퓨터의이해</td>
-									<td><button type="button" class="btn btn-default btn-xs btn-view">강의보기</button></td>
-								</tr>
-								<tr class="class-view course-part-1-view">
-									<td></td>
-									<th>강의</th>
-									<td>컴퓨터의이해</td>
-									<td><button type="button" class="btn btn-default btn-xs btn-view">강의보기</button></td>
-								</tr>
+							<c:choose>
+								<c:when test="${not empty sources.partInfos}">
+									<c:forEach var="partInfo" items="${sources.partInfos }">
+										<tr id="course-part-${partInfo.NO }" class="course-part">
+											<td>${partInfo.WEEK }</td>
+											<td colspan="2"><strong>${partInfo.NAME }</strong></td>
+											<td><strong>${partInfo.AVG } %</strong></td>
+											<td></td>
+										</tr>
+										<c:forEach var="classInfo" items="${sources.classInfos }">
+											<c:if test="${classInfo.PARTNO eq partInfo.NO }">
+												<tr class="class-view course-part-${classInfo.PARTNO }-view">
+													<td></td>
+													<th>강의</th>
+													<td>${classInfo.CLASSNAME }</td>
+													<td>${classInfo.PERCENTAGE } %</td>
+													<td><button type="button" class="btn btn-default btn-xs btn-view" value="${classInfo.VIDEO }">강의보기</button></td>
+												</tr>
+											</c:if>
+										</c:forEach>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr class="text-center">
+										<td colspan="5">조회된 강의가 없습니다.</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
 							</tbody>
 						</table>
 					</div>
@@ -97,11 +106,13 @@ $(function() {
 	})
 	
 	$('.btn-view').click(function() {
-		var win = window.open('/ju/student/course/courseview', '_blank', 'width=1200, height=600');
+		var video = $(this).val();
+		alert(video);
+		var win = window.open('/ju/student/course/courseview?video='+video, '_blank', 'width=1200, height=600');
 		var pollTimer = window.setInterval(function() {
 		    if (win.closed !== false) {
 		        window.clearInterval(pollTimer);
-		        alert("aaaaaaaaaaaaaaaaaa")
+		        alert("강의종료됨")
 		    }
 		}, 200);
 	})

@@ -16,4 +16,7 @@ public interface StudentDao {
 	Integer countCurrentCoursesByStudentNo(Map<String, Object> search);
 	List<CourseAttend> getCoursesByStudentNoAndYearTerm(Map<String, Object> maps);
 	List<Map<String, Object>> getAllRecordesByStudentNo(Map<String, Object> map);
+	List<Map<String, Object>> getCoursedetailSource(Map<String, Object> search);
+	Integer getAvgCourseView(Map<String, Object> search);
+	List<Map<String, Object>> getPartInfos(Map<String, Object> search);
 }
