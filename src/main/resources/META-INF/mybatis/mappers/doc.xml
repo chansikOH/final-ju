@@ -5,13 +5,4 @@
   
   <mapper namespace="kr.ac.ju.dao.DocDao">
   
-  <!-- 직원 로그인 결재문서 전체 조회 -->
-  <select id="getAllDocByNo" parameterType="int" resultType="">
-  	select
-  		
-  	from
-  		
-  	where	
-  </select>
-  
   </mapper>
