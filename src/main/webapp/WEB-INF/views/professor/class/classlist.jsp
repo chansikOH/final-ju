@@ -72,11 +72,13 @@
                     <form method="get" action="#">
                         <table class="table">
                             <tbody>
+                            	
+                            
                                 <tr>
                                     <th class="border-top">년도</th>
                                     <td class="border-top">
                                         <select id="search-year" name="year">
-                                            <option>전체</option>
+                                            <option value="">전체</option>
                                         <c:forEach var="course" items="${years }">
                                         	<option value="${course.year }">${course.year }</option>
                                         </c:forEach>
@@ -85,7 +87,7 @@
                                     <th class="border-top">학기</th>
                                     <td class="border-top">
                                         <select id="search-term" name="term">
-                                            <option>전체</option>
+                                            <option value="">전체</option>
                                             <option value="1">1학기</option>
                                             <option value="2">2학기</option>
                                         </select>
@@ -93,7 +95,7 @@
                                     <th class="border-top">학점</th>
                                     <td class="border-top">
                                         <select id="search-credit" name="credit">
-                                            <option>전체</option>
+                                            <option value="">전체</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
@@ -104,7 +106,7 @@
                                     <th>학과</th>
                                     <td>
                                         <select id="search-part" name="part">
-                                            <option>전체</option>
+                                            <option value="">전체</option>
                                         <c:forEach var="course" items="${majors }">
                                             <option value="${course.major.name }">${course.major.name }</option>
                                         </c:forEach>
@@ -120,7 +122,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td></td>
+                                    <td><input type="hidden" name="pno" id="page-no" value="1"></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -159,7 +161,7 @@
                                 <tbody>
                                 <c:forEach varStatus="loop" var="course" items="${courses }">
                                     <tr>
-                                        <td>${loop.count }</td>
+                                        <td class="search-count" data-count="${loop.count }">${loop.count }</td>
                                         <td class="abc" data-value="${course.no }">${course.no }</td>
                                        	<c:choose>
                                        		<c:when test="${course.mustYn eq 'Y'}">
@@ -204,13 +206,11 @@
                     </div>
                 </div>
                 <div class="row pagination">
-                    <div class="col-sm-12 page">
-                        <span class="glyphicon glyphicon-menu-left"></span>
-                        <a href="#" class="page-active">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <span class="glyphicon glyphicon-menu-right"></span>
-                    </div>
+                    <div class="col-sm-12 text-center">
+						<ul class="pagination" id="pagination-box">
+							
+						</ul>
+					</div>
                 </div>
             </div>
         </div>
@@ -318,24 +318,68 @@
         </div>
     </div>
     <script type="text/javascript">
-    
-    	$("#search-year").change(function(){
-    		var year = $(this).val();
-    		alert(year);
-    	});
-    	$("#search-term").change(function(){
-    		var term = $(this).val();
-    		alert(term)
-    	});
-    	$("#search-credit").change(function(){
-    		var credit = $(this).val();
-    		alert(credit)
-    	});
-    	$("#search-part").change(function(){
-    		var part = $(this).val();
-    		alert(part)
+    	
+    $("#search-button").click(function(){
+    	
+    		var searchYear = $("#search-year").val();    
+    		var searchTerm = $("#search-term").val();            
+    		var searchCredit = $("#search-credit").val();        
+    		var searchPart = $("#search-part").val();    
+    		var searchCourseNum = $("#search-courseNum").val();  
+    		var searchCourseName = $("#search-courseName").val();	
+    		var searchPageNo = $("#page-no").val();
+    	
+    	$.ajax({
+    		type : "GET",
+    		url :"searchcourse",
+    		data : {year:searchYear, term:searchTerm, credit:searchCredit, part:searchPart, courseNum:searchCourseNum, courseName:searchCourseName, pno: searchPageNo},
+    		success : function(data){
+    			$("#course-list-table tbody").empty();
+    			var courData = data.courseDatas;
+    			
+    			
+    			$.each(courData, function(index, course){
+    				
+    				var row = "<tr>";
+    				row += "<td></td>"
+    				row += "<td>"+course.no+"</td>";
+    				row += "<td>"+course.mustYn+"</td>";
+    				row += "<td>"+course.year+"</td>";
+    				row += "<td>"+course.term+"</td>";
+    				row += "<td><a href='#' class='course-detail' data-value='"+course.no+"'>"+course.name+"</a></td>";
+    				row += "<td>"+course.major.name+"</td>";
+    				row += "<td>"+course.professor.name+"</td>";
+    				row += "<td>"+course.credit+"</td>";
+    				row += "<td>"+course.count+"</td>";
+    				row += "<td>"+course.quota+"</td>";
+    				row += "<td>"+course.passYn+"</td>";
+    				row += "<td class='btn-update'><a href='#' class='btn btn-default' data-toggle='modal' data-target='.bs-test-modal-lg'>이동</a></td>";
+    				row += "<td class='btn-update'><a href='classesupdate.html' class='btn btn-default'>강의수정</a></td>";
+    				row += "</tr>"
+    				$("#course-list-table tbody").append(row);
+    				
+    				
+    			})
+    			
+   				var pagination = data.pagination;	
+   				var row = "";
+   				
+   				if (!pagination.first) {
+   					row += "<li><a href='' data-pno='"+(pagination.page -1 )+"'>이전</li>";
+   				}
+   				for (var i=pagination.begin; i<=pagination.end; i++) {
+   					row += "<li><a href=''>"+i+"</li>";
+   				}
+   				$("#pagination-box").html(row);	
+   				if (!pagination.last) {
+   					row += "<li><a href='' data-pno='"+(pagination.page +1 )+"'>다음</li>";
+   				}
+    				
+    		}
+    		
     	});
     	
+    });
     	
     
     /* 모달 상세조회 */

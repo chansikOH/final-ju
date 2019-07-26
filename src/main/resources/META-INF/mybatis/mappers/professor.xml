@@ -89,7 +89,7 @@
         and
             c.course_no = p.course_no
 	</select>
-	
+	<!-- 교과목번호로 교과목 조회 -->
 	<select id="getCourseByCourseNo" resultType="course" parameterType="int">
 		select 
 			c.course_no no,
@@ -115,6 +115,7 @@
 		and
 			c.professor_no = f.professor_no
 	</select>
+	<!-- 교수번호로 년도 조회 -->
 	<select id="getYearByProfessorNo" resultType="course" parameterType="int">
 		select 
 			distinct c.course_year year
@@ -125,6 +126,7 @@
 		and
 			c.major_no = m.major_no
 	</select>
+	<!-- 교수번호로 학과이름 조회 -->
 	<select id="getMajorByProfessorNo" resultType="course" parameterType="int">
 		select    
 		    distinct m.major_name "major.name"
@@ -136,5 +138,93 @@
 			c.major_no = m.major_no
 	</select>
 	
+	<select id="searchByOptions" resultType="course" parameterType="map">
+		select 
+			*
+			
+		from
+			(
+				select
+					c.course_no no,
+					c.professor_no "professor.no",
+					f.professor_name "professor.name",
+					c.major_no "major.no",
+					m.major_name "major.name",
+					c.course_name name,
+					c.course_credit credit,
+					c.course_year year,
+					c.course_term term,
+					c.course_must_yn mustYn,
+					c.course_pass_yn passYn,
+					c.course_create_date createDate,
+					c.course_quota quota,
+					c.course_count count,
+					row_number() over (order by c.course_no asc) rn
+				from
+					courses c, majors m, professors f
+				<where>
+					c.professor_no = #{profId}
+					
+					and
+                        c.major_no = m.major_no
+                    and
+                        c.professor_no = f.professor_no
+					<if test="year != null">
+						and c.course_year = #{year}
+					</if>
+					<if test="term != null">
+						and c.course_term = #{term}
+					</if>
+					<if test="credit != null">
+						and c.course_credit = #{credit}
+					</if>
+					<if test="part != null">
+						and m.major_name = #{part}
+					</if>
+					<if test="courseNum != null">
+						and c.course_no like '%' || #{courseNum} ||'%'
+					</if>
+					<if test="courseName != null">
+						and c.course_name like '%' || #{courseName} ||'%'
+					</if>
+				</where>	
+			)
+		where
+			rn >= #{beginIndex}
+		and
+			rn &lt;= #{endIndex}
+	</select>
+	
+	<select id="getRows" parameterType="map" resultType="int">
+		select
+			count(*)
+		from
+			courses c, majors m, professors f
+		<where>
+			c.professor_no = #{profId}
+			and
+                c.major_no = m.major_no
+            and
+                c.professor_no = f.professor_no
+			<if test="year != null">
+				and c.course_year = #{year}
+			</if>
+			<if test="term != null">
+				and c.course_term = #{term}
+			</if>
+			<if test="credit != null">
+				and c.course_credit = #{credit}
+			</if>
+			<if test="part != null">
+				and m.major_name = #{part}
+			</if>
+			<if test="courseNum != null">
+				and c.course_no like '%' || #{courseNum} ||'%'
+			</if>
+			<if test="courseName != null">
+				and c.course_name like '%' || #{courseName} ||'%'
+			</if>
+		</where>	
+	</select>
 	
 </mapper>
