@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import kr.ac.ju.dao.StudentDao;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
+import kr.ac.ju.vo.Student;
+import kr.ac.ju.vo.StudentStatus;
 
 @Service
 public class StudentServiceImpl implements StudentService{
@@ -95,5 +97,19 @@ public class StudentServiceImpl implements StudentService{
 		List<Map<String, Object>> records = studentDao.getAllRecordesByStudentNo(map);
 		
 		return records;
+	}
+	
+	@Override
+	public Student getStudentInfoByNo(int studentNo) {
+		Student studentInfo = studentDao.getStudentInfoByNo(studentNo);
+		
+		return studentInfo;
+	}
+	
+	@Override
+	public List<StudentStatus> getStudentStatusByNo(int studentNo) {
+		List<StudentStatus> status = studentDao.getStudentStatusByNo(studentNo);
+		
+		return status;
 	}
 }

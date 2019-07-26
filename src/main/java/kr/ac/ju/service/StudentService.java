@@ -5,6 +5,8 @@ import java.util.Map;
 
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
+import kr.ac.ju.vo.Student;
+import kr.ac.ju.vo.StudentStatus;
 
 public interface StudentService {
 
@@ -14,4 +16,6 @@ public interface StudentService {
 	Integer countCurrentCoursesByStudentNo(int studentNo);
 	List<CourseAttend> getCoursesByStudentNoAndYearTerm(Map<String, Object> maps);
 	List<Map<String, Object>> getAllRecordesByStudentNo(Map<String, Object> map);
+	Student getStudentInfoByNo(int studentNo);
+	List<StudentStatus> getStudentStatusByNo(int studentNo);
 }

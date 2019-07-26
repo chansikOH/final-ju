@@ -126,9 +126,9 @@
 				</div>
 				<div id="sub-menu6">
 					<ul>
-						<li><a href="#">휴학 신청</a></li>
-						<li><a href="#">복학 신청</a></li>
-						<li><a href="#">자퇴 신청</a></li>
+						<li><a href="/ju/student/status/chStatus?type=leave">휴학 신청</a></li>
+						<li><a href="/ju/student/status/chStatus?type=goingback">복학 신청</a></li>
+						<li><a href="/ju/student/status/chStatus?type=drop">자퇴 신청</a></li>
 					</ul>
 				</div>
 				<div id="sub-menu7">

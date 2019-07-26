@@ -20,7 +20,7 @@
 		<result property="transferYn" column="transfer_yn"/>
 		<result property="status.no" column="status_no"/>
 		<result property="createDate" column="student_create_date"/>
-		<result property="div" column="student_div"/>
+		<result property="division" column="student_div"/>
 		<result property="photoName" column="student_photo_name"/>
 	</resultMap>
 	
@@ -40,7 +40,7 @@
 		<result property="transferYn" column="transfer_yn"/>
 		<result property="status.no" column="status_no"/>
 		<result property="createDate" column="student_create_date"/>
-		<result property="div" column="student_div"/>
+		<result property="division" column="student_div"/>
 		<result property="photoName" column="student_photo_name"/>
 	</resultMap>
 	
@@ -192,5 +192,56 @@
 			and Y.PROFESSOR_NO = Z.professor_no
 			and Y.COURSE_YEAR = '2018'
 	</select>
+	
+	<select id="getStudentInfoByNo" parameterType="int" resultType="student">
+		select 
+			S.student_no no, 
+			M.major_name "major.name", 
+			S.student_grade grade, 
+			S.student_div division, 
+			P.professor_name "professor.name", 
+			S.student_phone_number phoneNumber
+		from 
+			students S, 
+			Majors M, 
+			professors P
+		where 
+			S.professor_no = P.professor_no 
+			and S.major_no = M.major_no
+			and student_no = ${value}
+	</select>
+	
+	<select id="getStudentStatusByNo" parameterType="int" resultType="student">
+		select 
+			SS.start_term "studentStatus.startTerm", 
+			SS.term_count "studentStatus.termCount", 
+			M.major_name "major.name", 
+			SS.status_div "studentStatus.division", 
+			SS.status_contents "studentStatus.contents", 
+			SS.student_create_date "studentStatus.createDate", 
+			SS.pass_yn "studentStatus.passYn"
+		from 
+			student_status SS, 
+			majors M, 
+			students S
+		where 
+			S.student_no = SS.student_no 
+			and S.major_no = M.major_no
+			and S.student_no = ${value}
+	</select>
+	
+	<insert id="insertStudentStatus">
+		insert into
+			student_status
+		values
+			(student_status_seq.nextval,
+			${division},
+			${startTerm},
+			${termCount},
+			'W',
+			sysdate,
+			${contents}
+			${no});
+	</insert>
 	
 </mapper>

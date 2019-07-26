@@ -16,6 +16,7 @@ import kr.ac.ju.service.StudentService;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.Student;
+import kr.ac.ju.vo.StudentStatus;
 
 @Controller
 @RequestMapping("/student")
@@ -91,8 +92,12 @@ public class StudentController {
 		
 		List<Map<String, Object>> records = studentService.getAllRecordesByStudentNo(map);
 		
+		/*
+		 * for(int i=0; i>=records.size(); i++) { String record =
+		 * records.get(i).get("cnt").toString(); System.out.println("dgdg"+record); }
+		 */
+		
 		model.addAttribute("records", records);
-		System.out.println(records);
 		
 		return "student/records";
 	}
@@ -101,19 +106,17 @@ public class StudentController {
 	public String courseopinions() {
 		return "student/course/courseopinions";
 	}
-
-	@RequestMapping("/status/drop")
-	public String statusdrop() {
-		return "student/status/statusdrop";
-	}
 	
-	@RequestMapping("/status/goingback")
-	public String statusgoingback() {
-		return "student/status/statusgoingback";
-	}
-	
-	@RequestMapping("/status/leave")
-	public String statusleave() {
-		return "student/status/statusleave";
+	@RequestMapping("/status/chStatus")
+	public String statusleave(HttpSession session, Model model) {
+		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
+		
+		Student studentInfo = studentService.getStudentInfoByNo(student.getNo());
+		List<StudentStatus> status = studentService.getStudentStatusByNo(student.getNo());
+		
+		model.addAttribute("student", studentInfo);
+		model.addAttribute("status", status);
+		
+		return "student/status/changeStatus";
 	}
 }
