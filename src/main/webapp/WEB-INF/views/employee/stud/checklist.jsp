@@ -64,13 +64,13 @@
                     <h1>학생 조회</h1>
                 </div>
                 <div class="col-sm-12 table-wrap">
-                    <form method="get">
+                    <form method="get" action="checklist.json">
                         <table class="table">
                             <tbody>
                                 <tr>
                                     <th class="border-top">학적상태</th>
                                     <td class="border-top">
-                                        <select>
+                                        <select name="status">
                                             <option>전체</option>
                                             <option>재학</option>
                                             <option>휴학</option>
@@ -80,20 +80,20 @@
                                     </td>
                                     <th class="border-top">학년</th>
                                     <td class="border-top">
-                                        <select>
-                                            <option>전체</option>
-                                            <option>1학년</option>
-                                            <option>2학년</option>
-                                            <option>3학년</option>
-                                            <option>4학년</option>
+                                        <select name="grade">
+                                            <option value="전체">전체</option>
+                                            <option value="1">1학년</option>
+                                            <option value="2">2학년</option>
+                                            <option value="3">3학년</option>
+                                            <option value="4">4학년</option>
                                         </select>
                                     </td>
                                     <th class="border-top">학과</th>
                                     <td class="border-top">
-                                        <select>
+                                        <select name="major">
                                             <option>전체</option>
                                             <c:forEach var="major" items="${majors }">
-                                            <option>${major.name }</option>
+                                            <option value="${major.no }">${major.name }</option>
                                             </c:forEach>
                                         </select>
                                     </td>
@@ -101,15 +101,25 @@
                                 <tr>
                                     <th>학생명</th>
                                     <td>
-                                        <input>
+                                        <input name="name">
                                     </td>
                                     <th>학번</th>
                                     <td>
-                                        <input>
+                                        <input name="studentNo">
                                     </td>
                                     <th>전화번호</th>
                                     <td>
-                                        <input>
+                                        <input name="tel"> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td></td>
+                                    <th></th>
+                                    <td></td>
+                                    <th></th>
+                                    <td class="search"> 
+                                        <button type="submit" class="search-btn btn btn-default">조회</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -120,7 +130,7 @@
                             <p>총 <span>10</span>건 조회</p>
                         </div>
                         <div class="col-sm-12">
-                            <table class="table">
+                            <table class="table" id="search-result-table">
                                 <thead>
                                     <tr>
                                         <th>순번</th>
@@ -137,10 +147,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr class="hiden">
                                         <td>1</td>
                                         <td></td>
-                                        <td></td>
+                                        <td></td> 
                                         <td>1학년</td>
                                         <td>컴퓨터공학과</td>
                                         <td>20119111</td>
@@ -243,5 +253,15 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+    	$(function() {
+    		
+    		$("#search-result-table tbody tr").hide()
+    		
+    		/* $("search-btn").on('click', "#search-result-table tbody tr", function() {
+    			var 
+    		}); */
+    	})
+    </script>
 </body>
 </html>
