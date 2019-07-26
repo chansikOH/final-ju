@@ -9,7 +9,6 @@ public class Vacation {
 	private String contents;
 	private Date startDate;
 	private Date endDate;
-	private Date createDate;
 
 	public Vacation() {
 
@@ -54,12 +53,5 @@ public class Vacation {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+	
 }

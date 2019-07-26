@@ -8,7 +8,6 @@ public class Retire {
 	private String div;
 	private String contents;
 	private Date retireDate;
-	private Date createDate;
 
 	public Retire() {
 
@@ -46,11 +45,4 @@ public class Retire {
 		this.retireDate = retireDate;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
 }

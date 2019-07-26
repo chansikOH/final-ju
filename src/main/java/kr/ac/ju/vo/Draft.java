@@ -10,7 +10,6 @@ public class Draft {
 	private Date startDate;
 	private String keepingYear;
 	private String returnReason;
-	private Date createDate;
 
 	public Draft() {
 
@@ -64,11 +63,4 @@ public class Draft {
 		this.returnReason = returnReason;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
 }
