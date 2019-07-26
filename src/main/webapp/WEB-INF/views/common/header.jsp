@@ -114,7 +114,7 @@
 				</div>
 				<div id="sub-menu4">
 					<ul>
-						<li><a href="#">성적 조회</a></li>
+						<li><a href="/ju/student/records">성적 조회</a></li>
 						<li><a href="#">강의 평가</a></li>
 					</ul>
 				</div>

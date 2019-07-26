@@ -90,4 +90,10 @@ public class StudentServiceImpl implements StudentService{
 		
 		return courseAttends;
 	}
+	
+	public List<Map<String, Object>> getAllRecordesByStudentNo(Map<String, Object> map) {
+		List<Map<String, Object>> records = studentDao.getAllRecordesByStudentNo(map);
+		
+		return records;
+	}
 }

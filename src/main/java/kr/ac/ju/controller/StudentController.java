@@ -1,6 +1,8 @@
 package kr.ac.ju.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -80,4 +82,38 @@ public class StudentController {
 		return "student/course/courseview";
 	}
 	
+	@RequestMapping("/records")
+	public String courserecords(HttpSession session, Model model) {
+		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("no", student.getNo());
+		
+		List<Map<String, Object>> records = studentService.getAllRecordesByStudentNo(map);
+		
+		model.addAttribute("records", records);
+		System.out.println(records);
+		
+		return "student/records";
+	}
+	
+	@RequestMapping("/course/courseopinions")
+	public String courseopinions() {
+		return "student/course/courseopinions";
+	}
+
+	@RequestMapping("/status/drop")
+	public String statusdrop() {
+		return "student/status/statusdrop";
+	}
+	
+	@RequestMapping("/status/goingback")
+	public String statusgoingback() {
+		return "student/status/statusgoingback";
+	}
+	
+	@RequestMapping("/status/leave")
+	public String statusleave() {
+		return "student/status/statusleave";
+	}
 }

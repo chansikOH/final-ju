@@ -44,6 +44,15 @@
 		<result property="photoName" column="student_photo_name"/>
 	</resultMap>
 	
+	<resultMap type="java.util.HashMap" id="studentRecoredResultMap">
+		<result javaType="java.lang.Integer" property="courseNo" column="course_no"/>
+		<result javaType="java.lang.String" property="mustYn" column="course_must_yn"/>
+		<result javaType="java.lang.String" property="courseName" column="course_name"/>
+		<result javaType="java.lang.String" property="professorName" column="professor_name"/>
+		<result javaType="java.lang.Integer" property="credit" column="course_credit"/>
+		<result javaType="java.lang.Integer" property="cnt" column="cnt"/>
+	</resultMap>
+	
 	<select id="getStudentByNo" parameterType="int" resultMap="studentWithMajorResultMap">
 		select *
 		from students S, majors M
@@ -145,6 +154,43 @@
 			and C.course_year = #{year}
 			and C.course_term = #{term}
 		order by C.course_no
+	</select>
+	
+	<select id="getAllRecordesByStudentNo" parameterType="map" resultMap="studentRecoredResultMap">
+		select 
+			X.course_no as courseNo, 
+			Y.course_must_yn as mustYn, 
+			Y.course_name as courseName,
+			Z.professor_name as professorName,
+			Y.course_credit as credit,
+			cnt
+		from 
+			(select 
+				CA.STUDENT_NO, 
+				C.course_no, 
+				sum(TR.RESULT_SCORE) cnt
+			 from 
+				courses C, 
+				professors P, 
+				course_attends CA, 
+				tests T, 
+				test_results TR
+			 where 
+				CA.student_no = TR.student_no
+				and TR.test_no = T.test_no
+				and T.course_no = CA.course_no
+				and C.professor_no = P.professor_no
+				and CA.course_no = C.course_no
+				and TR.student_no = #{no}
+			 group by 
+				CA.STUDENT_NO, 
+				C.course_no) X, 
+			 Courses Y, 
+			 Professors Z 
+		where 
+			X.course_no =Y.course_no 
+			and Y.PROFESSOR_NO = Z.professor_no
+			and Y.COURSE_YEAR = '2018'
 	</select>
 	
 </mapper>
