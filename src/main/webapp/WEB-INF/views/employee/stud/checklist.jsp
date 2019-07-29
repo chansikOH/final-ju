@@ -71,11 +71,11 @@
                                     <th class="border-top">학적상태</th>
                                     <td class="border-top">
                                         <select name="status">
-                                            <option>전체</option>
-                                            <option>재학</option>
-                                            <option>휴학</option>
-                                            <option>졸업</option>
-                                            <option>자퇴</option>
+                                            <option value="전체">전체</option>
+                                            <option value="재학">재학</option>
+                                            <option value="휴학">휴학</option>
+                                            <option value="졸업">졸업</option>
+                                            <option value="자퇴">자퇴</option>
                                         </select>
                                     </td>
                                     <th class="border-top">학년</th>
@@ -119,7 +119,7 @@
                                     <td></td>
                                     <th></th>
                                     <td class="search"> 
-                                        <button type="submit" class="search-btn btn btn-default">조회</button>
+                                        <button type="button" class="search-btn btn btn-default">조회</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -127,7 +127,7 @@
                     </form>
                     <div class="row result">
                         <div class="col-sm-12">
-                            <p>총 <span>10</span>건 조회</p>
+                            <p>총 <span id="search-result-count">0</span>건 조회</p>
                         </div>
                         <div class="col-sm-12">
                             <table class="table" id="search-result-table">
@@ -147,25 +147,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="hiden">
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td> 
-                                        <td>1학년</td>
-                                        <td>컴퓨터공학과</td>
-                                        <td>20119111</td>
-                                        <td>양해림</td>
-                                        <td>재학중</td>
-                                        <td></td>
-                                        <td class="btn-update"><a href="#" class="btn btn-default" data-toggle="modal" data-target=".bs-detail-modal-lg">상세정보</a></td>
-                                        <td class="btn-update"><a href="#" class="btn btn-default" data-toggle="modal" data-target=".bs-change-modal-lg">학적상태변경</a></td>
-                                    </tr>
+                                    
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                <div class="row pagination">
+                
+                <!-- <div class="row pagination">
                     <div class="col-sm-12 page">
                         <span class="glyphicon glyphicon-menu-left"></span>
                         <a href="#" class="page-active">1</a>
@@ -173,15 +162,26 @@
                         <a href="#">3</a>
                         <span class="glyphicon glyphicon-menu-right"></span>
                     </div>
-                </div>
+                </div> -->
+                <div class="row pagination">
+					<div class="col-sm-12 page">
+						<ul class="pagination" id="pagination-box">
+							
+						</ul>
+					</div>
+				</div>
             </div>
         </div>
     </div>
     <!-- Large modal -->
     <div class="modal fade bs-detail-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
+        
         	<div class="modal-content">
-                <h3>학생 상세정보</h3>
+		     	<div class="modal-header">
+		       		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		        	<h3>학생 상세정보</h3>
+		      	</div> 
       			<div class="modal-body">
         			<div class="row">
 	    				<div class="col-sm-3">
@@ -201,66 +201,159 @@
 	    				</div>
     				</div>
       			</div>
-      			<div class="result-close"><button class="btn btn-default input-sm">닫힘</button></div>
-    		</div>        
+      			<div class="modal-footer">
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      	</div>
+    		</div>   
         </div>
     </div>
     <div class="modal fade bs-change-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <h3>학적상태 변경</h3>
-                <form class="form"> 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>학번</th>
-                                <th>이름</th>
-                                <th>학년</th>
-                                <th>학과</th>
-                                <th>변경 전</th>
-                                <th class="status-result">변경 후</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>20181234</td>
-                                <td>양해림</td>
-                                <td>2</td>
-                                <td>컴퓨터공학과</td>
-                                <td>재학</td>
-                                <td class="status-result">
-                                    <select class="form-control input-sm">
-                                        <option>선택</option>
-                                        <option>재학</option>
-                                        <option>휴학</option>
-                                        <option>졸업</option>
-                                        <option>자퇴</option>
-                                        <option>제적</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td class="result-save"><button class="btn btn-default input-sm">저장</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </form>
+                <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        <h3 class="modal-title">학적상태 변경</h3>
+		    	</div>
+		    	<div class="modal-body">
+	                <form class="form"> 
+	                    <table class="table">
+	                        <thead>
+	                            <tr>
+	                                <th>학번</th>
+	                                <th>이름</th>
+	                                <th>학년</th>
+	                                <th>학과</th>
+	                                <th>변경 전</th>
+	                                <th class="status-result">변경 후</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+	                            <tr>
+	                                <td>20181234</td>
+	                                <td>양해림</td>
+	                                <td>2</td>
+	                                <td>컴퓨터공학과</td>
+	                                <td>재학</td>
+	                                <td class="status-result">
+	                                    <select class="form-control input-sm">
+	                                        <option>선택</option>
+	                                        <option>재학</option>
+	                                        <option>휴학</option>
+	                                        <option>졸업</option>
+	                                        <option>자퇴</option>
+	                                        <option>제적</option>
+	                                    </select>
+	                                </td>
+	                            </tr>
+	                            <tr>
+	                                <td></td>
+	                                <td></td>
+	                                <td></td>
+	                                <td></td>
+	                                <td></td>
+	                                <td class="result-save"><button class="btn btn-default input-sm">저장</button></td>
+	                            </tr>
+	                        </tbody>
+	                    </table>
+	                </form>		    		
+		      	</div>
             </div>
         </div>
     </div>
     <script type="text/javascript">
     	$(function() {
     		
-    		$("#search-result-table tbody tr").hide()
+    		$("#search-result-table tbody tr").hide();
     		
-    		/* $("search-btn").on('click', "#search-result-table tbody tr", function() {
-    			var 
-    		}); */
+    		/* 조회버튼 클릭 */
+    	    $(".search-btn").click(function() {
+    	    	$("#search-result-table tbody tr").empty();
+    	    	
+    	    	var status = $("[name=status]").val(); 
+    	    	var grade = $("[name=grade]").val(); 
+    	    	var major = $("[name=major]").val(); 
+    	    	var name = $("[name=name]").val(); 
+    	    	var studentNo = $("[name=studentNo]").val(); 
+    	    	var tel = $("[name=tel]").val(); 
+    	    	
+    	    	$.ajax({
+ 	               type:"GET",
+ 	               url:"checklist.json",
+ 	               data:{status:status, grade:grade, major:major, name:name, studentNo:studentNo, tel:tel},
+ 	               dataType:"json", 
+ 	               success:function(data) {
+ 	            	  /* student 표현  */
+ 	            	  var students = data.searchStudents;
+ 	                  if(students.length != 0) {
+ 	                     $.each(students, function(index, stud) {
+ 	                        var row = "<tr>";
+ 	                        row += "<td>"+stud.no+"</td>";
+ 	                        row += "<td></td>";
+ 	                        row += "<td></td>";
+ 	                        row += "<td>"+stud.grade+"</td>";
+ 	                        row += "<td>"+stud.major.name+"</td>";
+ 	                        row += "<td>"+stud.no+"</td>";
+ 	                        row += "<td>"+stud.name+"</td>";
+ 	                        row += "<td>"+stud.div+"</td>";
+ 	                        row += "<td></td>";
+ 	                        row += "<td class='btn-update'><a href='#' class='btn btn-default' data-toggle='modal' data-target='.bs-detail-modal-lg'>상세정보</a></td>";
+ 	                        row += "<td class='btn-update'><a href='#' class='btn btn-default' data-toggle='modal' data-target='.bs-change-modal-lg'>학적상태변경</a></td>";
+ 	                        row += "</tr>";
+ 	                        $("#search-result-table tbody").append(row);
+ 	                     })
+ 	                  } else {
+ 	                     var row = "<tr>";
+ 	                     row += "<td colspan='12' class='text-center'소속된 사원이 없습니다.></td>";
+ 	                     row += "</tr>";
+ 	                     $("#search-result-table tbody").append(row);
+ 	                  }
+ 	                  /* pagination */
+ 	                 	var pagination = data.pagination;
+ 	                  
+ 	                  	var page = pagination.page;		/* 현재 페이지*/
+ 	                  	var begin = pagination.begin;	/* 화면에 보여질 첫번째 번호 */
+ 	                  	var end = pagination.end;		/* 화면에 보여질 마지막 번호 */
+ 	                  	var first = pagination.first;	/* ture or false*/
+ 	                  	var last = pagination.last;		/* ture or false*/
+ 	                  	
+ 	                  	/* <span class="glyphicon glyphicon-menu-left"></span>
+                        <a href="#" class="page-active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <span class="glyphicon glyphicon-menu-right"></span> */
+                    	
+                        /*    var pagination = data.pagination;   
+                        var row = "";
+                        
+                        if (!pagination.first) {
+                           row += "<li><a href='' data-pno='"+(pagination.page -1 )+"'>이전</li>";
+                        }
+                        for (var i=pagination.begin; i<=pagination.end; i++) {
+                           row += "<li><a href=''>"+i+"</li>";
+                        }
+                        $("#pagination-box").html(row);   
+                        if (!pagination.last) {
+                           row += "<li><a href='' data-pno='"+(pagination.page +1 )+"'>다음</li>";
+                        } */
+                        
+                   /*      var row = "";
+ 	                  	if(first){
+ 	                  		<span class="glyphicon glyphicon-menu-left" data-pno='"+(pagination.page +1 )+"'></span>
+ 	                  	} 
+                        for(var i=begin; i<= end; i++){
+                        	row += "<li><a href=''>"+i+"</li>"
+ 	                 	 } 	                  	
+ 	                  	if(last){
+ 	                  		<span class="glyphicon glyphicon-menu-right" data-pno='"+(pagination.page +1 )+"'></span>
+ 	                  	}  */
+ 	                  	
+ 	                  	
+ 	               }
+ 	            });
+    	    	
+    	    	
+    		}); 
+    	    
     	})
     </script>
 </body>

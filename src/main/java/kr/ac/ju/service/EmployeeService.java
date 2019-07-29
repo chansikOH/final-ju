@@ -8,6 +8,10 @@ import kr.ac.ju.vo.Student;
 
 public interface EmployeeService {
 
+	// Controller
 	List<Major> getAllMajors(); 
+	
+	// RestController
 	List<Student> searchStudents(Map<String, Object> searchOption ); 
+	int searchStudentsCount(Map<String, Object> searchOption); 
 }
