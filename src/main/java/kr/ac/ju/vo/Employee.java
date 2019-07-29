@@ -11,7 +11,7 @@ public class Employee extends Person{
 	private Date hireDate;
 	private Integer salary;
 	private String status;
-	private Integer managerId;
+	private Employee manager;
 	private Date createDate;
 	private String photoName; 
 	
@@ -73,12 +73,12 @@ public class Employee extends Person{
 		this.status = status;
 	}
 
-	public Integer getManagerId() {
-		return managerId;
+	public Employee getManager() {
+		return manager;
 	}
 
-	public void setManagerId(Integer managerId) {
-		this.managerId = managerId;
+	public void setManager(Employee manager) {
+		this.manager = manager;
 	}
 
 	public Date getCreateDate() {
@@ -96,4 +96,6 @@ public class Employee extends Person{
 	public void setPhotoName(String photoName) {
 		this.photoName = photoName;
 	}
+
+	
 }

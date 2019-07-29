@@ -1,5 +1,8 @@
 package kr.ac.ju.service;
 
-public interface DocService {
+import java.util.HashMap;
+import java.util.List;
 
+public interface DocService {
+	List<HashMap<String, Object>> getDocEmployeeByNo(int employeeNo);
 }
