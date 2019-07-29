@@ -1,6 +1,7 @@
 package kr.ac.ju.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CoursePart;
@@ -16,4 +17,7 @@ public interface ProfessorDao {
 	
 	List<Course> getYearByProfessorNo(int professorNo);
 	List<Course> getMajorByProfessorNo(int professorNo);
+	
+	List<Course> searchByOptions(Map<String, Object> param);
+	int getRows(Map<String, Object> param);
 }

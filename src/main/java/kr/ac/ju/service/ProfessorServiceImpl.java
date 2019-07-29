@@ -1,6 +1,7 @@
 package kr.ac.ju.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,15 @@ public class ProfessorServiceImpl implements ProfessorService{
 	public List<Course> getMajorByProfessorNo(int professorNo) {
 		return professorDao.getMajorByProfessorNo(professorNo);
 	}
-	
+
+	@Override
+	public List<Course> searchByOptions(Map<String, Object> param) {
+		return professorDao.searchByOptions(param);
+	}
+	@Override
+	public int getRows(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return professorDao.getRows(param);
+	}
 	
 }
