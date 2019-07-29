@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.codec.digest.MessageDigestAlgorithms;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -70,6 +72,8 @@ public class StudentController {
 		studentForm.setNo(student.getNo());
 		studentForm.setName(student.getName());
 		studentForm.setBirthday(DateUtils.dateToString(student.getBirth()));
+		studentForm.setEmail(student.getEmail());
+		studentForm.setPhoneNumber(student.getPhoneNumber());
 		
 		model.addAttribute("studentForm",studentForm);
 		return "student/mypage";
@@ -78,16 +82,34 @@ public class StudentController {
 	@RequestMapping(value = "/updatemypage", method = RequestMethod.POST)
 	public String updateMypage(@Valid StudentForm studentForm, BindingResult errors) {
 		if(errors.hasErrors()) {
-			return "mypage";
+			System.out.println(errors);
+			return "student/mypage";
 		}
+		
+		String newAddress = studentForm.getAddress() + " " + studentForm.getDetailaddress();
+		String digestPwd = new DigestUtils(MessageDigestAlgorithms.MD5).digestAsHex(studentForm.getPassword());
 		
 		Student student = new Student();
 		BeanUtils.copyProperties(studentForm, student);
+		
+		student.setPassword(digestPwd.toUpperCase());
 		student.setBirth(DateUtils.stringToDate(studentForm.getBirthday()));
+		student.setAddress(newAddress);
 		
 		if(!(studentForm.getPassword().equals(studentForm.getCheckpassword()))) {
 			return "redirect:mypage?result=fail";
 		}
+		
+		System.out.println(student.getNo());
+		System.out.println(student.getName());
+		System.out.println(student.getPassword());
+		System.out.println(student.getBirth());
+		System.out.println(student.getGender());
+		System.out.println(student.getEmail());
+		System.out.println(student.getPhoneNumber());
+		System.out.println(student.getAddress());
+		
+		studentService.updateMyPage(student);
 		
 		return "redirect:mypage";
 	}

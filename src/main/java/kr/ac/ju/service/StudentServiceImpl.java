@@ -132,4 +132,9 @@ public class StudentServiceImpl implements StudentService{
 		
 		return status;
 	}
+	
+	@Override
+	public void updateMyPage(Student student) {
+		studentDao.updateMyPage(student);
+	}
 }

@@ -33,6 +33,10 @@ div {
 	color: red;
 	font-style: italic;
 }
+
+input:read-only {
+	color:#333;
+}
 </style>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 </head>
@@ -52,25 +56,25 @@ div {
 						<form:form method="post" action="updatemypage" modelAttribute="studentForm" enctype="multipart/form-data">
 							<div class="form-group">
 								<label>이름</label>
-								<form:input path="name" cssClass="form-control"  disabled="true" />
+								<form:input path="name" cssClass="form-control" readonly="true" />
 							</div>
 							<div class="form-group">
 								<label>학번</label>
-								<form:input path="no" cssClass="form-control" disabled="true" />
+								<form:input path="no" cssClass="form-control" readonly="true" />
 							</div>
 							<div class="form-group">
 								<label>비밀번호</label>
-								<form:input path="password" cssClass="form-control"/>
+								<form:password path="password" cssClass="form-control"/>
 								<span class="help-block form-error"><form:errors path="password"></form:errors></span>
 							</div>
 							<div class="form-group">
 								<label>비밀번호 확인</label>
-								<form:input path="checkpassword" cssClass="form-control"/>
+								<form:password path="checkpassword" cssClass="form-control"/>
 								<span class="help-block form-error"><form:errors path="checkpassword"></form:errors></span>
 							</div>
 							<div class="form-group">
 								<label>생일</label>
-								<form:input path="birthday" cssClass="form-control"  disabled="true"/>
+								<form:input path="birthday" cssClass="form-control" readonly="true" />
 							</div>
 							<div class="form-group">
 								<label>이메일</label>
@@ -79,16 +83,16 @@ div {
 							</div>
 							<div class="form-group">
 								<label>전화번호</label>
-								<form:input path="phone" cssClass="form-control"/>
-								<span class="help-block form-error"><form:errors path="phone"></form:errors></span>
+								<form:input path="phoneNumber" cssClass="form-control"/>
+								<span class="help-block form-error"><form:errors path="phoneNumber"></form:errors></span>
 							</div>
 							<div>
 								<label>주소</label>
 							</div>
 							<div class="input-group">
-								<input type="text" id="user-postal-code" name="userpostalcode" id="addr1" readonly="readonly" class="form-control" style="width: 15%;" placeholder="우편번호" aria-describedby="basic-addon1">
+								<input type="text" id="user-postal-code" name="userpostalcode" id="addr1" readonly="true" class="form-control" style="width: 15%;" placeholder="우편번호" aria-describedby="basic-addon1">
 								<a class="btn btn-default" onclick="execPostCode();" style="float: left;">우편번호 찾기</a>
-								<form:input path="address" cssClass="form-control"  disabled="true"/>
+								<form:input path="address" cssClass="form-control" readonly="true" />
 								<form:input path="detailaddress" cssClass="form-control" />
 							</div>
 							<br>
@@ -117,14 +121,15 @@ div {
 		}).open();
 	}
 	
-	$(".btn").submit(function(event) {
+	$("#studentForm").submit(function(event) {
 		var password = $('[name=password]').val();
 		var checkpassword = $('[name=checkpassword]').val();
 		
-		if($('[name=password]').val() != $('[name=checkpassword]').val()) {
-			event.preventDefault();
+		if(password != checkpassword) {
 			alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+			return false;
 		}
+		return true;
 	});
 	</script>
 </body>

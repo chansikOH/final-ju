@@ -357,4 +357,13 @@
 			${no});
 	</insert>
 	
+	<update id="updateMyPage" parameterType="student">
+		update students
+		set	student_password = #{password},
+			student_email = #{email},
+			student_phone_number = #{phoneNumber},
+			student_address = #{address}
+		where student_no = #{no}
+	</update>
+	
 </mapper>

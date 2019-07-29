@@ -22,4 +22,5 @@ public interface StudentDao {
 	List<Map<String, Object>> getPartInfos(Map<String, Object> search);
 	Student getStudentInfoByNo(int studentNo);
 	List<StudentStatus> getStudentStatusByNo(int studentNo);
+	void updateMyPage(Student student);
 }

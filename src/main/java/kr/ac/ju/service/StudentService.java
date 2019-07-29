@@ -19,4 +19,5 @@ public interface StudentService {
 	Map<String, Object> getCoursedetailSource(int studentNo, int courseNo);
 	Student getStudentInfoByNo(int studentNo);
 	List<StudentStatus> getStudentStatusByNo(int studentNo);
+	void updateMyPage(Student student);
 }
