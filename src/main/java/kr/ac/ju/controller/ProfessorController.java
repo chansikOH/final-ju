@@ -1,28 +1,39 @@
 package kr.ac.ju.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.ju.service.ProfessorService;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.Pagination;
 import kr.ac.ju.vo.Person;
 import kr.ac.ju.vo.Professor;
+import kr.ac.ju.vo.Test;
+import kr.ac.ju.vo.TestForm;
 
 @Controller
 @RequestMapping("/professor")
 public class ProfessorController {
 
+	@Value("${dir.file.testfile}")
+	private String attachmentFileSaveDirectory;
+	
 	@Autowired
 	private ProfessorService service;
 	
@@ -42,12 +53,11 @@ public class ProfessorController {
 		return "professor/class/classlist";
 	}
 	@RequestMapping("/class/listdetail")
-	public @ResponseBody Map<String, Object> listdetail(@RequestParam("no")int no){
-		
+	public @ResponseBody Map<String, Object> listdetail(@RequestParam(value="courseNo", required=false, defaultValue = "")int courseNo){
 		Map<String, Object> map = new HashMap<String, Object>();
 				
-		map.put("courseDetail", service.getCourseByCourseNo(no));
-		map.put("courseParts", service.getCoursePartByCourseNo(no));
+		map.put("courseDetail", service.getCourseByCourseNo(courseNo));
+		map.put("courseParts", service.getCoursePartByCourseNo(courseNo));
 		
 		return map;
 	}
@@ -86,20 +96,47 @@ public class ProfessorController {
 			map.put("courseName", courseName);
 		}
 		
-		map.put("beginIndex", (pageNo-1)*5+1);
-		map.put("endIndex", pageNo*5);
+		map.put("beginIndex", (pageNo-1)*2+1);
+		map.put("endIndex", pageNo*2);
 		
 		int records = service.getRows(map);
-		Pagination pagination = new Pagination(pageNo, 5, records);
+		Pagination pagination = new Pagination(pageNo, 2, records);
 		
 		List<Course> courseDatas = service.searchByOptions(map);
 		
 		Map<String, Object> courseMap = new HashMap<String, Object>();
 		courseMap.put("courseDatas", courseDatas);
 		courseMap.put("pagination", pagination);
+		courseMap.put("count", records);
 		
 		return courseMap;
 	}
+	@RequestMapping("/class/addtest")
+	public String addtest(TestForm testForm, Integer courseNo) throws IOException {
+		
+		Test test = new Test();
+		
+		test.setNo(courseNo);
+		BeanUtils.copyProperties(testForm, test);
+		
+		System.out.println(test.getNo());
+		System.out.println(test.getStatus());
+		
+		if(!testForm.getTestfile().isEmpty()) {
+			MultipartFile mf = testForm.getTestfile();
+			String filename = mf.getOriginalFilename();
+			
+			FileCopyUtils.copy(mf.getBytes(), new File(attachmentFileSaveDirectory, filename));
+			test.setFileName(filename);
+			System.out.println(filename);
+		} else {
+			return "redirect:list";
+		}
+		service.addTest(test);
+		
+		return "redirect:list";
+	}
+	
 	
 	@RequestMapping("/class/form")
 	public String classform(){

@@ -227,4 +227,10 @@
 		</where>	
 	</select>
 	
+	<insert id="addTest" parameterType="test">
+		insert into tests
+		(test_no, course_no, test_status, test_file_name)
+		values 
+		(test_seq.nextval, #{no}, #{status}, #{fileName})
+	</insert>
 </mapper>

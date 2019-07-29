@@ -57,4 +57,9 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 
+
+	 <!-- 
+	  	config.properties 파일 로드하기
+	   -->
+	  <context:property-placeholder location="classpath:/META-INF/spring/config.properties" />
 </beans>
