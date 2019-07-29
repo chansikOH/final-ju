@@ -86,24 +86,8 @@ public class StudentController {
 		student.setBirth(DateUtils.stringToDate(studentForm.getBirthday()));
 		
 		if(!(studentForm.getPassword().equals(studentForm.getCheckpassword()))) {
-			System.out.println(studentForm.getPassword());
-			System.out.println(studentForm.getCheckpassword());
 			return "redirect:mypage?result=fail";
 		}
-		
-		System.out.println(student.getNo());
-		System.out.println(student.getName());
-		System.out.println(student.getAddress());
-		System.out.println(student.getDiv());
-		System.out.println(student.getEmail());
-		System.out.println(student.getGender());
-		System.out.println(student.getGubun());
-		System.out.println(student.getPassword());
-		System.out.println(student.getPhoneNumber());
-		System.out.println(student.getPhotoName());
-		System.out.println(student.getTransferYn());
-		System.out.println(student.getBirth());
-		System.out.println(student.getGrade());
 		
 		return "redirect:mypage";
 	}
