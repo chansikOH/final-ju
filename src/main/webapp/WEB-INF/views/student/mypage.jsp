@@ -28,8 +28,13 @@
 div {
 	padding: 0;
 }
+
+.form-error {
+	color: red;
+	font-style: italic;
+}
 </style>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js""></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 </head>
 
 <body>
@@ -44,34 +49,38 @@ div {
 				<h1>개인정보 수정</h1>
 				<div class="row">
 					<div class="col-sm-12">
-						<form method="post" action="#" enctype="multipart/form-data">
+						<form:form method="post" action="updatemypage" modelAttribute="studentForm" enctype="multipart/form-data">
 							<div class="form-group">
 								<label>이름</label>
-								<input type="text" class="form-control" value="${LOGIN_STUDENT.name }" name="name" disabled>
+								<form:input path="name" cssClass="form-control"  disabled="true" />
 							</div>
 							<div class="form-group">
-								<label>아이디</label>
-								<input type="text" class="form-control" value="${LOGIN_STUDENT.no }" name="no" disabled>
+								<label>학번</label>
+								<form:input path="no" cssClass="form-control" disabled="true" />
 							</div>
 							<div class="form-group">
 								<label>비밀번호</label>
-								<input type="password" class="form-control" name="password">
+								<form:input path="password" cssClass="form-control"/>
+								<span class="help-block form-error"><form:errors path="password"></form:errors></span>
 							</div>
 							<div class="form-group">
 								<label>비밀번호 확인</label>
-								<input type="password" class="form-control" name="checkpassword">
+								<form:input path="checkpassword" cssClass="form-control"/>
+								<span class="help-block form-error"><form:errors path="checkpassword"></form:errors></span>
 							</div>
 							<div class="form-group">
 								<label>생일</label>
-								<input type="date" class="form-control" value="${LOGIN_STUDENT.birth }" name="birth" disabled>
+								<form:input path="birthday" cssClass="form-control"  disabled="true"/>
 							</div>
 							<div class="form-group">
 								<label>이메일</label>
-								<input type="email" class="form-control" value="${LOGIN_STUDENT.email }" name="email">
+								<form:input path="email" cssClass="form-control" />
+								<span class="help-block form-error"><form:errors path="email"></form:errors></span>
 							</div>
 							<div class="form-group">
 								<label>전화번호</label>
-								<input type="text" class="form-control" name="phone" value="${LOGIN_STUDENT.phoneNumber }">
+								<form:input path="phone" cssClass="form-control"/>
+								<span class="help-block form-error"><form:errors path="phone"></form:errors></span>
 							</div>
 							<div>
 								<label>주소</label>
@@ -79,18 +88,19 @@ div {
 							<div class="input-group">
 								<input type="text" id="user-postal-code" name="userpostalcode" id="addr1" readonly="readonly" class="form-control" style="width: 15%;" placeholder="우편번호" aria-describedby="basic-addon1">
 								<a class="btn btn-default" onclick="execPostCode();" style="float: left;">우편번호 찾기</a>
-								<input type="text" id="user-address" name="useraddress" id="addr2" class="form-control" placeholder="도로명주소" readonly="readonly" aria-describedby="basic-addon1">
-								<input type="text" id="user-detail-address" name="userdetailaddress" id="addr3" class="form-control" placeholder="상세주소" aria-describedby="basic-addon1">
+								<form:input path="address" cssClass="form-control"  disabled="true"/>
+								<form:input path="detailaddress" cssClass="form-control" />
 							</div>
 							<br>
 							<div class="form-group">
 								<label>프로필사진</label>
-								<input type="file" class="form-control" name="photofile">
+								<input type="file" class="form-control" name="photoFile">
+								<span class="help-block form-error"><form:errors path="photoFile"></form:errors></span>
 							</div>
 							<div class="text-center">
 								<button type="submit" class="btn btn-success btn-sm">변경사항 저장</button>
 							</div>
-						</form>
+						</form:form>
 					</div>
 				</div>
 			</div>
@@ -101,11 +111,21 @@ div {
 		new daum.Postcode({
 			oncomplete: function(data) {
 				$('[name=userpostalcode]').val(data.zonecode); // 우편번호 (5자리)
-				$('[name=useraddress]').val(data.address);
-				$('[name=userdetailaddress]').val(data.buildingName);
+				$('[name=address]').val(data.address);
+				$('[name=detailaddress]').val(data.buildingName);
 			}
 		}).open();
 	}
+	
+	$(".btn").submit(function(event) {
+		var password = $('[name=password]').val();
+		var checkpassword = $('[name=checkpassword]').val();
+		
+		if($('[name=password]').val() != $('[name=checkpassword]').val()) {
+			event.preventDefault();
+			alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+		}
+	});
 	</script>
 </body>
 </html>
