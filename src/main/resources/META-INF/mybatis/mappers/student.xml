@@ -321,11 +321,12 @@
 		where 
 			S.professor_no = P.professor_no 
 			and S.major_no = M.major_no
-			and student_no = ${value}
+			and student_no = #{value}
 	</select>
 	
 	<select id="getStudentStatusByNo" parameterType="int" resultType="student">
 		select 
+			SS.status_no  "studentStatus.no",
 			SS.start_term "studentStatus.startTerm", 
 			SS.term_count "studentStatus.termCount", 
 			M.major_name "major.name", 
@@ -340,21 +341,43 @@
 		where 
 			S.student_no = SS.student_no 
 			and S.major_no = M.major_no
-			and S.student_no = ${value}
+			and S.student_no = #{value}
+		order by
+			SS.status_no desc
 	</select>
 	
-	<insert id="insertStudentStatus">
-		insert into
-			student_status
+	<insert id="insertStudentStatus" parameterType="studentStatus">
+		insert into student_status
+			(status_no,
+			status_div,
+			start_term,
+			term_count,
+			pass_yn,
+			student_create_date,
+			status_contents,
+			student_no)
 		values
 			(student_status_seq.nextval,
-			${division},
-			${startTerm},
-			${termCount},
+			#{division},
+			#{startTerm},
+			#{termCount},
 			'W',
 			sysdate,
-			${contents}
-			${no});
+			#{contents},
+			#{no})
 	</insert>
+	
+	<delete id="deleteStudentStatus" parameterType="int">
+		delete from student_status
+		where status_no = #{value}
+	</delete>
+	
+	<select id="getStatusCheckByNo" parameterType="map" resultType="studentStatus">
+		select *
+		from student_status
+		where student_no = #{no}
+			and status_div = #{division}
+			and pass_yn = 'W'
+	</select>
 	
 </mapper>

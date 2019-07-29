@@ -89,7 +89,49 @@
 	                                    <td>${record.PROFESSORNAME }</td>
 	                                    <td>${record.CREDIT }</td>
 	                                    <td>${record.cnt }</td>
-	                                    <td>B+</td>
+	                                    <td>
+	                                    	<c:choose>
+	                                    		<c:when test="${record.cnt >= 97 }">
+	                                    			A+
+	                                    		</c:when>
+	                                    		<c:when test="${record.cnt >= 93 }">
+	                                    			A-
+	                                    		</c:when>
+	                                    		<c:when test="${record.cnt >= 89 }">
+	                                    			A0
+	                                    		</c:when>
+	                                    		<c:when test="${record.cnt >= 85 }">
+	                                    			B+
+	                                    		</c:when>
+	                                    		<c:when test="${record.cnt >= 81 }">
+	                                    			B-
+	                                    		</c:when>
+	                                    		<c:when test="${record.cnt >= 77 }">
+	                                    			B0
+	                                    		</c:when>
+	                                    		<c:when test="${record.cnt >= 73 }">
+	                                    			C+
+	                                    		</c:when>
+	                                    		<c:when test="${record.cnt >= 69 }">
+	                                    			C-
+	                                    		</c:when>
+	                                    		<c:when test="${record.cnt >= 65 }">
+	                                    			C0
+	                                    		</c:when>
+	                                    		<c:when test="${record.cnt >= 61 }">
+	                                    			D+
+	                                    		</c:when>
+	                                    		<c:when test="${record.cnt >= 57 }">
+	                                    			D-
+	                                    		</c:when>
+	                                    		<c:when test="${record.cnt >= 50 }">
+	                                    			D0
+	                                    		</c:when>
+	                                    		<c:otherwise>
+	                                    			F
+	                                    		</c:otherwise>
+	                                    	</c:choose>
+	                                    </td>
                                 	</tr>
                             	</c:forEach>
                             </tbody>

@@ -22,4 +22,7 @@ public interface StudentDao {
 	List<Map<String, Object>> getPartInfos(Map<String, Object> search);
 	Student getStudentInfoByNo(int studentNo);
 	List<StudentStatus> getStudentStatusByNo(int studentNo);
+	void deleteStudentStatus(int statusNo);
+	void insertStudentStatus(StudentStatus studentStatus);
+	StudentStatus getStatusCheckByNo(Map<String, Object> map);
 }

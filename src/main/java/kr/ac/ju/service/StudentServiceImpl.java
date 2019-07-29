@@ -132,4 +132,21 @@ public class StudentServiceImpl implements StudentService{
 		
 		return status;
 	}
+	
+	@Override
+	public void deleteStudentStatus(int statusNo) {
+		studentDao.deleteStudentStatus(statusNo);
+	}
+	
+	@Override
+	public void insertStudentStatus(StudentStatus studentStatus) {
+		studentDao.insertStudentStatus(studentStatus);
+	}
+	
+	@Override
+	public StudentStatus getStatusCheckByNo(Map<String, Object> map) {
+		StudentStatus alreadyStatus = studentDao.getStatusCheckByNo(map);
+		
+		return alreadyStatus;
+	}
 }
