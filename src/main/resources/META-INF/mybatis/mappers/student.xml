@@ -362,7 +362,8 @@
 		set	student_password = #{password},
 			student_email = #{email},
 			student_phone_number = #{phoneNumber},
-			student_address = #{address}
+			student_address = #{address},
+			student_photo_name = #{photoName}
 		where student_no = #{no}
 	</update>
 	

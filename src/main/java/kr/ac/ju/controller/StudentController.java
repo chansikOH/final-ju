@@ -1,5 +1,7 @@
 package kr.ac.ju.controller;
 
+import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,19 +13,23 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.codec.digest.MessageDigestAlgorithms;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.ju.form.StudentForm;
+import kr.ac.ju.service.HomeService;
 import kr.ac.ju.service.StudentService;
 import kr.ac.ju.utils.DateUtils;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
+import kr.ac.ju.vo.Person;
 import kr.ac.ju.vo.Student;
 import kr.ac.ju.vo.StudentStatus;
 
@@ -31,8 +37,14 @@ import kr.ac.ju.vo.StudentStatus;
 @RequestMapping("/student")
 public class StudentController {
 	
+	@Value("${dir.image.profile}")
+	private String profileImageSaveDirectory;
+	
 	@Autowired
 	private StudentService studentService;
+	
+	@Autowired
+	private HomeService homeService;
 	
 	@RequestMapping("/course/apply")
 	public String courseApply() {
@@ -80,7 +92,7 @@ public class StudentController {
 	}
 	
 	@RequestMapping(value = "/updatemypage", method = RequestMethod.POST)
-	public String updateMypage(@Valid StudentForm studentForm, BindingResult errors) {
+	public String updateMypage(@Valid StudentForm studentForm, BindingResult errors, HttpSession session) throws Exception {
 		if(errors.hasErrors()) {
 			System.out.println(errors);
 			return "student/mypage";
@@ -96,20 +108,26 @@ public class StudentController {
 		student.setBirth(DateUtils.stringToDate(studentForm.getBirthday()));
 		student.setAddress(newAddress);
 		
-		if(!(studentForm.getPassword().equals(studentForm.getCheckpassword()))) {
-			return "redirect:mypage?result=fail";
+		MultipartFile mf = studentForm.getPhotoFile();
+		if(!mf.isEmpty()) {
+			final long maxfileSize = 1028 * 1024 * 5;
+			long fileSize = mf.getSize();
+			
+			if(fileSize > maxfileSize) {
+				errors.rejectValue("photoFile", null, "첨부파일의 최대용량을 초과하였습니다.");
+				return "student/mypage";
+			}
+			
+			String filename = mf.getOriginalFilename() + new Date().getTime();
+			
+			FileCopyUtils.copy(mf.getBytes(), new File(profileImageSaveDirectory, filename));
+			student.setPhotoName(filename);
 		}
 		
-		System.out.println(student.getNo());
-		System.out.println(student.getName());
-		System.out.println(student.getPassword());
-		System.out.println(student.getBirth());
-		System.out.println(student.getGender());
-		System.out.println(student.getEmail());
-		System.out.println(student.getPhoneNumber());
-		System.out.println(student.getAddress());
-		
 		studentService.updateMyPage(student);
+		
+		Person person = homeService.getPersonByNo(student.getNo());
+		session.setAttribute("LOGIN_STUDENT", person);
 		
 		return "redirect:mypage";
 	}

@@ -22,6 +22,9 @@
 	<context:annotation-config/>
 	<context:component-scan base-package="kr.ac.ju.controller"/>
 	
+	<!-- config.properties 파일 로드하기 -->
+	<context:property-placeholder location="classpath:/META-INF/spring/config.properties"/>
+	
 	<bean id="loginCheckInterceptor" class="kr.ac.ju.interceptor.LoginCheckInterceptor"></bean>
 	<bean id="studentCheckInterceptor" class="kr.ac.ju.interceptor.StudentCheckInterceptor"></bean>
 	<bean id="professorCheckInterceptor" class="kr.ac.ju.interceptor.ProfessorCheckInterceptor"></bean>
