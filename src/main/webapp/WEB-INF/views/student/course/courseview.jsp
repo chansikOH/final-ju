@@ -81,11 +81,23 @@
 .scroll {
 	overflow: auto;
 }
-.class-table, .class-table a {
+.class-table {
 	color: white;
 	font-size: 12px;
 }
 .class-table a:hover {
+	color: yellow;
+}
+.class-table .complete {
+	color: green;
+}
+.class-table .possible{
+	color: white;
+}
+.class-table .impossible{
+	color: red;
+}
+.class-table .active {
 	color: yellow;
 }
 </style>
@@ -97,7 +109,7 @@
 			<div class="row video-wrapper">
 				<div class="col-sm-12 video-box">
 					<video id="video">
-						<source src="/ju/resources/video/${video }" type="video/mp4">
+						<source src="/ju/resources/video/${sources.cla.videoName }" type="video/mp4">
 					</video>
 				</div>
 			</div>
@@ -106,188 +118,26 @@
 					<img id="rewind" alt="rewind" src="/ju/resources/images/rewind.png" width="50" height="50">
 					<img id="play" alt="play" src="/ju/resources/images/play.png" width="50" height="50">
 					<span id="pBar"><span id="cBar"></span></span>
-					<span id="currentTime">00:00</span><span id="duration"></span>
+					<span id="currentTime">00:00</span><span id="duration">/ 00:00</span>
 					<span id="percent">진행도 0%</span>
 					<img id="sound" alt="sound" src="/ju/resources/images/speak.png" width="20" height="20">
 				</div>
 			</div>
 		</div>
 		<div class="col-sm-3 right-box scroll">
-			<h4 class="list-name">컴퓨터공학개론 강의목록</h4>
+			<h4 class="list-name">${sources.courseName } 강의목록</h4>
 			<table class="class-table">
 				<colgroup>
 					<col width="40%">
 					<col width="*">
 				</colgroup>
 				<tbody>
+				<c:forEach var="classInfo" items="${sources.classInfos }" varStatus="loop">
 					<tr>
-						<th>제1강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
+						<th>제 ${loop.count } 강</th>
+						<td><a href="courseview?cno=${classInfo.COURSENO }&clno=${classInfo.CLASSNO}" class="list ${sources.cla.no eq classInfo.CLASSNO ? 'active' : '' }" data-per="${classInfo.PERCENTAGE }">${classInfo.CLASSNAME }</a></td>
 					</tr>
-					<tr>
-						<th>제2강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제3강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제4강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제5강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제6강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제7강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제8강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제9강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제10강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제11강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제12강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제13강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제14강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제15강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제16강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제17강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제18강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제19강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제20강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제21강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제22강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제23강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제24강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제25강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제26강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제27강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제28강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제29강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제30강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제31강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제32강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제33강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제34강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제35강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제36강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제37강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제38강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제39강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제40강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제41강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
-					<tr>
-						<th>제42강</th>
-						<td><a href="#">컴퓨터의 이해</a></td>
-					</tr>
+				</c:forEach>
 				</tbody>
 			</table>
 		</div>
@@ -295,6 +145,32 @@
 </div>
 <script type="text/javascript">
 $(function() {
+	var prevPer = 100;
+	$('.list').each(function(index, data) {
+		var currPer = $(this).attr('data-per');
+		
+		if(currPer == 100) {
+			$(this).addClass('complete');
+		} else if(prevPer >= 85) {
+			$(this).addClass('possible');
+		} else if(prevPer < 85) {
+			$(this).addClass('impossible');
+		}
+		
+		prevPer = currPer;
+	});
+	
+	$('.list').on('click', function(event) {
+		if($(this).hasClass('impossible')) {
+			event.preventDefault();
+			alert('이전 강의를 85% 이상 수강해야만 수강 가능합니다.');
+		}
+	});
+	
+	if($('#video').get(0).ended) {
+		
+	}
+	
 	$('#play').click(function() {
 		if($('#video').get(0).paused) {
 			$(this).attr('src', '/ju/resources/images/pause.png');

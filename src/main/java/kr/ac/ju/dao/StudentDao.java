@@ -3,6 +3,8 @@ package kr.ac.ju.dao;
 import java.util.List;
 import java.util.Map;
 
+import kr.ac.ju.vo.Cla;
+import kr.ac.ju.vo.ClassView;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.Student;
@@ -22,4 +24,6 @@ public interface StudentDao {
 	List<Map<String, Object>> getPartInfos(Map<String, Object> search);
 	Student getStudentInfoByNo(int studentNo);
 	List<StudentStatus> getStudentStatusByNo(int studentNo);
+	Cla getClassByClassNo(int classNo);
+	ClassView getClassViewByStudentNoAndClassNo(Map<String, Object> viewSearch);
 }

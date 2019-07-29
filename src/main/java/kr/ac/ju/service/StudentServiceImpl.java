@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.ac.ju.dao.StudentDao;
+import kr.ac.ju.vo.Cla;
+import kr.ac.ju.vo.ClassView;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.Student;
@@ -131,5 +133,29 @@ public class StudentServiceImpl implements StudentService{
 		List<StudentStatus> status = studentDao.getStudentStatusByNo(studentNo);
 		
 		return status;
+	}
+	
+	@Override
+	public Map<String, Object> getCourseviewSource(int studentNo, int courseNo, int classNo) {
+		Map<String, Object> search = new HashMap<String, Object>();
+		search.put("studentNo", studentNo);
+		search.put("courseNo", courseNo);
+		
+		Map<String, Object> viewSearch = new HashMap<String, Object>();
+		viewSearch.put("studentNo", studentNo);
+		viewSearch.put("classNo", classNo);
+		
+		List<Map<String, Object>> classInfos = studentDao.getCoursedetailSource(search);
+		String courseName = (String) classInfos.get(0).get("COURSENAME");
+		Cla cla = studentDao.getClassByClassNo(classNo);
+		ClassView classView = studentDao.getClassViewByStudentNoAndClassNo(viewSearch);
+		
+		Map<String, Object> sources = new HashMap<String, Object>();
+		sources.put("classInfos", classInfos);
+		sources.put("courseName", courseName);
+		sources.put("cla", cla);
+		sources.put("classView", classView);
+		
+		return sources;
 	}
 }

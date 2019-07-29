@@ -46,6 +46,7 @@
 				
 				<div class="row course-table">
 					<div class="col-sm-12">
+						<p>* 85% 이상 수강하지 않으면 다음 강의를 볼 수 없습니다.</p>
 						<table class="table">
 							<colgroup>
 								<col width="10%">
@@ -79,7 +80,7 @@
 													<th>강의</th>
 													<td>${classInfo.CLASSNAME }</td>
 													<td class="percentage-${classInfo.PARTNO }-class">${classInfo.PERCENTAGE } %</td>
-													<td><button type="button" class="btn btn-default btn-xs btn-view" value="${classInfo.VIDEO }" disabled>강의보기</button></td>
+													<td><button type="button" class="btn btn-default btn-xs btn-view" data-cno="${classInfo.COURSENO }" data-clno="${classInfo.CLASSNO }" disabled>강의보기</button></td>
 												</tr>
 											</c:if>
 										</c:forEach>
@@ -144,9 +145,10 @@ $(function() {
 	})
 	
 	$('.btn-view').click(function() {
-		var video = $(this).val();
-		alert(video);
-		var win = window.open('/ju/student/course/courseview?video='+video, '_blank', 'width=1200, height=600');
+		var cno = $(this).attr('data-cno');
+		var clno = $(this).attr('data-clno');
+
+		var win = window.open('/ju/student/course/courseview?cno='+cno+'&clno='+clno, '_blank', 'width=1200, height=600');
 		var pollTimer = window.setInterval(function() {
 		    if (win.closed !== false) {
 		        window.clearInterval(pollTimer);

@@ -115,9 +115,11 @@ public class StudentController {
 	}
 	
 	@RequestMapping("/course/courseview")
-	public String courseview(HttpSession session, Model model, @RequestParam("video") String video) {
+	public String courseview(HttpSession session, Model model, @RequestParam("cno") int courseNo, @RequestParam("clno") int classNo) {
+		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
 		
-		model.addAttribute("video", video);
+		Map<String, Object> sources = studentService.getCourseviewSource(student.getNo(), courseNo, classNo);
+		model.addAttribute("sources", sources);
 		
 		return "student/course/courseview";
 	}

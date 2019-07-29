@@ -244,7 +244,7 @@
 		and
 		    CL.class_no = CV.class_no
 		order by 
-		    CP.course_part_no
+		    CL.class_no
 	</select>
 	
 	<select id="getAvgCourseView" parameterType="map" resultType="int">
@@ -356,5 +356,35 @@
 			${contents}
 			${no});
 	</insert>
+	
+	<select id="getClassByClassNo" parameterType="int" resultType="cla">
+		select
+			class_no no,
+			course_part_no "coursePart.no",
+			class_name name,
+			class_video_name videoName,
+			class_create_date createDate
+		from
+			classes
+		where 
+			class_no = #{value}
+	</select>
+	
+	<select id="getClassViewByStudentNoAndClassNo" parameterType="map" resultType="classview">
+		select
+			class_view_no no,
+			student_no "student.no",
+			class_no "cla.no",
+			view_time time,
+			view_percentage percentage,
+			view_create_date createDate,
+			course_no "course.no"
+		from
+			class_views
+		where
+			student_no = #{studentNo}
+		and
+			class_no = #{classNo}
+	</select>
 	
 </mapper>
