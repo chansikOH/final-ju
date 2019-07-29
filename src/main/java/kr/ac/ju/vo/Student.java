@@ -12,7 +12,7 @@ public class Student extends Person{
 	private String transferYn;
 	private StudentStatus studentStatus;
 	private Date createDate;
-	private String div;
+	private String division;
 	private String photoName;
 
 	public Student() {
@@ -83,12 +83,12 @@ public class Student extends Person{
 		this.createDate = createDate;
 	}
 
-	public String getDiv() {
-		return div;
+	public String getDivision() {
+		return division;
 	}
 
-	public void setDiv(String div) {
-		this.div = div;
+	public void setDivision(String division) {
+		this.division = division;
 	}
 
 	public String getPhotoName() {
@@ -103,11 +103,11 @@ public class Student extends Person{
 	public String toString() {
 		return "Student [major=" + major + ", professor=" + professor + ", phoneNumber=" + phoneNumber + ", address="
 				+ address + ", grade=" + grade + ", transferYn=" + transferYn + ", studentStatus=" + studentStatus
-				+ ", createDate=" + createDate + ", div=" + div + ", photoName=" + photoName + ", getMajor()="
+				+ ", createDate=" + createDate + ", division=" + division + ", photoName=" + photoName + ", getMajor()="
 				+ getMajor() + ", getProfessor()=" + getProfessor() + ", getPhoneNumber()=" + getPhoneNumber()
 				+ ", getAddress()=" + getAddress() + ", getGrade()=" + getGrade() + ", getTransferYn()="
 				+ getTransferYn() + ", getStudentStatus()=" + getStudentStatus() + ", getCreateDate()="
-				+ getCreateDate() + ", getDiv()=" + getDiv() + ", getPhotoName()=" + getPhotoName() + ", getNo()="
+				+ getCreateDate() + ", getDivision()=" + getDivision() + ", getPhotoName()=" + getPhotoName() + ", getNo()="
 				+ getNo() + ", getName()=" + getName() + ", getPassword()=" + getPassword() + ", getBirth()="
 				+ getBirth() + ", getGender()=" + getGender() + ", getEmail()=" + getEmail() + ", getGubun()="
 				+ getGubun() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="

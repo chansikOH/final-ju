@@ -5,12 +5,13 @@ import java.util.Date;
 public class StudentStatus {
 
 	private Integer no;
-	private String div;
+	private String division;
 	private Integer startTerm;
 	private String termCount;
 	private String passYn;
 	private Date createDate;
 	private String contents;
+	private Student student;
 
 	public StudentStatus() {
 
@@ -24,12 +25,12 @@ public class StudentStatus {
 		this.no = no;
 	}
 
-	public String getDiv() {
-		return div;
+	public String getDivision() {
+		return division;
 	}
 
-	public void setDiv(String div) {
-		this.div = div;
+	public void setDivision(String division) {
+		this.division = division;
 	}
 
 	public Integer getStartTerm() {
@@ -70,5 +71,13 @@ public class StudentStatus {
 
 	public void setContents(String contents) {
 		this.contents = contents;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 }

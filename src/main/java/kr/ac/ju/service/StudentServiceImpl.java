@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import kr.ac.ju.dao.StudentDao;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
+import kr.ac.ju.vo.Student;
+import kr.ac.ju.vo.StudentStatus;
 
 @Service
 public class StudentServiceImpl implements StudentService{
@@ -98,6 +100,7 @@ public class StudentServiceImpl implements StudentService{
 	}
 	
 	@Override
+
 	public Map<String, Object> getCoursedetailSource(int studentNo, int courseNo) {
 		Map<String, Object> search = new HashMap<String, Object>();
 		search.put("studentNo", studentNo);
@@ -115,5 +118,18 @@ public class StudentServiceImpl implements StudentService{
 		sources.put("partInfos", partInfos);
 		
 		return sources;
+	}
+	
+	public Student getStudentInfoByNo(int studentNo) {
+		Student studentInfo = studentDao.getStudentInfoByNo(studentNo);
+		
+		return studentInfo;
+	}
+	
+	@Override
+	public List<StudentStatus> getStudentStatusByNo(int studentNo) {
+		List<StudentStatus> status = studentDao.getStudentStatusByNo(studentNo);
+		
+		return status;
 	}
 }
