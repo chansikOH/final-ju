@@ -30,4 +30,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public int searchStudentsCount(Map<String, Object> searchOption) {
 		return employeedao.searchStudentsCount(searchOption); 
 	}
+	
+	@Override
+	public Student getStudentByNo(int studentNo) {
+		return employeedao.getStudentByNo(studentNo); 
+	}
+	
+	@Override
+	public void updateStudentStatusByNo(Student student) {
+		employeedao.updateStudentStatusByNo(student); 
+	}
 }

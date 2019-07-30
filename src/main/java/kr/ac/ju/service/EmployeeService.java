@@ -14,4 +14,6 @@ public interface EmployeeService {
 	// RestController
 	List<Student> searchStudents(Map<String, Object> searchOption ); 
 	int searchStudentsCount(Map<String, Object> searchOption); 
+	Student getStudentByNo(int studentNo); 
+	void updateStudentStatusByNo(Student student); 
 }
