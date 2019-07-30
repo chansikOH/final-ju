@@ -15,6 +15,8 @@ public interface StudentDao {
 	Student getStudentByNo(int studentNo);
 	List<Course> getYearTermsByStudentNo(int studentNo);
 	List<CourseAttend> getAllCoursesByStudentNo(int studentNo);
+	Course getCourseByCourseNo(int courseNo);
+	List<Course> getMinusCoursesByStudentNo(Map<String, Object> map);
 	List<Course> getAllCoursesWithProfessorAndMajorByStudentNo(Map<String, Object> search);
 	Integer countCurrentCoursesByStudentNo(Map<String, Object> search);
 	List<CourseAttend> getCoursesByStudentNoAndYearTerm(Map<String, Object> maps);
@@ -30,4 +32,6 @@ public interface StudentDao {
 	void deleteStudentStatus(int statusNo);
 	void insertStudentStatus(StudentStatus studentStatus);
 	StudentStatus getStatusCheckByNo(Map<String, Object> map);
+	void insertCourseAttendsByStudentNo(CourseAttend courseAttend);
+	void updateCourseCount(Map<String, Object> map);
 }

@@ -48,12 +48,12 @@ public class StudentRestController {
 		
 		for (CourseAttend ca : courseAttends) {
 			creditCount += ca.getCourse().getCredit();
-			totalScore += ca.getRecordScore();
+			totalScore += ca.getRecordScore() * ca.getCourse().getCredit();
 		}
 		
 		results.put("courseAttends", courseAttends);
 		results.put("creditCount", creditCount);
-		results.put("avgScore", String.format("%.2f", (double) totalScore/courseAttends.size()));
+		results.put("avgScore", String.format("%.2f", (double) totalScore/creditCount));
 		results.put("totalCourses", courseAttends.size());
 
 		return results;

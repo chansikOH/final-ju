@@ -12,6 +12,8 @@ public interface StudentService {
 
 	List<Course> getYearTermsByStudentNo(int studentNo);
 	List<CourseAttend> getAllCoursesByStudentNo(int studentNo);
+	Course getCourseByCourseNo(int courseNo);
+	List<Course> getMinusCoursesByStudentNo(int studentNo);
 	List<Course> getAllCoursesWithProfessorAndMajorByStudentNo(int studentNo);
 	Integer countCurrentCoursesByStudentNo(int studentNo);
 	List<CourseAttend> getCoursesByStudentNoAndYearTerm(Map<String, Object> maps);
@@ -24,4 +26,6 @@ public interface StudentService {
 	void deleteStudentStatus(int statusNo);
 	void insertStudentStatus(StudentStatus studentStatus);
 	StudentStatus getStatusCheckByNo(Map<String, Object> map);
+	void insertCourseAttendsByStudentNo(CourseAttend courseAttend);
+	void updateCourseCount(int count, int courseNo);
 }

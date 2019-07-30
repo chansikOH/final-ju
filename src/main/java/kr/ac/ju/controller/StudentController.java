@@ -48,8 +48,35 @@ public class StudentController {
 	private HomeService homeService;
 	
 	@RequestMapping("/course/apply")
-	public String courseApply() {
+	public String courseApply(HttpSession session, Model model) {
+		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
+		
+		List<Course> minusCourses = studentService.getMinusCoursesByStudentNo(student.getNo());
+		model.addAttribute("minusCourses", minusCourses);
+		
+		List<Course> myCourses = studentService.getAllCoursesWithProfessorAndMajorByStudentNo(student.getNo());
+		model.addAttribute("myCourses", myCourses);
+		
 		return "student/course/courseapply";
+	}
+	
+	@RequestMapping("/course/signupCourse")
+	public String signupCourse(HttpSession session, int cno) {
+		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
+		CourseAttend courseAttend = new CourseAttend();
+		
+		// CourseAttend에 20181001번 학생으로 과목 추가.
+		Course course = studentService.getCourseByCourseNo(cno);
+		
+		courseAttend.setStudent(student);
+		courseAttend.setCourse(course);
+		
+		studentService.insertCourseAttendsByStudentNo(courseAttend);
+		
+		// Course에 신청인원 증가
+		studentService.updateCourseCount(course.getCount() + 1, cno);
+		
+		return "redirect:/student/course/apply";
 	}
 	
 	@RequestMapping("/course/select")
@@ -67,11 +94,11 @@ public class StudentController {
 		
 		for (CourseAttend ca : courseAttends) {
 			creditCount += ca.getCourse().getCredit();
-			totalScore += ca.getRecordScore();
+			totalScore += ca.getRecordScore() * ca.getCourse().getCredit();
 		}
 		
 		model.addAttribute("creditCount", creditCount);
-		model.addAttribute("avgScore", String.format("%.2f", (double) totalScore/courseAttends.size()));
+		model.addAttribute("avgScore", String.format("%.2f", (double) totalScore/creditCount));
 		model.addAttribute("totalCourses", courseAttends.size());
 		
 		return "student/course/courseselect";
@@ -119,7 +146,7 @@ public class StudentController {
 				return "student/mypage";
 			}
 			
-			String filename = mf.getOriginalFilename() + new Date().getTime();
+			String filename = new Date().getTime() + "-" + mf.getOriginalFilename();
 			
 			FileCopyUtils.copy(mf.getBytes(), new File(profileImageSaveDirectory, filename));
 			student.setPhotoName(filename);

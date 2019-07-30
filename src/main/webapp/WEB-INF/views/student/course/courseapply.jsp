@@ -14,11 +14,11 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style>
 	.box-top {
-		height: 400px;
+		height: 300px;
 	}
 	
 	.box-bottom {
-		height: 200px;
+		height: 300px;
 	} 
 	
 	.auto {
@@ -67,111 +67,33 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1</td>
-									<td>2019</td>
-									<td>1학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>전필</td>
-									<td>3</td>
-									<td>김다윤</td>
-									<td>2</td>
-									<td>40</td>
-									<td>
-										<button class="btn btn-default">신청</button>
-									</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>2019</td>
-									<td>2학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>전선</td>
-									<td>3</td>
-									<td>김다윤</td>
-									<td>2</td>
-									<td>40</td>
-									<td>
-										<button class="btn btn-default">신청</button>
-									</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>2019</td>
-									<td>1학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>교필</td>
-									<td>2</td>
-									<td>김다윤</td>
-									<td>2</td>
-									<td>40</td>
-									<td>
-										<button class="btn btn-default">신청</button>
-									</td>
-								</tr>
-								<tr>
-									<td>4</td>
-									<td>2019</td>
-									<td>2학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>교선</td>
-									<td>2</td>
-									<td>김다윤</td>
-									<td>2</td>
-									<td>40</td>
-									<td>
-										<button class="btn btn-default">신청</button>
-									</td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td>2019</td>
-									<td>2학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>교선</td>
-									<td>2</td>
-									<td>김다윤</td>
-									<td>2</td>
-									<td>40</td>
-									<td>
-										<button class="btn btn-default">신청</button>
-									</td>
-								</tr>
-								<tr>
-									<td>6</td>
-									<td>2019</td>
-									<td>2학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>교선</td>
-									<td>2</td>
-									<td>김다윤</td>
-									<td>2</td>
-									<td>40</td>
-									<td>
-										<button class="btn btn-default">신청</button>
-									</td>
-								</tr>
-								<tr>
-									<td>7</td>
-									<td>2019</td>
-									<td>2학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>교선</td>
-									<td>2</td>
-									<td>김다윤</td>
-									<td>2</td>
-									<td>40</td>
-									<td>
-										<button class="btn btn-default">신청</button>
-									</td>
-								</tr>
+							<c:choose>
+								<c:when test="${not empty minusCourses }">
+									<c:forEach var="course" items="${minusCourses }" varStatus="index">
+										<tr>
+											<td>${index.count }</td>
+											<td>${course.year }</td>
+											<td>${course.term }학기</td>
+											<td>${course.no }</td>
+											<td>${course.name }</td>
+											<td>${course.getMust() }</td>
+											<td>${course.credit }</td>
+											<td>${course.professor.name }</td>
+											<td>${course.count }</td>
+											<td>${course.quota }</td>
+											<td>
+												<a href="signupCourse?cno=${course.no }" class="btn btn-default">신청</a>
+											</td>
+										</tr>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td colspan="11">수강 가능한 과목이 없습니다.</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
+								
 							</tbody>
 						</table>
 					</div>
@@ -212,105 +134,31 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1</td>
-									<td>2019</td>
-									<td>1학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>전필</td>
-									<td>3</td>
-									<td>김다윤</td>
-									<td>2019-02-17</td>
-									<td>
-										<button class="btn btn-default">취소</button>
-									</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>2019</td>
-									<td>1학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>전필</td>
-									<td>3</td>
-									<td>김다윤</td>
-									<td>2019-02-17</td>
-									<td>
-										<button class="btn btn-default">취소</button>
-									</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>2019</td>
-									<td>1학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>전필</td>
-									<td>3</td>
-									<td>김다윤</td>
-									<td>2019-02-17</td>
-									<td>
-										<button class="btn btn-default">취소</button>
-									</td>
-								</tr>
-								<tr>
-									<td>4</td>
-									<td>2019</td>
-									<td>1학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>전필</td>
-									<td>3</td>
-									<td>김다윤</td>
-									<td>2019-02-17</td>
-									<td>
-										<button class="btn btn-default">취소</button>
-									</td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td>2019</td>
-									<td>1학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>전필</td>
-									<td>3</td>
-									<td>김다윤</td>
-									<td>2019-02-17</td>
-									<td>
-										<button class="btn btn-default">취소</button>
-									</td>
-								</tr>
-								<tr>
-									<td>6</td>
-									<td>2019</td>
-									<td>1학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>전필</td>
-									<td>3</td>
-									<td>김다윤</td>
-									<td>2019-02-17</td>
-									<td>
-										<button class="btn btn-default">취소</button>
-									</td>
-								</tr>
-								<tr>
-									<td>7</td>
-									<td>2019</td>
-									<td>1학기</td>
-									<td>1984040</td>
-									<td>컴퓨터구조</td>
-									<td>전필</td>
-									<td>3</td>
-									<td>김다윤</td>
-									<td>2019-02-17</td>
-									<td>
-										<button class="btn btn-default">취소</button>
-									</td>
-								</tr>
-								
+								<c:choose>
+									<c:when test="${not empty myCourses }">
+										<c:forEach var="course" items="${myCourses }" varStatus="index">
+											<tr>
+												<td>${index.count }</td>
+												<td>${course.year }</td>
+												<td>${course.term }학기</td>
+												<td>${course.no }</td>
+												<td>${course.name }</td>
+												<td>${course.getMust() }</td>
+												<td>${course.credit }</td>
+												<td>${course.professor.name }</td>
+												<td><fmt:formatDate value="${course.createDate }"/></td>
+												<td>
+													<a href="dropCourse" class="btn btn-default">취소</a>
+												</td>
+											</tr>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<tr>
+											<td colspan="10">수강신청한 과목이 없습니다.</td>
+										</tr>
+									</c:otherwise>
+								</c:choose>
 							</tbody>
 						</table>
 					</div>

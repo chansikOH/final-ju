@@ -86,6 +86,7 @@
 		from course_attends CA, courses C
 		where CA.course_no = C.course_no
 			and student_no = #{value}
+			and CA.course_attend_record is not null
 		order by C.course_year asc
 	</select>
 	
@@ -104,8 +105,46 @@
 			and C.course_no = CA.course_no
 			and P.professor_no = C.professor_no
 			and C.course_pass_yn = 'Y'
+			and CA.course_attend_record is not null
 			and S.student_no = #{value}
 		order by C.course_no
+	</select>
+	
+	<select id="getCourseByCourseNo" parameterType="int" resultType="course">
+		select	C.course_year as year,
+				C.course_term as term,
+				C.course_no as no,
+				C.course_name as name,
+				C.course_must_yn as mustYn,
+				C.course_credit as credit,
+				P.professor_name as "professor.name",
+				C.course_count as count
+		from courses C, professors P
+		where C.professor_no = P.professor_no
+			and C.course_no = #{value}
+	</select>
+	
+	<select id="getMinusCoursesByStudentNo" parameterType="map" resultType="course">
+		select	C.course_no as no,
+				C.course_name as name,
+				C.course_year as year,
+				C.course_term as term,
+				C.course_must_yn as mustYn,
+				C.course_credit as credit,
+				P.professor_name as "professor.name",
+				C.course_quota as quota,
+				C.course_count as count
+		from courses C, professors P
+		where C.course_year = #{year}
+		and C.course_term = #{term}
+		and C.professor_no = P.professor_no
+		minus
+		select C.course_no, C.course_name, C.course_year, C.course_term, C.course_must_yn,
+				C.course_credit, P.professor_name, C.course_quota, C.course_count
+		from courses C, COURSE_ATTENDS CA, professors P
+		where C.COURSE_NO = CA.COURSE_NO
+		and C.professor_no = P.professor_no
+		and CA.STUDENT_NO = #{studentNo}
 	</select>
 	
 	<select id="getAllCoursesWithProfessorAndMajorByStudentNo" parameterType="map" resultType="course">
@@ -419,5 +458,16 @@
 			and status_div = #{division}
 			and pass_yn = 'W'
 	</select>
+	
+	<insert id="insertCourseAttendsByStudentNo" parameterType="courseAttend">
+		insert into course_attends(course_attend_no, student_no, course_no)
+		values(course_attend_seq.nextval, #{student.no}, #{course.no})
+	</insert>
+	
+	<update id="updateCourseCount" parameterType="course">
+		update courses
+		set course_count = #{count}
+		where course_no = #{courseNo}
+	</update>
 	
 </mapper>

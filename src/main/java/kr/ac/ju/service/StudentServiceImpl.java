@@ -38,6 +38,38 @@ public class StudentServiceImpl implements StudentService{
 	}
 	
 	@Override
+	public List<Course> getMinusCoursesByStudentNo(int studentNo) {
+		int year = 0;
+		int term = 0;
+		
+		long currentTime = System.currentTimeMillis();
+		SimpleDateFormat currentYear = new SimpleDateFormat("yyyy");
+		SimpleDateFormat currentMonth = new SimpleDateFormat("MM");
+		
+		year = Integer.parseInt(currentYear.format(new Date(currentTime)));
+		
+		int nowMonth = Integer.parseInt(currentMonth.format(new Date(currentTime)));
+		if(nowMonth >= 3 && nowMonth <= 8) {
+			term = 1;
+		} else if ((nowMonth >= 1 && nowMonth <= 2) || (nowMonth >= 9 && nowMonth <= 12)) {
+			term = 2;
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("year", year);
+		map.put("term", term);
+		map.put("studentNo", studentNo);
+		
+		return studentDao.getMinusCoursesByStudentNo(map);
+	}
+	
+	@Override
+	public Course getCourseByCourseNo(int courseNo) {
+		
+		return studentDao.getCourseByCourseNo(courseNo);
+	}
+	
+	@Override
 	public List<Course> getAllCoursesWithProfessorAndMajorByStudentNo(int studentNo) {
 		int year = 0;
 		int term = 0;
@@ -177,5 +209,20 @@ public class StudentServiceImpl implements StudentService{
 		StudentStatus alreadyStatus = studentDao.getStatusCheckByNo(map);
 		
 		return alreadyStatus;
+	}
+	
+	@Override
+	public void insertCourseAttendsByStudentNo(CourseAttend courseAttend) {
+		studentDao.insertCourseAttendsByStudentNo(courseAttend);
+	}
+	
+	@Override
+	public void updateCourseCount(int count, int courseNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("count", count);
+		map.put("courseNo", courseNo);
+		
+		studentDao.updateCourseCount(map);
 	}
 }
