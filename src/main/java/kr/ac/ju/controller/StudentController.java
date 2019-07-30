@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -172,12 +173,7 @@ public class StudentController {
 		map.put("no", student.getNo());
 		
 		List<Map<String, Object>> records = studentService.getAllRecordesByStudentNo(map);
-		
-		/*
-		 * for(int i=0; i>=records.size(); i++) { String record =
-		 * records.get(i).get("cnt").toString(); System.out.println("dgdg"+record); }
-		 */
-		
+				
 		model.addAttribute("records", records);
 		
 		return "student/records";
@@ -189,7 +185,7 @@ public class StudentController {
 	}
 	
 	@RequestMapping("/status/chStatus")
-	public String statusleave(HttpSession session, Model model) {
+	public String changeStatus(HttpSession session, Model model) {
 		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
 		
 		Student studentInfo = studentService.getStudentInfoByNo(student.getNo());
@@ -199,5 +195,31 @@ public class StudentController {
 		model.addAttribute("status", status);
 		
 		return "student/status/changeStatus";
+	}
+	
+	@RequestMapping("/status/delete.status") 
+	public String statusDelete(@RequestParam("no")int statusNo, String sta) {
+		studentService.deleteStudentStatus(statusNo);
+		
+		return "redirect:chStatus?sta="+sta;
+	}
+	
+	@RequestMapping("/status/changeStatus")
+	public String changeStatus(StudentStatus studentStatus, String sta) {
+		/*
+		 * System.out.println("dddddddd"+studentStatus.getStudent().getNo());
+		 * 
+		 * Map<String, Object> map = new HashMap<String, Object>();
+		 * 
+		 * map.put("no", studentStatus.getStudent().getNo()); map.put("division",
+		 * studentStatus.getDivision());
+		 * 
+		 * if(studentService.getStatusCheckByNo(map) != null) { return
+		 * "redirect:chStatus?sta="+sta+"&result=false"; }
+		 */
+		
+		studentService.insertStudentStatus(studentStatus);
+		
+		return "redirect:chStatus?sta="+sta;
 	}
 }

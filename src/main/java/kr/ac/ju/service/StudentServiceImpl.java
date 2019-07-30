@@ -162,4 +162,20 @@ public class StudentServiceImpl implements StudentService{
 	public void updateMyPage(Student student) {
 		studentDao.updateMyPage(student);
 	}
+		
+	public void deleteStudentStatus(int statusNo) {
+		studentDao.deleteStudentStatus(statusNo);
+	}
+	
+	@Override
+	public void insertStudentStatus(StudentStatus studentStatus) {
+		studentDao.insertStudentStatus(studentStatus);
+	}
+	
+	@Override
+	public StudentStatus getStatusCheckByNo(Map<String, Object> map) {
+		StudentStatus alreadyStatus = studentDao.getStatusCheckByNo(map);
+		
+		return alreadyStatus;
+	}
 }

@@ -21,4 +21,7 @@ public interface StudentService {
 	List<StudentStatus> getStudentStatusByNo(int studentNo);
 	Map<String, Object> getCourseviewSource(int studentNo, int courseNo, int classNo);
 	void updateMyPage(Student student);
+	void deleteStudentStatus(int statusNo);
+	void insertStudentStatus(StudentStatus studentStatus);
+	StudentStatus getStatusCheckByNo(Map<String, Object> map);
 }

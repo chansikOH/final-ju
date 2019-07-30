@@ -27,4 +27,7 @@ public interface StudentDao {
 	Cla getClassByClassNo(int classNo);
 	ClassView getClassViewByStudentNoAndClassNo(Map<String, Object> viewSearch);
 	void updateMyPage(Student student);
+	void deleteStudentStatus(int statusNo);
+	void insertStudentStatus(StudentStatus studentStatus);
+	StudentStatus getStatusCheckByNo(Map<String, Object> map);
 }
