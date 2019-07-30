@@ -84,12 +84,12 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td id="studentNo"><c:out value="${student.no }"/></td>
-                                    <td><c:out value="${student.major.name }" /></td>
-                                    <td><c:out value="${student.grade }" /></td>
-                                    <td><c:out value="${student.division }" /></td>
-                                    <td><c:out value="${student.professor.name }" /></td>
-                                    <td><c:out value="${student.phoneNumber }" /></td>
+                                    <td>${student.no }</td>
+                                    <td>${student.major.name }</td>
+                                    <td>${student.grade }</td>
+                                    <td>${student.division }</td>
+                                    <td>${student.professor.name }</td>
+                                    <td>${student.phoneNumber }</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -99,11 +99,11 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <h4>[휴학 및 자퇴 신청현황]</h4>
-                        <table class="table">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>시작년도/학기</th>
-                                    <th>학기</th>
+                                    <th>시작년도</th>
+                                    <th>학기 수</th>
                                     <th>학부(과)</th>
                                     <th>신청구분</th>
                                     <th>변동사유</th>
@@ -114,11 +114,16 @@
                             </thead>
                             <tbody>
                             	<c:choose>
-                            		<c:when test="${status != null }">
+                            		<c:when test="${empty status }">
+                            			<tr>
+                            				<td colspan="8">조회된 신청내역이 없습니다.</td>
+                            			</tr>
+                            		</c:when>
+                            		<c:otherwise>
                             			<c:forEach var="sta" items="${status }">
 		                            		<tr>
 		                            			<c:choose>
-		                            				<c:when test="${sta.studentStatus.startTerm != 0 }">
+		                            				<c:when test="${sta.studentStatus.startTerm != 0 && sta.studentStatus.division != '복학' }">
 					                                    <td>${sta.studentStatus.startTerm }</td>
 		                            				</c:when>
 		                            				<c:otherwise>
@@ -126,7 +131,7 @@
 		                            				</c:otherwise>
 		                            			</c:choose>
 		                            			<c:choose>
-		                            				<c:when test="${sta.studentStatus.termCount != 0 }">
+		                            				<c:when test="${sta.studentStatus.termCount != '0' }">
 					                                    <td>${sta.studentStatus.termCount }</td>
 		                            				</c:when>
 		                            				<c:otherwise>
@@ -137,22 +142,19 @@
 			                                    <td>${sta.studentStatus.division }</td>
 			                                    <td>${sta.studentStatus.contents }</td>
 			                                    <td><fmt:formatDate value="${sta.studentStatus.createDate }"/></td>
-			                                    <td>
-			          
-			                                    	<c:choose>
-			                                    		<c:when test="${sta.studentStatus.passYn eq 'W' }">
-			                                    			대기중
-			                                    		</c:when>
-			                                    		<c:when test="${sta.studentStatus.passYn eq 'P' }">
-			                                    			승인
-			                                    		</c:when>
-			                                    		<c:when test="${sta.studentStatus.passYn eq 'N' }">
-			                                    			반려
-			                                    		</c:when>
-			                                    	</c:choose>
-			                                    </td>
 			                                    <c:choose>
 			                                    	<c:when test="${sta.studentStatus.passYn eq 'W' }">
+			                                    		<td>대기중</td>
+			                                    	</c:when>
+			                                    	<c:when test="${sta.studentStatus.passYn eq 'P' }">
+			                                    		<td>승인</td>
+			                                    	</c:when>
+			                                    	<c:when test="${sta.studentStatus.passYn eq 'N' }">
+			                                    		<td>반려</td>
+			                                    	</c:when>
+			                                    </c:choose>
+			                                    <c:choose>
+			                                    	<c:when test="${sta.studentStatus.passYn eq 'W' && sta.studentStatus.division != '복학' }">
 			                                    		<td><a href="delete.status?no=${sta.studentStatus.no }&sta=${param.sta }" class="btn btn-danger btn-xs" id="cancle">취소하기</a></td>
 			                                    	</c:when>
 			                                    	<c:otherwise>
@@ -161,11 +163,6 @@
 			                                    </c:choose>
 			                                </tr>
 		                            	</c:forEach>
-                            		</c:when>
-                            		<c:otherwise>
-                            			<tr>
-                            				<td colspan="8">조회된 신청현황이 없습니다.</td>
-                            			</tr>
                             		</c:otherwise>
                             	</c:choose>
                             	
@@ -186,23 +183,13 @@
 		                                    <tr>
 		                                        <th>재적구분</th>
 		                                        <td><input type="text" value="휴학" class="form-control" name="division"></td>
-		                                        
+		                                                        
 		                                        <th>학기 수</th>
 		                                        <td><input type="text" class="form-control" name="termCount"></td>
 		                                        
-		                                        <th>복학예정일자</th>
-		                                        <td><input type="date" class="form-control"></td>
-		                                    </tr>
-		                                    <tr class="expected">
 		                                        <th>휴학예정기간</th>
-		                                        <td colspan="3"><input type="text" name="startTerm"> 년도
-		                                                        <input type="text"> 학기 ~
-		                                                        <input type="text"> 년도
+		                                        <td class="expected"><input type="text" name="startTerm"> 년도
 		                                                        <input type="text"> 학기</td>
-		                                                        
-		                                        <th>복학예정학기</th>
-		                                        <td><input type="text"> 년도
-		                                            <input type="text"> 학기</td>
 		                                    </tr>
 		                                    <tr>
 		                                        <th>휴학사유</th>
@@ -210,7 +197,6 @@
 		                                    </tr>
 		                                    <tr>
 		                                        <td colspan="6">
-		                                        	<input type="hidden" name="no" value="${LOGIN_STUDENT.no }" class="form-control" />
 		                                            <button type="submit" class="btn btn-success" id="btn-insert">신청</button> 
 		                                            <button type="reset" class="btn btn-default">초기화</button>
 		                                        </td>
@@ -224,29 +210,48 @@
 		                        <p>※ 복학접수가 완료되면 수강신청 및 등록사항 반드시 확인</p>
 		                        <p>※ 복학 학부(과) 선택의 신청구분에 체크한 후 접수버튼 클릭</p>
 		                        <p class="danger">※ 복학 신청한 내용은 취소 불가</p>
-		                        <table class="table">
-		                            <thead>
-		                                <tr>
-		                                    <th>학번</th>
-		                                    <th>학부(과)</th>
-		                                    <th>학적상태</th>
-		                                    <th>연락처</th>
-		                                    <th>신청구분</th>
-		                                </tr>
-		                            </thead>
-		                            <tbody>
-		                                <tr>
-		                                    <td>20190101</td>
-		                                    <td>컴퓨터공학과</td>
-		                                    <td>휴학</td>
-		                                    <td>010-1111-1111</td>
-		                                    <td><input type="checkbox"></td>
-		                                </tr>
-		                            </tbody>
-		                            <tr>
-		                                <td colspan="5"><button class="btn btn-default">복학신청</button></td>
-		                            </tr>
-		                        </table>
+		                        <form class="form" method="POST" action="changeStatus?sta=${param.sta }" >
+			                        <table class="table">
+			                            <thead>
+			                                <tr>
+			                                	<th>번호</th>
+			                                    <th>시작년도</th>
+			                                    <th>학부(과)</th>
+			                                    <th>학적상태</th>
+			                                    <th>신청일자</th>
+			                                    <th>신청구분</th>
+			                                </tr>
+			                            </thead>
+			                            <tbody>
+			                            	<c:choose>
+			                            		<c:when test="${leaveStudents eq null }">
+			                            			<tr>
+			                            				<td colspan="6">조회된 복학 가능 내역이 없습니다.</td>
+			                            			</tr>
+			                            		</c:when>
+			                            		<c:otherwise>
+						                            <tr>				                            	
+								                        <td>${leaveStudents.studentStatus.no }</td>
+								                        <td>${leaveStudents.studentStatus.startTerm }</td>
+								                        <td>${leaveStudents.major.name }</td>
+								                        <td>${leaveStudents.studentStatus.division }</td>
+								                        <td><fmt:formatDate value="${leaveStudents.studentStatus.createDate }" /></td>
+										                <td><input type="checkbox"></td>
+							                        </tr>
+						                            <tr>
+						                                <td colspan="6">
+						                                	<input type="hidden" name="division" value="복학" class="form-control" />
+						                                	<input type="hidden" name="startTerm" value="${leaveStudents.studentStatus.no }" class="form-control" />
+						                                	<input type="hidden" name="termCount" value="0" class="form-control" />
+						                                	<input type="hidden" name="contents" value="-" class="form-control" />
+						                                	<button class="btn btn-success pull-right">신청</button>
+						                                </td>
+						                            </tr>
+			                            		</c:otherwise>
+			                            	</c:choose>
+			                            </tbody>
+			                        </table>
+		                        </form>
                         	</c:when>
                         	
                         	<c:when test="${param.sta eq 'drop' }">
@@ -268,7 +273,6 @@
 		                                        <td colspan="4">
 		                                        	<input type="hidden" name="startTerm" value="0" class="form-control" />
 		                                        	<input type="hidden" name="termCount" value="0" class="form-control" />
-		                                    		<input type="hidden" name="no" value="${LOGIN_STUDENT.no }" class="form-control" />
 		                                            <button type="submit" class="btn btn-success" id="btn-insert">신청</button>
 		                                            <button type="reset" class="btn btn-default">초기화</button>
 		                                        </td>
@@ -288,6 +292,27 @@
 	<script type="text/javascript">
 	
 		$(function() {
+			
+			function getQueryStringObject() {
+			    var a = window.location.search.substr(1).split('&');
+			    if (a == "") return {};
+			    var b = {};
+			    for (var i = 0; i < a.length; ++i) {
+			        var p = a[i].split('=', 2);
+			        if (p.length == 1)
+			            b[p[0]] = "";
+			        else
+			            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+			    }
+			    return b;
+			}
+			
+			var qs = getQueryStringObject();
+			var result = qs.result;
+			if(result=="fail") {
+				alert("이미 신청한 내역이 있습니다.");
+			}
+			
 			document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
 			
 			$("#cancle").click(function() {
@@ -305,8 +330,6 @@
 					return false;
 				}
 			});
-			
-			
 			
 		})
 	</script>

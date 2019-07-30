@@ -178,4 +178,11 @@ public class StudentServiceImpl implements StudentService{
 		
 		return alreadyStatus;
 	}
+	
+	@Override
+	public Student getLeaveStudentByNo(int studentNo) {
+		Student leaveStudent = studentDao.getLeaveStudentByNo(studentNo);
+		
+		return leaveStudent;
+	}
 }

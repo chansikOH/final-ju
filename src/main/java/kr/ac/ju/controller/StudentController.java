@@ -18,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -190,9 +189,11 @@ public class StudentController {
 		
 		Student studentInfo = studentService.getStudentInfoByNo(student.getNo());
 		List<StudentStatus> status = studentService.getStudentStatusByNo(student.getNo());
-		
+		Student leaveStudent = studentService.getLeaveStudentByNo(student.getNo());
+						
 		model.addAttribute("student", studentInfo);
 		model.addAttribute("status", status);
+		model.addAttribute("leaveStudents", leaveStudent);
 		
 		return "student/status/changeStatus";
 	}
@@ -205,21 +206,24 @@ public class StudentController {
 	}
 	
 	@RequestMapping("/status/changeStatus")
-	public String changeStatus(StudentStatus studentStatus, String sta) {
-		/*
-		 * System.out.println("dddddddd"+studentStatus.getStudent().getNo());
-		 * 
-		 * Map<String, Object> map = new HashMap<String, Object>();
-		 * 
-		 * map.put("no", studentStatus.getStudent().getNo()); map.put("division",
-		 * studentStatus.getDivision());
-		 * 
-		 * if(studentService.getStatusCheckByNo(map) != null) { return
-		 * "redirect:chStatus?sta="+sta+"&result=false"; }
-		 */
+	public String changeStatus(StudentStatus studentStatus, String sta, HttpSession session) {
+		Student student = (Student) session.getAttribute("LOGIN_STUDENT");		
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("no", student.getNo());
+		map.put("division", studentStatus.getDivision());
+		
+		StudentStatus queriedStudentStatus = studentService.getStatusCheckByNo(map);
+		if(!"복학".equals(studentStatus.getDivision()) && queriedStudentStatus != null) { 
+			return "redirect:chStatus?sta="+sta+"&result=fail";
+		}
+				
+		studentStatus.setStudent(student);
 		studentService.insertStudentStatus(studentStatus);
 		
 		return "redirect:chStatus?sta="+sta;
 	}
+	
+	
 }

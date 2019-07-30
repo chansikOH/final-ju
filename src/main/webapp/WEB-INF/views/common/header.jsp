@@ -86,7 +86,7 @@
 						<li><a href="#" id="menu1">학적관리</a></li>
 						<li><a href="#" id="menu2">강의</a></li>
 						<li><a href="/ju/student/mypage" id="menu3">개인정보관리</a></li>
-						<li><a href="#" id="menu4">성적</a></li>
+						<li><a href="#" id="menu4">강의평가</a></li>
 						<li><a href="#" id="menu5">등록금</a></li>
 						<li><a href="#" id="menu6">휴/복학 신청</a></li>
 						<li><a href="#" id="menu7">학사일정</a></li>
@@ -150,7 +150,7 @@
 						<li><a href="#" id="menu1">학적관리</a></li>
 						<li><a href="#" id="menu2">강의</a></li>
 						<li><a href="/ju/student/mypage" id="menu3">개인정보관리</a></li>
-						<li><a href="#" id="menu4">성적</a></li>
+						<li><a href="#" id="menu4">강의평가</a></li>
 						<li><a href="#" id="menu5">등록금</a></li>
 						<li><a href="#" id="menu6">휴/복학 신청</a></li>
 						<li><a href="#" id="menu7">학사일정</a></li>
@@ -177,10 +177,6 @@
 				<div id="sub-menu3">
 				</div>
 				<div id="sub-menu4">
-					<ul>
-						<li><a href="#">성적 조회</a></li>
-						<li><a href="#">강의 평가</a></li>
-					</ul>
 				</div>
 				<div id="sub-menu5">
 					<ul>
