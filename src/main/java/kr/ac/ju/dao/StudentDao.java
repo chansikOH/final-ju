@@ -26,4 +26,5 @@ public interface StudentDao {
 	List<StudentStatus> getStudentStatusByNo(int studentNo);
 	Cla getClassByClassNo(int classNo);
 	ClassView getClassViewByStudentNoAndClassNo(Map<String, Object> viewSearch);
+	void updateMyPage(Student student);
 }

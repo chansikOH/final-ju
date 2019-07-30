@@ -12,9 +12,11 @@ public class StudentForm {
 	private Integer no;
 
 	@NotBlank(message = "비밀번호는 필수입력값입니다.")
+	@Pattern(regexp = "^[a-zA-Z0-9]{6,}$", message = "비밀번호는 8글자 이상, 영어 대소문자/숫자만 입력하세요.")
 	private String password;
 
 	@NotBlank(message = "비밀번호 확인은 필수입력값입니다.")
+	@Pattern(regexp = "^[a-zA-Z0-9]{6,}$", message = "비밀번호는 8글자 이상, 영어 대소문자/숫자만 입력하세요.")
 	private String checkpassword;
 	private String birthday;
 
@@ -23,8 +25,8 @@ public class StudentForm {
 	private String email;
 
 	@NotBlank(message = "전화번호는 필수입력값입니다.")
-	@Pattern(regexp = "^0\\d{1,2}-\\d{3,4}-\\d{4}$", message = "유효한 전화번호 형식이 아닙니다.")
-	private String phone;
+	@Pattern(regexp = "^0\\d{1,2}-\\d{3,4}-\\d{4}$", message = "전화번호 형식이 올바르지 않습니다.")
+	private String phoneNumber;
 
 	private String address;
 	private String detailaddress;
@@ -82,12 +84,12 @@ public class StudentForm {
 		this.email = email;
 	}
 
-	public String getPhone() {
-		return phone;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public String getAddress() {

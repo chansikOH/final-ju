@@ -158,4 +158,8 @@ public class StudentServiceImpl implements StudentService{
 		
 		return sources;
 	}
+
+	public void updateMyPage(Student student) {
+		studentDao.updateMyPage(student);
+	}
 }
