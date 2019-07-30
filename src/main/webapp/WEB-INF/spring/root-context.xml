@@ -6,8 +6,10 @@
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xmlns:jee="http://www.springframework.org/schema/jee"
-	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
 		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
@@ -35,5 +37,11 @@
 	<!-- 지정된 패키지에 정의된 매퍼 인터페이스를 검색해서 매퍼객체를 만들고, 스프링빈으로 등록 -->
 	<mybatis-spring:scan base-package="kr.ac.ju.dao"/>
 	
+	<bean id="courseApplicantWebSocketHandler"
+		class="kr.ac.ju.websockethandler.CourseApplicantWebSocketHandler"></bean>
+		
+	<websocket:handlers>
+		<websocket:mapping handler="courseApplicantWebSocketHandler" path="/applicant.do"/>
+	</websocket:handlers>
 		
 </beans>

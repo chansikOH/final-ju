@@ -16,12 +16,16 @@ import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.Student;
 import kr.ac.ju.vo.StudentStatus;
+import kr.ac.ju.websockethandler.CourseApplicantWebSocketHandler;
 
 @Service
 public class StudentServiceImpl implements StudentService{
 
 	@Autowired
 	private StudentDao studentDao;
+	
+	@Autowired
+	private CourseApplicantWebSocketHandler handler;
 	
 	@Override
 	public List<Course> getYearTermsByStudentNo(int studentNo) {
@@ -217,13 +221,19 @@ public class StudentServiceImpl implements StudentService{
 	}
 	
 	@Override
-	public void updateCourseCount(int count, int courseNo) {
+	public void updateCourseCount(int count, int courseNo) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("count", count);
 		map.put("courseNo", courseNo);
 		
 		studentDao.updateCourseCount(map);
+		System.out.println("service - count 증가!");
+		
+		Course course = studentDao.getCourseByCourseNo(courseNo);
+		System.out.println("service - 전체 Course 반환");
+		handler.noticeCourseApplicant(course);
+		System.out.println("service - handler로 course 전달");
 	}
 	
 	@Override

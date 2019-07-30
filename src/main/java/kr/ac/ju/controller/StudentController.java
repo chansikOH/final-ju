@@ -61,7 +61,7 @@ public class StudentController {
 	}
 	
 	@RequestMapping("/course/signupCourse")
-	public String signupCourse(HttpSession session, int cno) {
+	public String signupCourse(HttpSession session, int cno) throws Exception {
 		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
 		CourseAttend courseAttend = new CourseAttend();
 		
@@ -72,13 +72,14 @@ public class StudentController {
 		
 		studentService.insertCourseAttendsByStudentNo(courseAttend);
 		
+		System.out.println("controller - update문 실행");
 		studentService.updateCourseCount(course.getCount() + 1, cno);
 		
 		return "redirect:/student/course/apply";
 	}
 	
 	@RequestMapping("/course/dropCourse")
-	public String dropCourse(HttpSession session, int cno) {
+	public String dropCourse(HttpSession session, int cno) throws Exception {
 		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
 		Course course = studentService.getCourseByCourseNo(cno);
 		
