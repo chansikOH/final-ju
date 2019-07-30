@@ -32,11 +32,10 @@
     .result .file{box-sizing: border-box;}
     .result .attach {padding-left: 41px;}
     
-    .pagination{width: 100%;}
-    .pagination .page{width: 100%; text-align: center;}
-    .pagination a{color: #777; font-size: 15px; padding: 10px;}
-    .pagination .page-active{color: #111; font-weight: bold;}
-    .pagination a:hover{color: #777; text-decoration: none;}
+    .pagination li{text-align: center; width: 100%;}
+    .pagination li a{color: #777; font-size: 15px; padding: 10px;}
+    .page-active{color: #0000ff; font-weight: bold;}
+    .pagination li a:hover{color: #777; text-decoration: none;}
     
     .modal-content table th{text-align: center;}
     .modal-content h3{margin: 25px 0 10px 25px; font-size: 20px; font-weight: bold; color: #555;}
@@ -133,17 +132,24 @@
                         </div>
                         <div class="col-sm-12">
                             <table class="table" id="search-result-table">
+                            	<colgroup>
+                            		<col width="10%">
+                            		<col width="10%">
+                            		<col width="*">
+                            		<col width="15%">
+                            		<col width="15%">
+                            		<col width="10%">
+                            		<col width="10%">
+                            		<col width="10%">
+                            	</colgroup>
                                 <thead>
                                     <tr>
                                         <th>순번</th>
-                                        <th></th>
-                                        <th></th>
                                         <th>학년</th>
                                         <th>학과</th>
                                         <th>학번</th>
                                         <th>이름</th>
                                         <th>학적상태</th>
-                                        <th></th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -155,7 +161,7 @@
                     </div>
                 </div>
                
-                <div class="row pagination">
+                <div class="row">
 					<div class="col-sm-12 page">
 						<ul class="pagination" id="pagination-box">
 							
@@ -194,7 +200,7 @@
     </div>
     
     <!-- 학적상태변경 modal -->
-    <div class="modal fade bs-change-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div id="change-division-modal" class="modal fade bs-change-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -248,22 +254,21 @@
 	               dataType:"json", 
 	               success:function(data) {
 	    	      $("#search-result-table tbody tr").empty();
-	            	  /* student 표현  */
 	            	  var students = data.searchStudents;
+                 	  var pagination = data.pagination;
+                 	  
+	            	  /* student 표현  */
 	                  if(students.length != 0) {
 	                     $.each(students, function(index, stud) {
-	                        var row = "<tr>";
-	                        row += "<td>"+(index+1)+"</td>";
-	                        row += "<td></td>";
-	                        row += "<td></td>";
+	                        var row = "<tr id='row-"+stud.no+"'>";
+	                        row += "<td>"+(pagination.index + index)+"</td>";
 	                        row += "<td>"+stud.grade+"</td>";
 	                        row += "<td>"+stud.major.name+"</td>";
 	                        row += "<td>"+stud.no+"</td>";
 	                        row += "<td>"+stud.name+"</td>";
-	                        row += "<td>"+stud.div+"</td>";
-	                        row += "<td></td>";
+	                        row += "<td>"+stud.division+"</td>";
 	                        row += "<td class='btn-update'><a href='#' id='detail-student' class='btn btn-default' data-toggle='modal' data-target='.bs-detail-modal-lg' data-no="+stud.no+">상세정보</a></td>";
-	                        row += "<td class='btn-update'><a href='#' id='change-student-status' class='btn btn-default' data-toggle='modal' data-target='.bs-change-modal-lg' data-no="+stud.no+">학적상태변경</a></td>";
+	                        row += "<td class='btn-update'><a href='#' id='check-student-status' class='btn btn-default' data-toggle='modal' data-target='.bs-change-modal-lg' data-no="+stud.no+">학적상태변경</a></td>";
 	                        row += "</tr>";
 	                        $("#search-result-table tbody").append(row);
 	                     })
@@ -275,8 +280,6 @@
 	                  }
 	                  
 	                  /* pagination */
-	                 	var pagination = data.pagination;
-	                  
 	                  	var page = pagination.page;		/* 현재 페이지*/
 	                  	var begin = pagination.begin;	/* 화면에 보여질 첫번째 번호 */
 	                  	var end = pagination.end;		/* 화면에 보여질 마지막 번호 */
@@ -342,15 +345,14 @@
     		});
     	});
     	
-    	/*학적상태 변경*/
-    	$("#search-result-table").on('click','#change-student-status',function(event){
+    	/*학적상태변경 확인*/
+    	$("#search-result-table").on('click','#check-student-status',function(event){
     		event.preventDefault();
     		var studentNo = $(this).attr('data-no');
-    		console.log(studentNo);
     		
     		$.ajax({
     			type:"GET",
-    			url:"statuschange.json",
+    			url:"statuscheck.json",
     			data:{studentNo:studentNo},
     			dataType:"json",
     			success: function (stud) {
@@ -359,16 +361,16 @@
                     row += "<td>"+stud.grade+"</td>";
                     row += "<td>"+stud.name+"</td>";
                     row += "<td>"+stud.major.name+"</td>";
-                    row += "<td>"+stud.div+"</td>";
+                    row += "<td>"+stud.division+"</td>";
                     row += "<td class='status-result'>";
-	                    row += "<select class='form-control input-sm'>";
-		                    row += "<option>선택</option>";
-		                    row += "<option>재학</option>";
-		                    row += "<option>휴학</option>";
-		                    row += "<option>졸업</option>";
-		                    row += "<option>자퇴</option>";
-		                    row += "<option>제적</option>";
-	                    row += "</select>";
+                    row += "<select class='form-control input-sm' id='change-student-status'>";
+                    row += "<option value=''>선택</option>";
+                    row += "<option value='재학'>재학</option>";
+                    row += "<option value='휴학'>휴학</option>";
+                    row += "<option value='졸업'>졸업</option>";
+                    row += "<option value='자퇴'>자퇴</option>";
+                    row += "<option value='제적'>제적</option>";
+                    row += "</select>";
                     row += "</td>";
                     row += "</tr>";
                     $(".student-status").html(row); 		
@@ -376,7 +378,25 @@
     		});
     	});
     	
-    	    
+    	
+    	/*학적상태변경 저장*/
+    	$(".result-save").click(function(){
+    		var afterStatus = $("#change-student-status").val(); 
+    		var studentNo = $(".student-status td:first").text(); 
+    		
+    	 	$.ajax({
+    			type:"GET",
+    			url:"statuschange.json",
+    			data:{afterStatus:afterStatus, studentNo:studentNo},
+    			dataType:"json",
+    			success: function (student) {
+    				console.log(student)
+    				$("#row-"+student.no).find('td:eq(5)').text(student.division);
+    				$('#change-division-modal').modal('hide');
+    				alert('학적상태 변경이 완료되었습니다.');
+    			}
+    		}); 
+    	})
     </script>
 </body>
 </html>

@@ -33,6 +33,10 @@ public class Pagination {
 		this.records = records;
 		init();
 	}
+	
+	public int getIndex() {
+		return (getPage() - 1) * size + 1;
+	}
 
 	public int getPage() {
 		return page;

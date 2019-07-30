@@ -10,13 +10,16 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style type="text/css">
-	 .img-rounded {width: 150px; height: 150px;}
+	 .img-rounded {width: 150px; height: 150px; margin-left: 0; margin-bottom: 20px;}
 	 .header {margin: 30px;}
 	 .btn-success {margin: 30px;}
 	 .form-group {width: 750px;}
 	 .input-group {width: 750px; margin: 10px; margin-left: 0; margin-top: 0;}
 	 .shadow {padding:0; box-shadow: 1px 1px 1px 1px #999;}
   	 .submit {margin: 0 auto 15px;}
+  	 
+	 .radio-inline {font-size: 15px; width: 50px;}  	 
+  	 .form-group select {width:174px; height: 22px;} 
 </style>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js""></script>
 </head>
@@ -34,6 +37,9 @@
 	  		</div>
 	  		<div class="col-sm-12 ">
 		  		<form method="post" action="#" enctype="multipart/form-data">
+		  			<div class="form-group">
+		  				<img src="/ju/resources/images/profile.jpg" alt="..." class="img-rounded">
+		  			</div>
 					<div class="form-group">
 						<label>이름</label> 
 						<input type="text" class="form-control" name="name" placeholder="이름을 입력하세요">
@@ -42,14 +48,14 @@
 						<label>성별</label> 
 						<div>
 							<label class="radio-inline">
-							  <input type="radio" name="gender"  checked="checked"> 남자
+							  <input type="radio" name="gender"  value="M" checked="checked"> 남자
 							</label>
 							<label class="radio-inline">
-							  <input type="radio" name="gender"> 여자
+							  <input type="radio" name="gender" value="F"> 여자
 							</label>
 						</div>
-					</div>
-					<div class="form-group">
+					</div> 
+					<div class="form-group"> 
 						<label>생일</label> 
 						<input type="date" class="form-control" name="birth">
 					</div>
@@ -70,23 +76,31 @@
 					    <button type="button" class="btn btn-default" onclick="execPostCode();">우편번호 찾기</button>
 					    <input type="text" name="useraddress" class="form-control" placeholder="도로명주소" readonly="readonly" aria-describedby="basic-addon1">
 					    <input type="text" name="userdetailaddress" class="form-control" placeholder="상세주소" aria-describedby="basic-addon1">
-				    </div>					
-					<div class="form-group">
-						<label>편입여부</label> 
+				    </div>		
+				    <div class="form-group">
+						<label>학과</label> 
 						<div>
-							<label class="radio-inline"> <input type="radio" name="tranfer" "> N </label>
-							<label class="radio-inline"> <input type="radio" name="tranfer checked="checked"> Y</label>
+					  	  	<select name="major">
+		                        <option value="2">컴퓨터공학과</option>
+	                  	 	</select>	
 						</div>
 					</div>
 					<div class="form-group">
-						<label>학년</label> 
-							<select class="form-control" name="grade">
-							  <option>1</option>
-							  <option>2</option>
-							  <option>3</option>
-							  <option>4</option>
-							</select>
-					</div>	
+						<label>편입여부</label> 
+						<div>
+							<label class="radio-inline">
+							  <input type="radio" name="tranfer" value="N"  checked="checked"> N
+							</label>
+							<label class="radio-inline">
+							  <input type="radio" name="tranfer" value="Y" > Y
+							</label>
+					  	  	<select name="grade" style="display: none;">
+	                            <option value="2">2학년</option>
+	                            <option value="3">3학년</option> 
+	                            <option value="4">4학년</option>
+                            </select>	
+						</div>
+					</div>
 					<div class="form-group">
 						<label>프로필사진</label> <input type="file" class="form-control" name="photofile">
 			 		</div>
@@ -99,15 +113,28 @@
 	</div>
 </div>
 	<script type="text/javascript">
+	
+	/* 주소 API */
 	function execPostCode() {
         new daum.Postcode({
            oncomplete: function(data) {
-              $('[name=userpostalcode]').val(data.zonecode); // 우편번호 (5자리)
+              $('[name=userpostalcode]').val(data.zonecode);       // 우편번호 (5자리)
               $('[name=useraddress]').val(data.address);
               $('[name=userdetailaddress]').val(data.buildingName);
            }
            }).open();
        }
+	
+	/* grade select창 */
+	$("[name=tranfer]").click(function(){
+		var istransfer = $(this).val();
+		
+		if(istransfer === 'Y'){
+			$("[name=grade]").removeAttr('style');
+		} else {
+			$("[name=grade]").attr('style','display: none');
+		}
+	})
 	</script>
 </body>
 </html>

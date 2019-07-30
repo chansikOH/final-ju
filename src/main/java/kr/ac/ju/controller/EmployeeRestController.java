@@ -85,11 +85,24 @@ public class EmployeeRestController {
 		return student; 
 	}
 	
-	@GetMapping("/stud/statuschange.json")
+	@GetMapping("/stud/statuscheck.json")
 	@ResponseBody
-	public Student statuschange(@RequestParam(value = "studentNo", required = true) int studentNo) {
+	public Student statuscheck(@RequestParam(value = "studentNo", required = true) int studentNo) {
 		Student student = employeeService.getStudentByNo(studentNo);
 		return student; 
+	}
+	
+	@GetMapping("/stud/statuschange.json")
+	@ResponseBody
+	public Student statuschange (@RequestParam(value = "studentNo", required = true) int studentNo, 
+							  @RequestParam(value = "afterStatus", required = true) String afterStatus ) {
+		
+		Student student = employeeService.getStudentByNo(studentNo);
+		student.setDivision(afterStatus);
+		
+		employeeService.updateStudentStatusByNo(student); 
+		
+		return student;
 	}
 	
 	
