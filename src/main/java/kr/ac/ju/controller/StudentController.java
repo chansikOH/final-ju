@@ -65,7 +65,6 @@ public class StudentController {
 		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
 		CourseAttend courseAttend = new CourseAttend();
 		
-		// CourseAttend에 20181001번 학생으로 과목 추가.
 		Course course = studentService.getCourseByCourseNo(cno);
 		
 		courseAttend.setStudent(student);
@@ -73,8 +72,19 @@ public class StudentController {
 		
 		studentService.insertCourseAttendsByStudentNo(courseAttend);
 		
-		// Course에 신청인원 증가
 		studentService.updateCourseCount(course.getCount() + 1, cno);
+		
+		return "redirect:/student/course/apply";
+	}
+	
+	@RequestMapping("/course/dropCourse")
+	public String dropCourse(HttpSession session, int cno) {
+		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
+		Course course = studentService.getCourseByCourseNo(cno);
+		
+		studentService.deleteCourseAttendsByCourseNo(student.getNo(), cno);
+		
+		studentService.updateCourseCount(course.getCount() - 1, cno);
 		
 		return "redirect:/student/course/apply";
 	}

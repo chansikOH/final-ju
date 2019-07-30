@@ -34,4 +34,5 @@ public interface StudentDao {
 	StudentStatus getStatusCheckByNo(Map<String, Object> map);
 	void insertCourseAttendsByStudentNo(CourseAttend courseAttend);
 	void updateCourseCount(Map<String, Object> map);
+	void deleteCourseAttendsByCourseNo(Map<String, Object> map);
 }

@@ -470,4 +470,11 @@
 		where course_no = #{courseNo}
 	</update>
 	
+	<delete id="deleteCourseAttendsByCourseNo" parameterType="map">
+		delete
+		from course_attends
+		where course_no = #{courseNo}
+			and student_no = #{studentNo}
+	</delete>
+	
 </mapper>

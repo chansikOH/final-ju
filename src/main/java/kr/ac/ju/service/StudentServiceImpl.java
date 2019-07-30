@@ -225,4 +225,14 @@ public class StudentServiceImpl implements StudentService{
 		
 		studentDao.updateCourseCount(map);
 	}
+	
+	@Override
+	public void deleteCourseAttendsByCourseNo(int studentNo, int courseNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("studentNo", studentNo);
+		map.put("courseNo", courseNo);
+		
+		studentDao.deleteCourseAttendsByCourseNo(map);
+	}
 }

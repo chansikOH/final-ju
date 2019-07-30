@@ -148,7 +148,7 @@
 												<td>${course.professor.name }</td>
 												<td><fmt:formatDate value="${course.createDate }"/></td>
 												<td>
-													<a href="dropCourse" class="btn btn-default">취소</a>
+													<a href="dropCourse?cno=${course.no }" class="btn btn-default">취소</a>
 												</td>
 											</tr>
 										</c:forEach>

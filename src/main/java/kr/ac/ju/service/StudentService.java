@@ -28,4 +28,5 @@ public interface StudentService {
 	StudentStatus getStatusCheckByNo(Map<String, Object> map);
 	void insertCourseAttendsByStudentNo(CourseAttend courseAttend);
 	void updateCourseCount(int count, int courseNo);
+	void deleteCourseAttendsByCourseNo(int studentNo, int courseNo);
 }
