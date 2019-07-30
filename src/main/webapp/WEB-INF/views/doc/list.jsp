@@ -67,58 +67,24 @@
 								<th>결재번호</th>
 								<th>제목</th>
 								<th>파일</th>
-								<th>작성지</th>
+								<th>작성자</th>
 								<th>결재자</th>
 								<th>등록일</th>
 								<th>결재상태</th>
 							</tr>
 						</thead>
 						<tbody>
+						<c:forEach var="doc" items="${docs }">
 							<tr>
-								<td><input type="checkbox" name="" />100</td>
-								<td><a href="">보고서</a></td>
-								<td>첨부파일 유무상태</td>
-								<td>박인재</td>
-								<td>부장</td>
-								<td>2018/1/20</td>
-								<td>대기중</td>
+								<td><input type="checkbox" name="" />${doc.DOC_NO }</td>
+								<td><a href="/ju/doc/draft/update">${doc.DRAFT_TITLE }</a></td>
+								<td>${doc.DOC_FILE_YN }</td>
+								<td>${doc.EMPLOYEE_NAME }</td>
+								<td>${doc.PROFESSOR_NAME }</td>
+								<td>${doc.DOC_CREATE_DATE }</td>
+								<td>${doc.DOC_STATE }</td>
 							</tr>
-							<tr>
-								<td><input type="checkbox" name="" />200</td>
-								<td><a href="">보고서</a></td>
-								<td>첨부파일 유무상태</td>
-								<td>박재상</td>
-								<td>부장</td>
-								<td>2018/2/20</td>
-								<td>진행중</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="" />300</td>
-								<td><a href="">보고서</a></td>
-								<td>첨부파일 유무상태</td>
-								<td>박ㅇㅇ</td>
-								<td>차장</td>
-								<td>2018/3/20</td>
-								<td>진행중</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="" />400</td>
-								<td><a href="">보고서</a></td>
-								<td>첨부파일 유무상태</td>
-								<td>박지수</td>
-								<td>차장</td>
-								<td>2018/5/20</td>
-								<td>반려</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="" />500</td>
-								<td><a href="">보고서</a></td>
-								<td>첨부파일 유무상태</td>
-								<td>박건우</td>
-								<td>차장</td>
-								<td>2018/7/10</td>
-								<td>완료</td>
-							</tr>
+						</c:forEach>
 						</tbody>
 					</table>
 				</div>

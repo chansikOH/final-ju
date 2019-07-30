@@ -5,18 +5,44 @@
   
 <mapper namespace="kr.ac.ju.dao.DocDao">
 
-	<!-- 직원 결재문 등록 insert -->
-	<!-- 직원 휴가계획서 등록 insert -->
-	<!-- 직원 결재문 등록 insert -->
-	
-	<!-- 직원 로그인시 모든 결재 정보 조회  -->
-	<!-- <select id="getEmployeeDocNo" parameterType="int" resultType="int">
-		select *
-		from docs A, drafts B
-		where A.doc_no = B.docs_no
-		and A.employee_no = #{value}
-	</select> -->
-	
-	<!-- 교수 로그인시 모든 결재 정보 조회 -->
+	<!-- 직원 로그인 기안서, 휴가계획서, 퇴직서 정보 조회  -->
+	<select id="getDocEmployeeByNo" parameterType="int" resultType="hashmap">
+		SELECT 
+			A.DOC_NO, B.DRAFT_TITLE, A.DOC_FILE_YN, C.EMPLOYEE_NAME, D.PROFESSOR_NAME, A.DOC_CREATE_DATE, A.DOC_STATE
+		FROM 
+			DOCS A, DRAFTS B, EMPLOYEES C, PROFESSORS D
+		WHERE 
+			A.DOC_NO = B.DOCS_NO
+		AND 
+			A.EMPLOYEE_NO = C.EMPLOYEE_NO
+		AND 
+			A.DOC_FINAL_PERSON = D.PROFESSOR_NO
+		AND 
+			A.EMPLOYEE_NO = #{value}
+		UNION
+		SELECT 
+			A.DOC_NO, '휴가신청서', A.DOC_FILE_YN, C.EMPLOYEE_NAME, D.PROFESSOR_NAME,  A.DOC_CREATE_DATE, A.DOC_STATE
+		FROM 
+			DOCS A, EMPLOYEES C, PROFESSORS D
+		WHERE 
+			A.EMPLOYEE_NO = C.EMPLOYEE_NO
+		AND 
+			A.DOC_FINAL_PERSON = D.PROFESSOR_NO
+		AND 
+			A.EMPLOYEE_NO = #{value}
+		UNION
+		SELECT 
+			A.DOC_NO, '퇴직신청서', A.DOC_FILE_YN, B.EMPLOYEE_NAME, C.PROFESSOR_NAME, A.DOC_CREATE_DATE, A.DOC_STATE 
+		FROM 
+			DOCS A, EMPLOYEES B, PROFESSORS C
+		WHERE 
+			A.EMPLOYEE_NO = B.EMPLOYEE_NO
+		AND 
+			A.DOC_FINAL_PERSON = C.PROFESSOR_NO
+		AND 
+			A.EMPLOYEE_NO = #{value}
+	</select>
+	 
+	<!-- 직원 기안서(보고서), 휴가계획서, 퇴직서 등록 -->
 	
 </mapper>
