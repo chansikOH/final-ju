@@ -10,6 +10,7 @@ import kr.ac.ju.dao.ProfessorDao;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CoursePart;
 import kr.ac.ju.vo.Professor;
+import kr.ac.ju.vo.Test;
 
 @Service
 public class ProfessorServiceImpl implements ProfessorService{
@@ -62,8 +63,12 @@ public class ProfessorServiceImpl implements ProfessorService{
 	}
 	@Override
 	public int getRows(Map<String, Object> param) {
-		// TODO Auto-generated method stub
 		return professorDao.getRows(param);
+	}
+
+	@Override
+	public void addTest(Test test) {
+		professorDao.addTest(test);
 	}
 	
 }

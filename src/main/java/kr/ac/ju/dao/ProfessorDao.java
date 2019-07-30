@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CoursePart;
 import kr.ac.ju.vo.Professor;
+import kr.ac.ju.vo.Test;
 
 public interface ProfessorDao {
 
@@ -20,4 +21,6 @@ public interface ProfessorDao {
 	
 	List<Course> searchByOptions(Map<String, Object> param);
 	int getRows(Map<String, Object> param);
+	
+	void addTest(Test test);
 }

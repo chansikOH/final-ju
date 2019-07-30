@@ -54,6 +54,9 @@
 	    
 	    .bs-example-modal-lg .save-btn{text-align: right; padding: 12px 20px 0px;}
 	    .bs-example-modal-lg .save-btn button{padding: 5px 15px;}
+	    
+	    .text-center{margin: 0 auto;}
+	    .pagination{width: auto;}
 	</style>
 </head>
 <body>
@@ -136,9 +139,9 @@
                     </form>
                     <div class="row result">
                         <div class="col-sm-12">
-                            <p>총 <span>${counts }</span>건 조회</p>
+                            <p>총 <span class="search-count">0</span>건 조회</p>
                         </div>
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 course-detail-modal">
                             <table class="table" id="course-list-table">
                                 <thead>
                                     <tr>
@@ -159,7 +162,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach varStatus="loop" var="course" items="${courses }">
+                               <%--  <c:forEach varStatus="loop" var="course" items="${courses }">
                                     <tr>
                                         <td class="search-count" data-count="${loop.count }">${loop.count }</td>
                                         <td class="abc" data-value="${course.no }">${course.no }</td>
@@ -195,22 +198,20 @@
                                         <td>${course.quota }</td>
                                         <td>${course.passYn }</td>
                                         <td class="btn-update">
-                                            <a href="#" class="btn btn-default" data-toggle="modal" data-target=".bs-test-modal-lg">이동</a>
+                                            <a href="#" class="btn btn-default test-detail" data-value="${course.no }">이동</a>
                                         </td>
                                         <td class="btn-update"><a href="classesupdate.html" class="btn btn-default">강의수정</a></td>
                                     </tr>
-                                 </c:forEach>
+                                 </c:forEach> --%>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                <div class="row pagination">
                     <div class="col-sm-12 text-center">
 						<ul class="pagination" id="pagination-box">
 							
 						</ul>
-					</div>
                 </div>
             </div>
         </div>
@@ -220,7 +221,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <h3>교과목정보 조회</h3>
-                <table class="table course-detail-modal">
+                <table class="table course-detail-show">
                     <thead>
                         <tr>
                             <th>교과목번호</th>
@@ -248,13 +249,7 @@
                             </tr>
                         </thead>
                         <tbody>
-								<%-- <tr>
-											<td>${coursepart.no }</td>
-											<td>${coursepart.name }</td>
-											<td>${coursepart.week }</td>
-											<td class="file-control"><input type="file"
-												class="form-control input-sm"></td>
-								</tr> --%>
+								
                         </tbody>
 						<tfoot>
 							<tr>
@@ -270,12 +265,12 @@
         </div>
     </div>
     <!-- Large modal -->
-    <div class="modal fade bs-test-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div id="course-test-modal" class="modal fade bs-test-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <h3>시험 출제</h3>
-                <form method="post" action="">
-                    <table class="table">
+                <form method="post" action="addtest" enctype="multipart/form-data">
+                    <table class="table course-test">
                         <thead>
                             <tr>
                                 <th>교과목번호</th>
@@ -288,29 +283,7 @@
                            
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>10000</td>
-                                <td>전공</td>
-                                <td>컴퓨터공학개론</td>
-                                <td>컴퓨터공학과</td>
-                                <td class="test-select">
-                                    <select class="form-control input-sm">
-                                        <option value="">중간</option>
-                                        <option value="">기말</option>
-                                    </select>
-                                </td>
-                                <td class="test-file"><input type="file" class="form-control input-sm"></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td class="test-btn">
-                                    <button type="submit" class="btn btn-default">저장</button>
-                                </td>
-                            </tr>
+                            
                         </tbody>
                     </table>
                 </form>
@@ -318,17 +291,17 @@
         </div>
     </div>
     <script type="text/javascript">
-    	
-    $("#search-button").click(function(){
-    	
-    		var searchYear = $("#search-year").val();    
-    		var searchTerm = $("#search-term").val();            
-    		var searchCredit = $("#search-credit").val();        
-    		var searchPart = $("#search-part").val();    
-    		var searchCourseNum = $("#search-courseNum").val();  
-    		var searchCourseName = $("#search-courseName").val();	
-    		var searchPageNo = $("#page-no").val();
-    	
+    
+    
+    function searchCourse(searchPageNo) {
+    	event.preventDefault();
+		var searchYear = $("#search-year").val();    
+		var searchTerm = $("#search-term").val();            
+		var searchCredit = $("#search-credit").val();        
+		var searchPart = $("#search-part").val();    
+		var searchCourseNum = $("#search-courseNum").val();  
+		var searchCourseName = $("#search-courseName").val();	
+		
     	$.ajax({
     		type : "GET",
     		url :"searchcourse",
@@ -336,12 +309,12 @@
     		success : function(data){
     			$("#course-list-table tbody").empty();
     			var courData = data.courseDatas;
-    			
+    			var searchCounts = data.count;
     			
     			$.each(courData, function(index, course){
     				
     				var row = "<tr>";
-    				row += "<td></td>"
+    				row += "<td>"+(index+1)+"</td>"
     				row += "<td>"+course.no+"</td>";
     				row += "<td>"+course.mustYn+"</td>";
     				row += "<td>"+course.year+"</td>";
@@ -353,11 +326,10 @@
     				row += "<td>"+course.count+"</td>";
     				row += "<td>"+course.quota+"</td>";
     				row += "<td>"+course.passYn+"</td>";
-    				row += "<td class='btn-update'><a href='#' class='btn btn-default' data-toggle='modal' data-target='.bs-test-modal-lg'>이동</a></td>";
+    				row += "<td class='btn-update'><a href='#' class='btn btn-default test-detail' data-value='"+course.no+"'>이동</a></td>";
     				row += "<td class='btn-update'><a href='classesupdate.html' class='btn btn-default'>강의수정</a></td>";
     				row += "</tr>"
     				$("#course-list-table tbody").append(row);
-    				
     				
     			})
     			
@@ -368,31 +340,44 @@
    					row += "<li><a href='' data-pno='"+(pagination.page -1 )+"'>이전</li>";
    				}
    				for (var i=pagination.begin; i<=pagination.end; i++) {
-   					row += "<li><a href=''>"+i+"</li>";
+   					if (pagination.page == i) {
+   						row += "<li class='active'><a href='' data-pno='"+i+"'>"+i+"</li>";
+   					} else {
+	   					row += "<li><a href='' data-pno='"+i+"'>"+i+"</li>";
+   					}
    				}
-   				$("#pagination-box").html(row);	
    				if (!pagination.last) {
    					row += "<li><a href='' data-pno='"+(pagination.page +1 )+"'>다음</li>";
    				}
-    				
+   				
+   				$("#pagination-box").html(row);	
+   				$(".search-count").html(searchCounts);
     		}
-    		
     	});
+    }
     	
+    $("#search-button").on("click",function(event){
+    	searchCourse(1)
     });
     	
+    $('#pagination-box').on('click', 'a', function() {
+    	searchCourse($(this).attr('data-pno'));
+    	return false;
+    });
     
     /* 모달 상세조회 */
-    	$('.course-detail').click(function(){
-	    	var courseNo = $(this).attr('data-value');
+    	$('.course-detail-modal').on("click",".course-detail", function(event){
+    		event.preventDefault();
+	    	var no = $(this).attr('data-value');
 	    	
 	    	$.ajax({
 	    		type:"GET",
 	    		url: "listdetail",
-	    		data : {no:courseNo},
+	    		data : {courseNo:no},
 	    		dataType:"json",
 	    		success: function(data) {
-	    			$("#course-detail-modal .course-detail-modal tbody").empty();
+	    			
+	    			$("#course-detail-modal .course-detail-show tbody").empty();
 	    			$("#course-detail-modal .coursepart-modal tbody").empty();
 	    			
     				var course = data.courseDetail;
@@ -406,7 +391,7 @@
     				courseRow += "<td>"+course.professor.name+"</td>";
     				courseRow += "<td class='move-btn'><a href='#' class='btn btn-default'>보기</a></td>";
     				courseRow += "<td class='move-btn'><a href='#' class='btn btn-default'>수정</a></td>";
-    				$("#course-detail-modal .course-detail-modal tbody").append(courseRow); 
+    				$("#course-detail-modal .course-detail-show tbody").append(courseRow); 
 	    				
 	    			$.each(parts, function(index, part){
 	    				var partRow = "<tr>";
@@ -416,8 +401,6 @@
 	    				partRow += "<td class='file-control'><input type='file' class='form-control input-sm'></td>";
 	    				$("#course-detail-modal .coursepart-modal tbody").append(partRow);
 	    			});
-	    			
-	    			
 	    		}
 	    	});
 	    	
@@ -426,8 +409,43 @@
 	 		$("#course-detail-modal").on('hide', function(){
 	 			
 	 		});
+	 		
     	})
-    	
+    	$(".course-detail-modal").on("click", ".test-detail", function(event){
+    		event.preventDefault();
+    		var no = $(this).attr('data-value');
+    		$.ajax({
+    			type:"GET",
+    			url:"listdetail",
+    			data: {courseNo:no},
+    			dataType: "json",
+    			success:function(data){
+    				$("#course-test-modal .course-test tbody").empty();
+    				
+    				
+    				var course = data.courseDetail;
+    				
+    				var row="<tr>";
+    				row += "<td>"+course.no+"<input type='hidden' name='courseNo' value='"+course.no+"'></td>";
+    				row += "<td>"+course.mustYn+"</td>";
+    				row += "<td>"+course.name+"</td>";
+    				row += "<td>"+course.major.name+"</td>";
+    				row += "<td class='test-select'><select class='form-control input-sm' name='status'><option value='M'>중간</option><option value='F'>기말</option></select></td>";
+    				row += "<td class='test-file'><input type='file' class='form-control input-sm' name='testfile'></td>";
+    				row += "</tr>";
+    				row += "<tr>";
+    				row += "<td colspan='5'></td>";
+    				row += "<td class='test-btn'><button type='submit' class='btn btn-default'>저장</td>"
+    				$("#course-test-modal .course-test tbody").append(row);
+    			}
+    		})
+    		
+	 		$('#course-test-modal').modal('show');
+	 		return false;
+	 		$("#course-test-modal").on('hide', function(){
+	 			
+	 		});
+    	})
     </script>
 </body>
 </html>
