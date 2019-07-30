@@ -169,17 +169,14 @@
 	
 	<script type="text/javascript">
 		$(function() {
-			console.log("1");
 			var webSocket = new WebSocket("ws://localhost/ju/applicant.do");
 			
-			console.log("2");
 			webSocket.onmessage = function(event) {
 				var code = event.data.split(":")[0];
 				var cnt = event.data.split(":")[1];
 				
 				$('#course-count-' + code).text(cnt);
 			}
-			console.log("3");
 		})
 	</script>
 </body>

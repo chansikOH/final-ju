@@ -18,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,7 +71,6 @@ public class StudentController {
 		
 		studentService.insertCourseAttendsByStudentNo(courseAttend);
 		
-		System.out.println("controller - update문 실행");
 		studentService.updateCourseCount(course.getCount() + 1, cno);
 		
 		return "redirect:/student/course/apply";
@@ -259,5 +257,10 @@ public class StudentController {
 		studentService.insertStudentStatus(studentStatus);
 		
 		return "redirect:chStatus?sta="+sta;
+	}
+	
+	@RequestMapping("/notice/list")
+	public String studentNoticeList() {
+		return "student/notice/noticelist";
 	}
 }

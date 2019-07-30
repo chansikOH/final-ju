@@ -36,15 +36,9 @@
 			</div>
 			<div class="col-sm-10">
 				<h1>수강조회</h1>
-				<!-- <div class="row">
-					<div class="col-sm-12">
-						<span><strong>[학기별성적]</strong></span>
-					</div>
-				</div> -->
-				
 				<div class="row">
 					<div class="col-sm-2">
-						<span><strong>[학기별성적]</strong></span>
+						<span style="font-size: 20px; color: #333;"><strong>학기별성적</strong></span>
 					</div>
 					<div class="col-sm-5">
 						<label>년도-학기</label>

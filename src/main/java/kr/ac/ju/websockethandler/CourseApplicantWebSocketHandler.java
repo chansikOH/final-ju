@@ -28,14 +28,10 @@ public class CourseApplicantWebSocketHandler extends TextWebSocketHandler{
 			System.out.println(session);
 			try {
 				// 클라이언트에게 전송할 메세지를 TextMessage 객체로 만든다.
-				System.out.println("handler - try");
 				TextMessage message = new TextMessage(course.getNo() + ":" + course.getCount());
-				System.out.println(message);
 				// TextMessage를 클라이언트에게 전송한다.
 				session.sendMessage(message);
-				System.out.println("handler - 세션으로 메세지 전송 완료!");
 			}catch(IOException e) {
-				System.out.println("handler - catch");
 				// 전송중 에러가 발생하는 해당 클라이언트와 통신을 담당하는 WebSocketSession 객체를 삭제한다.
 				iterator.remove();
 			}
@@ -52,7 +48,6 @@ public class CourseApplicantWebSocketHandler extends TextWebSocketHandler{
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		// 연결요청이 접수되면 해당 클라이언트와 통신을 담당하는 WebSocketSession 객체가 전달된다.
 		// WebSocketSession객체를 Set에 담아둔다.
-		System.out.println("handler - 세션 연결!");
 		sessions.add(session);
 	}
 	

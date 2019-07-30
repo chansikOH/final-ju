@@ -228,12 +228,9 @@ public class StudentServiceImpl implements StudentService{
 		map.put("courseNo", courseNo);
 		
 		studentDao.updateCourseCount(map);
-		System.out.println("service - count 증가!");
 		
 		Course course = studentDao.getCourseByCourseNo(courseNo);
-		System.out.println("service - 전체 Course 반환");
 		handler.noticeCourseApplicant(course);
-		System.out.println("service - handler로 course 전달");
 	}
 	
 	@Override

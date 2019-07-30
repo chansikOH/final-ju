@@ -90,7 +90,7 @@
 						<li><a href="#" id="menu5">등록금</a></li>
 						<li><a href="#" id="menu6">휴/복학 신청</a></li>
 						<li><a href="#" id="menu7">학사일정</a></li>
-						<li><a href="#" id="menu8">공지사항</a></li>
+						<li><a href="/ju/student/notice/list" id="menu8">공지사항</a></li>
 					</ul>
 				</div>
 			</div>
