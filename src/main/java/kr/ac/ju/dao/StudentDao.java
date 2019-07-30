@@ -30,4 +30,6 @@ public interface StudentDao {
 	void deleteStudentStatus(int statusNo);
 	void insertStudentStatus(StudentStatus studentStatus);
 	StudentStatus getStatusCheckByNo(Map<String, Object> map);
+	void updateClassView(ClassView classView);
+	ClassView getClassViewByClassViewNo(int viewNo);
 }

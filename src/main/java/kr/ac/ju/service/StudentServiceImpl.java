@@ -178,4 +178,14 @@ public class StudentServiceImpl implements StudentService{
 		
 		return alreadyStatus;
 	}
+	
+	@Override
+	public void updateClassView(int viewNo, String currentTime, int percentage) {
+		ClassView classView = studentDao.getClassViewByClassViewNo(viewNo);
+		classView.setTime(currentTime);
+		classView.setStatusYn("Y");
+		classView.setPercentage(percentage);
+		
+		studentDao.updateClassView(classView);
+	}
 }

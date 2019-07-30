@@ -386,6 +386,7 @@
 			student_no "student.no",
 			class_no "cla.no",
 			view_time time,
+			view_status_yn statusYn,
 			view_percentage percentage,
 			view_create_date createDate,
 			course_no "course.no"
@@ -418,6 +419,32 @@
 		where student_no = #{no}
 			and status_div = #{division}
 			and pass_yn = 'W'
+	</select>
+	
+	<update id="updateClassView" parameterType="classview">
+		update class_views
+		set
+			view_time = #{time},
+			view_status_yn = #{statusYn},
+			view_percentage = #{percentage}
+		where
+			class_view_no = #{no}
+	</update>
+	
+	<select id="getClassViewByClassViewNo" parameterType="int" resultType="classView">
+		select
+			class_view_no no,
+			student_no "student.no",
+			class_no "cla.no",
+			view_time time,
+			view_status_yn statusYn,
+			view_percentage percentage,
+			view_create_date createDate,
+			course_no "course.no"
+		from
+			class_views
+		where
+			class_view_no = #{value}
 	</select>
 	
 </mapper>

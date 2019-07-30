@@ -24,4 +24,5 @@ public interface StudentService {
 	void deleteStudentStatus(int statusNo);
 	void insertStudentStatus(StudentStatus studentStatus);
 	StudentStatus getStatusCheckByNo(Map<String, Object> map);
+	void updateClassView(int viewNo, String currentTime, int percentage);
 }

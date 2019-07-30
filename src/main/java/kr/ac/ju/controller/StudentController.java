@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.ju.form.StudentForm;
@@ -163,6 +164,21 @@ public class StudentController {
 		model.addAttribute("sources", sources);
 		
 		return "student/course/courseview";
+	}
+	
+	@RequestMapping("/course/updateview")
+	public String updateview(HttpSession session, @RequestParam("cno") int courseNo, @RequestParam("clno") int classNo,
+							@RequestParam("viewno") int viewNo, @RequestParam("current") String currentTime, @RequestParam("percent") int percentage) {
+		
+		studentService.updateClassView(viewNo, currentTime, percentage);
+		
+		return "redirect:courseview?cno="+courseNo+"&clno="+classNo;
+	}
+	
+	@RequestMapping("/course/realtimeupdate")
+	@ResponseBody
+	public void realtimeupdate(@RequestParam("viewno") int viewNo, @RequestParam("current") String currentTime, @RequestParam("percent") int percentage) {
+		studentService.updateClassView(viewNo, currentTime, percentage);
 	}
 	
 	@RequestMapping("/records")

@@ -108,7 +108,9 @@
 		<div class="col-sm-9 left-box">
 			<div class="row video-wrapper">
 				<div class="col-sm-12 video-box">
-					<video id="video">
+					<video id="video" data-time="${sources.classView.time }"
+									  data-status="${sources.classView.statusYn }"
+									  data-percentage="${sources.classView.percentage }">
 						<source src="/ju/resources/video/${sources.cla.videoName }" type="video/mp4">
 					</video>
 				</div>
@@ -135,7 +137,13 @@
 				<c:forEach var="classInfo" items="${sources.classInfos }" varStatus="loop">
 					<tr>
 						<th>제 ${loop.count } 강</th>
-						<td><a href="courseview?cno=${classInfo.COURSENO }&clno=${classInfo.CLASSNO}" class="list ${sources.cla.no eq classInfo.CLASSNO ? 'active' : '' }" data-per="${classInfo.PERCENTAGE }">${classInfo.CLASSNAME }</a></td>
+						<td>
+						<a href="courseview?cno=${classInfo.COURSENO }&clno=${classInfo.CLASSNO}" class="list ${sources.cla.no eq classInfo.CLASSNO ? 'active' : '' }" 
+								data-per="${classInfo.PERCENTAGE }"
+								data-cno="${classInfo.COURSENO }"
+								data-clno="${classInfo.CLASSNO }"
+								data-viewno="${classInfo.VIEWNO }">${classInfo.CLASSNAME }</a>
+						</td>
 					</tr>
 				</c:forEach>
 				</tbody>
@@ -145,6 +153,7 @@
 </div>
 <script type="text/javascript">
 $(function() {
+	
 	var prevPer = 100;
 	$('.list').each(function(index, data) {
 		var currPer = $(this).attr('data-per');
@@ -166,10 +175,6 @@ $(function() {
 			alert('이전 강의를 85% 이상 수강해야만 수강 가능합니다.');
 		}
 	});
-	
-	if($('#video').get(0).ended) {
-		
-	}
 	
 	$('#play').click(function() {
 		if($('#video').get(0).paused) {
@@ -206,22 +211,45 @@ $(function() {
 		if (sec < 3600) {
 			res = pad(parseInt(sec / 60 % 60)) + ":" + pad(sec % 60);
 		} else {
-			res = pad(parseInt(sec / (60*60))) + ":" + pad(parseInt(sec / 60 % 60)) + ":" + pad(sec % 60);
+			res = pad(parseInt(sec / (60*60))) + ':' + pad(parseInt(sec / 60 % 60)) + ':' + pad(sec % 60);
 		}
 		return res;
 	}
 	
 	$('#video').on('loadedmetadata', function() {
+		if($(this).attr('data-status') == 'Y' && $(this).attr('data-percentage') != 100) {
+			var time = $(this).attr('data-time');
+			$(this).get(0).currentTime = time;
+		}
+		
 		$('#duration').text(' / '+changeTime(Math.floor($(this).get(0).duration)));
 	});
 	
 	$('#video').on('timeupdate', function() {
 		var current = $(this).get(0).currentTime;
 		var max = $(this).get(0).duration;
-		var percent = current / max*100;
+		var percent = Math.floor(current / max*100);
 		$('#currentTime').text(changeTime(Math.floor(current)));
 		$('#cBar').css('width', percent+'%');
-		$('#percent').text('진행도 ' + Math.floor(percent) + '%');
+		$('#percent').text('진행도 ' + percent + '%');
+		
+		var viewno = $('.active').attr('data-viewno');
+		if($(this).get(0).ended) {
+			$('#play').attr('src', '/ju/resources/images/play.png');
+			
+			var cno = $('.active').attr("data-cno");
+			var nextClno = $('.active').parents('tr').next().find('.list').attr('data-clno');
+
+			window.location.href = "http://localhost/ju/student/course/updateview?cno="+cno+"&clno="+nextClno+"&viewno="+viewno+"&current="+current+"&percent="+percent;
+		}
+		
+		if($(this).attr('data-percentage') != 100) {
+			$.ajax({
+				type:'get',
+				url:'realtimeupdate',
+				data: {viewno:viewno, current:current, percent:percent}
+			});
+		}
 	});
 })
 </script>
