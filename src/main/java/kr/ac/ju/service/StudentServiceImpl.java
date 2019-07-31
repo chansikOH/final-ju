@@ -73,17 +73,24 @@ public class StudentServiceImpl implements StudentService {
 		return studentDao.getCourseByCourseNo(courseNo);
 	}
 
+	/*
+	 * 작성자 : 오찬식
+	 * 설명 : 현재 연도 및 학기에 특정 학생이 수강하는 모든 교과목들을 제공하는 메소드
+	 */
 	@Override
 	public List<Course> getAllCoursesWithProfessorAndMajorByStudentNo(int studentNo) {
 		int year = 0;
 		int term = 0;
 
+		// 현재 시간의 연도와 월을 따로 추출
 		long currentTime = System.currentTimeMillis();
 		SimpleDateFormat currentYear = new SimpleDateFormat("yyyy");
 		SimpleDateFormat currentMonth = new SimpleDateFormat("MM");
 
+		// 현재 연도를 정의
 		year = Integer.parseInt(currentYear.format(new Date(currentTime)));
 
+		// 현재 월이 3~8월이면 1학기, 1,2,9~12월이면 2학기로 정의 
 		int nowMonth = Integer.parseInt(currentMonth.format(new Date(currentTime)));
 		if (nowMonth >= 3 && nowMonth <= 8) {
 			term = 1;
@@ -91,25 +98,34 @@ public class StudentServiceImpl implements StudentService {
 			term = 2;
 		}
 
+		// 쿼리문에 parameterType으로 보낼 맵을 정의하고 특정 학생번호, 연도, 학기를 맵에 주입
 		Map<String, Object> search = new HashMap<String, Object>();
 		search.put("studentNo", studentNo);
 		search.put("year", year);
 		search.put("term", term);
 
+		// 생성된 맵을 매개변수로 하여 뽑은 교과목들을 반환
 		return studentDao.getAllCoursesWithProfessorAndMajorByStudentNo(search);
 	}
 
+	/*
+	 * 작성자 : 오찬식
+	 * 설명 : 현재 연도 및 학기에 특정 학생이 수강하는 모든 교과목의 수를 제공하는 메소드
+	 */
 	@Override
 	public Integer countCurrentCoursesByStudentNo(int studentNo) {
 		int year = 0;
 		int term = 0;
 
+		// 현재 시간의 연도와 월을 따로 추출
 		long currentTime = System.currentTimeMillis();
 		SimpleDateFormat currentYear = new SimpleDateFormat("yyyy");
 		SimpleDateFormat currentMonth = new SimpleDateFormat("MM");
 
+		// 현재 연도를 정의
 		year = Integer.parseInt(currentYear.format(new Date(currentTime)));
 
+		// 현재 월이 3~8월이면 1학기, 1,2,9~12월이면 2학기로 정의
 		int nowMonth = Integer.parseInt(currentMonth.format(new Date(currentTime)));
 		if (nowMonth >= 3 && nowMonth <= 8) {
 			term = 1;
@@ -117,11 +133,13 @@ public class StudentServiceImpl implements StudentService {
 			term = 2;
 		}
 
+		// 쿼리문에 parameterType으로 보낼 맵을 정의하고 특정 학생번호, 연도, 학기를 맵에 주입
 		Map<String, Object> search = new HashMap<String, Object>();
 		search.put("studentNo", studentNo);
 		search.put("year", year);
 		search.put("term", term);
 
+		// 생성된 맵을 매개변수로 하여 뽑은 숫자를 반환
 		return studentDao.countCurrentCoursesByStudentNo(search);
 	}
 
@@ -137,24 +155,34 @@ public class StudentServiceImpl implements StudentService {
 		return records;
 	}
 
+	/*
+	 * 작성자 : 오찬식
+	 * 설명 : coursedetail 페이지에 제공될 정보들(교과정보들, 교과목이름, 평균 진행도, 단원정보들)을 제공하는 메소드
+	 */
 	@Override
-
 	public Map<String, Object> getCoursedetailSource(int studentNo, int courseNo) {
+		// parameterType으로 보낼 맵을 정의하고 특정학생과 특정교과목번호를 주입
 		Map<String, Object> search = new HashMap<String, Object>();
 		search.put("studentNo", studentNo);
 		search.put("courseNo", courseNo);
 
+		// 위에 정의된 맵을 매개변수로 하여 뽑힌 교과목정보 맵객체를 자료형으로 삼는 리스트 객체 정의
 		List<Map<String, Object>> classInfos = studentDao.getCoursedetailSource(search);
+		// 교과목 이름 정의
 		String courseName = (String) classInfos.get(0).get("COURSENAME");
+		// 교과목의 평균 진행도를 담는 변수 정의 
 		Integer courseAvg = studentDao.getAvgCourseView(search);
+		// 단원 정보가 담긴 맵객체를 자료형으로 삼는 리스트 객체 정의
 		List<Map<String, Object>> partInfos = studentDao.getPartInfos(search);
 
+		// 위에 정의된 정보들을 모두 담을 하나의 맵객체를 정의하고 주입
 		Map<String, Object> sources = new HashMap<String, Object>();
 		sources.put("classInfos", classInfos);
 		sources.put("courseName", courseName);
 		sources.put("courseAvg", courseAvg);
 		sources.put("partInfos", partInfos);
 
+		// 위에 정의된 맵객체 반환
 		return sources;
 	}
 
@@ -171,27 +199,39 @@ public class StudentServiceImpl implements StudentService {
 		return status;
 	}
 
+	/*
+	 * 작성자 : 오찬식
+	 * 설명 : courseview 페이지에 제공될 정보들(교과목정보들, 교과목이름, 강의정보, 강의시청정보)을 제공하는 메소드
+	 */
 	@Override
 	public Map<String, Object> getCourseviewSource(int studentNo, int courseNo, int classNo) {
+		// 강의정보들을 뽑는 쿼리문에 parameterType으로 보낼 맵을 정의하고 특정학생과 특정교과목번호를 주입
 		Map<String, Object> search = new HashMap<String, Object>();
 		search.put("studentNo", studentNo);
 		search.put("courseNo", courseNo);
-
+		
+		// 강의시청정보를 뽑는 쿼리문에 parameterType으로 보낼 맵을 정의하고 특정학생과 특정강의번호를 주입
 		Map<String, Object> viewSearch = new HashMap<String, Object>();
 		viewSearch.put("studentNo", studentNo);
 		viewSearch.put("classNo", classNo);
 
+		// 교과목정보들이 담긴 맵객체를 자료형으로 삼는 리스트 객체 정의
 		List<Map<String, Object>> classInfos = studentDao.getCoursedetailSource(search);
+		// 교과목 이름 정의
 		String courseName = (String) classInfos.get(0).get("COURSENAME");
+		// 특정 강의번호로 뽑힌 강의정보를 정의
 		Cla cla = studentDao.getClassByClassNo(classNo);
+		// 특정 학생번호와 교과목번호로 뽑힌 강의시청정보를 정의
 		ClassView classView = studentDao.getClassViewByStudentNoAndClassNo(viewSearch);
 
+		// 위에 정의된 정보들을 모두 담을 하나의 맵객체를 정의하고 주입
 		Map<String, Object> sources = new HashMap<String, Object>();
 		sources.put("classInfos", classInfos);
 		sources.put("courseName", courseName);
 		sources.put("cla", cla);
 		sources.put("classView", classView);
 
+		// 위에 정의된 맵객체 반환
 		return sources;
 	}
 
@@ -243,12 +283,20 @@ public class StudentServiceImpl implements StudentService {
 		studentDao.deleteCourseAttendsByCourseNo(map);
 	}
 
+	/*
+	 * 작성자 : 오찬식
+	 * 설명 : 강의시청정보를 수정하는 메소드
+	 */
+	@Override
 	public void updateClassView(int viewNo, String currentTime, int percentage) {
+		// 강의시청번호로 뽑힌 강의시청정보를 정의
 		ClassView classView = studentDao.getClassViewByClassViewNo(viewNo);
+		// 변경할 컬럼 변경
 		classView.setTime(currentTime);
 		classView.setStatusYn("Y");
 		classView.setPercentage(percentage);
 
+		// 강의시청정보를 수정
 		studentDao.updateClassView(classView);
 	}
 

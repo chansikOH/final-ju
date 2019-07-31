@@ -13,14 +13,14 @@
 	}
 	.navbar-header .logo {
 		position: absolute;
-		left: 235px;
+		left: 100px;
 		padding: 0;
 		display: inline-block;
 		font-size: 20px;
 		color: #333;
 	}
 	.nav-sub {
-/* 		width: 810px; */
+ 		width: 840px;
 		float: right;
 		position: absolute;
 		top: 50%;

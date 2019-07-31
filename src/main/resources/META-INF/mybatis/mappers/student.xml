@@ -53,6 +53,10 @@
 		<result javaType="java.lang.Integer" property="cnt" column="cnt"/>
 	</resultMap>
 	
+	<!--  
+		작성자 : 오찬식
+		기능 : 교과목, 단원, 강의, 강의시청 정보를 담는 HashMap 객체
+	-->
 	<resultMap type="hashmap" id="coursedetailInfoResultMap">
 		<result javaType="java.lang.Integer" property="courseNo" column="course_no"/>
 		<result javaType="java.lang.String" property="courseName" column="course_name"/>
@@ -66,6 +70,10 @@
 		<result javaType="java.lang.Integer" property="percentage" column="view_percentage"/>
 	</resultMap>
 	
+	<!--  
+		작성자 : 오찬식
+		기능 : 단원 정보와 단원의 평균 진행도를 담는 HashMap 객체
+	-->
 	<resultMap type="hashmap" id="getAvgCoursepartsViewResultMap">
 		<result javaType="java.lang.Integer" property="no" column="course_part_no"/>
 		<result javaType="java.lang.String" property="name" column="course_part_name"/>
@@ -147,6 +155,10 @@
 		and CA.STUDENT_NO = #{studentNo}
 	</select>
 	
+	<!--  
+		작성자 : 오찬식
+		기능 : 특정 학생이 특정 학년, 특정 학기에 수강하는 모든 교과목정보를 뽑는 쿼리문
+	-->
 	<select id="getAllCoursesWithProfessorAndMajorByStudentNo" parameterType="map" resultType="course">
 		select
 			C.course_no no,
@@ -179,6 +191,10 @@
 			C.course_no
 	</select>
 	
+	<!-- 
+		작성자 : 오찬식
+		기능 : 특정학생이 특정 연도와 특정학기에 수강하는 모든 교과목 숫자를 뽑는 쿼리문
+	-->
 	<select id="countCurrentCoursesByStudentNo" parameterType="map" resultType="int">
 		select
 			count(*)
@@ -252,6 +268,10 @@
 			and Y.COURSE_YEAR = '2018'
 	</select>
 	
+	<!--
+		작성자 : 오찬식
+		기능 : 특정 학생이 수강하는 특정 교과목의 교과목, 단원, 강의, 강의시청 정보를 뽑는 쿼리문
+	-->
 	<select id="getCoursedetailSource" parameterType="map" resultMap="coursedetailInfoResultMap">
 		select
 			X.course_no courseNo,
@@ -286,6 +306,10 @@
 		    CL.class_no
 	</select>
 	
+	<!--  
+		작성자 : 오찬식
+		기능 : 특정 학생이 수강하는 특정 교과목의 평균 수강 진행도를 뽑는 쿼리문
+	-->
 	<select id="getAvgCourseView" parameterType="map" resultType="int">
 		select
 		    avg(nvl(CV.view_percentage, 0)) 
@@ -309,6 +333,10 @@
 		    CL.class_no = CV.class_no
 	</select>
 	
+	<!--  
+		작성자 : 오찬식
+		기능 : 특정 학생이 수강하는 특정 교과목의 단원정보와 단원 평균 진행도를 뽑는 쿼리문
+	-->
 	<select id="getPartInfos" parameterType="map" resultMap="getAvgCoursepartsViewResultMap">
 		select
 		    Y.course_part_no no,
@@ -406,6 +434,10 @@
 			#{student.no})
 	</insert>
 	
+	<!--  
+		작성자 : 오찬식
+		기능 : 강의 번호로 강의 정보를 뽑는 쿼리문
+	-->
 	<select id="getClassByClassNo" parameterType="int" resultType="cla">
 		select
 			class_no no,
@@ -419,6 +451,10 @@
 			class_no = #{value}
 	</select>
 	
+	<!--  
+		작성자 : 오찬식
+		기능 : 특정 학생이 듣는 특정 강의의 강의시청정보를 뽑는 쿼리문
+	-->
 	<select id="getClassViewByStudentNoAndClassNo" parameterType="map" resultType="classview">
 		select
 			class_view_no no,
@@ -527,6 +563,10 @@
 			and student_no = #{studentNo}
 	</delete>
 
+	<!--  
+		작성자 : 오찬식
+		기능 : 강의시청 정보를 수정하는 쿼리문
+	-->
 	<update id="updateClassView" parameterType="classview">
 		update class_views
 		set
@@ -537,6 +577,10 @@
 			class_view_no = #{no}
 	</update>
 	
+	<!--  
+		작성자 : 오찬식
+		기능 : 강의시청번호로 강의시청정보를 뽑는 쿼리문
+	-->
 	<select id="getClassViewByClassViewNo" parameterType="int" resultType="classView">
 		select
 			class_view_no no,

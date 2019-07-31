@@ -171,36 +171,59 @@ public class StudentController {
 		return "redirect:mypage";
 	}
 
+	/*
+	 * 작성자 : 오찬식
+	 * 설명 : courselist 페이지
+	 */
 	@RequestMapping("/course/courselist")
 	public String courselist(HttpSession session, Model model) {
+		// 세션에 담겨있는 현재 로그인한 학생 객체로 정의
 		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
 
+		// 학생 번호를 매개변수로 수강중인 현재 수강정보들을 추출
 		List<Course> courses = studentService.getAllCoursesWithProfessorAndMajorByStudentNo(student.getNo());
+		// 학생 번호를 매개변수로 수강중인 현재 교과목 수를 추출
 		Integer countCourses = studentService.countCurrentCoursesByStudentNo(student.getNo());
 
+		// 모델에 수강정보들과 교과목수를 담음
 		model.addAttribute("courses", courses);
 		model.addAttribute("countCourses", countCourses);
+		// courselist 페이지를 반환
 		return "student/course/courselist";
 	}
 
+	/*
+	 * 작성자 : 오찬식
+	 * 설명 : coursedetail 페이지
+	 */
 	@RequestMapping("/course/coursedetail")
 	public String coursedetail(HttpSession session, Model model, @RequestParam("courNo") int courseNo) {
 		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
 
+		// 학생번호와 교과목번호를 매개변수로 coursedetil 페이지에서 필요한 정보를 추출
 		Map<String, Object> sources = studentService.getCoursedetailSource(student.getNo(), courseNo);
+		// 모델에 정보를 담음
 		model.addAttribute("sources", sources);
 
+		// coursedetail 페이지를 반환
 		return "student/course/coursedetail";
 	}
 
+	/*
+	 * 작성자 : 오찬식
+	 * 설명 : courseview 페이지
+	 */
 	@RequestMapping("/course/courseview")
 	public String courseview(HttpSession session, Model model, @RequestParam("cno") int courseNo,
 			@RequestParam("clno") int classNo) {
 		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
 
+		// 학생정보와 코스번호, 강의번호를 매개변수로 courseview 페이지에서 필요한 정보를 추출
 		Map<String, Object> sources = studentService.getCourseviewSource(student.getNo(), courseNo, classNo);
+		// 모델에 정보를 담음
 		model.addAttribute("sources", sources);
 
+		// courseview 페이지를 반환 
 		return "student/course/courseview";
 	}
 
