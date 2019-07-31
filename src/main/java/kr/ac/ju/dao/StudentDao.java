@@ -35,4 +35,6 @@ public interface StudentDao {
 	void insertCourseAttendsByStudentNo(CourseAttend courseAttend);
 	void updateCourseCount(Map<String, Object> map);
 	void deleteCourseAttendsByCourseNo(Map<String, Object> map);
+	void updateClassView(ClassView classView);
+	ClassView getClassViewByClassViewNo(int viewNo);
 }

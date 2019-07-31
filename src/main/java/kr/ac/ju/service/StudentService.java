@@ -29,4 +29,5 @@ public interface StudentService {
 	void insertCourseAttendsByStudentNo(CourseAttend courseAttend);
 	void updateCourseCount(int count, int courseNo) throws Exception;
 	void deleteCourseAttendsByCourseNo(int studentNo, int courseNo);
+	void updateClassView(int viewNo, String currentTime, int percentage);
 }

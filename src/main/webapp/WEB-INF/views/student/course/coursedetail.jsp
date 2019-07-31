@@ -138,7 +138,7 @@ $(function() {
 			$(this).css('color', 'orange');
 		}
 	});
-		
+	
 	$('[id^=course-part-]').click(function() {
 		var id = $(this).attr('id');
 		$('.'+id+'-view').toggle();
@@ -152,7 +152,7 @@ $(function() {
 		var pollTimer = window.setInterval(function() {
 		    if (win.closed !== false) {
 		        window.clearInterval(pollTimer);
-		        alert("강의종료됨")
+		        window.location.reload();
 		    }
 		}, 200);
 	})
