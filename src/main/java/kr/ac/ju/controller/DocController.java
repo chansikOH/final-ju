@@ -1,5 +1,7 @@
 package kr.ac.ju.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,7 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.ac.ju.form.DocForm;
 import kr.ac.ju.service.DocService;
+import kr.ac.ju.vo.Doc;
+import kr.ac.ju.vo.DocFile;
+import kr.ac.ju.vo.DocLine;
+import kr.ac.ju.vo.Draft;
+import kr.ac.ju.vo.Employee;
 import kr.ac.ju.vo.Person;
 
 @Controller
@@ -30,8 +38,33 @@ public class DocController {
 		return "doc/list";
 	}
 	
+	
+	@RequestMapping("/draft/addform")
+	public String draft(DocForm docForm, HttpSession session) {
+		
+		Doc doc = new Doc();
+		Draft draft = new Draft();
+		List<DocLine> docLines = new ArrayList<DocLine>();
+		DocFile docfile = new DocFile();
+		
+		Employee person = (Employee) session.getAttribute("LOGIN_EMPLOYEE");
+		
+		doc.setEmployee(person);
+		doc.setState("결재중");
+		doc.setfinalPerson(docForm.getFinalPersonNo());
+		if (docForm.getUpfile().isEmpty()) {
+			doc.setFileYn("N");			
+		} else {
+			doc.setFileYn("Y");						
+		}
+		
+		docService.addDraft(doc, draft, docLines, docfile);
+		
+		return "doc/draft/addform";
+	}
+	
 	@RequestMapping("/draft/detail")
-	public String draft() {
+	public String draftform() {
 		return "doc/draft/detail";
 	}
 	

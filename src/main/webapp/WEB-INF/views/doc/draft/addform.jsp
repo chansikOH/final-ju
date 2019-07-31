@@ -23,7 +23,7 @@
 		<%@ include file="/WEB-INF/views/common/sidebar.jsp"%>
 		</div>
 		<div class="col-sm-10">
-			<h2 class="text-center">기안서 상세페이지</h2>
+			<h2 class="text-center">기안서 양식</h2>
 		    <div class="well">
 		    	<form:form method="post" action="insertdetail" modelAttribute="DocForm" enctype="multipart/form-data">
 		    		<div class="form-group">

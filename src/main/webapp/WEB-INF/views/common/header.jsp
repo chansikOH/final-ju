@@ -20,7 +20,7 @@
 		color: #333;
 	}
 	.nav-sub {
-		width: 810px;
+/* 		width: 810px; */
 		float: right;
 		position: absolute;
 		top: 50%;
@@ -219,6 +219,7 @@
 						<li><a href="#" id="menu6">휴/복학 신청</a></li>
 						<li><a href="#" id="menu7">학사일정</a></li>
 						<li><a href="#" id="menu8">공지사항</a></li>
+						<li><a href="/ju/doc/list" id="menu9">결재</a></li>
 					</ul>
 				</div>
 			</div>
@@ -264,6 +265,8 @@
 				<div id="sub-menu7">
 				</div>
 				<div id="sub-menu8">
+				</div>
+				<div id="sub-menu9">
 				</div>
 			</div>
 		</div>

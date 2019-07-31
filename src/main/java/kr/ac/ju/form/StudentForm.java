@@ -115,4 +115,5 @@ public class StudentForm {
 	public void setPhotoFile(MultipartFile photoFile) {
 		this.photoFile = photoFile;
 	}
+	
 }
