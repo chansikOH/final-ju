@@ -10,7 +10,8 @@ public class Draft {
 	private Date startDate;
 	private String keepingYear;
 	private String returnReason;
-
+	private Doc doc;
+	
 	public Draft() {
 
 	}
@@ -63,4 +64,13 @@ public class Draft {
 		this.returnReason = returnReason;
 	}
 
+	public Doc getDoc() {
+		return doc;
+	}
+
+	public void setDoc(Doc doc) {
+		this.doc = doc;
+	}
+
+	
 }

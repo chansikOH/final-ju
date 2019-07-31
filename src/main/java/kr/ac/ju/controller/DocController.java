@@ -1,5 +1,6 @@
 package kr.ac.ju.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -8,8 +9,11 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.ac.ju.form.DocForm;
@@ -38,8 +42,16 @@ public class DocController {
 		return "doc/list";
 	}
 	
-	
 	@RequestMapping("/draft/addform")
+	public String addform(Model model) {
+		List<Employee> employees = docService.getAllEmployees();
+		
+		model.addAttribute("employees", employees);
+		
+		return "doc/draft/addform";
+	}
+	
+	@RequestMapping("/draft/insertDoc")
 	public String draft(DocForm docForm, HttpSession session) {
 		
 		Doc doc = new Doc();
@@ -51,7 +63,17 @@ public class DocController {
 		
 		doc.setEmployee(person);
 		doc.setState("결재중");
-		doc.setfinalPerson(docForm.getFinalPersonNo());
+		docForm.setMiddlePersonNo(docForm.getMiddlePersonNo());
+		doc.setMiddlePerson(docForm.getMiddlePersonNo());
+		doc.setFinalPerson(docForm.getFinalPersonNo());
+		draft.setTitle(docForm.getTitle());
+		draft.setContents(docForm.getContents());
+		draft.setKeepingYear(docForm.getKeepingYear());
+		draft.setStartDate(docForm.getStartDate());
+		
+		System.out.println("title: "+docForm.getTitle());
+		System.out.println("file: "+docForm.getUpfile());
+		
 		if (docForm.getUpfile().isEmpty()) {
 			doc.setFileYn("N");			
 		} else {
@@ -60,7 +82,7 @@ public class DocController {
 		
 		docService.addDraft(doc, draft, docLines, docfile);
 		
-		return "doc/draft/addform";
+		return "doc/draft/detail";
 	}
 	
 	@RequestMapping("/draft/detail")
@@ -91,5 +113,10 @@ public class DocController {
 	@RequestMapping("/vacation/update")
 	public String vacationUpdate() {
 		return "doc/vacation/update";
+	}
+	
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		dataBinder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
 	}
 }

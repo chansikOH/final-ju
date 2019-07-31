@@ -11,6 +11,7 @@ import kr.ac.ju.vo.Doc;
 import kr.ac.ju.vo.DocFile;
 import kr.ac.ju.vo.DocLine;
 import kr.ac.ju.vo.Draft;
+import kr.ac.ju.vo.Employee;
 
 @Service
 public class DocServiceImpl implements DocService {
@@ -30,5 +31,16 @@ public class DocServiceImpl implements DocService {
 		int seq = docDao.getDocSeq();
 		doc.setNo(String.valueOf(seq));
 		docDao.insertDoc(doc);
+		
+		docDao.insertDraft(draft);
+		docDao.insertDocLine(docLines);
+		docDao.insertDocfiles(docfile);
+	}
+
+
+	@Override
+	public List<Employee> getAllEmployees() {
+		List<Employee> employees = docDao.getAllEmployees();
+		return employees; 
 	}
 }

@@ -14,6 +14,7 @@ public class Doc {
 	private String state;
 	private Integer finalPerson;
 	private String fileYn;
+	private Integer middlePerson;
 
 	public Doc() {
 
@@ -83,11 +84,11 @@ public class Doc {
 		this.state = state;
 	}
 
-	public Integer getfinalPerson() {
+	public Integer getFinalPerson() {
 		return finalPerson;
 	}
 
-	public void setfinalPerson(Integer finalPerson) {
+	public void setFinalPerson(Integer finalPerson) {
 		this.finalPerson = finalPerson;
 	}
 
@@ -98,6 +99,14 @@ public class Doc {
 	public void setFileYn(String fileYn) {
 		this.fileYn = fileYn;
 	}
-	
+
+	public Integer getMiddlePerson() {
+		return middlePerson;
+	}
+
+	public void setMiddlePerson(Integer middlePerson) {
+		this.middlePerson = middlePerson;
+	}
+
 	
 }
