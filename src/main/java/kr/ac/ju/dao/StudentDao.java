@@ -37,4 +37,5 @@ public interface StudentDao {
 	void deleteCourseAttendsByCourseNo(Map<String, Object> map);
 	void updateClassView(ClassView classView);
 	ClassView getClassViewByClassViewNo(int viewNo);
+	Student getLeaveStudentByNo(int studentNo);
 }

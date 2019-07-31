@@ -403,7 +403,7 @@
 			'W',
 			sysdate,
 			#{contents},
-			#{no})
+			#{student.no})
 	</insert>
 	
 	<select id="getClassByClassNo" parameterType="int" resultType="cla">
@@ -452,12 +452,61 @@
 		where status_no = #{value}
 	</delete>
 	
-	<select id="getStatusCheckByNo" parameterType="map" resultType="studentStatus">
-		select *
+	<select id="getStatusCheckByNo" parameterType="map" resultType="studentstatus">
+		select 
+			status_no no,
+			status_div division,
+			start_term startTerm,
+			term_count termCount,
+			pass_yn passYn,
+			student_create_date createDate,
+			status_contents contents,
+			student_no "student.no"
 		from student_status
 		where student_no = #{no}
-			and status_div = #{division}
-			and pass_yn = 'W'
+		and status_div = #{division}
+		and pass_yn = 'W'
+	</select>
+	
+	<select id="getLeaveStudentByNo" parameterType="int" resultType="student">
+		select 
+				SS.status_no  "studentStatus.no",
+				SS.start_term "studentStatus.startTerm", 
+				M.major_name "major.name", 
+				SS.status_div "studentStatus.division",
+				SS.status_contents,
+				SS.student_create_date "studentStatus.createDate"
+			from 
+				student_status SS,
+				student_status B,
+				majors M, 
+				students S
+			where 
+				S.student_no = SS.student_no 
+				and S.major_no = M.major_no
+				and S.student_no = #{no}
+				and SS.status_div = '휴학'
+				and SS.pass_yn = 'P'
+			minus
+			select 
+				SS.status_no  "studentStatus.no",
+				SS.start_term "studentStatus.startTerm", 
+				M.major_name "major.name", 
+				SS.status_div "studentStatus.division",
+				SS.status_contents,
+				SS.student_create_date "studentStatus.createDate"
+			from 
+				student_status SS, 
+				student_status B,
+				majors M, 
+				students S
+			where 
+				S.student_no = SS.student_no 
+				and S.major_no = M.major_no
+				and S.student_no = #{no}
+				and SS.status_div = '휴학'
+				and SS.pass_yn = 'P'
+				and SS.status_no = B.start_term
 	</select>
 	
 	<insert id="insertCourseAttendsByStudentNo" parameterType="courseAttend">

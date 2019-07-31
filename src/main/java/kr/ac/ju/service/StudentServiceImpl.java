@@ -251,4 +251,11 @@ public class StudentServiceImpl implements StudentService {
 
 		studentDao.updateClassView(classView);
 	}
+
+	@Override
+	public Student getLeaveStudentByNo(int studentNo) {
+		Student leaveStudent = studentDao.getLeaveStudentByNo(studentNo);
+
+		return leaveStudent;
+	}
 }
