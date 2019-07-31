@@ -1,4 +1,4 @@
-package kr.ac.ju.vo;
+package kr.ac.ju.form;
 
 import org.springframework.web.multipart.MultipartFile;
 

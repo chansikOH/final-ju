@@ -19,13 +19,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.ac.ju.form.ClaForm;
+import kr.ac.ju.form.TestForm;
 import kr.ac.ju.service.ProfessorService;
+import kr.ac.ju.vo.Cla;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.Pagination;
 import kr.ac.ju.vo.Person;
 import kr.ac.ju.vo.Professor;
 import kr.ac.ju.vo.Test;
-import kr.ac.ju.vo.TestForm;
 
 @Controller
 @RequestMapping("/professor")
@@ -33,6 +35,9 @@ public class ProfessorController {
 
 	@Value("${dir.file.testfile}")
 	private String attachmentFileSaveDirectory;
+	
+	@Value("${dir.file.videofile}")
+	private String attachmentVideoFileSaveDirectory;
 	
 	@Autowired
 	private ProfessorService service;
@@ -136,6 +141,36 @@ public class ProfessorController {
 		
 		return "redirect:list";
 	}
+	@RequestMapping("/class/classvideo")
+	public String classvideo(int courseNo, Model model) {
+		
+		model.addAttribute("course", service.getCourseByCourseNo(courseNo));
+		model.addAttribute("courseParts", service.getCoursePartByCourseNo(courseNo));
+		return "professor/class/classvideo";
+	}
+	
+	@RequestMapping("/class/addvideo")
+	public String addvideo(ClaForm claForm, Integer coursePartNo) throws IOException {
+		Cla cla = new Cla();
+		cla.setNo(coursePartNo);
+		System.out.println(claForm.getName());
+		System.out.println(claForm.getVideoFile());
+		BeanUtils.copyProperties(claForm, cla);
+		if(!claForm.getVideoFile().isEmpty()) {
+			MultipartFile mf = claForm.getVideoFile();
+			String filename = mf.getOriginalFilename();
+			
+			FileCopyUtils.copy(mf.getBytes(), new File(attachmentVideoFileSaveDirectory, filename));
+			cla.setVideoName(filename);
+			System.out.println(filename);
+			
+		} else {
+			return "redirect:list";
+		}
+		service.addVideo(cla);
+		
+		return "redirect:list";
+	}
 	
 	
 	@RequestMapping("/class/form")
@@ -152,6 +187,10 @@ public class ProfessorController {
 	}
 	@RequestMapping("/course/planform")
 	public String planform() {
+		
+		
+		
+		
 		return "professor/course/planform";
 	}
 	@RequestMapping("/course/planupdate")

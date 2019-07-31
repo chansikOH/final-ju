@@ -81,7 +81,6 @@
             p.course_part_no no,
             p.course_part_name name,
             p.course_part_week week
-            
 		from
 			courses c, course_parts p
 		where
@@ -137,7 +136,7 @@
 		and
 			c.major_no = m.major_no
 	</select>
-	
+	<!-- 검색조건으로 조회 -->
 	<select id="searchByOptions" resultType="course" parameterType="map">
 		select 
 			*
@@ -195,6 +194,7 @@
 			rn &lt;= #{endIndex}
 	</select>
 	
+	<!-- 조건별로 갯수조회 -->
 	<select id="getRows" parameterType="map" resultType="int">
 		select
 			count(*)
@@ -227,10 +227,20 @@
 		</where>	
 	</select>
 	
+	<!-- 시험 등록 -->
 	<insert id="addTest" parameterType="test">
 		insert into tests
 		(test_no, course_no, test_status, test_file_name)
 		values 
 		(test_seq.nextval, #{no}, #{status}, #{fileName})
 	</insert>
+	
+	<!-- 비디오 등록 -->
+	<insert id="addVideo" parameterType="cla">
+		insert into classes
+		(class_no, course_part_no, class_name, class_video_name)
+		values
+		(class_seq.nextval, #{no}, #{name}, #{videoName})
+	</insert>
+	
 </mapper>

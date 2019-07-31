@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.ac.ju.dao.ProfessorDao;
+import kr.ac.ju.vo.Cla;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CoursePart;
 import kr.ac.ju.vo.Professor;
@@ -69,6 +70,11 @@ public class ProfessorServiceImpl implements ProfessorService{
 	@Override
 	public void addTest(Test test) {
 		professorDao.addTest(test);
+	}
+	
+	@Override
+	public void addVideo(Cla cla) {
+		professorDao.addVideo(cla);
 	}
 	
 }

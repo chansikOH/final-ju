@@ -3,6 +3,7 @@ package kr.ac.ju.dao;
 import java.util.List;
 import java.util.Map;
 
+import kr.ac.ju.vo.Cla;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CoursePart;
 import kr.ac.ju.vo.Professor;
@@ -23,4 +24,5 @@ public interface ProfessorDao {
 	int getRows(Map<String, Object> param);
 	
 	void addTest(Test test);
+	void addVideo(Cla cla);
 }

@@ -172,6 +172,7 @@
 					<ul>
 						<li><a href="/ju/professor/class/list">강의조회</a></li>
 						<li><a href="/ju/professor/class/form">강의개설</a></li>
+						<li><a href="/ju/professor/course/planform">강의계획작성</a></li>
 					</ul>
 				</div>		
 				<div id="sub-menu3">

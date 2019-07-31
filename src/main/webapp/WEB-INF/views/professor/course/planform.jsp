@@ -59,7 +59,7 @@
                     <h1>강의계획서 작성</h1>
                 </div>
                 <div class="col-sm-12 table-wrap">
-                    <form class="form">
+                    <form class="form" method="post" action="#">
                         <table class="table">
                             <tbody>
                                 <tr class="top">
@@ -129,33 +129,15 @@
                                 <tr>
                                     <th colspan="4" class="part-title">단원목록</th>
                                 </tr>
-                                <tr class="part-padding">
-                                    <th>순번</th>
+                                <tr id="add-part" class="part-padding">
                                     <th>단원주차</th>
                                     <th>단원명</th>
+                                    <th>단원내용</th>
                                     <th></th>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>1주차</td>
-                                    <td>컴퓨터공학개론</td>
-                                    <td><a href="#" class="delete-btn btn btn-default input-sm ">삭제</a></td>
-                                </tr>
-                                 <tr>
-                                    <td>2</td>
-                                    <td>2주차</td>
-                                    <td>컴퓨터공학개론</td>
-                                    <td><a href="#" class="delete-btn btn btn-default input-sm">삭제</a></td>
-                                </tr>
-                                 <tr>
-                                    <td>3</td>
-                                    <td>3주차</td>
-                                    <td>컴퓨터공학개론</td>
-                                    <td><a href="#" class="delete-btn btn btn-default input-sm">삭제</a></td>
                                 </tr>
                                 
                                 <tr>
-                                    <td class="search"><a href="#" class="add-btn btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">단원추가</a></td>
+                                    <td class="search"><a href="#" class="add-btn btn btn-primary" id="part-add">단원추가</a></td>
                                     <td></td>
                                     <td></td>
                                     <td class="search">
@@ -170,7 +152,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div id="course-part-form" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <h3>교과목정보 조회</h3>
@@ -185,8 +167,8 @@
                     <tbody>
                         <tr>
                             <td class="course-no">10000</td>
-                            <td><input class="form-control input-sm"></td>
-                            <td><input class="form-control input-sm"></td>
+                            <td><input class="form-control input-sm" type="text" name="modal-week"></td>
+                            <td><input class="form-control input-sm" type="text" name="modal-name"></td>
                         </tr>
                         <tr>
                             <th class="part-cont">단원내용</th>
@@ -195,13 +177,15 @@
                         </tr>
                         <tr>
                            <td colspan="3" class="part-textarea">
-                                <textarea class="form-control input-sm" rows="5"></textarea>
+                                <textarea class="form-control input-sm" rows="5" name="modal-content"></textarea>
                             </td>
                         </tr>
                         <tr>
                            <td></td>
                            <td></td>
-                           <td class="save-btn"><button class="btn btn-default" type="submit">저장</button></td>
+                           <td class="save-btn"><button class="btn btn-default btn-add" type="button">저장</button>
+                           <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">닫기</button>
+                           </td>
                         </tr>
                     </tbody>
                 </table>
@@ -209,5 +193,48 @@
             </div>
         </div>
     </div>
+    <script>
+    	$(".table").on("click", "#part-add", function(){
+    			
+	   		$('#course-part-form').modal('show');
+				return false;
+			$("#course-part-form").on('hide', function(){
+					
+			});
+    	});
+    		
+    		$("#course-part-form").on("click", ".btn-add",function(){
+	    			var week = $("[name=modal-week]").val();
+	    			var name = $("[name=modal-name]").val();
+	    			var content = $("[name=modal-content]").val();
+	    			
+	    			var row = "<tr>";
+	    			row += "<td><input class='form-control' name='week' value='"+week+"'></td>";
+	    			row += "<td><input class='form-control' name='partName' value='"+name+"'></td>";
+	    			row += "<td><input class='form-control' name='contents' value='"+content+"'></td>";
+					row += " <td><a href='#' class='delete-btn btn btn-default input-sm'>삭제</a></td>"   	
+					row += "</tr>"
+					
+	    			if(week == ""){
+	    				alert("주차를 입력해주세요.");
+	    				return;
+	    			}
+    				if(name == ""){
+    					alert("단원명을 입력해주세요.");
+    					return;
+    				}if(content == ""){
+    					alert("내용을 입력해주세요.");
+    					return;
+    				}
+	    			$("#add-part").after(row);
+    		});
+    		$(".table tbody").on("click", ".delete-btn",function(){
+    				$(this).parents('tr').remove();
+    				return false;
+    		});
+    		
+    		
+    
+    </script>
 </body>
 </html>

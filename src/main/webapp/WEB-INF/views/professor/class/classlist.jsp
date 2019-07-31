@@ -231,6 +231,7 @@
                             <th>교수명</th>
                             <th>강의계획서</th>
                             <th></th>
+                            <th>동영상 등록</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -238,14 +239,13 @@
                     </tbody>
                 </table>
                 <h3>강의 목차</h3>
-                <form method="post" action="#">
+                <form method="post" action="addvideo">
                     <table class="table coursepart-modal">
                         <thead>
                             <tr>
                                 <th>단원번호</th>
-                                <th>단원명</th>
                                 <th>단원주차</th>
-                                <th>동영상 등록</th>
+                                <th>단원명</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -253,7 +253,6 @@
                         </tbody>
 						<tfoot>
 							<tr>
-                               <td></td>
                                <td></td>
                                <td></td>
                                <td class="save-btn"><button type="submit" class="btn btn-default">저장</button></td>
@@ -391,14 +390,14 @@
     				courseRow += "<td>"+course.professor.name+"</td>";
     				courseRow += "<td class='move-btn'><a href='#' class='btn btn-default'>보기</a></td>";
     				courseRow += "<td class='move-btn'><a href='#' class='btn btn-default'>수정</a></td>";
+    				courseRow += "<td class='btn-update'><a href='classvideo?courseNo="+course.no+"' class='btn btn-default'>등록</a></td>";
     				$("#course-detail-modal .course-detail-show tbody").append(courseRow); 
 	    				
 	    			$.each(parts, function(index, part){
 	    				var partRow = "<tr>";
 	    				partRow += "<td>"+part.no+"</td>";
-	    				partRow += "<td>"+part.name+"</td>";
 	    				partRow += "<td>"+part.week+"</td>";
-	    				partRow += "<td class='file-control'><input type='file' class='form-control input-sm'></td>";
+	    				partRow += "<td>"+part.name+"</td>";
 	    				$("#course-detail-modal .coursepart-modal tbody").append(partRow);
 	    			});
 	    		}
