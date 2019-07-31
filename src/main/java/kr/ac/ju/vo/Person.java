@@ -10,7 +10,7 @@ public class Person {
 	private Date birth;
 	private String gender;
 	private String email;
-	private String gubun;
+	private String gubun;    // 학생,교수,직원
 
 	public Person() {
 

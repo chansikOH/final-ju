@@ -20,6 +20,8 @@
   	 
 	 .radio-inline {font-size: 15px; width: 50px;}  	 
   	 .form-group select {width:174px; height: 22px;} 
+  	 
+  	 .form-error {color: red; font-style: italic;}
 </style>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js""></script>
 </head>
@@ -36,15 +38,16 @@
 	  			<h2>학생등록</h2>
 	  		</div>
 	  		<div class="col-sm-12 ">
-		  		<form method="post" action="#" enctype="multipart/form-data">
-		  			<div class="form-group">
-		  				<img src="/ju/resources/images/profile.jpg" alt="..." class="img-rounded">
-		  			</div>
+	  			<div>
+	  				<img src="/ju/resources/images/profile.jpg" class="img-rounded">
+	  			</div>
+		  		<form:form  method="post" action="studentRegister.do"  modelAttribute="studentRegisterForm"  enctype="multipart/form-data">
 					<div class="form-group">
-						<label>이름</label> 
-						<input type="text" class="form-control" name="name" placeholder="이름을 입력하세요">
+						<label>이름</label>
+						<form:input path="name" cssClass="form-control"/>
+						<span class="help-block form-error"><form:errors path="name"></form:errors></span>
 					</div>
-					<div class="form-group">
+					<div class="form-group"> 
 						<label>성별</label> 
 						<div>
 							<label class="radio-inline">
@@ -55,34 +58,39 @@
 							</label>
 						</div>
 					</div> 
-					<div class="form-group"> 
-						<label>생일</label> 
-						<input type="date" class="form-control" name="birth">
+					<div class="form-group">
+						<label>생일</label>
+						<form:input path="birth"  type="date" cssClass="form-control"/>
+						<span class="help-block form-error"><form:errors path="birth"></form:errors></span>
 					</div>
 					<div class="form-group">
-						<label>이메일</label> 
-						<input type="email" class="form-control" name="email">
+						<label>이메일</label>
+						<form:input path="email" cssClass="form-control" />
+						<span class="help-block form-error"><form:errors path="email"></form:errors></span>
 					</div>
 					<div class="form-group">
-						<label>전화번호</label> 
-						<input type="text" class="form-control" name="phone" placeholder="전화번호를 입력하세요">
+						<label>전화번호</label>
+						<form:input path="phoneNumber" cssClass="form-control"/>
+						<span class="help-block form-error"><form:errors path="phoneNumber"></form:errors></span>
 					</div>
 					<div>
 						<label>주소</label>
 					</div>
 					<div class="input-group">
-				    	<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-home"></i></span>
-					    <input type="text" name="userpostalcode" readonly="readonly" class="form-control" style="width: 15%;" placeholder="우편번호" aria-describedby="basic-addon1">
-					    <button type="button" class="btn btn-default" onclick="execPostCode();">우편번호 찾기</button>
-					    <input type="text" name="useraddress" class="form-control" placeholder="도로명주소" readonly="readonly" aria-describedby="basic-addon1">
-					    <input type="text" name="userdetailaddress" class="form-control" placeholder="상세주소" aria-describedby="basic-addon1">
-				    </div>		
+						<input type="text" name="userpostalcode"  readonly="true" class="form-control" style="width: 15%;" placeholder="우편번호" aria-describedby="basic-addon1">
+						<a class="btn btn-default" onclick="execPostCode();" style="float: left;">우편번호 찾기</a>
+						<form:input path="address" cssClass="form-control" />
+						<form:input path="detailaddress" cssClass="form-control" />
+						<span class="help-block form-error"><form:errors path="address"></form:errors></span>
+					</div>
 				    <div class="form-group">
 						<label>학과</label> 
 						<div>
 					  	  	<select name="major">
-		                        <option value="2">컴퓨터공학과</option>
-	                  	 	</select>	
+		                  	 	<c:forEach var="major" items="${majors }">
+	                            	<option value="${major.no }">${major.name }</option>
+	                            </c:forEach>	
+	                  	 	</select>
 						</div>
 					</div>
 					<div class="form-group">
@@ -94,20 +102,22 @@
 							<label class="radio-inline">
 							  <input type="radio" name="tranfer" value="Y" > Y
 							</label>
-					  	  	<select name="grade" style="display: none;">
-	                            <option value="2">2학년</option>
-	                            <option value="3">3학년</option> 
-	                            <option value="4">4학년</option>
-                            </select>	
+								<div id="grade-box">
+		                            <select name="grade" id="grade-transfer-n">
+			                            <option value="1">1학년</option>
+		                            </select> 	
+								</div>
 						</div>
 					</div>
 					<div class="form-group">
-						<label>프로필사진</label> <input type="file" class="form-control" name="photofile">
-			 		</div>
+						<label>프로필사진</label>
+						<input type="file" class="form-control" name="photoFile">
+						<span class="help-block form-error"><form:errors path="photoFile"></form:errors></span>
+					</div>
 					<div class="form-group submit">
 						<button type="submit" class="btn btn-success btn-lg">학생등록</button>
 					</div>
-				</form>
+				</form:form>
 	  		</div>
 	  	</div>
 	</div>
@@ -118,9 +128,9 @@
 	function execPostCode() {
         new daum.Postcode({
            oncomplete: function(data) {
-              $('[name=userpostalcode]').val(data.zonecode);       // 우편번호 (5자리)
-              $('[name=useraddress]').val(data.address);
-              $('[name=userdetailaddress]').val(data.buildingName);
+              $('[name=postalcode]').val(data.zonecode);       // 우편번호 (5자리)
+              $('[name=address]').val(data.address);
+              $('[name=detailaddress]').val(data.buildingName);
            }
            }).open();
        }
@@ -129,10 +139,20 @@
 	$("[name=tranfer]").click(function(){
 		var istransfer = $(this).val();
 		
+		var n = "<select name='grade' id='grade-transfer-n'>"; 
+		    n += "<option value='1'>1학년</option>";
+            n += "</select>";
+       
+        var y = "<select name='grade' id='grade-transfer-y'>";
+        	y += "<option value='2'>2학년</option>";
+        	y += "<option value='3'>3학년</option>"; 
+        	y += "<option value='4'>4학년</option>"; 
+        	y += "</select>"; 
+        
 		if(istransfer === 'Y'){
-			$("[name=grade]").removeAttr('style');
+			$('#grade-box').html(y);
 		} else {
-			$("[name=grade]").attr('style','display: none');
+			$('#grade-box').html(n);
 		}
 	})
 	</script>

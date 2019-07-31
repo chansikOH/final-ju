@@ -12,7 +12,7 @@ public class Student extends Person{
 	private String transferYn;
 	private StudentStatus studentStatus;
 	private Date createDate;
-	private String division;
+	private String division;      // 재학, 휴학 (현재상태)
 	private String photoName;
 
 	public Student() {
