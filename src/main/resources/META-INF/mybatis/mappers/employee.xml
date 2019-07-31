@@ -5,30 +5,24 @@
   
 <mapper namespace="kr.ac.ju.dao.EmployeeDao">
 	
-	<resultMap type="employee" id="employeeResultMap">
-		<result property="no" column="employee_no"/>
-		<result property="department.id" column="department_no"/>
-		<result property="position.id" column="position_id"/>
-		<result property="name" column="employee_name"/>
-		<result property="password" column="employee_password"/>
-		<result property="birth" column="employee_birth"/>
-		<result property="gender" column="employee_gender"/>
-		<result property="email" column="employee_email"/>
-		<result property="phoneNumber" column="employee_phone_number"/>
-		<result property="address" column="employee_address"/>
-		<result property="hireDate" column="employee_hire_date"/>
-		<result property="salary" column="employee_salary"/>
-		<result property="status" column="employee_status"/>
-		<result property="manager.no" column="manager_no"/>
-		<result property="createDate" column="employee_create_date"/>
-		<result property="photoName" column="employee_photo_name"/>
-	</resultMap>
-
-	
-	<select id="getEmployeeByNo" parameterType="int" resultMap="employeeResultMap">
-		select *
-		from employees E
-		where employee_no = #{value}
+	<select id="getEmployeeByNo" parameterType="int" resultType="employee">
+		select 
+			E.employee_no 				as no,
+			E.employee_password			as password, 
+			E.employee_name				as name,
+			E.employee_gender			as gender,
+			E.employee_email 			as email,
+			E.employee_phone_number		as phoneNumber,
+			E.employee_address			as address,
+			E.employee_photo_name		as photoName,
+			P.position_name				as "position.name",
+			D.department_name 			as "department.name"
+		from 
+			employees E, position P, departments D 
+		where 
+			E.department_id = D.department_id
+			and E.position_id = P.position_id
+			and E.employee_no = #{value}
 	</select>
 	
 	<select id="getAllMajors" resultType="major">
@@ -70,52 +64,81 @@
 	<select id="searchStudents" parameterType="map" resultType="student" >
 		select *
 		from(
-			select 
-				A.student_no 				as no,
-				A.major_no					as "major.no",
-				B.major_name				as "major.name",
-				A.professor_no				as "professor.no",
-				A.student_name				as name,
-				A.student_password			as password,
-				A.student_birth				as birth,
-				A.student_gender			as gender,
-				A.student_email				as email, 
-				A.student_phone_number		as phoneNumber,
-				A.student_address			as address,
-				A.student_grade				as grade,
-				A.transfer_yn				as transferYn,
-				A.student_create_date		as createDate,
-				A.student_div				as div,
-				A.student_photo_name 		as photoName,
-				row_number() over (order by student_no desc) as rn
-			from 
-					students A, majors B
-			where
-				A.major_no = B.major_no
-				<if test="status != null">
-					and A.student_div = #{status}
-				</if>
-				<if test="grade != null">
-					and A.student_grade = #{grade}
-				</if>
-				<if test="major != null">
-					and A.major_no = #{major}
-				</if>
-				<if test="name != null">
-					and A.student_name = #{name}
-				</if>
-				<if test="studentNo != null">
-					and A.student_no = #{studentNo}
-				</if>
-				<if test="tel != null">
-					and A.student_phone_number = #{tel}
-				</if>
-			)
+				select 
+					A.student_no 				as no,
+					A.major_no					as "major.no",
+					B.major_name				as "major.name",
+					A.professor_no				as "professor.no",
+					A.student_name				as name,
+					A.student_password			as password,
+					A.student_birth				as birth,
+					A.student_gender			as gender,
+					A.student_email				as email, 
+					A.student_phone_number		as phoneNumber,
+					A.student_address			as address,
+					A.student_grade				as grade,
+					A.transfer_yn				as transferYn,
+					A.student_create_date		as createDate,
+					A.student_div				as division,
+					A.student_photo_name 		as photoName,
+					row_number() over (order by student_no desc) as rn
+				from 
+						students A, majors B
+				where
+					A.major_no = B.major_no
+					<if test="status != null">
+						and A.student_div = #{status}
+					</if>
+					<if test="grade != null">
+						and A.student_grade = #{grade}
+					</if>
+					<if test="major != null">
+						and A.major_no = #{major}
+					</if>
+					<if test="name != null">
+						and A.student_name = #{name}
+					</if>
+					<if test="studentNo != null">
+						and A.student_no = #{studentNo}
+					</if>
+					<if test="tel != null">
+						and A.student_phone_number = #{tel}
+					</if>
+				)
 		where 
 			rn >= #{beginIndex}
 			and rn &lt;= #{endIndex}		
 	</select> 
 	
+	<select id="getStudentByNo" parameterType="int" resultType="student">
+		select 
+			A.student_no 				as no,
+			A.major_no					as "major.no",
+			B.major_name				as "major.name",
+			A.professor_no				as "professor.no",
+			A.student_name				as name,
+			A.student_password			as password,
+			A.student_birth				as birth,
+			A.student_gender			as gender,
+			A.student_email				as email, 
+			A.student_phone_number		as phoneNumber,
+			A.student_address			as address,
+			A.student_grade				as grade,
+			A.transfer_yn				as transferYn,
+			A.student_create_date		as createDate,
+			A.student_div				as division,
+			A.student_photo_name 		as photoName
+		from 
+			students A, majors B
+		where 
+			A.student_no = #{value}
+			and A.major_no = B.major_no
+	</select>
 	
+	<update id="updateStudentStatusByNo" parameterType="student">
+		update students
+		set student_div = #{division}
+		where student_no = #{no}
+	</update>
 	
 </mapper>

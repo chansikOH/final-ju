@@ -172,32 +172,32 @@
 				<table class="table">
 					<tbody>
 						<tr>
-							<td class="bg-color-gray">학번</td>
-							<td>20173868</td>
+							<td class="bg-color-gray">사원번호</td>
+							<td>${LOGIN_EMPLOYEE.no }</td>
 						</tr>
 						<tr>
-							<td class="bg-color-gray">학과</td>
-							<td>컴퓨터정보공학과</td>
+							<td class="bg-color-gray">부서</td>
+							<td>${LOGIN_EMPLOYEE.department.name }</td>
 						</tr>
 						<tr>
-							<td class="bg-color-gray">학년</td>
-							<td>2학년</td>
+							<td class="bg-color-gray">직위</td>
+							<td>${LOGIN_EMPLOYEE.position.name }</td>
 						</tr>
 						<tr>
 							<td class="bg-color-gray">이름</td>
-							<td>김다윤</td>
+							<td>${LOGIN_EMPLOYEE.name }</td>
 						</tr>
 						<tr>
 							<td class="bg-color-gray">주소</td>
-							<td>서울시 영등포구 서울시 영등포구</td>
+							<td>${LOGIN_EMPLOYEE.address }</td>
 						</tr>
 						<tr>
 							<td class="bg-color-gray">연락처</td>
-							<td>010-0000-0000</td>
+							<td>${LOGIN_EMPLOYEE.phoneNumber }</td>
 						</tr>
 						<tr>
 							<td class="bg-color-gray">이메일</td>
-							<td>kim@naver.com</td>
+							<td>${LOGIN_EMPLOYEE.email }</td>
 						</tr>
 					</tbody>
 				</table>

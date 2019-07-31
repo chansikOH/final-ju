@@ -33,7 +33,7 @@ public class EmployeeRestController {
 								@RequestParam(value = "studentNo", required = false, defaultValue = "0") int studentNo,
 								@RequestParam(value = "tel", required = false, defaultValue = "") String tel, 
 			                    Model model) {
-		System.out.println(status);
+		
 		Map<String, Object> searchOption = new HashMap<String, Object>();
 			
 		// search 관련
@@ -57,7 +57,7 @@ public class EmployeeRestController {
 		}
 		
 		// pagination 관련
-		int size = 10;									
+		int size = 5;									
 		int beginIndex  = (pageNo - 1)*size + 1 ;		
 		int endIndex   = pageNo*size ; 					
 		
@@ -74,7 +74,36 @@ public class EmployeeRestController {
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("searchStudents", serarchStudents); 
 		result.put("pagination", pagination); 
-
+		result.put("count", count); 
 		return result; 
 	}
+	
+	@GetMapping("/stud/studentdetail.json")
+	@ResponseBody
+	public Student detailStudent(@RequestParam(value = "studentNo", required = true) int studentNo) {
+		Student student = employeeService.getStudentByNo(studentNo);
+		return student; 
+	}
+	
+	@GetMapping("/stud/statuscheck.json")
+	@ResponseBody
+	public Student statuscheck(@RequestParam(value = "studentNo", required = true) int studentNo) {
+		Student student = employeeService.getStudentByNo(studentNo);
+		return student; 
+	}
+	
+	@GetMapping("/stud/statuschange.json")
+	@ResponseBody
+	public Student statuschange (@RequestParam(value = "studentNo", required = true) int studentNo, 
+							  @RequestParam(value = "afterStatus", required = true) String afterStatus ) {
+		
+		Student student = employeeService.getStudentByNo(studentNo);
+		student.setDivision(afterStatus);
+		
+		employeeService.updateStudentStatusByNo(student); 
+		
+		return student;
+	}
+	
+	
 }
