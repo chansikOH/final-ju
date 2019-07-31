@@ -30,6 +30,7 @@ import kr.ac.ju.service.StudentService;
 import kr.ac.ju.utils.DateUtils;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
+import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Person;
 import kr.ac.ju.vo.Student;
 import kr.ac.ju.vo.StudentStatus;
@@ -56,6 +57,17 @@ public class StudentController {
 
 		List<Course> myCourses = studentService.getAllCoursesWithProfessorAndMajorByStudentNo(student.getNo());
 		model.addAttribute("myCourses", myCourses);
+
+		int creditCount = 0;
+		int totalCount = 0;
+
+		for (Course course : myCourses) {
+			creditCount += course.getCredit();
+			totalCount ++;
+		}
+
+		model.addAttribute("creditCount", creditCount);
+		model.addAttribute("totalCount", totalCount);
 
 		return "student/course/courseapply";
 	}
@@ -306,7 +318,31 @@ public class StudentController {
 	}
 
 	@RequestMapping("/notice/list")
-	public String studentNoticeList() {
+	public String studentNoticeList(Model model) {
+		List<Notice> notices = studentService.getAllNotices();
+		model.addAttribute("notices", notices);
+		
 		return "student/notice/noticelist";
+	}
+	
+	@RequestMapping("/notice/detail")
+	public String studentNoticeDetail(int no, Model model) {
+		Notice notice = studentService.getNoticeByNoticeNo(no);
+		model.addAttribute("notice", notice);
+		
+		return "student/notice/noticedetail";
+	}
+	
+	@RequestMapping("/course/testlist")
+	public String testList(HttpSession session, Model model) {
+		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
+
+		List<Course> courses = studentService.getAllCoursesWithProfessorAndMajorByStudentNo(student.getNo());
+		Integer countCourses = studentService.countCurrentCoursesByStudentNo(student.getNo());
+
+		model.addAttribute("courses", courses);
+		model.addAttribute("countCourses", countCourses);
+		
+		return "student/course/testlist";
 	}
 }

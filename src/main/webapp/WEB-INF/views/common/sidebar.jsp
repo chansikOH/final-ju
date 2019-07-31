@@ -6,7 +6,7 @@
 		padding: 0px;
 	}
 	
-	img {
+	#profile {
 		border-radius: 50%;
 		display: block;
 		margin: 0px auto;
@@ -35,7 +35,7 @@
 				<br>
 				<c:choose>
 					<c:when test="${empty LOGIN_STUDENT.photoName }">
-						<img src="/ju/resources/images/profile.jpg" style="width: 50%; height: 50%; margin-bottom: 20px;" />
+						<img src="/ju/resources/images/profile.jpg" id="profile" style="width: 50%; height: 50%; margin-bottom: 20px;" />
 					</c:when>
 					<c:otherwise>
 						<img src="/ju/resources/images/students/${LOGIN_STUDENT.photoName }" style="width: 50%; height: 50%; margin-bottom: 20px;" />

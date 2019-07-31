@@ -54,7 +54,14 @@ public class Notice {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-
+	
+	public String getExtension() {
+		if (fileName == null) {
+			return null;
+		}
+		return fileName.substring(fileName.lastIndexOf(".") + 1);
+	}
+	
 	public Date getCreateDate() {
 		return createDate;
 	}
