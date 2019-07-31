@@ -553,4 +553,26 @@
 			class_view_no = #{value}
 	</select>
 	
+	<select id="getAllNotices" resultType="notice">
+		select	notice_no as no,
+				notice_writer as writer,
+				notice_title as title,
+				notice_contents as contents,
+				notice_file_name as fileName,
+				notice_create_date as createDate
+		from notices
+		order by notice_no desc
+	</select>
+	
+	<select id="getNoticeByNoticeNo" parameterType="int" resultType="notice">
+		select	notice_no as no,
+				notice_writer as writer,
+				notice_title as title,
+				notice_contents as contents,
+				notice_file_name as fileName,
+				notice_create_date as createDate
+		from notices
+		where notice_no = #{value}
+	</select>
+	
 </mapper>

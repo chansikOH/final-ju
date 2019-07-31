@@ -16,7 +16,7 @@
 	.result{padding: 0 15px;}
 	.result div:first-child{margin: 15px 0 5px 0; padding: 0;}
 	.result th{background: #faf6f0; }
-	.result th, td{text-align: center; }
+	.result th{text-align: center; }
 </style>
 </head>
 <body>
@@ -30,45 +30,45 @@
 				<h1>공지사항</h1>
 				<div class="row result">
 					<div class="col-sm-12">
-						<table class="table table-striped">
+						<table class="table">
 							<colgroup>
-								<col width="10%">
-								<col width="50%">
-								<col width="10%">
-								<col width="10%">
-								<col width="20%">
+								<col width="15%">
+								<col width="35%">
+								<col width="15%">
+								<col width="35%">
 							</colgroup>
-							<thead>
-								<tr>
-									<th>번호</th>
-									<th>제목</th>
-									<th>파일</th>
-									<th>작성자</th>
-									<th>작성일</th>
-								</tr>
-							</thead>
 							<tbody>
-								<c:forEach var="notice" items="${notices }" varStatus="index">
-									<tr>
-										<td>${index.count }</td>
-										<td class="text-left"><a href="detail?no=${notice.no }">${notice.title }</a></td>
-										
-										<c:if test="${empty notice.extension }">
+								<tr>
+									<th>제목</th>
+									<td>${notice.title }</td>
+									<th>작성일</th>
+									<td><fmt:formatDate value="${notice.createDate }"/></td>
+								</tr>
+								<tr>
+									<th>작성자</th>
+									<td colspan="3">${notice.writer }</td>
+								</tr>
+								<tr>
+									<th>파일명</th>
+									<c:choose>
+										<c:when test="${not empty notice.fileName }">
+											<td>${notice.fileName }</td>
+										</c:when>
+										<c:otherwise>
 											<td></td>
-										</c:if>
-										<c:if test="${not empty notice.extension && notice.extension eq 'pdf' }">
-											<td><img src="/ju/resources/images/pdf.png" style="width: 21px; height: 21px;"/></td>
-										</c:if>
-										<c:if test="${not empty notice.extension && notice.extension ne 'pdf' }">
-											<td><img src="/ju/resources/images/file.png" style="width: 18px; height: 18px;"/></td>
-										</c:if>
-										<td>${notice.writer }</td>
-										<td><fmt:formatDate value="${notice.createDate }"/></td>
-									</tr>
-								</c:forEach>
+										</c:otherwise>
+									</c:choose>
+								</tr>
+								<tr>
+									<th>내용</th>
+									<td colspan="3">${notice.contents }</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
+				</div>
+				<div class="text-right">
+					<a href="list" class="btn btn-default">목록</a>
 				</div>
 			</div>
 		</div>

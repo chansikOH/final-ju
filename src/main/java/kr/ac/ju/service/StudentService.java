@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
+import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Student;
 import kr.ac.ju.vo.StudentStatus;
 
@@ -31,4 +32,6 @@ public interface StudentService {
 	void deleteCourseAttendsByCourseNo(int studentNo, int courseNo);
 	void updateClassView(int viewNo, String currentTime, int percentage);
 	Student getLeaveStudentByNo(int studentNo);
+	List<Notice> getAllNotices();
+	Notice getNoticeByNoticeNo(int noticeNo);
 }

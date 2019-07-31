@@ -50,7 +50,7 @@
 				</div>
 				<div class="row result">
 					<div class="col-sm-12 box-top auto">
-						<table class="table table-striped">
+						<table class="table table-striped" id="course-apply-table">
 							<thead>
 								<tr>
 									<th>NO</th>
@@ -109,10 +109,10 @@
 						<span>수강가능학점 : 24</span>
 					</div>
 					<div class="col-sm-2" style="font-weight: bold;">
-						<span>신청과목수 : 7</span>
+						<span>신청과목수 : ${totalCount }</span>
 					</div>
 					<div class="col-sm-2" style="font-weight: bold;">
-						<span>신청학점 : 21</span>
+						<span>신청학점 : <span id="creditCount">${creditCount }</span></span>
 					</div>
 				</div>
 				
@@ -176,6 +176,13 @@
 				var cnt = event.data.split(":")[1];
 				
 				$('#course-count-' + code).text(cnt);
+			}
+			
+			if($("#creditCount").text() >= 24) {
+				$("#course-apply-table tbody tr td a").click(function(e) {
+					e.preventDefault();
+					alert("수강가능학점은 최대 24학점입니다.")
+				});
 			}
 		})
 	</script>
