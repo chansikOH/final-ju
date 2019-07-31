@@ -9,4 +9,7 @@ import kr.ac.ju.vo.Doc;
 public interface DocDao {
 
 	List<HashMap<String, Object>> getDocEmployeeByNo(int employeeNo);
+	void insertDoc(Doc doc);
+	int getDocSeq();
+
 }

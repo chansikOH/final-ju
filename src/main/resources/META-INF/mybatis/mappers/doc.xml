@@ -8,9 +8,15 @@
 	<!-- 직원 로그인 기안서, 휴가계획서, 퇴직서 정보 조회  -->
 	<select id="getDocEmployeeByNo" parameterType="int" resultType="hashmap">
 		SELECT 
-			A.DOC_NO, B.DRAFT_TITLE, A.DOC_FILE_YN, C.EMPLOYEE_NAME, D.PROFESSOR_NAME, A.DOC_CREATE_DATE, A.DOC_STATE
+			A.DOC_NO, B.DRAFT_TITLE, 
+			A.DOC_FILE_YN, C.EMPLOYEE_NAME, 
+			D.PROFESSOR_NAME, 
+			A.DOC_CREATE_DATE, 
+			A.DOC_STATE
 		FROM 
-			DOCS A, DRAFTS B, EMPLOYEES C, PROFESSORS D
+			DOCS A, DRAFTS B, 
+			EMPLOYEES C, 
+			PROFESSORS D
 		WHERE 
 			A.DOC_NO = B.DOCS_NO
 		AND 
@@ -21,9 +27,17 @@
 			A.EMPLOYEE_NO = #{value}
 		UNION
 		SELECT 
-			A.DOC_NO, '휴가신청서', A.DOC_FILE_YN, C.EMPLOYEE_NAME, D.PROFESSOR_NAME,  A.DOC_CREATE_DATE, A.DOC_STATE
+			A.DOC_NO, 
+			'휴가신청서', 
+			A.DOC_FILE_YN, 
+			C.EMPLOYEE_NAME, 
+			D.PROFESSOR_NAME,  
+			A.DOC_CREATE_DATE, 
+			A.DOC_STATE
 		FROM 
-			DOCS A, EMPLOYEES C, PROFESSORS D
+			DOCS A, 
+			EMPLOYEES C, 
+			PROFESSORS D
 		WHERE 
 			A.EMPLOYEE_NO = C.EMPLOYEE_NO
 		AND 
@@ -32,9 +46,17 @@
 			A.EMPLOYEE_NO = #{value}
 		UNION
 		SELECT 
-			A.DOC_NO, '퇴직신청서', A.DOC_FILE_YN, B.EMPLOYEE_NAME, C.PROFESSOR_NAME, A.DOC_CREATE_DATE, A.DOC_STATE 
+			A.DOC_NO, 
+			'퇴직신청서', 
+			A.DOC_FILE_YN, 
+			B.EMPLOYEE_NAME, 
+			C.PROFESSOR_NAME, 
+			A.DOC_CREATE_DATE, 
+			A.DOC_STATE 
 		FROM 
-			DOCS A, EMPLOYEES B, PROFESSORS C
+			DOCS A, 
+			EMPLOYEES B, 
+			PROFESSORS C
 		WHERE 
 			A.EMPLOYEE_NO = B.EMPLOYEE_NO
 		AND 
@@ -43,6 +65,31 @@
 			A.EMPLOYEE_NO = #{value}
 	</select>
 	 
-	<!-- 직원 기안서(보고서), 휴가계획서, 퇴직서 등록 -->
+	<!-- SEQ 생성 -->
+	<select id="getDocSeq" resultType="int">
+		select 
+			doc_detail_seq.nextval
+		from
+			dual
+	</select>
+	
+	<!-- 결재문서등록 Doc -->
+	<insert id="insertDoc" parameterType="doc">
+		insert into Doc
+			(doc_no, 
+			employee_no, 
+			doc_state, 
+			doc_final_person,
+			doc_file_yn)
+		values
+			(#{no},
+			 #{employee.no}, 
+			 #{state},
+			 #{finalPerson},
+			 #{fileYn})
+	</insert>
+	
+	
+	
 	
 </mapper>

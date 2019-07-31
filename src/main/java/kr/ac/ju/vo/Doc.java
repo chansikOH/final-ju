@@ -11,6 +11,9 @@ public class Doc {
 	private Vacation vacation;
 	private Retire retire;
 	private Date createDate;
+	private String state;
+	private Integer finalPerson;
+	private String fileYn;
 
 	public Doc() {
 
@@ -71,4 +74,30 @@ public class Doc {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public Integer getfinalPerson() {
+		return finalPerson;
+	}
+
+	public void setfinalPerson(Integer finalPerson) {
+		this.finalPerson = finalPerson;
+	}
+
+	public String getFileYn() {
+		return fileYn;
+	}
+
+	public void setFileYn(String fileYn) {
+		this.fileYn = fileYn;
+	}
+	
+	
 }

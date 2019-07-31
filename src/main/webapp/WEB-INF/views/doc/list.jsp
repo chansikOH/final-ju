@@ -77,12 +77,12 @@
 						<c:forEach var="doc" items="${docs }">
 							<tr>
 								<td><input type="checkbox" name="" />${doc.DOC_NO }</td>
-								<td><a href="/ju/doc/draft/update">${doc.DRAFT_TITLE }</a></td>
+								<td><a href="/ju/doc/draft/detail">${doc.DRAFT_TITLE }</a></td>
 								<td>${doc.DOC_FILE_YN }</td>
 								<td>${doc.EMPLOYEE_NAME }</td>
 								<td>${doc.PROFESSOR_NAME }</td>
 								<td>${doc.DOC_CREATE_DATE }</td>
-								<td>${doc.DOC_STATE }</td>
+								<td><a href="/ju/doc/draft/update">${doc.DOC_STATE }</a></td>
 							</tr>
 						</c:forEach>
 						</tbody>
@@ -91,7 +91,7 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12 text-right">
-					<a href="/ju/doc/draft/detail" class="btn-sm btn-success">기안서작성</a> 
+					<a href="/ju/doc/draft/addform" class="btn-sm btn-success">기안서작성</a> 
 					<a href="/ju/doc/vacation/detail" class="btn-sm btn-info">휴가서작성</a> 
 					<a href="/ju/doc/retire/detail" class="btn-sm btn-warning">퇴직서작성</a>
 				</div>
