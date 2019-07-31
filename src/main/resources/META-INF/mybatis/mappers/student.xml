@@ -50,7 +50,9 @@
 		<result javaType="java.lang.String" property="courseName" column="course_name"/>
 		<result javaType="java.lang.String" property="professorName" column="professor_name"/>
 		<result javaType="java.lang.Integer" property="credit" column="course_credit"/>
-		<result javaType="java.lang.Integer" property="cnt" column="cnt"/>
+		<result javaType="java.lang.Double" property="totalcnt" column="totalcnt"/>
+		<result javaType="java.lang.String" property="record" column="course_attend_record"/>
+		<result javaType="java.lang.Integer" property="courseOpinionNo" column="course_opinion_no"/>
 	</resultMap>
 	
 	<resultMap type="hashmap" id="coursedetailInfoResultMap">
@@ -217,39 +219,48 @@
 	
 	<select id="getAllRecordesByStudentNo" parameterType="map" resultMap="studentRecoredResultMap">
 		select 
-			X.course_no as courseNo, 
-			Y.course_must_yn as mustYn, 
-			Y.course_name as courseName,
-			Z.professor_name as professorName,
-			Y.course_credit as credit,
-			cnt
+			H.course_no courseNo, 
+			Y.course_must_yn mustYn, 
+			Y.course_name courseName, 
+			Z.professor_name professorName,
+			Y.course_credit credit, 
+			totalcnt, 
+			W.course_attend_record record, 
+			W.course_opinion_no courseOpinionNo
 		from 
 			(select 
-				CA.STUDENT_NO, 
-				C.course_no, 
-				sum(TR.RESULT_SCORE) cnt
-			 from 
-				courses C, 
-				professors P, 
-				course_attends CA, 
-				tests T, 
-				test_results TR
-			 where 
-				CA.student_no = TR.student_no
-				and TR.test_no = T.test_no
-				and T.course_no = CA.course_no
-				and C.professor_no = P.professor_no
-				and CA.course_no = C.course_no
-				and TR.student_no = #{no}
-			 group by 
-				CA.STUDENT_NO, 
-				C.course_no) X, 
-			 Courses Y, 
-			 Professors Z 
+				F.student_no, 
+				F.course_no, 
+				sum(F.cnt+G.course_attend_point) totalcnt
+			from 
+				(select 
+					B.student_no, 
+					A.course_no, 
+					sum(B.result_score) cnt
+				from 
+					tests A, 
+					test_results B, 
+					courses C, 
+					students D
+				where 
+					A.test_no = B.test_no
+					and A.course_no = C.course_no
+					and B.student_no = D.student_no
+					and B.student_no = #{studentNo}
+					and C.course_year = #{year}
+					and C.course_term = #{term}
+				group by B.student_no, A.course_no) F, course_attends G
+			where 
+				F.course_no = G.course_no 
+				and G.student_no = F.student_no
+			group by 
+				F.course_no, 
+				F.student_no) H, courses Y, professors Z, course_attends W
 		where 
-			X.course_no =Y.course_no 
-			and Y.PROFESSOR_NO = Z.professor_no
-			and Y.COURSE_YEAR = '2018'
+			H.course_no = Y.course_no 
+			and Y.professor_no = Z.professor_no 
+			and Y.course_no = W.course_no
+			and H.student_no = W.student_no
 	</select>
 	
 	<select id="getCoursedetailSource" parameterType="map" resultMap="coursedetailInfoResultMap">

@@ -225,10 +225,7 @@ public class StudentController {
 	public String courserecords(HttpSession session, Model model) {
 		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("no", student.getNo());
-
-		List<Map<String, Object>> records = studentService.getAllRecordesByStudentNo(map);
+		List<Map<String, Object>> records = studentService.getAllRecordesByStudentNo(student.getNo());
 
 		model.addAttribute("records", records);
 

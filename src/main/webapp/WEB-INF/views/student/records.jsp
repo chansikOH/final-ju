@@ -13,8 +13,8 @@
   	
   	<style>
         .wrapper {
-            margin-top: 30px;
-            padding: 50px;
+        	margin-top: 20px;
+            padding: 20px;
         }
         
         .wrapper table {
@@ -47,28 +47,14 @@
 			<div class="col-sm-10 wrapper">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4>[4학년 1학기]</h4>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <div class="pull-right">
-                            <select id="search-course-term">
-                                <option value="" disabled selected> 학기별 조회</option>
-                                <option value=""> 4학년 1학기</option>
-                                <option value=""> 3학년 2학기</option>
-                                <option value=""> 3학년 1학기</option>
-                                <option value=""> 2학년 2학기</option>
-                                <option value=""> 2학년 1학기</option>
-                                <option value=""> 1학년 2학기</option>
-                                <option value=""> 1학년 1학기</option>
-                            </select>
-                        </div>
+                        <h4>[성적조회]</h4>               
+                        <p>※ 강의평가 후 성적조회 가능</p>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-sm-12">
-                        <table class="table">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>교과목번호</th>
@@ -88,50 +74,19 @@
 	                                    <td>${record.COURSENAME }</td>
 	                                    <td>${record.PROFESSORNAME }</td>
 	                                    <td>${record.CREDIT }</td>
-	                                    <td>${record.cnt }</td>
-	                                    <td>
-	                                    	<c:choose>
-	                                    		<c:when test="${record.cnt >= 97 }">
-	                                    			A+
-	                                    		</c:when>
-	                                    		<c:when test="${record.cnt >= 93 }">
-	                                    			A-
-	                                    		</c:when>
-	                                    		<c:when test="${record.cnt >= 89 }">
-	                                    			A0
-	                                    		</c:when>
-	                                    		<c:when test="${record.cnt >= 85 }">
-	                                    			B+
-	                                    		</c:when>
-	                                    		<c:when test="${record.cnt >= 81 }">
-	                                    			B-
-	                                    		</c:when>
-	                                    		<c:when test="${record.cnt >= 77 }">
-	                                    			B0
-	                                    		</c:when>
-	                                    		<c:when test="${record.cnt >= 73 }">
-	                                    			C+
-	                                    		</c:when>
-	                                    		<c:when test="${record.cnt >= 69 }">
-	                                    			C-
-	                                    		</c:when>
-	                                    		<c:when test="${record.cnt >= 65 }">
-	                                    			C0
-	                                    		</c:when>
-	                                    		<c:when test="${record.cnt >= 61 }">
-	                                    			D+
-	                                    		</c:when>
-	                                    		<c:when test="${record.cnt >= 57 }">
-	                                    			D-
-	                                    		</c:when>
-	                                    		<c:when test="${record.cnt >= 50 }">
-	                                    			D0
-	                                    		</c:when>
-	                                    		<c:otherwise>
-	                                    			F
-	                                    		</c:otherwise>
-	                                    	</c:choose>
-	                                    </td>
+	                                   <c:choose>
+	                                    	<c:when test="${empty record.COURSEOPINIONNO}">
+	                                    		<td>
+	                                    			<input type="hidden" value="${record.COURSEOPINIONNO }" id="opinionNo">
+	                                    			<a href="" onclick="javascript:openOpinion()" class="btn btn-info btn-xs">강의평가</a>
+	                                    		</td>
+	                                    		<td></td>
+	                                    	</c:when>
+	                                    	<c:otherwise>
+			                                    <td>${record.totalcnt }</td>
+			                                    <td>${record.RECORD }</td>
+	                                    	</c:otherwise>
+	                                    </c:choose>
                                 	</tr>
                             	</c:forEach>
                             </tbody>
@@ -143,9 +98,11 @@
 	</div>
 
 	<script type="text/javascript">
-		$(function() {
+			var opinionNo = $("#opinionNo").val();
 			
-		});
+			function openOpinion(){  
+			    window.open("course/courseopinions", "강의평가", "width=1000, height=900, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+			} 
 	</script>
 
 </body>

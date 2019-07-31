@@ -15,7 +15,7 @@
 		<level value="info" />
 	</logger>
 	<logger name="kr.ac.ju.dao">
-		<level value="debug" />
+		<level value="info" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->

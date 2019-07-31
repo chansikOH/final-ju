@@ -131,10 +131,29 @@ public class StudentServiceImpl implements StudentService {
 		return courseAttends;
 	}
 
-	public List<Map<String, Object>> getAllRecordesByStudentNo(Map<String, Object> map) {
-		List<Map<String, Object>> records = studentDao.getAllRecordesByStudentNo(map);
+	public List<Map<String, Object>> getAllRecordesByStudentNo(int studentNo) {
+		int year = 0;
+		int term = 0;
 
-		return records;
+		long currentTime = System.currentTimeMillis();
+		SimpleDateFormat currentYear = new SimpleDateFormat("yyyy");
+		SimpleDateFormat currentMonth = new SimpleDateFormat("MM");
+
+		year = Integer.parseInt(currentYear.format(new Date(currentTime)));
+
+		int nowMonth = Integer.parseInt(currentMonth.format(new Date(currentTime)));
+		if (nowMonth >= 3 && nowMonth <= 8) {
+			term = 1;
+		} else if ((nowMonth >= 1 && nowMonth <= 2) || (nowMonth >= 9 && nowMonth <= 12)) {
+			term = 2;
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("studentNo", studentNo);
+		map.put("year", year);
+		map.put("term", term);
+				
+		return studentDao.getAllRecordesByStudentNo(map);
 	}
 
 	@Override

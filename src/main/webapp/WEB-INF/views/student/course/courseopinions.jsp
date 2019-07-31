@@ -13,16 +13,9 @@
   	
   	<style>
 	    .sidebar>div {
-	        margin-top: 10px;
 	        padding: 0px;
 	    }
-	
-	    img {
-	        border-radius: 50%;
-	        display: block;
-	        margin: 0px auto;
-	    }
-	
+		
 	    .center {
 	        text-align: center;
 	    }
@@ -36,7 +29,6 @@
 	    }
 	    
 	    .course-opinion-table {
-	        margin-top: 30px;
 	        padding: 30px;
 	    }
 	    
@@ -64,13 +56,8 @@
 <body>
 
 	<div class="container-fluid">
-	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<div class="row">
-			<div class="col-sm-2 shadow">
-				<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
-			</div>
-			
-			<div class="col-sm-10">
+			<div class="col-sm-12">
                 <div class="course-opinion-table">
                    <h4>[강의평가]</h4>
                    
@@ -91,7 +78,7 @@
                     </table>
 
                    <div class="score-check">
-                        <p>이 설문지의 목적으 여러분의 의견을 반영하여 보다 좋은 강의를 제공할 수 있도록 돕는 것입니다. 이 목적에 도움이 되도록 성실하고 솔직하게 답변해 주시면 감사하겠습니다.</p>
+                        <p>이 설문지의 목적은 여러분의 의견을 반영하여 보다 좋은 강의를 제공할 수 있도록 돕는 것입니다. 이 목적에 도움이 되도록 성실하고 솔직하게 답변해 주시면 감사하겠습니다.</p>
                         <p>이 평가서는 익명으로 작성되며, 성적평가 후 개봉/정리되어 담당교수의 다음 학기 강의 준비에 참고가 될 것입니다.</p>
                         <hr/>
                         <p>각 문항별로 여러분이 동의하는 정도에 따라 1~5 중 하나를 선택해주십시오.</p>
@@ -161,6 +148,11 @@
                                     <input type="radio" value="4"> 4
                                     <input type="radio" value="5"> 5
                                 </td>
+                            </tr>
+                            <tr>
+                            	<td colspan="3">
+                            		<button class="btn btn-success">제출</button>
+                            	</td>
                             </tr>
                         </tbody>
                     </table>
