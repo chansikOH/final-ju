@@ -23,6 +23,6 @@ public interface EmployeeDao {
 	int searchStudentsCount(Map<String, Object> searchOption); 
 	Student getStudentByNo(int studentNo); 
 	void updateStudentStatusByNo(Student student); 
-	List<Notice> getAllNotices(); 
+	List<Notice> getAllNotices(Map<String, Object> paginationOption); 
 	int getAllNoticesCount(); 
 }

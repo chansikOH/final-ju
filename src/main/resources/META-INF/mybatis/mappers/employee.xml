@@ -158,26 +158,36 @@
 		from notices 
 	</select>
 	
-	<select id="getAllNotices" resultType="notice">
-		select	notice_no 			as no,
+	<select id="getAllNotices" parameterType="map" resultType="notice">
+		select *
+		from
+			(select	
+				notice_no 			as no,
 				notice_writer 		as writer,
 				notice_title 		as title,
 				notice_contents	 	as contents,
 				notice_file_name 	as fileName,
-				notice_create_date	as createDate
-		from notices
-		order by notice_no desc
+				notice_create_date	as createDate,
+				row_number() over (order by notice_no desc) as rn
+			from 
+				notices)
+		where 
+			rn >= #{beginIndex}
+			and rn &lt;= #{endIndex}		
 	</select>
 	
 	<select id="getNoticeByNoticeNo" parameterType="int" resultType="notice">
-		select	notice_no 			as no,
-				notice_writer		as writer,
-				notice_title 		as title,
-				notice_contents 	as contents,
-				notice_file_name 	as fileName,
-				notice_create_date 	as createDate
-		from notices
-		where notice_no = #{value}
+		select	
+			notice_no 			as no,
+			notice_writer		as writer,
+			notice_title 		as title,
+			notice_contents 	as contents,
+			notice_file_name 	as fileName,
+			notice_create_date 	as createDate
+		from 
+			notices
+		where 
+			notice_no = #{value}
 	</select>
 	
 </mapper>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.ju.service.EmployeeService;
+import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Pagination;
 import kr.ac.ju.vo.Student;
 
@@ -103,6 +104,35 @@ public class EmployeeRestController {
 		employeeService.updateStudentStatusByNo(student); 
 		
 		return student;
+	}
+	
+	@GetMapping("/stud/noticelist.do")
+	public String noticelist(@RequestParam(value = "pageNo", required = false, defaultValue = "1" ) int pageNo,
+							 Model model) {
+		
+		// pagination 관련
+		Map<String, Object> paginationOption = new HashMap<String, Object>();
+		
+		int size = 5;				 					
+		int beginIndex  = (pageNo - 1)*size + 1 ;		
+		int endIndex   = pageNo*size ; 	
+		int count = employeeService.getAllNoticesCount();
+		
+		paginationOption.put("size", size); 
+		paginationOption.put("beginIndex", beginIndex); 
+		paginationOption.put("endIndex", endIndex); 
+
+		List<Notice> notices = employeeService.getAllNotices(paginationOption); 
+		Pagination pagination = new Pagination(pageNo, size, count); 
+		
+		// 값 담기 
+		model.addAttribute("notices", notices);
+		model.addAttribute("count", count);
+		model.addAttribute("pagination", pagination);
+		
+		System.out.println(pagination.getBegin());
+		
+		return "employee/stud/noticelist";
 	}
 	
 	

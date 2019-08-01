@@ -18,6 +18,7 @@
      .title{margin: 20px 0; font-size: 26px;}
 
 	.result{padding: 0 15px;}
+	.result p{text-align: right; font-size: 15px; color: #0000ff;}
 	.result div:first-child{margin: 15px 0 5px 0; padding: 0;}
 	.result th{background: #faf6f0; }
 	.result th, td{text-align: center; }
@@ -39,7 +40,7 @@
 				<h1 class="title">학생 공지사항</h1> 
 				<div class="row result">
 					<div class="col-sm-12">
-                            <p>총 ${notices }건 조회</p>
+                            <p>총 ${count }건 조회</p>
                     </div>
 					<div class="col-sm-12">
 						<table class="table table-striped">
@@ -94,5 +95,10 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+	$(function() {
+		$("#search-result-table tbody tr").hide();
+	})
+	</script>
 </body>
 </html>
