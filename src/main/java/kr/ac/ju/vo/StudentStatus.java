@@ -5,7 +5,7 @@ import java.util.Date;
 public class StudentStatus {
 
 	private Integer no;
-	private String division;
+	private String division;     //  휴학신청여부, 자퇴신청여부 (진행중)
 	private Integer startTerm;
 	private String termCount;
 	private String passYn;

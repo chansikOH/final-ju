@@ -10,6 +10,7 @@ public interface EmployeeService {
 
 	// Controller
 	List<Major> getAllMajors(); 
+	void insertStudent(Student student);
 	
 	// RestController
 	List<Student> searchStudents(Map<String, Object> searchOption ); 
