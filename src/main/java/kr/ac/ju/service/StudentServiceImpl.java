@@ -189,9 +189,12 @@ public class StudentServiceImpl implements StudentService {
 		// 위에 정의된 맵을 매개변수로 하여 뽑힌 교과목정보 맵객체를 자료형으로 삼는 리스트 객체 정의
 		List<Map<String, Object>> classInfos = studentDao.getCoursedetailSource(search);
 		// 교과목 이름 정의
-		String courseName = (String) classInfos.get(0).get("COURSENAME");
+		String courseName = studentDao.getCourseByCourseNo(courseNo).getName();
 		// 교과목의 평균 진행도를 담는 변수 정의 
 		Integer courseAvg = studentDao.getAvgCourseView(search);
+		if(courseAvg == null) {
+			courseAvg = 0;
+		}
 		// 단원 정보가 담긴 맵객체를 자료형으로 삼는 리스트 객체 정의
 		List<Map<String, Object>> partInfos = studentDao.getPartInfos(search);
 
@@ -238,7 +241,7 @@ public class StudentServiceImpl implements StudentService {
 		// 교과목정보들이 담긴 맵객체를 자료형으로 삼는 리스트 객체 정의
 		List<Map<String, Object>> classInfos = studentDao.getCoursedetailSource(search);
 		// 교과목 이름 정의
-		String courseName = (String) classInfos.get(0).get("COURSENAME");
+		String courseName = studentDao.getCourseByCourseNo(courseNo).getName();
 		// 특정 강의번호로 뽑힌 강의정보를 정의
 		Cla cla = studentDao.getClassByClassNo(classNo);
 		// 특정 학생번호와 교과목번호로 뽑힌 강의시청정보를 정의
