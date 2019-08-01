@@ -25,18 +25,20 @@
 		<div class="col-sm-10">
 			<h2 class="text-center">기안서 양식</h2>
 		    <div class="well">
-		    	<form:form method="post" action="insertdetail" modelAttribute="DocForm" enctype="multipart/form-data">
+		    	<form:form method="post" action="insertDoc" modelAttribute="DocForm" enctype="multipart/form-data">
 		    		<div class="form-group">
 		    			<label>중간결재자</label>
-						<select class="form-control" name="middlePersonNo"> 
-                            <option value=""> 대리</option>
-                            <option value=""> 과장</option>
-                            <option value=""> 처장</option>
+						<select class="form-control" name="middlePersonNo">
+						<c:forEach var="emp" items="${employees }">
+                            <option value="${emp.no }"> ${emp.name } ${emp.position.name }</option>
+						</c:forEach> 
                         </select>
 		    			<br/>
 		    			<label>최종결재자</label>
 		    			<select class="form-control" name="finalPersonNo"> 
-                            <option value=""> 처장</option>
+		    			<c:forEach var="emp" items="${employees }">
+                            <option value="${emp.no }"> ${emp.name } ${emp.position.name }</option>
+		    			</c:forEach>
                         </select>
 		    			<br/>
 		    			<label>제목</label>
@@ -49,10 +51,10 @@
 			    		<input type="file" name="upfile">
 			    		<br/>
 		    			<label>보존년한</label>
-		    			<select class="form-control" name="keepingYear"> 
-                            <option value=""> 1년</option>
-                            <option value=""> 2년</option>
-                            <option value=""> 3년</option>
+		    			<select class="form-control" name="keepingYear">
+                            <option value="1"> 1년</option>
+                            <option value="2"> 2년</option>
+                            <option value="3"> 3년</option>
                         </select>
                         <br/>
 		    			<label>시행일자</label>
@@ -65,7 +67,7 @@
 		    		</div>
 		    	</form:form>
 		    </div>
-		    <dr>
+		    <br>
 		</div>
 	</div>
 </div>

@@ -73,23 +73,87 @@
 			dual
 	</select>
 	
-	<!-- 결재문서등록 Doc -->
+	<!-- 사원 전체 조회 -->
+	<select id="getAllEmployees" resultType="employee">
+		SELECT 
+			A.employee_no as no, 
+			B.position_id as "position.id",
+			A.employee_name as "name" , 
+			B.POSITION_NAME as "position.name"
+		FROM 
+			employees A, position B
+		where 
+			A.position_id = B.position_id
+		order by B.position_level desc, A.employee_name asc
+	</select>
+	
+	<!-- 직원 결재문서등록 Doc -->
 	<insert id="insertDoc" parameterType="doc">
-		insert into Doc
+		insert into Docs
 			(doc_no, 
 			employee_no, 
 			doc_state, 
+			doc_middle_person,
 			doc_final_person,
 			doc_file_yn)
 		values
 			(#{no},
 			 #{employee.no}, 
 			 #{state},
+			 #{middlePerson},
 			 #{finalPerson},
 			 #{fileYn})
 	</insert>
 	
+	<!-- docs_no 가져오기?? -->
+	<select id="docs" parameterType="int" resultType="doc">
+		select
+			doc_no 
+		from docs;
+	</select>
 	
+	<!-- 직원 기안서 등록 Drafts-->
+	<insert id="insertDraft" parameterType="draft">
+		insert into Drafts
+			(draft_no, 
+			draft_title, 
+			draft_contents,
+			draft_start_date,
+			draft_keeping_year,
+			docs_no)
+		values
+			(doc_detail_seq.nextval,
+			#{title}, 
+			#{contents}, 
+			#{startDate},
+			#{keepingYear},
+			#{doc.no})
+	</insert>
 	
+	<!-- 직원 결재선 등록 -->
+	<insert id="insertDocLine" parameterType="docLine">
+		insert into DocLines
+			(doc_line_no, 
+			doc_line_statu, 
+			person_no,
+			doc_no)
+		values
+			(#{no}, 
+			#{status},
+			#{person.no},
+			#{doc.no})
+	</insert>
+	
+	<!-- 직원 파일 등록 -->
+	<insert id="insertDocfile" parameterType="docFile">
+		insert into DocFiles
+			(doc_file_no, 
+			doc_no, 
+			doc_name)
+		values
+			(#{no},
+			#{doc.no},
+			#{fileName})
+	</insert>
 	
 </mapper>
