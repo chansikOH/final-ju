@@ -10,9 +10,18 @@ public class CourseAttend {
 	private Integer point;
 	private Date createDate;
 	private String record;
-
+	private CourseOpinion courseOpinion;
+	
 	public CourseAttend() {
 
+	}
+	
+	public CourseOpinion getCourseOpinion() {
+		return courseOpinion;
+	}
+
+	public void setCourseOpinion(CourseOpinion courseOpinion) {
+		this.courseOpinion = courseOpinion;
 	}
 
 	public Integer getNo() {

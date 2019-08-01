@@ -21,7 +21,7 @@ public interface StudentService {
 	// 작성자 : 오찬식
 	Integer countCurrentCoursesByStudentNo(int studentNo);
 	List<CourseAttend> getCoursesByStudentNoAndYearTerm(Map<String, Object> maps);
-	List<Map<String, Object>> getAllRecordesByStudentNo(Map<String, Object> map);
+	List<Map<String, Object>> getAllRecordesByStudentNo(int studentNo);
 	
 	// 작성자 : 오찬식
 	Map<String, Object> getCoursedetailSource(int studentNo, int courseNo);
