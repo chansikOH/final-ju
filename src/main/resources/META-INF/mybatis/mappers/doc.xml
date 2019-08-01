@@ -106,10 +106,19 @@
 	</insert>
 	
 	<!-- docs_no 가져오기?? -->
-	<select id="docs" parameterType="int" resultType="doc">
-		select
-			doc_no 
-		from docs;
+	<select id="getdocs" parameterType="int" resultType="doc">
+		select 
+			doc_no as no, 
+			employee_no as employee, 
+			doc_create_date as createDate, 
+			doc_state as state, 
+			doc_final_person as finalPerson, 
+			doc_file_yn as fileYn,  
+			doc_middle_person as middlePerson 
+		from 
+			docs
+		where 
+			doc_no = #{value}
 	</select>
 	
 	<!-- 직원 기안서 등록 Drafts-->
@@ -132,26 +141,24 @@
 	
 	<!-- 직원 결재선 등록 -->
 	<insert id="insertDocLine" parameterType="docLine">
-		insert into DocLines
+		insert into Doc_lines
 			(doc_line_no, 
-			doc_line_statu, 
 			person_no,
 			doc_no)
 		values
-			(#{no}, 
-			#{status},
+			(doc_line_seq.nextval, 
 			#{person.no},
 			#{doc.no})
 	</insert>
 	
 	<!-- 직원 파일 등록 -->
 	<insert id="insertDocfile" parameterType="docFile">
-		insert into DocFiles
+		insert into Doc_files
 			(doc_file_no, 
 			doc_no, 
 			doc_name)
 		values
-			(#{no},
+			(doc_file_seq.nextval,
 			#{doc.no},
 			#{fileName})
 	</insert>

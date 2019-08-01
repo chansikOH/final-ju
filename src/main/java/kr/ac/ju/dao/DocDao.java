@@ -13,11 +13,14 @@ import kr.ac.ju.vo.Employee;
 public interface DocDao {
 
 	List<HashMap<String, Object>> getDocEmployeeByNo(int employeeNo);
+	
+	Doc getdocs(int no);
+	
 	void insertDoc(Doc doc);
-	void docs(Doc docs);
 	void insertDraft(Draft draft);
-	void insertDocLine(List<DocLine> docLines);
+	void insertDocLine(DocLine docLine);
 	void insertDocfiles(DocFile docFile);
+	
 	int getDocSeq();
 	List<Employee> getAllEmployees();
 

@@ -12,6 +12,7 @@ import kr.ac.ju.vo.Employee;
 public interface DocService {
 	List<HashMap<String, Object>> getDocEmployeeByNo(int employeeNo);
 
-	void addDraft(Doc doc, Draft draft, List<DocLine> docLines, DocFile docfile);
+	void addDraft(Doc doc, Draft draft, List<Integer> nos, DocFile docfile);
+	
 	List<Employee> getAllEmployees();
 }
