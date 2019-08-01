@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.ac.ju.vo.Employee;
 import kr.ac.ju.vo.Major;
+import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Student;
 
 public interface EmployeeDao {
@@ -14,10 +15,14 @@ public interface EmployeeDao {
 	// Controller
 	List<Major> getAllMajors(); 
 	void insertStudent(Student student); 
+	int getStudentNoSeq(int majorNo); 
+	Notice getNoticeByNoticeNo(int noticeNo); 
 	
 	// RestController
 	List<Student> searchStudents(Map<String, Object> searchOption ); 
 	int searchStudentsCount(Map<String, Object> searchOption); 
 	Student getStudentByNo(int studentNo); 
 	void updateStudentStatusByNo(Student student); 
+	List<Notice> getAllNotices(); 
+	int getAllNoticesCount(); 
 }
