@@ -56,6 +56,17 @@
 			<artifactId>spring-websocket</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		<!-- 엑셀 읽고 쓰기 -->
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>3.11</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>3.11</version>
+		</dependency>
 		<!-- 암호화 -->
 		<dependency>
 			<groupId>commons-codec</groupId>

@@ -84,7 +84,7 @@
 											<td>${course.major.name }</td>
 											<td>${course.name }</td>
 											<td>${course.professor.name }</td>
-											<td class="btn-update"><a href="coursedetail?courNo=${course.no }" class="btn btn-default">시험보기</a></td>
+											<td class="btn-update"><a href="test" class="btn btn-default">시험보기</a></td>
 										</tr>
 									</c:forEach>
 								</c:when>

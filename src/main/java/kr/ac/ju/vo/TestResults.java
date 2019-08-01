@@ -7,7 +7,7 @@ public class TestResults {
 	private Integer no;
 	private Test test;
 	private Student student;
-	private Integer score;
+	private Integer score;	// 시험보는것을 완료하면 웹에서 정답 체크
 	private Date createDate;
 
 	public TestResults() {
