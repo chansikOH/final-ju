@@ -10,6 +10,8 @@ import kr.ac.ju.dao.ProfessorDao;
 import kr.ac.ju.vo.Cla;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CoursePart;
+import kr.ac.ju.vo.CoursePlan;
+import kr.ac.ju.vo.Major;
 import kr.ac.ju.vo.Professor;
 import kr.ac.ju.vo.Test;
 
@@ -76,5 +78,21 @@ public class ProfessorServiceImpl implements ProfessorService{
 	public void addVideo(Cla cla) {
 		professorDao.addVideo(cla);
 	}
-	
+
+	@Override
+	public void addCoursePlanAndParts(CoursePlan coursePlan, List<CoursePart> parts) {
+		professorDao.addCoursePlan(coursePlan);
+		
+		for(CoursePart part : parts) {
+			professorDao.addCoursePart(part);
+		}
+	}
+	@Override
+	public Major getMajor(int profNo) {
+		return professorDao.getMajor(profNo);
+	}
+	@Override
+	public void addCourse(Course course) {
+		professorDao.addCourse(course);
+	}
 }

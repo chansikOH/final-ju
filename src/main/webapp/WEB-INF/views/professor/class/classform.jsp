@@ -22,7 +22,6 @@
 	    .course-create .table-wrap .table>tbody>tr>td{padding: 12px 20px;}
 	    .course-create .table-wrap .table>tbody>tr>th{padding: 40px 20px 18px;}
 	    .course-create .table-wrap .table .search{text-align: right; padding: 30px 20px 37px 0;}
-	    .course-create select, input{width:174px; height: 30px;}
 	</style>
 </head>
 <body>
@@ -38,87 +37,82 @@
                     <h1>강의 개설</h1>
                 </div>
                 <div class="col-sm-12 table-wrap">
-                    <form class="form">
+                    <form class="form" method="post" action="addcourse">
                         <table class="table">
                             <tbody>
                                 <tr class="top">
                                     <th>교수번호</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="number" class="form-control input-sm" value="1000" disabled>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>강의년도</th>
-                                    <th>학기</th>
                                     <th>학과</th>
+                                    <th>교과목번호</th>
+                                    <th>강의년도</th>
                                 </tr>
-                                <tr>
+                                <tr class="form-input">
                                     <td>
-                                        <select class="form-control input-sm">
-                                            <option>선택</option>
-                                            <option>2019</option>
-                                            <option>2020</option>
-                                        </select>
+                                        <input type="number" class="form-control input-sm" value="${LOGIN_PROFESSOR.no }" disabled>
                                     </td>
                                     <td>
-                                        <select class="form-control input-sm">
-                                            <option>선택</option>
-                                            <option>1학기</option>
-                                            <option>2학기</option>
-                                        </select>
+                                    	<input type="text" class="form-control input-sm" value="${major.name }" disabled>
+                                    	<input type="hidden" name="mno" value="${major.no }">
                                     </td>
                                     <td>
-                                        <select class="form-control input-sm">
-                                            <option>선택</option>
-                                            <option>컴퓨터공학과</option>
-                                            <option>국문학과</option>
-                                        </select>
+                                        <input type="text" name="no" class="form-control input-sm">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="year" class="form-control input-sm">
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th>강의학기</th>
                                     <th>교과목구분</th>
-                                    <th>학점</th>
-                                    <th></th>
+                                    <th>강의학점</th>
+                                    <th>강의정원</th>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select class="form-control input-sm">
+                                        <select name="term" class="form-control input-sm">
                                             <option>선택</option>
-                                            <option>전공</option>
-                                            <option>교양</option>
+                                            <option value="1">1학기</option>
+                                            <option value="2">2학기</option>
+                                        </select>
+                                    </td>
+                                     <td>
+                                        <select name="mustYn" class="form-control input-sm">
+                                            <option>선택</option>
+                                            <option value="Y">필수</option>
+                                            <option value="N">선택</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control input-sm">
+                                        <select name="credit" class="form-control input-sm">
                                             <option>선택</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
                                         </select>
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        <select name="quota" class="form form-control">
+                                        	<option value="30">30</option>
+                                        	<option value="40">40</option>
+                                        	<option value="50">50</option>
+                                        </select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>교과목명</th>
-                                    <th>강의명</th>
+                                    <th></th>
+                                    <th></th>
                                     <th></th>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <input class="form-control input-sm">
+                                    <td colspan="2">
+                                       <input type="text" name="name" class="form form-control">
                                     </td>
-                                    <td>
-                                        <input class="form-control input-sm">
-                                    </td>
+                                    <td></td>
                                     <td></td>
                                 </tr>
                                 <tr>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td class="search">

@@ -243,4 +243,35 @@
 		(class_seq.nextval, #{no}, #{name}, #{videoName})
 	</insert>
 	
+	<insert id='addCoursePlan' parameterType="coursePlan">
+		insert into course_plans
+		(course_plan_no, professor_no, course_no, plan_goal, plan_summary, plan_main_book, plan_sub_book1, plan_sub_book2, plan_sub_book3, plan_test_process)
+		values
+		(#{no}, #{professor.no}, #{course.no}, #{goal}, #{summary}, #{mainBook}, #{subBook1}, #{subBook2}, #{subBook3}, #{testProcess})
+	</insert>
+	
+	<insert id="addCoursePart" parameterType="coursePart">
+		insert into course_parts
+		(course_part_no, course_no, course_part_name, course_part_week, course_part_contents)
+		values
+		(course_part_seq.nextval, #{course.no}, #{name}, #{week}, #{contents})
+	</insert>
+	
+	<select id="getMajor" parameterType="int" resultType="major">
+		select
+   			M.major_name as name, M.major_no as no, P.professor_no as "professor.no" 
+		from
+		    professors P, majors M
+		where
+		    P.major_no  = M.major_no
+		and
+		    P.professor_no = #{value}
+	</select>
+	<insert id="addCourse" parameterType="course">
+		insert into courses
+		(course_no, professor_no, major_no, course_name, course_credit, course_year, course_term, course_must_yn, course_quota)
+		values
+		(#{no}, #{professor.no}, #{major.no}, #{name}, #{credit}, #{year}, #{term}, #{mustYn}, #{quota})
+	</insert>
+	
 </mapper>

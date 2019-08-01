@@ -2,6 +2,7 @@ package kr.ac.ju.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,10 +21,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.ju.form.ClaForm;
+import kr.ac.ju.form.CoursePlanForm;
 import kr.ac.ju.form.TestForm;
 import kr.ac.ju.service.ProfessorService;
 import kr.ac.ju.vo.Cla;
 import kr.ac.ju.vo.Course;
+import kr.ac.ju.vo.CoursePart;
+import kr.ac.ju.vo.CoursePlan;
+import kr.ac.ju.vo.Major;
 import kr.ac.ju.vo.Pagination;
 import kr.ac.ju.vo.Person;
 import kr.ac.ju.vo.Professor;
@@ -48,7 +53,6 @@ public class ProfessorController {
 		
 		Person person = (Person) session.getAttribute("LOGIN_PROFESSOR");
 		profNo = person.getNo();
-		
 		
 		model.addAttribute("courses", service.getAllClassByProfId(profNo));
 		model.addAttribute("counts", service.getAllClassCount(profNo));
@@ -174,9 +178,29 @@ public class ProfessorController {
 	
 	
 	@RequestMapping("/class/form")
-	public String classform(){
+	public String classform(Model model, HttpSession session){
+		
+		Professor professor= (Professor) session.getAttribute("LOGIN_PROFESSOR");
+		
+		
+		
+		model.addAttribute("major", service.getMajor(professor.getNo()));
+		
 		return "professor/class/classform";
 	}
+	@RequestMapping("/class/addcourse")
+	public String addcourse(Course course, HttpSession session, int mno){
+		
+		Professor professor= (Professor) session.getAttribute("LOGIN_PROFESSOR");
+		Major major = (Major)service.getMajor(professor.getNo());
+		course.setProfessor(professor);
+		course.setMajor(major);
+
+		service.addCourse(course);
+		
+		return "redirect:list";
+	}
+	
 	@RequestMapping("/class/update")
 	public String classupdate() {
 		return "professor/class/classupdate";
@@ -185,14 +209,53 @@ public class ProfessorController {
 	public String grade() {
 		return "professor/grade/grade";
 	}
+	
 	@RequestMapping("/course/planform")
-	public String planform() {
+	public String planform(HttpSession session, Model model) {
 		
-		
-		
+		Person person = (Person) session.getAttribute("LOGIN_PROFESSOR");
+		model.addAttribute("courses", service.getAllClassByProfId(person.getNo()));
 		
 		return "professor/course/planform";
 	}
+	
+	@RequestMapping("/course/addplanform")
+	public String addplanform(CoursePlanForm form, HttpSession session) {
+		
+		CoursePlan coursePlan = new CoursePlan();
+		
+		Course course = service.getCourseByCourseNo(form.getCourseNo());
+		
+		BeanUtils.copyProperties(form, coursePlan);
+		Professor pro = (Professor) session.getAttribute("LOGIN_PROFESSOR");
+		
+		coursePlan.setProfessor(pro);
+		coursePlan.setCourse(course);
+		
+		List<CoursePart> parts = new ArrayList<CoursePart>();
+		for(int i = 0; i<form.getName().length; i++ ) {
+			CoursePart coursePart = new CoursePart();
+			BeanUtils.copyProperties(form, coursePart);
+			coursePart.setCourse(course);
+			
+			
+			coursePart.setName(form.getName()[i]);
+			coursePart.setWeek(form.getWeek()[i]);
+			coursePart.setContents(form.getContents()[i]);
+			System.out.println(coursePart.getName());
+			System.out.println(coursePart.getWeek());
+			System.out.println(coursePart.getContents());
+			
+			parts.add(coursePart);
+		}
+		
+		service.addCoursePlanAndParts(coursePlan, parts);
+		
+		System.out.println(form.getWeek());
+		
+		return "redirect: ../class/list";
+	}
+	
 	@RequestMapping("/course/planupdate")
 	public String planupdate() {
 		return "professor/course/planupdate";
