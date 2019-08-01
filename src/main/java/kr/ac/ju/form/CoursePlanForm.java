@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class CoursePlanForm {
 
+	private Integer no;
 	private Integer courseNo;
 	private String goal;
 	private String summary;
@@ -11,13 +12,19 @@ public class CoursePlanForm {
 	private String subBook1;
 	private String subBook2;
 	private String subBook3;
-	private String process;
+	private String testProcess;
 	private Date createDate;
 	
-	private String[] partName;
+	private String[] name;
 	private Integer[] week;
 	private String[] contents;
 	
+	public Integer getNo() {
+		return no;
+	}
+	public void setNo(Integer no) {
+		this.no = no;
+	}
 	public Integer getCourseNo() {
 		return courseNo;
 	}
@@ -60,24 +67,26 @@ public class CoursePlanForm {
 	public void setSubBook3(String subBook3) {
 		this.subBook3 = subBook3;
 	}
-	public String getProcess() {
-		return process;
-	}
-	public void setProcess(String process) {
-		this.process = process;
-	}
 	
+	
+	public String getTestProcess() {
+		return testProcess;
+	}
+	public void setTestProcess(String testProcess) {
+		this.testProcess = testProcess;
+	}
 	public Date getCreateDate() {
 		return createDate;
 	}
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	public String[] getPartName() {
-		return partName;
+	
+	public String[] getName() {
+		return name;
 	}
-	public void setPartName(String[] partName) {
-		this.partName = partName;
+	public void setName(String[] name) {
+		this.name = name;
 	}
 	public Integer[] getWeek() {
 		return week;

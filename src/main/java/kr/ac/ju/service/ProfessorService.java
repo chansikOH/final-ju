@@ -6,6 +6,8 @@ import java.util.Map;
 import kr.ac.ju.vo.Cla;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CoursePart;
+import kr.ac.ju.vo.CoursePlan;
+import kr.ac.ju.vo.Major;
 import kr.ac.ju.vo.Professor;
 import kr.ac.ju.vo.Test;
 
@@ -25,4 +27,9 @@ public interface ProfessorService {
 	
 	void addTest(Test test);
 	void addVideo(Cla cla);
+	
+	void addCoursePlanAndParts(CoursePlan coursePlan, List<CoursePart> parts);
+	
+	Major getMajor(int profNo);
+	void addCourse(Course course);
 }

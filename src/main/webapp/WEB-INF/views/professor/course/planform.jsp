@@ -20,7 +20,7 @@
     .course-create .table-wrap .table>tbody>tr>td{padding: 8px 20px;}
     .course-create .table-wrap .table>tbody>tr>th{padding: 40px 20px 18px;}
     .course-create .table-wrap .table .search{text-align: right; padding: 30px 20px 37px 0;}
-    .course-create select, input{width:174px; height: 30px;}
+    
     .course-create .table-wrap .table .part-padding th{padding-top: 20px;}
     .part-title{font-size: 22px;}
     .course-create .table-wrap .table .search .add-btn{float: left; margin-left: 20px}
@@ -59,26 +59,32 @@
                     <h1>강의계획서 작성</h1>
                 </div>
                 <div class="col-sm-12 table-wrap">
-                    <form class="form" method="post" action="#">
+                    <form class="form" method="post" action="addplanform">
                         <table class="table">
                             <tbody>
                                 <tr class="top">
+                                    <th>교과목번호 / 교과목명</th>
+                                	<th>강의계획서 번호</th>
                                     <th>교수번호</th>
                                     <th>교수이름</th>
-                                    <th>교과목번호</th>
-                                    <th></th>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="number" class="form-control input-sm" value="1000" disabled>
+                                        <select name="courseNo" class="form-control">
+                                        	<c:forEach var="course" items="${courses }">
+                                        		<option value="${course.no }">${course.no } / ${course.name } </option>
+                                        	</c:forEach>
+                                        </select>
+                                    </td>
+                                	<td>
+                                		<input type="text" name="no" class="form-control input-sm">
+                                	</td>
+                                    <td>
+                                        <input type="text" class="form-control input-sm" value="${LOGIN_PROFESSOR.no }" disabled>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control input-sm" value="홍길동" disabled>
+                                        <input type="text" class="form-control input-sm" value="${LOGIN_PROFESSOR.name }" disabled>
                                     </td>
-                                    <td>
-                                        <input type="number" class="form-control input-sm" value="" disabled>
-                                    </td>
-                                    <td></td>
                                 </tr>
                                 <tr>
                                     <th>주교재</th>
@@ -88,16 +94,16 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control input-sm">
+                                        <input type="text" name="mainBook" class="form-control input-sm">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control input-sm">
+                                        <input type="text" name="subBook1" class="form-control input-sm">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control input-sm">
+                                        <input type="text" name="subBook2" class="form-control input-sm">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control input-sm">
+                                        <input type="text" name="subBook3" class="form-control input-sm">
                                     </td>
                                     
                                 </tr>
@@ -106,7 +112,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="4">
-                                        <textarea rows="4" class="form-control input-sm"></textarea>
+                                        <textarea rows="4" name="goal" class="form-control input-sm"></textarea>
                                     </td>
                                    
                                 </tr>
@@ -115,7 +121,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="4">
-                                            <textarea rows="5" class="form-control input-sm"></textarea>
+                                            <textarea rows="5" name="summary" class="form-control input-sm"></textarea>
                                         </td>
                                 </tr>
                                 <tr>
@@ -123,7 +129,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="4">
-                                        <textarea rows="4" class="form-control input-sm"></textarea>
+                                        <textarea rows="4" name="testProcess" class="form-control input-sm"></textarea>
                                     </td>
                                 </tr>
                                 <tr>
@@ -167,8 +173,8 @@
                     <tbody>
                         <tr>
                             <td class="course-no">10000</td>
-                            <td><input class="form-control input-sm" type="text" name="modal-week"></td>
-                            <td><input class="form-control input-sm" type="text" name="modal-name"></td>
+                            <td class="input-text"><input class="form-control input-sm" type="text" name="modal-week"></td>
+                            <td class="input-text"><input class="form-control input-sm" type="text" name="modal-name"></td>
                         </tr>
                         <tr>
                             <th class="part-cont">단원내용</th>
@@ -176,7 +182,7 @@
                             <th></th>
                         </tr>
                         <tr>
-                           <td colspan="3" class="part-textarea">
+                           <td colspan="3" class="part-textarea input-text">
                                 <textarea class="form-control input-sm" rows="5" name="modal-content"></textarea>
                             </td>
                         </tr>
@@ -184,7 +190,7 @@
                            <td></td>
                            <td></td>
                            <td class="save-btn"><button class="btn btn-default btn-add" type="button">저장</button>
-                           <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">닫기</button>
+                           <button type="button" class="btn btn-default btn-danger close-modal">닫기</button>
                            </td>
                         </tr>
                     </tbody>
@@ -203,37 +209,45 @@
 			});
     	});
     		
-    		$("#course-part-form").on("click", ".btn-add",function(){
-	    			var week = $("[name=modal-week]").val();
-	    			var name = $("[name=modal-name]").val();
-	    			var content = $("[name=modal-content]").val();
-	    			
-	    			var row = "<tr>";
-	    			row += "<td><input class='form-control' name='week' value='"+week+"'></td>";
-	    			row += "<td><input class='form-control' name='partName' value='"+name+"'></td>";
-	    			row += "<td><input class='form-control' name='contents' value='"+content+"'></td>";
-					row += " <td><a href='#' class='delete-btn btn btn-default input-sm'>삭제</a></td>"   	
-					row += "</tr>"
-					
-	    			if(week == ""){
-	    				alert("주차를 입력해주세요.");
-	    				return;
-	    			}
-    				if(name == ""){
-    					alert("단원명을 입력해주세요.");
-    					return;
-    				}if(content == ""){
-    					alert("내용을 입력해주세요.");
-    					return;
-    				}
-	    			$("#add-part").after(row);
+   		$("#course-part-form").on("click", ".btn-add",function(){
+    			var week = $("[name=modal-week]").val();
+    			var name = $("[name=modal-name]").val();
+    			var content = $("[name=modal-content]").val();
+    			
+    			var row = "<tr>";
+    			row += "<td>"+week+"<input type='hidden' class='form-control' name='week' value='"+week+"'></td>";
+    			row += "<td>"+name+"<input type='hidden' class='form-control' name='name' value='"+name+"'></td>";
+    			row += "<td>"+content+"<input type='hidden' class='form-control' name='contents' value='"+content+"'></td>";
+				row += " <td><a href='#' class='delete-btn btn btn-default input-sm'>삭제</a></td>";
+				row += "</tr>";
+				
+    			if(week == ""){
+    				alert("주차를 입력해주세요.");
+    				return;
+    			}
+   				if(name == ""){
+   					alert("단원명을 입력해주세요.");
+   					return;
+   				}if(content == ""){
+   					alert("내용을 입력해주세요.");
+   					return;
+   				}
+    			$("#add-part").after(row);
+    			$(".input-text input, .input-text textarea").val("");
+    			
     		});
+   		
     		$(".table tbody").on("click", ".delete-btn",function(){
     				$(this).parents('tr').remove();
     				return false;
     		});
     		
-    		
+    		$(".close-modal").click(function(){
+    			$(".input-text input, .input-text textarea").val("");
+    			
+    			$('#course-part-form').modal('hide');
+    			
+    		})
     
     </script>
 </body>
