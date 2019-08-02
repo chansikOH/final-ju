@@ -9,6 +9,7 @@ public class Vacation {
 	private String contents;
 	private Date startDate;
 	private Date endDate;
+	private Doc doc;
 
 	public Vacation() {
 
@@ -53,5 +54,12 @@ public class Vacation {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	
+
+	public Doc getDoc() {
+		return doc;
+	}
+
+	public void setDoc(Doc doc) {
+		this.doc = doc;
+	}
 }

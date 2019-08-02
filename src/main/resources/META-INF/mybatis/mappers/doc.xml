@@ -5,16 +5,29 @@
   
 <mapper namespace="kr.ac.ju.dao.DocDao">
 
+	<resultMap type="doc" id="docsResultMap">
+		<result property="no" column="doc_no"/>
+		<result property="title" column="draft_title"/>
+		<result property="fileYn" column="doc_file_yn"/>
+		<result property="empName" column="employee_name"/>
+		<result property="proName" column="professor_name"/>
+		<result property="createDate" column="doc_create_date"/>
+		<result property="state" column="doc_state"/>
+	</resultMap>	
+
 	<!-- 직원 로그인 기안서, 휴가계획서, 퇴직서 정보 조회  -->
-	<select id="getDocEmployeeByNo" parameterType="int" resultType="hashmap">
+	<select id="getDocEmployeeByNo" parameterType="int" resultMap="docsResultMap">
 		SELECT 
-			A.DOC_NO, B.DRAFT_TITLE, 
-			A.DOC_FILE_YN, C.EMPLOYEE_NAME, 
+			A.DOC_NO as "NO", 
+			B.DRAFT_TITLE, 
+			A.DOC_FILE_YN, 
+			C.EMPLOYEE_NAME, 
 			D.PROFESSOR_NAME, 
 			A.DOC_CREATE_DATE, 
 			A.DOC_STATE
 		FROM 
-			DOCS A, DRAFTS B, 
+			DOCS A, 
+			DRAFTS B, 
 			EMPLOYEES C, 
 			PROFESSORS D
 		WHERE 
@@ -35,13 +48,16 @@
 			A.DOC_CREATE_DATE, 
 			A.DOC_STATE
 		FROM 
-			DOCS A, 
+			DOCS A,
+			VACATIONS B, 
 			EMPLOYEES C, 
 			PROFESSORS D
 		WHERE 
 			A.EMPLOYEE_NO = C.EMPLOYEE_NO
 		AND 
 			A.DOC_FINAL_PERSON = D.PROFESSOR_NO
+		AND 
+			A.DOC_NO = B.DOCS_NO
 		AND 
 			A.EMPLOYEE_NO = #{value}
 		UNION
@@ -56,12 +72,15 @@
 		FROM 
 			DOCS A, 
 			EMPLOYEES B, 
-			PROFESSORS C
+			PROFESSORS C,
+			RETIRES D
 		WHERE 
 			A.EMPLOYEE_NO = B.EMPLOYEE_NO
 		AND 
 			A.DOC_FINAL_PERSON = C.PROFESSOR_NO
 		AND 
+			A.DOC_NO = D.DOCS_NO
+		AND
 			A.EMPLOYEE_NO = #{value}
 	</select>
 	 
@@ -156,11 +175,43 @@
 		insert into Doc_files
 			(doc_file_no, 
 			doc_no, 
-			doc_name)
+			file_name)
 		values
 			(doc_file_seq.nextval,
 			#{doc.no},
 			#{fileName})
+	</insert>
+	
+	<!-- 직원 퇴직서 등록  -->
+	<insert id="insertRetire" parameterType="retire">
+	insert into retires
+		(retire_no, 
+		retire_div, 
+		retire_contents,
+		retire_date, 
+		docs_no)
+	values
+		(doc_detail_seq.nextval,
+		#{div}, 
+		#{contents}, 
+		#{retireDate}, 
+		#{doc.no})
+	</insert>
+	
+	<!-- 직원 휴가등록 -->
+	<insert id="">
+	insert into vacations
+		(vacation_no, 
+		vacation_contents, 
+		vacation_start_date, 
+		vacation_end_date, 
+		docs_no )
+	values
+		(doc_detail_seq.nextval, 
+		#{contents}, 
+		#{startDate}, 
+		#{endDate},
+		#{doc.no})
 	</insert>
 	
 </mapper>

@@ -27,18 +27,15 @@
 		<%@ include file="/WEB-INF/views/common/sidebar.jsp"%>
 		</div>
 		<div class="col-sm-10">
-			<h2 class="text-center">휴가계획서 양식</h2>
+			<h2 class="text-center">휴가계획서 등록</h2>
 		    <div class="well">
 		    	<form action="">
 		    		<div class="form-group">
-		    			<label>작성자</label>
-		    			<input type="text" class="form-control">
-		    			<br/>
 		    			<label>중간결재자</label>
-		    			<input type="text" class="form-control">
+		    			<input type="text" class="form-control" name="">
 		    			<br/>
 		    			<label>최종결재자</label>
-		    			<input type="text" class="form-control">
+		    			<input type="text" class="form-control" name="">
 		    			<br/>
 		    			<label>종류</label>
 		    			<select class="form-control">
@@ -47,16 +44,16 @@
 	                    </select>
 		    			<br/>
 		    			<label>휴가시작</label>
-		    			<input type="date" class="form-control">
+		    			<input type="date" class="form-control" name="">
 		    			<br/>
 		    			<label>휴가종료</label>
-		    			<input type="date" class="form-control">
+		    			<input type="date" class="form-control" name="">
 		    			<br/>
 		    			<label>내용</label>
-		    			<textarea type="text" rows="15" class="form-control"></textarea>
+		    			<textarea type="text" rows="15" class="form-control" name=""></textarea>
 		    			<br/>
 		    			<label>파일</label>
-			    		<input type="file">
+			    		<input type="file" name="">
 			    		<br/>
 		    		</div>
 		    		<br/>
