@@ -107,7 +107,7 @@ public class EmployeeRestController {
 		return student;
 	}
 	
-	@GetMapping("/stud/noticelist.json")
+	/*@GetMapping("/stud/noticelist.json")
 	@ResponseBody
 	public Map<String, Object> noticelist(@RequestParam(value = "pageNo", required = false, defaultValue = "1" ) int pageNo,
 							 Model model) {
@@ -133,6 +133,6 @@ public class EmployeeRestController {
 		result.put("count", count); 
 		result.put("pagination", pagination); 
 	
-		return result; 
-	}
+		return result;
+	} */
 }

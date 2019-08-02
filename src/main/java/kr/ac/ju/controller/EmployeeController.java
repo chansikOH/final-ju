@@ -141,9 +141,18 @@ public class EmployeeController {
 		return "employee/stud/noticedetail";
 	}
 	
+	@GetMapping("/stud/noticeupdate.do")
+	public String noticeupdate(Model model) {
+		
+		return "employee/stud/noticedetail";
+	}
+	
+	
 	@InitBinder // 한국식 날짜 변환 
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
 	}
+	
+	
 	
 }

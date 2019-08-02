@@ -16,7 +16,7 @@
 	 a{color: #000;}
      a:hover{text-decoration: none;}
      .title{margin-top: 30; padding-bottom:20px; font-size: 40px;}
-
+		
 	.result{padding: 0 15px;}
 	.result p{text-align: left; font-size: 18px; padding-left: 30px;}
 	.result div:first-child{margin: 15px 0 5px 0; padding: 0;}
@@ -39,25 +39,27 @@
 			<div class="col-sm-10">
 				<h1 class="title">학생 공지사항</h1> 
 				<div class="row result">
+				
+				<div class="col-sm-12"> 
 					<div class="col-sm-6">
                             <p>총 <strong><span id="search-result-count">${count }</span></strong>건 조회</p>
                     </div>
-		  	    <div class="col-sm-6">
-				   <div class="input-group">
-				  	   <div class="input-group-btn">
-					        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" >검색조건 <span class="caret"></span></button>
-					        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-					          <li><a href="#">번호</a></li>
-					          <li><a href="#">제목</a></li>
-					          <li><a href="#">작성일</a></li>
-					        </ul>
-					   </div>
-					   <input type="text" class="form-control" placeholder="Search for...">
-					   <span class="input-group-btn">
-						   <button class="btn btn-default" type="button">검색</button>
-					   </span>
-			   	   </div>
-			    </div>   
+			  	    <div class="col-sm-6">
+					    <form method="get" action="noticelist.json" class="navbar-form">
+					      <select name="option">
+	                          <option value="none">검색조건</option>
+	                          <option value="noticeNo">번호</option>
+	                          <option value="title">제목</option>
+	                          <option value="createDate">작성일</option>
+	                      </select>	
+						  <div class="form-group">
+						    <input type="text" class="form-control" name="text" placeholder="Search">
+						  </div> 
+						  <button class="btn btn-default" type="button">검색</button>
+						</form>
+				   	</div>
+				</div>
+			
 				<div class="col-sm-12">
 					<table class="table table-striped">
 						<colgroup>
@@ -103,10 +105,23 @@
 				<div class="row">
 					<div class="col-sm-12 page">
 						<ul class="pagination" id="pagination-box">
-						<%-- 	<c:if test="${ }">
-							
-							</c:if> --%>
-						</ul>
+							<c:if test="${not pagination.first }">
+								<li><a href="" data-pno="${pagination.page-1 }"><span class='glyphicon glyphicon-menu-left'></span></a></li>
+							</c:if>
+							<c:forEach begin="${pagination.begin}" end="${pagination.end}" var="no">
+								<c:choose>
+									<c:when test="${pagination.page eq no}">
+										<li class='page-active'><a href="" data-pno="${no }">${no }</a></li>								
+									</c:when>
+									<c:otherwise>
+										<li><a href="" data-pno="${no }">${no }</a></li>								
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+							<c:if test="${not pagination.last }">
+								<li><a href="" data-pno="${pagination.page+1 }"><span class='glyphicon glyphicon-menu-right'></span></a></li>
+							</c:if>
+						</ul> 
 					</div>
 				</div>
 				
@@ -114,9 +129,7 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-	$(function() {
-		$("#search-result-table tbody tr").hide();
-	})
+		
 	</script>
 </body>
 </html>
