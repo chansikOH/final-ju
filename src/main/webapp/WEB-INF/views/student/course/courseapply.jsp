@@ -82,10 +82,9 @@
 											<td>${course.professor.name }</td>
 											<td id="course-count-${course.no }">${course.count }</td>
 											<td>${course.quota }</td>
-											<%-- <td>
-												<input type="hidden" value="${course.no }" id="planNo" />
-												<a href="" onclick="javascript:openPlan()" class="btn btn-default btn-xs">강의계획서</a>
-											</td> --%>
+											<td>
+												<a href="courseplan?cno=${course.no }" class="btn btn-default btn-sm">강의계획서</a>
+											</td>
 											<td>
 												<a href="signupCourse?cno=${course.no }" class="btn btn-default">신청</a>
 											</td>
@@ -135,6 +134,7 @@
 									<th>학점</th>
 									<th>담당교수</th>
 									<th>신청일</th>
+									<th>강의계획서</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -152,6 +152,9 @@
 												<td>${course.credit }</td>
 												<td>${course.professor.name }</td>
 												<td><fmt:formatDate value="${course.createDate }"/></td>
+												<td>
+													<a href="courseplan?cno=${course.no }" class="btn btn-default btn-sm">강의계획서</a>
+												</td>
 												<td>
 													<a href="dropCourse?cno=${course.no }" class="btn btn-default">취소</a>
 												</td>
