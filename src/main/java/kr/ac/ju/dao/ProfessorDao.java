@@ -33,5 +33,7 @@ public interface ProfessorDao {
 	
 	Major getMajor(int profNo);
 	void addCourse(Course course);
+	void updateCourse(Course course);
+	void deleteCourse(int courseNo);
 	
 }

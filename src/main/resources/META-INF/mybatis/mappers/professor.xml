@@ -8,7 +8,9 @@
 	<resultMap type="professor" id="professorResultMap">
 		<result property="no" column="professor_no"/>
 		<result property="major.no" column="major_no"/>
+		<result property="major.name" column="major_name"/>
 		<result property="position.id" column="position_id"/>
+		<result property="position.name" column="position_name"/>
 		<result property="name" column="professor_name"/>
 		<result property="password" column="professor_password"/>
 		<result property="birth" column="professor_birth"/>
@@ -26,8 +28,10 @@
 	<!-- 번호로 교수조회 -->
 	<select id="getProfessorByNo" parameterType="int" resultMap="professorResultMap">
 		select *
-		from professors
-		where professor_no = #{value}
+		from professors P, majors M, position O
+		where P.professor_no = #{value}
+		and P.major_no = M.major_no
+		and P.position_id = O.position_id
 	</select>
 	
 	<!-- 강의 갯수 조회 -->
@@ -267,6 +271,7 @@
 		and
 		    P.professor_no = #{value}
 	</select>
+	
 	<insert id="addCourse" parameterType="course">
 		insert into courses
 		(course_no, professor_no, major_no, course_name, course_credit, course_year, course_term, course_must_yn, course_quota)
@@ -274,4 +279,20 @@
 		(#{no}, #{professor.no}, #{major.no}, #{name}, #{credit}, #{year}, #{term}, #{mustYn}, #{quota})
 	</insert>
 	
+	<update id="updateCourse" parameterType="course">
+		update courses
+		set 
+		    course_name = #{name}, 
+		    course_credit = #{credit}, 
+		    course_year = #{year}, 
+		    course_term = #{term}, 
+		    course_must_yn = #{mustYn}, 
+		    course_quota = #{quota}
+		where course_no = #{no}
+	</update>
+	
+	<delete id="deleteCourse" parameterType="int">
+		delete from courses
+		where course_no = #{value}
+	</delete>
 </mapper>
