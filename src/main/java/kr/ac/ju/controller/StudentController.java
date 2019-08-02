@@ -241,6 +241,10 @@ public class StudentController {
 		return "student/course/courseview";
 	}
 
+	/*
+	 * 작성자 : 오찬식
+	 * 설명 : courseview 페이지의 정보를 업데이트하는 메소드
+	 */
 	@RequestMapping("/course/updateview")
 	public String updateview(HttpSession session, @RequestParam("cno") int courseNo, @RequestParam("clno") int classNo,
 			@RequestParam("viewno") int viewNo, @RequestParam("current") String currentTime,
@@ -251,6 +255,10 @@ public class StudentController {
 		return "redirect:courseview?cno=" + courseNo + "&clno=" + classNo;
 	}
 
+	/*
+	 * 작성자 : 오찬식
+	 * 설명 : courseview 페이지의 동영상 진행도를 실시간으로 업데이트하는 ResponseBody
+	 */
 	@RequestMapping("/course/realtimeupdate")
 	@ResponseBody
 	public void realtimeupdate(@RequestParam("viewno") int viewNo, @RequestParam("current") String currentTime,
