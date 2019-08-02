@@ -76,6 +76,7 @@ public class EmployeeRestController {
 		result.put("searchStudents", serarchStudents); 
 		result.put("pagination", pagination); 
 		result.put("count", count); 
+		
 		return result; 
 	}
 	
@@ -106,14 +107,15 @@ public class EmployeeRestController {
 		return student;
 	}
 	
-	@GetMapping("/stud/noticelist.do")
-	public String noticelist(@RequestParam(value = "pageNo", required = false, defaultValue = "1" ) int pageNo,
+	@GetMapping("/stud/noticelist.json")
+	@ResponseBody
+	public Map<String, Object> noticelist(@RequestParam(value = "pageNo", required = false, defaultValue = "1" ) int pageNo,
 							 Model model) {
 		
 		// pagination 관련
 		Map<String, Object> paginationOption = new HashMap<String, Object>();
 		
-		int size = 5;				 					
+		int size = 10;				 					
 		int beginIndex  = (pageNo - 1)*size + 1 ;		
 		int endIndex   = pageNo*size ; 	
 		int count = employeeService.getAllNoticesCount();
@@ -126,14 +128,11 @@ public class EmployeeRestController {
 		Pagination pagination = new Pagination(pageNo, size, count); 
 		
 		// 값 담기 
-		model.addAttribute("notices", notices);
-		model.addAttribute("count", count);
-		model.addAttribute("pagination", pagination);
-		
-		System.out.println(pagination.getBegin());
-		
-		return "employee/stud/noticelist";
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("notices", notices); 
+		result.put("count", count); 
+		result.put("pagination", pagination); 
+	
+		return result; 
 	}
-	
-	
 }

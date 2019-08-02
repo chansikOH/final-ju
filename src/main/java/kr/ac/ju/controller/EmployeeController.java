@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.util.BeanUtil;
@@ -33,6 +34,7 @@ import kr.ac.ju.form.StudentRegisterForm;
 import kr.ac.ju.service.EmployeeService;
 import kr.ac.ju.vo.Major;
 import kr.ac.ju.vo.Notice;
+import kr.ac.ju.vo.Pagination;
 import kr.ac.ju.vo.Student;
 
 @Controller
@@ -102,7 +104,35 @@ public class EmployeeController {
 		
 		return "employee/stud/checklist";
 	}
+	
+	@GetMapping("/stud/noticelist.do")
+	public Map<String, Object> noticelist(@RequestParam(value = "pageNo", required = false, defaultValue = "1" ) int pageNo,
+							 Model model) {
+		
+		// pagination 관련
+		Map<String, Object> paginationOption = new HashMap<String, Object>();
+		
+		int size = 10;				 					
+		int beginIndex  = (pageNo - 1)*size + 1 ;		
+		int endIndex   = pageNo*size ; 	
+		int count = employeeService.getAllNoticesCount();
+		
+		paginationOption.put("size", size); 
+		paginationOption.put("beginIndex", beginIndex); 
+		paginationOption.put("endIndex", endIndex); 
 
+		List<Notice> notices = employeeService.getAllNotices(paginationOption); 
+		Pagination pagination = new Pagination(pageNo, size, count); 
+		
+		// 값 담기 
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("notices", notices); 
+		result.put("count", count); 
+		result.put("pagination", pagination); 
+	
+		return result; 
+	}
+	
 	@GetMapping("/stud/noticedetail.do")
 	public String noticedetail(int noticeNo, Model model) {
 		Notice notice = employeeService.getNoticeByNoticeNo(noticeNo);
@@ -110,11 +140,6 @@ public class EmployeeController {
 		
 		return "employee/stud/noticedetail";
 	}
-	
-	
-	
-	
-	
 	
 	@InitBinder // 한국식 날짜 변환 
 	public void initBinder(WebDataBinder binder) {
