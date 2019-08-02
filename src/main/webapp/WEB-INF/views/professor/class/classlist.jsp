@@ -45,10 +45,10 @@
 	    .course-search .table .btn-update{padding: 18px 10px !important;}
 	    
 	    .move-btn{width: 123px; padding: 8px 0 !important;}
-	    .bs-test-modal-lg .test-file{width: 250px; padding: 5px 20px 6px;}
+	    .bs-test-modal-lg .test-file{width: 250px; padding: 5px 20px 6px; text-align: left;}
 	    .bs-test-modal-lg .test-select{padding: 5px 0 0 0;}
 	    .bs-test-modal-lg .test-btn{text-align: right; padding: 12px 20px 0px;}
-	    .modal-content .test-btn button{padding: 5px 15px;}
+	    .modal-content .test-btn button{padding: 5px 15px; margin: 5px;}
 	    
 	    .file-control{width: 250px; padding: 5px 20px !important;}
 	    
@@ -57,6 +57,7 @@
 	    
 	    .text-center{margin: 0 auto;}
 	    .pagination{width: auto;}
+	    .file{color: #ff0000;}
 	</style>
 </head>
 <body>
@@ -255,7 +256,7 @@
 							<tr>
                                <td></td>
                                <td></td>
-                               <td class="save-btn"><button type="submit" class="btn btn-default">저장</button></td>
+                               <td class="save-btn"><button type="button" class="btn btn-default btn-danger close-modal">닫기</button></td>
                            </tr>
                          </tfoot>
                     </table>
@@ -290,7 +291,7 @@
         </div>
     </div>
     <script type="text/javascript">
-    
+   
     
     function searchCourse(searchPageNo) {
     	event.preventDefault();
@@ -430,11 +431,12 @@
     				row += "<td>"+course.name+"</td>";
     				row += "<td>"+course.major.name+"</td>";
     				row += "<td class='test-select'><select class='form-control input-sm' name='status'><option value='M'>중간</option><option value='F'>기말</option></select></td>";
-    				row += "<td class='test-file'><input type='file' class='form-control input-sm' name='testfile'></td>";
+    				row += "<td class='test-file'><input type='file' class='form-control input-sm' id='file' name='testfile'></td>";
     				row += "</tr>";
     				row += "<tr>";
     				row += "<td colspan='5'></td>";
-    				row += "<td class='test-btn'><button type='submit' class='btn btn-default'>저장</td>"
+    				row += "<td class='test-btn'><button type='submit' class='btn btn-default addbtn'>저장</button><button type='button' class='btn btn-default btn-danger close-modal'>닫기</button></td>";
+    				row += "</tr>"
     				$("#course-test-modal .course-test tbody").append(row);
     			}
     		})
@@ -444,7 +446,22 @@
 	 		$("#course-test-modal").on('hide', function(){
 	 			
 	 		});
-    	})
+	 		
+    	});
+ 		$(".coursepart-modal button").click(function(){
+   			$("#course-detail-modal").modal('hide');
+ 		});
+ 		$(".course-test").on("click", ".close-modal", function(){
+ 			$("#course-test-modal").modal('hide');
+ 		});
+ 		
+ 		 $("#course-test-modal").on("click",".addbtn",function(){
+ 			var file =$("#file").val();
+ 			if(file == ""){ 				
+	 			$("#file").after("<span class='file'>* 파일을 선택해주세요</span>");
+ 			}
+ 		});	
+ 		
     </script>
 </body>
 </html>

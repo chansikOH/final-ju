@@ -242,9 +242,6 @@ public class ProfessorController {
 			coursePart.setName(form.getName()[i]);
 			coursePart.setWeek(form.getWeek()[i]);
 			coursePart.setContents(form.getContents()[i]);
-			System.out.println(coursePart.getName());
-			System.out.println(coursePart.getWeek());
-			System.out.println(coursePart.getContents());
 			
 			parts.add(coursePart);
 		}

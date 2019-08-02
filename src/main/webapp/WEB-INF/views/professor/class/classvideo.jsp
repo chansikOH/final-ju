@@ -22,7 +22,7 @@
 	    .course-create .table-wrap .table>tbody>tr>td{padding: 12px 20px;}
 	    .course-create .table-wrap .table>tbody>tr>th{padding: 40px 20px 18px;}
 	    .course-create .table-wrap .table .search{text-align: right; padding: 30px 20px 37px 0;}
-	    
+	    .check-text{color: #ff0000;}
 	</style>
 </head>
 <body>
@@ -60,7 +60,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="3">
-                                        <select class="form-control input-sm" name="coursePartNo">
+                                        <select id="cpno" class="form-control input-sm" name="coursePartNo">
+                                        	<option value="">선택</option>
                                         <c:forEach var="coursepart" items="${courseParts }">
                                             <option value="${coursepart.no }">${coursepart.week } / ${coursepart.name }</option>
                                         </c:forEach>
@@ -73,7 +74,7 @@
                                 </tr>
                                 <tr>
                                      <td colspan="3">
-                                        <input class="form-control input-sm" type="text" name="name">
+                                        <input id="name" class="form-control input-sm" type="text" name="name">
                                     </td>
                                 </tr>
                                 <tr>
@@ -81,7 +82,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="1">
-                                        <input class="form-control input-sm" type="file" name="videoFile">
+                                        <input id="file" class="form-control input-sm" type="file" name="videoFile">
                                     </td>
                                     <td></td>
                                     <td></td>
@@ -91,7 +92,7 @@
                                     <td></td>
                                     <td></td>
                                     <td class="search">
-                                        <button class="btn btn-default" type="submit">등록</button>
+                                        <button id="addbtn" class="btn btn-default" type="submit">등록</button>
                                         <a href="#" class="search-btn btn btn-default btn-danger">취소</a>
                                     </td>
                                 </tr>
@@ -102,5 +103,45 @@
             </div>
         </div>
     </div>
+    <script>
+		$("#addbtn").bind("click").on("click", function() {
+				
+				var cpno = $("#cpno").val();
+				var name = $("#name").val();
+				var file = $("#file").val();
+				var check1 = $(".check-text1").text();
+				var check2 = $(".check-text2").text();
+				var check3 = $(".check-text3").text();
+				
+				if (cpno == "" ) {
+					if(check1 == ""){
+						$("#cpno").after("<span class='check-text check-text1'>* 단원주차를 선택하세요.</span>");
+					}
+					$("#cpno").focus();
+					return false;
+				}else {
+					$("#cpno").siblings().empty();
+				}
+				if (name == "" ) {
+					if(check2 == ""){
+						$("#name").after("<span class='check-text check-text2'>* 강의명을 입력하세요.</span>");
+					}
+					$("#name").focus();
+					return false;
+				}else {
+					$("#name").siblings().empty();
+				}
+				if (file == "" ) {
+					if(check3 == ""){
+						$("#file").after("<span class='check-text check-text3'>* 동영상을 등록하세요.</span>");
+					}
+					$("#file").focus();
+					return false;
+				}else {
+					$("#file").siblings().empty();
+				}
+				
+		})
+    </script>
 </body>
 </html>
