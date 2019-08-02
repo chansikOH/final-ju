@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.ju.form.DocForm;
 import kr.ac.ju.service.DocService;
@@ -56,9 +57,8 @@ public class DocController {
 		
 		Doc doc = new Doc();
 		Draft draft = new Draft();
-		List<DocLine> docLines = new ArrayList<DocLine>();
+		List<Integer> nos = new ArrayList<Integer>();
 		DocFile docfile = new DocFile();
-		
 		Employee person = (Employee) session.getAttribute("LOGIN_EMPLOYEE");
 		
 		doc.setEmployee(person);
@@ -70,6 +70,9 @@ public class DocController {
 		draft.setContents(docForm.getContents());
 		draft.setKeepingYear(docForm.getKeepingYear());
 		draft.setStartDate(docForm.getStartDate());
+		nos.add(docForm.getMiddlePersonNo());
+		nos.add(docForm.getFinalPersonNo());
+		/* docfile.setDoc(docfile.getFileName()); */
 		
 		System.out.println("title: "+docForm.getTitle());
 		System.out.println("file: "+docForm.getUpfile());
@@ -80,7 +83,7 @@ public class DocController {
 			doc.setFileYn("Y");						
 		}
 		
-		docService.addDraft(doc, draft, docLines, docfile);
+		docService.addDraft(doc, draft, nos,  docfile);
 		
 		return "doc/draft/detail";
 	}
