@@ -77,7 +77,7 @@
 	                                   <c:choose>
 	                                    	<c:when test="${empty record.COURSEOPINIONNO}">
 	                                    		<td>
-	                                    			<input type="hidden" value="${record.COURSEOPINIONNO }" id="opinionNo">
+	                                    			<input type="hidden" value="${record.COURSENO }" id="opinionNo">
 	                                    			<a href="" onclick="javascript:openOpinion()" class="btn btn-info btn-xs">강의평가</a>
 	                                    		</td>
 	                                    		<td></td>
@@ -98,11 +98,6 @@
 	</div>
 
 	<script type="text/javascript">
-			var opinionNo = $("#opinionNo").val();
-			
-			function openOpinion(){  
-			    window.open("course/courseopinions", "강의평가", "width=1000, height=900, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
-			} 
 	</script>
 
 </body>

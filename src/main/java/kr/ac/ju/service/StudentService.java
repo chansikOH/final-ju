@@ -1,10 +1,13 @@
 package kr.ac.ju.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
+import kr.ac.ju.vo.CoursePart;
+import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Student;
 import kr.ac.ju.vo.StudentStatus;
@@ -43,4 +46,6 @@ public interface StudentService {
 	Student getLeaveStudentByNo(int studentNo);
 	List<Notice> getAllNotices();
 	Notice getNoticeByNoticeNo(int noticeNo);
+	HashMap<String, Object> getCoursePlanByNo(int courseNo);
+	List<CoursePart> getCoursePartByNo(int courseNo);
 }

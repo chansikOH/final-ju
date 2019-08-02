@@ -83,6 +83,20 @@
 		<result javaType="java.lang.Integer" property="avg" column="part_avg"/>
 	</resultMap>
 	
+	<resultMap type="hashmap" id="coursePlanResultMap">
+		<result javaType="java.lang.String" property="professorName" column="professor_name"/>
+		<result javaType="java.lang.Integer" property="courseNo" column="course_no"/>
+		<result javaType="java.lang.String" property="courseName" column="course_name"/>
+		<result javaType="java.lang.String" property="goal" column="plan_goal"/>
+		<result javaType="java.lang.String" property="summary" column="plan_summary"/>
+		<result javaType="java.lang.String" property="mainBook" column="plan_main_book"/>
+		<result javaType="java.lang.String" property="subBook1" column="plan_sub_book1"/>
+		<result javaType="java.lang.String" property="subBook2" column="plan_sub_book2"/>
+		<result javaType="java.lang.String" property="subBook3" column="plan_sub_book3"/>
+		<result javaType="java.lang.String" property="testProcess" column="plan_test_process"/>
+		<result javaType="java.util.Date" property="createDate" column="plan_create_date"/>
+	</resultMap>
+	
 	<select id="getStudentByNo" parameterType="int" resultMap="studentWithMajorResultMap">
 		select *
 		from students S, majors M
@@ -628,6 +642,40 @@
 				notice_create_date as createDate
 		from notices
 		where notice_no = #{value}
+	</select>
+	
+	<select id="getCoursePlanByNo" parameterType="int" resultMap="coursePlanResultMap">
+		select 
+			P.professor_name professorName,
+			C.course_no courseNo,
+			C.course_name courseName,
+			PL.plan_goal goal,
+			PL.plan_summary summary,
+			PL.plan_main_book mainBook,
+			PL.plan_sub_book1 subBook1,
+			PL.plan_sub_book2 subBook2,
+			PL.plan_sub_book3 subBook3,
+			PL.plan_test_process testProcess,
+			PL.plan_create_date createDate
+		from 
+			professors P,
+			courses C,
+			course_plans PL
+		where 
+			PL.course_no = C.course_no
+			and PL.professor_no = P.professor_no
+			and PL.course_no = #{no}
+	</select>
+	
+	<select id="getCoursePartByNo" parameterType="int" resultType="coursePart">
+		select 
+			course_part_week,
+			course_part_name,
+			course_part_contents
+		from 
+			course_parts
+		where 
+			course_no = #{no}
 	</select>
 	
 </mapper>

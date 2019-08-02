@@ -30,6 +30,8 @@ import kr.ac.ju.service.StudentService;
 import kr.ac.ju.utils.DateUtils;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
+import kr.ac.ju.vo.CoursePart;
+import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Person;
 import kr.ac.ju.vo.Student;
@@ -341,5 +343,20 @@ public class StudentController {
 		model.addAttribute("countCourses", countCourses);
 		
 		return "student/course/testlist";
+	}
+	
+	@RequestMapping("/course/courseplan")
+	public String coursePlan(Model model, @RequestParam("cno") int courseNo) {
+		System.out.println(courseNo);
+		
+		List<CoursePart> part = studentService.getCoursePartByNo(courseNo);
+		HashMap<String, Object> plan = studentService.getCoursePlanByNo(courseNo);
+		
+		System.out.println(plan);
+		
+		model.addAttribute("part", part);
+		model.addAttribute("plan", plan);
+		
+		return "student/course/courseplan";
 	}
 }
