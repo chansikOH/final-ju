@@ -58,7 +58,6 @@
             <div class="col-sm-2">
                <%@include file="../../common/sidebar.jsp" %>
             </div>
-            <!-- 정보 넣는 곳-->
             <div class="col-sm-10">
                 <div class="col-sm-12 title">
                     <h1>학생 조회</h1>

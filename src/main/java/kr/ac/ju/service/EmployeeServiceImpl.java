@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.ac.ju.dao.EmployeeDao;
 import kr.ac.ju.vo.Major;
+import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Student;
 
 @Service
@@ -43,6 +44,30 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Override
 	public void insertStudent(Student student) {
+		int studentNo = employeedao.getStudentNoSeq(student.getMajor().getNo());
+		student.setNo(studentNo);
+		
 		employeedao.insertStudent(student);
 	}
+	
+	@Override
+	public int getStudentNoSeq(int majorNo) {
+		return employeedao.getStudentNoSeq(majorNo);
+	}
+	
+	@Override
+	public List<Notice> getAllNotices(Map<String, Object> paginationOption) {
+		return employeedao.getAllNotices(paginationOption); 
+	}
+	
+	@Override
+	public Notice getNoticeByNoticeNo(int noticeNo) {
+		return employeedao.getNoticeByNoticeNo(noticeNo); 
+	}
+	
+	@Override
+	public int getAllNoticesCount() {
+		return employeedao.getAllNoticesCount(); 
+	}
+	
 }

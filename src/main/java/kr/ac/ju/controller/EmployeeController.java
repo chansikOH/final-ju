@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -30,6 +31,8 @@ import com.fasterxml.jackson.databind.util.BeanUtil;
 
 import kr.ac.ju.form.StudentRegisterForm;
 import kr.ac.ju.service.EmployeeService;
+import kr.ac.ju.vo.Major;
+import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Student;
 
 @Controller
@@ -51,17 +54,26 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value = "/stud/studentRegister.do", method = RequestMethod.POST)
-	public String studentRegister(@Valid StudentRegisterForm studentRegisterForm, BindingResult errors) throws Exception {
-		if(errors.hasErrors()) {
+	public String studentRegister(@Valid StudentRegisterForm studentRegisterForm, BindingResult errors,
+								  Model model) throws Exception {
+		if(errors.hasErrors()) { 
+			model.addAttribute("majors",employeeService.getAllMajors()); 
+			System.out.println(errors);
 			return "employee/stud/register";
 		}
 		
-		String Address = studentRegisterForm.getAddress() + " " + studentRegisterForm.getDetailaddress();
+		Student student = new Student();
+
+		String realAddress = studentRegisterForm.getAddress() + " " + studentRegisterForm.getDetailaddress();
 		String digestPwd = new DigestUtils(MessageDigestAlgorithms.MD5).digestAsHex(studentRegisterForm.getName());
 		
-		Student student = new Student();
 		BeanUtils.copyProperties(studentRegisterForm, student);
+		student.setAddress(realAddress);
+		student.setPassword(digestPwd); 
+		Major major = new Major();
 		
+		major.setNo(studentRegisterForm.getMajorNo());
+		student.setMajor(major);
 		MultipartFile mf = studentRegisterForm.getPhotoFile(); 
 		
 		if(!mf.isEmpty()) {
@@ -70,18 +82,17 @@ public class EmployeeController {
 			
 			if (fileSize > maxfileSize) {
 				errors.rejectValue("photoFile", null, "첨부파일이 최대 용량을 초과하였습니다.");
-				return "/stud/register.do";
+				model.addAttribute("majors",employeeService.getAllMajors()); 
+				return "employee/stud/register";
 			}
-			
 			String filename = new Date().getTime() + "-" + mf.getOriginalFilename();
 
 			FileCopyUtils.copy(mf.getBytes(), new File(profileImageSaveDirectory, filename));
-			student.setPhotoName(filename);       
+			student.setPhotoName(filename);    
 		}
-		
 		employeeService.insertStudent(student);
-		return "/stud/register.do";
 		
+		return "redirect:/employee/stud/register.do";
 	}
 	
 	@GetMapping("/stud/checklist.do")
@@ -92,11 +103,18 @@ public class EmployeeController {
 		return "employee/stud/checklist";
 	}
 
-	@GetMapping("/modify.do")
-	public String modify() {
+	@GetMapping("/stud/noticedetail.do")
+	public String noticedetail(int noticeNo, Model model) {
+		Notice notice = employeeService.getNoticeByNoticeNo(noticeNo);
+		model.addAttribute("notice", notice);
 		
-		return "employee/modify";
+		return "employee/stud/noticedetail";
 	}
+	
+	
+	
+	
+	
 	
 	@InitBinder // 한국식 날짜 변환 
 	public void initBinder(WebDataBinder binder) {

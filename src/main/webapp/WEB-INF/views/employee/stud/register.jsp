@@ -86,7 +86,7 @@
 				    <div class="form-group">
 						<label>학과</label> 
 						<div>
-					  	  	<select name="major">
+					  	  	<select name="majorNo">
 		                  	 	<c:forEach var="major" items="${majors }">
 	                            	<option value="${major.no }">${major.name }</option>
 	                            </c:forEach>	
@@ -97,10 +97,10 @@
 						<label>편입여부</label> 
 						<div>
 							<label class="radio-inline">
-							  <input type="radio" name="tranfer" value="N"  checked="checked"> N
+							  <input type="radio" name="transferYn" value="N"  checked="checked"> N
 							</label>
 							<label class="radio-inline">
-							  <input type="radio" name="tranfer" value="Y" > Y
+							  <input type="radio" name="transferYn" value="Y" > Y
 							</label>
 								<div id="grade-box">
 		                            <select name="grade" id="grade-transfer-n">
