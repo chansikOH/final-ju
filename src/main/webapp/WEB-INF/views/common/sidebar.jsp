@@ -99,13 +99,20 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<br>
-				<img src="/ju/resources/images/profile.jpg" style="width: 50%; height: 50%; margin-bottom: 20px;" />
+				<c:choose>
+					<c:when test="${empty LOGIN_PROFESSOR.photoName }">
+						<img src="/ju/resources/images/profile.jpg" id="profile" style="width: 50%; height: 50%; margin-bottom: 20px;" />
+					</c:when>
+					<c:otherwise>
+						<img src="/ju/resources/images/students/${LOGIN_PROFESSOR.photoName }" style="width: 50%; height: 50%; margin-bottom: 20px;" />
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 		
 		<div class="row">
 			<div class="col-sm-12">
-				<p class="center">
+				<p class="text-center">
 					<strong>${LOGIN_PROFESSOR.name }</strong>님 환영합니다.
 					<a href="/ju/logout" class="btn btn-default btn-xs">로그아웃</a>
 				</p>
@@ -114,35 +121,39 @@
 		
 		<div class="row">
 			<div class="col-sm-12">
-				<table class="table">
+				<table class="table" id="student-info-table">
+					<colgroup>
+						<col width="25%">
+						<col width="*">
+					</colgroup>
 					<tbody>
 						<tr>
-							<td class="bg-color-gray">학번</td>
-							<td>20173868</td>
+							<td class="bg-color-gray">사원번호</td>
+							<td>${LOGIN_PROFESSOR.no }</td>
 						</tr>
 						<tr>
-							<td class="bg-color-gray">학과</td>
-							<td>컴퓨터정보공학과</td>
+							<td class="bg-color-gray">부서</td>
+							<td>${LOGIN_PROFESSOR.major.name }</td>
 						</tr>
 						<tr>
-							<td class="bg-color-gray">학년</td>
-							<td>2학년</td>
+							<td class="bg-color-gray">직위</td>
+							<td>${LOGIN_PROFESSOR.position.name }</td>
 						</tr>
 						<tr>
 							<td class="bg-color-gray">이름</td>
-							<td>김다윤</td>
+							<td>${LOGIN_PROFESSOR.name }</td>
 						</tr>
 						<tr>
 							<td class="bg-color-gray">주소</td>
-							<td>서울시 영등포구 서울시 영등포구</td>
+							<td>${LOGIN_PROFESSOR.address }</td>
 						</tr>
 						<tr>
 							<td class="bg-color-gray">연락처</td>
-							<td>010-0000-0000</td>
+							<td>${LOGIN_PROFESSOR.phoneNumber }</td>
 						</tr>
 						<tr>
 							<td class="bg-color-gray">이메일</td>
-							<td>kim@naver.com</td>
+							<td>${LOGIN_PROFESSOR.email }</td>
 						</tr>
 					</tbody>
 				</table>

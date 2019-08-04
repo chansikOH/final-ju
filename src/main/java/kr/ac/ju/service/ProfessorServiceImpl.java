@@ -95,4 +95,13 @@ public class ProfessorServiceImpl implements ProfessorService{
 	public void addCourse(Course course) {
 		professorDao.addCourse(course);
 	}
+	
+	@Override
+	public void updateCourse(Course course) {
+		professorDao.updateCourse(course);
+	}
+	@Override
+	public void deleteCourse(int courseNo) {
+		professorDao.deleteCourse(courseNo);
+	}
 }

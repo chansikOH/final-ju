@@ -231,7 +231,6 @@
                             <th>교과목명</th>
                             <th>교수명</th>
                             <th>강의계획서</th>
-                            <th></th>
                             <th>동영상 등록</th>
                         </tr>
                     </thead>
@@ -290,6 +289,32 @@
             </div>
         </div>
     </div>
+    <!-- Large modal -->
+    <div id="course-plan-modal" class="modal fade bs-test-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <h3>시험 출제</h3>
+                <form method="post" action="addtest" enctype="multipart/form-data">
+                    <table class="table course-test">
+                        <thead>
+                            <tr>
+                                <th>교과목번호</th>
+                                <th>교과목구분</th>
+                                <th>교과목명</th>
+                                <th>학과</th>
+                                <th>시험구분</th>
+                                <th>시험출제</th>
+                            </tr>
+                           
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
    
     
@@ -310,13 +335,27 @@
     			$("#course-list-table tbody").empty();
     			var courData = data.courseDatas;
     			var searchCounts = data.count;
-    			
+    			var pagination = data.pagination;
     			$.each(courData, function(index, course){
     				
     				var row = "<tr>";
-    				row += "<td>"+(index+1)+"</td>"
+    				row += "<td>"+(pagination.index + index)+"</td>"
     				row += "<td>"+course.no+"</td>";
-    				row += "<td>"+course.mustYn+"</td>";
+    				if(course.mustYn == "Y"){
+    					
+    					if(course.major.no != 40){
+    						row += "<td>전공필수</td>";
+    					}else{
+    						row+= "<td>교양필수</td>";
+    					}
+    				}else{
+    					if(course.major.no != 40){
+    						row += "<td>전공선택</td>";
+    					}else{
+    						row += "<td>교양선택</td>";
+    					}
+    				}
+    				//row += "<td>"+course.mustYn+"</td>";
     				row += "<td>"+course.year+"</td>";
     				row += "<td>"+course.term+"</td>";
     				row += "<td><a href='#' class='course-detail' data-value='"+course.no+"'>"+course.name+"</a></td>";
@@ -327,13 +366,13 @@
     				row += "<td>"+course.quota+"</td>";
     				row += "<td>"+course.passYn+"</td>";
     				row += "<td class='btn-update'><a href='#' class='btn btn-default test-detail' data-value='"+course.no+"'>이동</a></td>";
-    				row += "<td class='btn-update'><a href='classesupdate.html' class='btn btn-default'>강의수정</a></td>";
+    				row += "<td class='btn-update'><a href='updateform?cno="+course.no+"' class='btn btn-default'>강의수정</a></td>";
     				row += "</tr>"
     				$("#course-list-table tbody").append(row);
     				
     			})
     			
-   				var pagination = data.pagination;	
+   					
    				var row = "";
    				
    				if (!pagination.first) {
@@ -389,8 +428,7 @@
     				courseRow += "<td>"+course.term+"</td>";
     				courseRow += "<td>"+course.name+"</td>";
     				courseRow += "<td>"+course.professor.name+"</td>";
-    				courseRow += "<td class='move-btn'><a href='#' class='btn btn-default'>보기</a></td>";
-    				courseRow += "<td class='move-btn'><a href='#' class='btn btn-default'>수정</a></td>";
+    				courseRow += "<td class='move-btn'><a href='#' id='plan-detail'class='btn btn-default'>보기</a></td>";
     				courseRow += "<td class='btn-update'><a href='classvideo?courseNo="+course.no+"' class='btn btn-default'>등록</a></td>";
     				$("#course-detail-modal .course-detail-show tbody").append(courseRow); 
 	    				
@@ -454,6 +492,12 @@
  		$(".course-test").on("click", ".close-modal", function(){
  			$("#course-test-modal").modal('hide');
  		});
+ 		
+ 		
+ 		$("#course-detail-modal").on("click", "#plan-detail", function(){
+ 			$("#course-plan-modal").modal('show');
+ 		})
+ 		
  		
  		 $("#course-test-modal").on("click",".addbtn",function(){
  			var file =$("#file").val();

@@ -201,15 +201,37 @@ public class ProfessorController {
 		return "redirect:list";
 	}
 	
-	@RequestMapping("/class/update")
-	public String classupdate() {
+	@RequestMapping("/class/updateform")
+	public String classupdateform(HttpSession session, int cno, Model model) {
+		
+		model.addAttribute("course", service.getCourseByCourseNo(cno));
+		
 		return "professor/class/classupdate";
 	}
+	@RequestMapping("/class/update")
+	public String classupdate(Course course) {
+				
+		service.updateCourse(course);
+		System.out.println("실행완료");
+		return "redirect:list";
+	}
+	@RequestMapping("/class/delete")
+	public String classdelete(int no) {
+		
+		service.deleteCourse(no);
+		
+		return "redirect:list";
+	}
+	
 	@RequestMapping("/grade/grade")
 	public String grade() {
 		return "professor/grade/grade";
 	}
-	
+	@RequestMapping("/course/plandetail")
+	public String plandetail() {
+		
+		return "professor/course/plandetail";
+	}
 	@RequestMapping("/course/planform")
 	public String planform(HttpSession session, Model model) {
 		

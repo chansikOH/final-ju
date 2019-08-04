@@ -81,8 +81,8 @@
                                      <td>
                                         <select name="mustYn" class="form-control input-sm" id="must">
                                             <option value="">선택</option>
-                                            <option value="Y">전공필수</option>
-                                            <option value="N">전공선택</option>
+                                            <option value="Y">필수</option>
+                                            <option value="N">선택</option>
                                         </select>
                                     </td>
                                     <td>
