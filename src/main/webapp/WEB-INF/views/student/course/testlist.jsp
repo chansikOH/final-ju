@@ -37,7 +37,7 @@
 			</div>
 			
 			<div class="col-sm-10">
-				<h1>강의 수강</h1>
+				<h1>시험과목</h1>
 				<div class="row">
 					<div class="col-sm-12">
 						<span><strong class="major-name">[수강 중인 교과목]</strong></span>
@@ -84,7 +84,7 @@
 											<td>${course.major.name }</td>
 											<td>${course.name }</td>
 											<td>${course.professor.name }</td>
-											<td class="btn-update"><a href="test" class="btn btn-default">시험보기</a></td>
+											<td class="btn-update"><a target="_blank" rel="noopener noreferrer" href="test?cno=${course.no }" class="btn btn-default">시험보기</a></td>
 										</tr>
 									</c:forEach>
 								</c:when>
