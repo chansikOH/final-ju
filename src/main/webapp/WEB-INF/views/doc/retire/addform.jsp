@@ -27,42 +27,44 @@
 		<%@ include file="/WEB-INF/views/common/sidebar.jsp"%>
 		</div>
 		<div class="col-sm-10">
-			<h2 class="text-center">휴가계획서 양식</h2>
+			<h2 class="text-center">퇴직서 양식 등록</h2>
 		    <div class="well">
 		    	<form action="">
 		    		<div class="form-group">
-		    			<label>작성자</label>
-		    			<input type="text" class="form-control">
-		    			<br/>
 		    			<label>중간결재자</label>
-		    			<input type="text" class="form-control">
+		    			<select class="form-control" name="middlePersonNo">
+		    			<c:forEach var="" items="">
+		    				<option value=""></option>
+		    			</c:forEach>
+		    			</select>
 		    			<br/>
 		    			<label>최종결재자</label>
-		    			<input type="text" class="form-control">
+		    			<select class="form-control" name="finalPersonNo"> 
+		    			<c:forEach var="" items="">
+		    				<option value=""></option>
+		    			</c:forEach>
+                        </select>
 		    			<br/>
-		    			<label>종류</label>
-		    			<select class="form-control">
-	                        <option value="3"> 연차</option>
-	                        <option value="4"> 월차</option>
+		    			<label>구분</label>
+		    			<select class="form-control" name="">
+	                        <option value=""> 명예퇴직</option>
+	                        <option value=""> 불명예퇴직</option>
 	                    </select>
 		    			<br/>
-		    			<label>휴가시작</label>
-		    			<input type="date" class="form-control">
-		    			<br/>
-		    			<label>휴가종료</label>
-		    			<input type="date" class="form-control">
+		    			<label>퇴직예정날짜</label>
+		    			<input type="date" class="form-control" name="">
 		    			<br/>
 		    			<label>내용</label>
-		    			<textarea type="text" rows="15" class="form-control"></textarea>
+		    			<textarea type="text" rows="15" class="form-control" name=""></textarea>
 		    			<br/>
-		    			<label>파일</label>
-			    		<input type="file">
+			    		<label>파일</label>
+			    		<input type="file" name="">
 			    		<br/>
 		    		</div>
 		    		<br/>
 		    		<div class="text-right">
 			             <input type="button" class="btn btn-default" value="뒤로가기" onclick="history.back(-1);">
-			             <button type="submit" class="btn btn-info" value="">제출</button>
+			             <button type="submit" class="btn btn-info" value="제출">제출</button>
 		    		</div>
 		    	</form>
 		    </div>

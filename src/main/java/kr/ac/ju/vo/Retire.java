@@ -8,6 +8,7 @@ public class Retire {
 	private String div;
 	private String contents;
 	private Date retireDate;
+	private Doc doc;
 
 	public Retire() {
 
@@ -45,4 +46,11 @@ public class Retire {
 		this.retireDate = retireDate;
 	}
 
+	public Doc getDoc() {
+		return doc;
+	}
+
+	public void setDoc(Doc doc) {
+		this.doc = doc;
+	}
 }

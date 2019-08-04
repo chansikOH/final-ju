@@ -1,5 +1,7 @@
 package kr.ac.ju.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,9 +11,11 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +34,9 @@ import kr.ac.ju.vo.Person;
 @RequestMapping("/doc")
 public class DocController {
 	
+	@Value("${dir.files.docfile}")
+	private String attachmentFileSaveDirectory; 
+	
 	@Autowired
 	private DocService docService;
 
@@ -38,6 +45,9 @@ public class DocController {
 		Person person = (Person) session.getAttribute("LOGIN_EMPLOYEE");
 		List<HashMap<String, Object>> docs = docService.getDocEmployeeByNo(person.getNo());
 		
+		/*
+		 * for (HashMap<String, Object> d : docs) { d.get("") }
+		 */
 		model.addAttribute("docs", docs);
 		
 		return "doc/list";
@@ -53,12 +63,12 @@ public class DocController {
 	}
 	
 	@RequestMapping("/draft/insertDoc")
-	public String draft(DocForm docForm, HttpSession session) {
+	public String draft(DocForm docForm, HttpSession session) throws IOException {
 		
 		Doc doc = new Doc();
 		Draft draft = new Draft();
+		DocFile docfile = null;
 		List<Integer> nos = new ArrayList<Integer>();
-		DocFile docfile = new DocFile();
 		Employee person = (Employee) session.getAttribute("LOGIN_EMPLOYEE");
 		
 		doc.setEmployee(person);
@@ -71,10 +81,10 @@ public class DocController {
 		draft.setKeepingYear(docForm.getKeepingYear());
 		draft.setStartDate(docForm.getStartDate());
 		nos.add(docForm.getMiddlePersonNo());
-		nos.add(docForm.getFinalPersonNo());
-		/* docfile.setDoc(docfile.getFileName()); */
+		nos.add(docForm.getFinalPersonNo());	
 		
 		System.out.println("title: "+docForm.getTitle());
+		System.out.println("keepingyear" + docForm.getKeepingYear() );
 		System.out.println("file: "+docForm.getUpfile());
 		
 		if (docForm.getUpfile().isEmpty()) {
@@ -83,9 +93,18 @@ public class DocController {
 			doc.setFileYn("Y");						
 		}
 		
-		docService.addDraft(doc, draft, nos,  docfile);
+		if (!docForm.getUpfile().isEmpty()) {
+			docfile = new DocFile();
+			MultipartFile mf = docForm.getUpfile();
+			String filename = mf.getOriginalFilename();
+			
+			FileCopyUtils.copy(mf.getBytes(),new File(attachmentFileSaveDirectory, filename));
+			docfile.setFileName(filename);
+			System.out.println(filename);
+		} 
+		docService.addDraft(doc, draft, nos, docfile);
 		
-		return "doc/draft/detail";
+		return "redirect:../list";
 	}
 	
 	@RequestMapping("/draft/detail")
@@ -98,6 +117,12 @@ public class DocController {
 		return "doc/draft/update";
 	}
 	
+	// 퇴직서
+	@RequestMapping("/retire/addform")
+	public String retireaddform() {
+		return "doc/retire/addform";
+	}
+	
 	@RequestMapping("/retire/detail")
 	public String retireDetail() {
 		return "doc/retire/detail";
@@ -106,6 +131,12 @@ public class DocController {
 	@RequestMapping("/retire/update")
 	public String retireuUpdate() {
 		return "doc/retire/update";
+	}
+	
+	//휴가
+	@RequestMapping("/vacation/addform")
+	public String vacationaddform() {
+		return "doc/vacation/addform";
 	}
 	
 	@RequestMapping("/vacation/detail")

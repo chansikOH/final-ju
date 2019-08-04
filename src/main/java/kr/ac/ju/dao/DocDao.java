@@ -9,6 +9,7 @@ import kr.ac.ju.vo.DocFile;
 import kr.ac.ju.vo.DocLine;
 import kr.ac.ju.vo.Draft;
 import kr.ac.ju.vo.Employee;
+import kr.ac.ju.vo.Retire;
 
 public interface DocDao {
 
@@ -19,7 +20,8 @@ public interface DocDao {
 	void insertDoc(Doc doc);
 	void insertDraft(Draft draft);
 	void insertDocLine(DocLine docLine);
-	void insertDocfiles(DocFile docFile);
+	void insertDocfile(DocFile docFile);
+	void insertRetire(Retire retire);
 	
 	int getDocSeq();
 	List<Employee> getAllEmployees();
