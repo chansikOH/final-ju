@@ -24,14 +24,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.ac.ju.dao.StudentDao;
 import kr.ac.ju.form.StudentForm;
 import kr.ac.ju.service.HomeService;
 import kr.ac.ju.service.StudentService;
 import kr.ac.ju.utils.DateUtils;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
+import kr.ac.ju.vo.CourseOpinion;
 import kr.ac.ju.vo.CoursePart;
-import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Person;
 import kr.ac.ju.vo.Student;
@@ -276,10 +277,28 @@ public class StudentController {
 
 		return "student/records";
 	}
-
-	@RequestMapping("/course/courseopinions")
-	public String courseopinions() {
-		return "student/course/courseopinions";
+	
+	@RequestMapping("/updateOpinion")
+	public String updateOpinion(HttpSession session, CourseOpinion courseOpinion, int courseNo) {
+		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
+		
+		Course course = new Course();
+		course.setNo(courseNo);
+		
+		courseOpinion.setCourse(course);
+		
+		
+		studentService.insertCourseOpinion(courseOpinion);
+		
+		CourseAttend courseAttend = new CourseAttend();
+		courseAttend.setStudent(student);
+		courseAttend.setCourse(courseOpinion.getCourse());
+		
+		System.out.println(courseAttend.getCourse());
+		
+		studentService.updateCourseAttend(courseAttend);
+		
+		return "redirect:records";
 	}
 
 	@RequestMapping("/status/chStatus")

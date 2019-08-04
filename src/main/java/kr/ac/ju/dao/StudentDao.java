@@ -8,8 +8,8 @@ import kr.ac.ju.vo.Cla;
 import kr.ac.ju.vo.ClassView;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
+import kr.ac.ju.vo.CourseOpinion;
 import kr.ac.ju.vo.CoursePart;
-import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Student;
 import kr.ac.ju.vo.StudentStatus;
@@ -64,4 +64,6 @@ public interface StudentDao {
 	Notice getNoticeByNoticeNo(int noticeNo);
 	HashMap<String, Object> getCoursePlanByNo(int courseNo);
 	List<CoursePart> getCoursePartByNo(int courseNo);
+	void insertCourseOpinion(CourseOpinion courseOpinion);
+	void updateCourseAttend(CourseAttend courseAttend);
 }

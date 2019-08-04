@@ -52,7 +52,9 @@
 		<result javaType="java.lang.Integer" property="credit" column="course_credit"/>
 		<result javaType="java.lang.Double" property="totalcnt" column="totalcnt"/>
 		<result javaType="java.lang.String" property="record" column="course_attend_record"/>
-		<result javaType="java.lang.Integer" property="courseOpinionNo" column="course_opinion_no"/>
+		<result javaType="java.lang.Integer" property="courseOpinion" column="course_opinion"/>
+		<result javaType="java.lang.Integer" property="year" column="course_year"/>
+		<result javaType="java.lang.Integer" property="term" column="course_term"/>
 	</resultMap>
 	
 	<!--  
@@ -256,7 +258,9 @@
 			Y.course_credit credit, 
 			totalcnt, 
 			W.course_attend_record record, 
-			W.course_opinion_no courseOpinionNo
+			W.course_opinion_yn courseOpinion,
+			Y.course_year year,
+			Y.course_term term
 		from 
 			(select 
 				F.student_no, 
@@ -677,5 +681,32 @@
 		where 
 			course_no = #{no}
 	</select>
+	
+	<insert id="insertCourseOpinion" parameterType="courseOpinion">
+		insert into course_opinions
+		values
+			(course_opinion_seq.nextval, 
+			sysdate, 
+			#{course.no}, 
+			#{q01}, 
+			#{q02}, 
+			#{q03}, 
+			#{q04}, 
+			#{q05}, 
+			#{q06}, 
+			#{q07}, 
+			#{q08}, 
+			#{q09}, 
+			#{q10}, 
+			#{q11})
+	</insert>
+	
+	<update id="updateCourseAttend" parameterType="courseAttend">
+		update course_attends
+		set
+			course_opinion_yn = 'Y'
+		where course_no = #{course.no}
+			and student_no = #{student.no}
+	</update>
 	
 </mapper>
