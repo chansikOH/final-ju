@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="kr.ac.ju.dao.TestDao">
+
+	<select id="getTestByCourseNoAndStatus" parameterType="map" resultType="test">
+		select	test_no as no,
+				course_no as "course.no",
+				test_status as status,
+				test_file_name as fileName,
+				test_create_date as createDate
+		from tests
+		where course_no = #{courseNo}
+			and test_status = 'M'
+	</select>
+	
+	<insert id="insertTestResults" parameterType="map">
+		insert into test_results(test_result_no, test_no, student_no, result_score)
+		values (test_result_seq.nextval, #{testNo}, #{studentNo}, #{score})
+	</insert>
+	
+	<select id="getTestResultsByStudentNo" parameterType="int" resultType="testResults">
+		select	test_result_no as no,
+				test_no as "test.no",
+				student_no as "student.no",
+				result_score as score,
+				result_create_date as createDate
+		from test_results
+		where student_no = #{value}
+	</select>
+
+</mapper>

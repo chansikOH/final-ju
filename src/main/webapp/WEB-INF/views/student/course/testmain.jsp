@@ -88,8 +88,9 @@
 		<div class="row" id="header">
 			<div class="text-center" id="top-margin">
 				<span id="title">과목명 : ${course.name }</span>
-				<span id="title">문제 수 : 20문제</span>
-				<span id="title">시험 시간 : 30분</span>
+				<span id="title">문제 수 : 15문제</span>
+				<span id="title">시험 시간 : 20분</span>
+				<span id="title">남은 시간 : <span class="timer">20:00</span></span>
 			</div>
 		</div>
 		<div class="row">
@@ -110,26 +111,31 @@
 				</c:forEach>
 			</div>
 			<div class="col-sm-3 right-box">
-				<c:forEach var="question" items="${questions }">
-					<div class="row answer-div" id="answer-div-${question.no }">
-						<div class="col-sm-4">
-							<span id="check-no-${question.no }" data-question="${question.no }"><strong>${question.no }</strong></span>
+				<form action="checkanswers" method="post" id="answers-form">
+					<input type="hidden" name="cno" value="${course.no }">
+					<c:forEach var="question" items="${questions }">
+						<div class="row answer-div" id="answer-div-${question.no }">
+							<div class="col-sm-4">
+								<span id="check-no-${question.no }" data-question="${question.no }"><strong>${question.no }</strong></span>
+							</div>
+							<div class="col-sm-2">
+								<span id="check-1" class="answer-div-span">①</span>
+							</div>
+							<div class="col-sm-2">
+								<span id="check-2" class="answer-div-span">②</span>
+							</div>
+							<div class="col-sm-2">
+								<span id="check-3" class="answer-div-span">③</span>
+							</div>
+							<div class="col-sm-2">
+								<span id="check-4" class="answer-div-span">④</span>
+							</div>
+							<input type="hidden" name="answers" value="" id="answer-${question.no }">
 						</div>
-						<div class="col-sm-2">
-							<span id="check-1" class="answer-div-span">①</span>
-						</div>
-						<div class="col-sm-2">
-							<span id="check-2" class="answer-div-span">②</span>
-						</div>
-						<div class="col-sm-2">
-							<span id="check-3" class="answer-div-span">③</span>
-						</div>
-						<div class="col-sm-2">
-							<span id="check-4" class="answer-div-span">④</span>
-						</div>
-					</div>
-				</c:forEach>
-				<a href="#" class="btn" style="width: 100%;">제출하기</a>
+					</c:forEach>
+					<button type="button" class="btn" style="width: 100%">제출하기</button>
+				</form>
+				<!-- <a href="" id="submit-answers" class="btn" style="width: 100%;">제출하기</a> -->
 			</div>
 		</div>
 	</div>
@@ -139,7 +145,7 @@
 			$("#question-div-1").show();
 			$("#prev-span-1").hide();
 			$("#next-span-1").css('margin-left', '255px');
-			$("#next-span-20").hide();
+			$("#next-span-15").hide();
 			
 			$('.div-line-span').click(function() {
 				var qno = $(this).attr('data-question');
@@ -147,6 +153,11 @@
 				
 				answerdelete(qno);
 				$(this).html("&#9899;");
+				
+				$("#answer-div-" + qno).find(".active").removeClass('active');
+				$("#answer-div-" + qno).find("#check-" + answer).addClass('active');
+				
+				$("#answer-" + qno).val(answer);
 				
 				checkdelete(qno);
 				$('#answer-div-' + qno).find('.answer-div-span').eq(answer-1).html("&#9899;");;
@@ -173,6 +184,17 @@
 				$("#question-div-" + qno).show();
 			});
 			
+			$("[type=button]").click(function() {
+				$(".answer-div").each(function (index) {
+					if($("#answer-div-" + (index + 1)).find(".active").attr('id') == null) {
+						alert("정답을 체크하지 않은 문제가 있습니다.");
+						return false;
+					}
+					
+					$("#answers-form").submit();
+				});
+			});
+			
 			function answerdelete(qno) {
 				var $spans = $('#question-div-' + qno).find('.div-line-span');
 				$spans.eq(0).html("①");
@@ -187,6 +209,15 @@
 				$spans.eq(1).html("②");
 				$spans.eq(2).html("③");
 				$spans.eq(3).html("④");
+			}
+			
+			var minute = 20;
+			var second = 10;
+			
+			var timerId;
+			
+			function startTimer() {
+				timerId = setInterval("decrementTime()", 1000);
 			}
 		})
 	</script>
