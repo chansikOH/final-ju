@@ -11,16 +11,21 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<!-- 스마트에디터 관련 자바스크립트 라이브러리 추가 -->
 	<script type="text/javascript" src="/ju/resources/js/se2/js/HuskyEZCreator.js"></script>
+<style type="text/css">
+	.title {margin-top: 30; padding-bottom:20px; font-size: 40px;}
+	iframe {width: 101% !important;}
+</style>
 </head>
 <body>
-<div class="container">
-	<div class="page-header">
-		<h1>글쓰기</h1>
-	</div>
-	
-	<div class="row">
-		<div class="col-sm-12">
-			<form id="register-form" class="well" method="post" action="register.do">
+	<%@ include file="../../common/header.jsp"%>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-2">
+				<%@ include file="../../common/sidebar.jsp"%>
+			</div>
+			<div class="col-sm-10">
+				<h1 class="title">학생 공지사항 입력</h1> 
+				<form id="register-form" method="post" action="register.do">
 				<div class="form-group">
 					<label>제목</label>
 					<input type="text" class="form-control" name="title" id="board-title"/>
@@ -36,10 +41,11 @@
 				<div class="text-right">
 					<button type="button" class="btn btn-primary" id="btn-add-form">등록</button>
 				</div>
-			</form>
+				</form>	
+			</div>
 		</div>
 	</div>
-</div>
+<body> 
 <script type="text/javascript">
 	// 스마트에디터 스킨을 추가하기 위한 스크립트코드
 	var oEditors = [];

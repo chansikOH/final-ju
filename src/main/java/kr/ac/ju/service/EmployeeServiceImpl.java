@@ -56,8 +56,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public List<Notice> getAllNotices(Map<String, Object> paginationOption) {
-		return employeedao.getAllNotices(paginationOption); 
+	public List<Notice> getAllNotices(Map<String, Object> searchOption) {
+		return employeedao.getAllNotices(searchOption); 
 	}
 	
 	@Override

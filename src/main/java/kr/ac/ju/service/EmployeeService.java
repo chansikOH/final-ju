@@ -20,6 +20,6 @@ public interface EmployeeService {
 	int searchStudentsCount(Map<String, Object> searchOption); 
 	Student getStudentByNo(int studentNo); 
 	void updateStudentStatusByNo(Student student); 
-	List<Notice> getAllNotices(Map<String, Object> paginationOption); 
+	List<Notice> getAllNotices(Map<String, Object> searchOption); 
 	int getAllNoticesCount(); 
 }
