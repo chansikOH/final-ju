@@ -16,6 +16,7 @@ import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.CourseOpinion;
 import kr.ac.ju.vo.CoursePart;
+import kr.ac.ju.vo.Message;
 import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Student;
 import kr.ac.ju.vo.StudentStatus;
@@ -29,7 +30,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private CourseApplicantWebSocketHandler handler;
-
+	
 	@Override
 	public List<Course> getYearTermsByStudentNo(int studentNo) {
 		List<Course> courses = studentDao.getYearTermsByStudentNo(studentNo);
@@ -361,4 +362,11 @@ public class StudentServiceImpl implements StudentService {
 	public void updateCourseAttend(CourseAttend courseAttend) {
 		studentDao.updateCourseAttend(courseAttend);
 	}
+	/*
+	 * @Override public void insertMessage(Message message) {
+	 * studentDao.insertMessage(message); }
+	 * 
+	 * @Override public Message getReceiveMessageByNo(int messageNo) { return
+	 * studentDao.getReceiveMessageByNo(messageNo); }
+	 */
 }

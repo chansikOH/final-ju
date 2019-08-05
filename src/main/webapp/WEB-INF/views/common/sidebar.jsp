@@ -25,6 +25,56 @@
 		background-color: #E3DCCC;
 	}
 	
+	 .modal-body {
+        height: 440px;
+    }
+    
+    .text-line {
+        display: block;
+        width:300px; 
+        overflow:hidden; 
+        text-overflow:ellipsis; 
+        white-space:nowrap;
+    }
+    
+    textarea {
+        resize: none;
+    }
+
+    textarea.form-control {
+        height: 250px;
+    }
+
+    #send-note .table,
+    #received-note .table,
+    #sent-note .table {
+        text-align: center;
+    }
+
+    #received-note th,
+    #sent-note th {
+        text-align: center;
+        background-color: #faf6f0;
+    }
+
+    #received-note .new {
+        background-color: #faf6f0;
+    }
+    
+    .note-list-button {
+        padding-top: 10px;
+    }
+
+    .note-list {
+        padding-top: 10px;
+        height: 300px;
+        overflow: auto;
+    }
+    
+    a, a:hover, a:link {
+        text-decoration: none;   
+    }
+	
 	#student-info-table td {text-align: left;}
 </style>
 <div class="sidebar" style="height: 100vh;">
@@ -49,6 +99,7 @@
 				<p class="text-center">
 					<strong>${LOGIN_STUDENT.name }</strong>님 환영합니다.
 					<a href="/ju/logout" class="btn btn-default btn-xs">로그아웃</a>
+                    <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#note-modal">쪽지</button>
 				</p>
 			</div>
 		</div>
@@ -215,4 +266,170 @@
 			</div>
 		</div>
 	</c:if>
+	
+	<div class="modal fade" id="note-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullsize">
+            <div class="modal-content modal-fullsize">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-l abel="Close"><span aria-hidden="true">&times;</span></button>
+                    <div role="tabpanel">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#send-note" aria-controls="send-note" role="tab" data-toggle="tab">쪽지보내기</a></li>
+                            <li role="presentation"><a href="#received-note" aria-controls="received-note" role="tab" data-toggle="tab">받은 쪽지</a></li>
+                            <li role="presentation"><a href="#sent-note" aria-controls="received-note" role="tab" data-toggle="tab">보낸 쪽지</a></li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="send-note">
+                                <form class="form" id="sendNote">
+                                    <table class="table">
+                                        <colgroup>
+                                            <col width="20%" />
+                                            <col width="80%" />
+                                        </colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <td>받는 사람</td>
+                                                <!--<td><div class="input-group">
+                                                            <input type="text" class="form-control" placeholder="Search" name="search">
+                                                            <div class="input-group-btn">
+                                                              <button class="btn btn-default" type="submit">
+                                                                <i class="glyphicon glyphicon-search"></i>
+                                                              </button>
+                                                            </div>
+                                                          </div></td>-->
+                                                <td><input type="text" class="form-control" name="receiver"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><textarea class="form-control" name="contents" ></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><button type="button" id="sendMessage" class="btn btn-info">전송</button>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane" id="received-note">
+                                <div class="note-list-button">
+                                    <button type="button" class="btn btn-default btn-xs">전체 선택</button>
+                                    <button type="button" class="btn btn-default btn-xs">읽음 표시</button>
+                                    <button type="button" class="btn btn-default btn-xs">삭제</button>
+                                </div>
+                                <div class="note-list">
+                                    <table class="table">
+                                        <colgroup>
+                                            <col width="10%" />
+                                            <col width="20%" />
+                                            <col width="50%" />
+                                            <col width="20%" />
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>보낸 사람</th>
+                                                <th>내용</th>
+                                                <th>날짜</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="new">
+                                                <td><input type="checkbox" /></td>
+                                                <td>홍길동</td>
+                                                <td><span class="text-line"><a href="#note-detail" aria-controls="note-detail" role="tab" data-toggle="tab">비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요</a></span></td>
+                                                <td>2019-09-05</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane" id="sent-note">
+                                <div class="note-list-button">
+                                    <button type="button" class="btn btn-default btn-xs">전체 선택</button>
+                                    <button type="button" class="btn btn-default btn-xs">읽음 표시</button>
+                                    <button type="button" class="btn btn-default btn-xs">삭제</button>
+                                </div>
+                                <div class="note-list">
+                                    <table class="table">
+                                        <colgroup>
+                                            <col width="10%" />
+                                            <col width="20%" />
+                                            <col width="50%" />
+                                            <col width="20%" />
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>받는 사람</th>
+                                                <th>내용</th>
+                                                <th>날짜</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><input type="checkbox" /></td>
+                                                <td>홍길동</td>
+                                                <td><span class="text-line"><a href="#note-detail" aria-controls="note-detail" role="tab" data-toggle="tab">비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요</a></span></td>
+                                                <td>2019-09-05</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane" id="note-detail">
+                                <form class="form">
+                                    <table class="table">
+                                        <colgroup>
+                                            <col width="20%" />
+                                            <col width="80%" />
+                                        </colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <td>받는/보낸 사람</td>
+                                                <td><input type="text" class="form-control" value="홍길동" disabled></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><textarea class="form-control"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><a href="#send-note" aria-controls="send-note" role="tab" data-toggle="tab" class="btn btn-default">답장</a>
+                                                    <a href="#sent-note" aria-controls="sent-note" role="tab" data-toggle="tab" class="btn btn-default">목록</a>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+    	$("#sendMessage").click(function() {
+    		
+    		var receiver = $("[name=receiver]").val();
+    		var contents = $("[name=contents]").val();
+    		
+    		$.ajax({
+    			type:"GET",
+    			url:"/ju/sendmessage",
+    			data: {receiver:receiver, contents:contents},
+    			dataType: "json",
+    			success: function(data) {
+    				$("#send-note tbody").empty();
+    			},
+    			error: function(request, error){
+    				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n");
+    			}
+    		});
+    	})
+    </script>
 </div>

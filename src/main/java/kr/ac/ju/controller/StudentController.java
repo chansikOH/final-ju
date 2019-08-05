@@ -33,6 +33,7 @@ import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.CourseOpinion;
 import kr.ac.ju.vo.CoursePart;
+import kr.ac.ju.vo.Message;
 import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Person;
 import kr.ac.ju.vo.Student;
@@ -373,4 +374,5 @@ public class StudentController {
 		
 		return "student/course/courseplan";
 	}
+	
 }

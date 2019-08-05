@@ -70,7 +70,35 @@
 		<result javaType="java.lang.String" property="testProcess" column="plan_test_process"/>
 		<result javaType="java.util.Date" property="createDate" column="plan_create_date"/>
 	</resultMap>
+		
+	<!--  
+		작성자 : 오찬식
+		기능 : 교과목, 단원, 강의, 강의시청 정보를 담는 HashMap 객체
+	-->
+	<resultMap type="hashmap" id="coursedetailInfoResultMap">
+		<result javaType="java.lang.Integer" property="courseNo" column="course_no"/>
+		<result javaType="java.lang.String" property="courseName" column="course_name"/>
+		<result javaType="java.lang.Integer" property="partNo" column="course_part_no"/>
+		<result javaType="java.lang.Integer" property="classNo" column="class_no"/>
+		<result javaType="java.lang.String" property="className" column="class_name"/>
+		<result javaType="java.lang.String" property="video" column="class_video_name"/>
+		<result javaType="java.lang.Integer" property="viewNo" column="class_view_no"/>
+		<result javaType="java.lang.String" property="viewTime" column="view_time"/>
+		<result javaType="java.lang.String" property="viewYn" column="view_status_yn"/>
+		<result javaType="java.lang.Integer" property="percentage" column="view_percentage"/>
+	</resultMap>
 	
+	<!--  
+		작성자 : 오찬식
+		기능 : 단원 정보와 단원의 평균 진행도를 담는 HashMap 객체
+	-->
+	<resultMap type="hashmap" id="getAvgCoursepartsViewResultMap">
+		<result javaType="java.lang.Integer" property="no" column="course_part_no"/>
+		<result javaType="java.lang.String" property="name" column="course_part_name"/>
+		<result javaType="java.lang.Integer" property="week" column="course_part_week"/>
+		<result javaType="java.lang.Integer" property="avg" column="part_avg"/>
+	</resultMap>
+		
 	<select id="getStudentByNo" parameterType="int" resultMap="studentWithMajorResultMap">
 		select *
 		from students S, majors M
@@ -221,7 +249,7 @@
 		order by C.course_no
 	</select>
 	
-	<select id="getAllRecordesByStudentNo" parameterType="map" resultMap="studentRecoredResultMap">
+	<select id="getAllRecordesByStudentNo" parameterType="map" resultType="map">
 		select 
 			H.course_no courseNo, 
 			Y.course_must_yn mustYn, 
@@ -620,7 +648,7 @@
 		where notice_no = #{value}
 	</select>
 	
-	<select id="getCoursePlanByNo" parameterType="int" resultMap="coursePlanResultMap">
+	<select id="getCoursePlanByNo" parameterType="int" resultType="map">
 		select 
 			P.professor_name professorName,
 			C.course_no courseNo,
@@ -680,5 +708,14 @@
 		where course_no = #{course.no}
 			and student_no = #{student.no}
 	</update>
+	
+	<insert id="insertMessage" parameterType="message">
+		insert into messages (message_no, message_contents, receiver_no, caller_no)
+		values (message_seq.nextval, #{contents}, #{person.receiver}, #{person.caller})
+	</insert>
+	
+	<select id="getReceiveMessageByNo" parameterType="int" resultType="message">
+		
+	</select>
 	
 </mapper>
