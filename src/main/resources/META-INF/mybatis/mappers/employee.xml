@@ -170,7 +170,18 @@
 				notice_create_date	as createDate,
 				row_number() over (order by notice_no desc) as rn
 			from 
-				notices)
+				notices
+			<where>
+				<if test="no != null">
+					notice_no  = #{no}
+				</if>
+				<if test="title != null">
+					notice_title = #{title}
+				</if>
+				<if test="createDate != null">
+					notice_create_date = #{createDate}
+				</if>
+			</where>)
 		where 
 			rn >= #{beginIndex}
 			and rn &lt;= #{endIndex}		
@@ -189,5 +200,10 @@
 		where 
 			notice_no = #{value}
 	</select>
+	
+	<insert id="addNotice" parameterType="notice">
+		insert into notices (notice_no, notice_writer, notice_title, notice_contents, notice_file_name) 
+		values (notice_seq.nextval, #{writer}, #{title}, #{contents}, #{fileName})
+	</insert>
 	
 </mapper>

@@ -107,24 +107,38 @@ public class EmployeeRestController {
 		return student;
 	}
 	
-	/*@GetMapping("/stud/noticelist.json")
+	@GetMapping("/stud/noticelist.json")
 	@ResponseBody
 	public Map<String, Object> noticelist(@RequestParam(value = "pageNo", required = false, defaultValue = "1" ) int pageNo,
-							 Model model) {
+							              @RequestParam(value = "option", required = false, defaultValue = "") String option,
+							              @RequestParam(value = "search", required = false, defaultValue = "") String search, 
+			                              Model model) {
 		
-		// pagination 관련
-		Map<String, Object> paginationOption = new HashMap<String, Object>();
+		Map<String, Object> searchOption = new HashMap<String, Object>();
+		System.out.println(pageNo); 
+		System.out.println(option); 
+		System.out.println(search); 
+		if(!option.isEmpty() && !option.equals("")) {
+			if(option.equals("noticeNo")) {
+				searchOption.put("no",search); 
+			} else if (option.equals("title")) {
+				searchOption.put("title",search); 
+			} else if (option.equals("createDate")) {
+				searchOption.put("createDate",search); 
+			}
+		} 
 		
+		// pagination 관련2019
 		int size = 10;				 					
 		int beginIndex  = (pageNo - 1)*size + 1 ;		
 		int endIndex   = pageNo*size ; 	
 		int count = employeeService.getAllNoticesCount();
 		
-		paginationOption.put("size", size); 
-		paginationOption.put("beginIndex", beginIndex); 
-		paginationOption.put("endIndex", endIndex); 
+		searchOption.put("size", size); 
+		searchOption.put("beginIndex", beginIndex); 
+		searchOption.put("endIndex", endIndex); 
 
-		List<Notice> notices = employeeService.getAllNotices(paginationOption); 
+		List<Notice> notices = employeeService.getAllNotices(searchOption); 
 		Pagination pagination = new Pagination(pageNo, size, count); 
 		
 		// 값 담기 
@@ -134,5 +148,5 @@ public class EmployeeRestController {
 		result.put("pagination", pagination); 
 	
 		return result;
-	} */
+	} 
 }

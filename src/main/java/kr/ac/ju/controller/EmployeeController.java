@@ -106,31 +106,8 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/stud/noticelist.do")
-	public Map<String, Object> noticelist(@RequestParam(value = "pageNo", required = false, defaultValue = "1" ) int pageNo,
-							 Model model) {
-		
-		// pagination 관련
-		Map<String, Object> paginationOption = new HashMap<String, Object>();
-		
-		int size = 10;				 					
-		int beginIndex  = (pageNo - 1)*size + 1 ;		
-		int endIndex   = pageNo*size ; 	
-		int count = employeeService.getAllNoticesCount();
-		
-		paginationOption.put("size", size); 
-		paginationOption.put("beginIndex", beginIndex); 
-		paginationOption.put("endIndex", endIndex); 
-
-		List<Notice> notices = employeeService.getAllNotices(paginationOption); 
-		Pagination pagination = new Pagination(pageNo, size, count); 
-		
-		// 값 담기 
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("notices", notices); 
-		result.put("count", count); 
-		result.put("pagination", pagination); 
-	
-		return result; 
+	public String noticelist(Model model){
+		return "employee/stud/noticelist";
 	}
 	
 	@GetMapping("/stud/noticedetail.do")
@@ -142,11 +119,22 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/stud/noticeform.do")
-	public String noticeupdate(Model model) {
+	public String noticeform(Model model) {
 		
 		return "employee/stud/noticeform";
 	}
 	
+	@GetMapping("/stud/addnotice.do")
+	public String addnotice(String title, String writer, String contents) {
+		Notice notice = new Notice(); 
+		notice.setTitle(title);
+		notice.setContents(contents);
+		notice.setWriter(writer);
+		
+		employeeService.addNotice(notice);
+		
+		return "redirect:noticelist.do";  
+	}
 	
 	@InitBinder // 한국식 날짜 변환 
 	public void initBinder(WebDataBinder binder) {

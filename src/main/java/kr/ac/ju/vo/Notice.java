@@ -2,6 +2,8 @@ package kr.ac.ju.vo;
 
 import java.util.Date;
 
+import kr.ac.ju.utils.DateUtils;
+
 public class Notice {
 
 	private Integer no;
@@ -64,6 +66,10 @@ public class Notice {
 	
 	public Date getCreateDate() {
 		return createDate;
+	}
+	
+	public String getCreateDateStr() {
+		return DateUtils.dateToString(createDate);
 	}
 
 	public void setCreateDate(Date createDate) {

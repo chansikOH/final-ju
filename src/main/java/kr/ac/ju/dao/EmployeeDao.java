@@ -17,12 +17,13 @@ public interface EmployeeDao {
 	void insertStudent(Student student); 
 	int getStudentNoSeq(int majorNo); 
 	Notice getNoticeByNoticeNo(int noticeNo); 
+	void addNotice(Notice notice); 
 	
 	// RestController
 	List<Student> searchStudents(Map<String, Object> searchOption ); 
 	int searchStudentsCount(Map<String, Object> searchOption); 
 	Student getStudentByNo(int studentNo); 
 	void updateStudentStatusByNo(Student student); 
-	List<Notice> getAllNotices(Map<String, Object> paginationOption); 
+	List<Notice> getAllNotices(Map<String, Object> searchOption); 
 	int getAllNoticesCount(); 
 }
