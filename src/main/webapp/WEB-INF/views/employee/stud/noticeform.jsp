@@ -10,7 +10,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<!-- 스마트에디터 관련 자바스크립트 라이브러리 추가 -->
-	<script type="text/javascript" src="/editor/resources/js/se2/js/HuskyEZCreator.js"></script>
+	<script type="text/javascript" src="/ju/resources/js/se2/js/HuskyEZCreator.js"></script>
 </head>
 <body>
 <div class="container">
@@ -41,17 +41,19 @@
 	</div>
 </div>
 <script type="text/javascript">
+	// 스마트에디터 스킨을 추가하기 위한 스크립트코드
 	var oEditors = [];
 	nhn.husky.EZCreator.createInIFrame({
 		oAppRef: oEditors,
    		elPlaceHolder: "board-contents",
-   		sSkinURI: "/editor/resources/js/se2/SmartEditor2Skin.html",
+   		sSkinURI: "/ju/resources/js/se2/SmartEditor2Skin.html",
     	fCreator: "createSEditor2"
 	});
+	
 	// textArea에 이미지 첨부
 	function pasteHTML(filepath){
 		setTimeout(function() {
-	    	var sHTML = '<img src="/editor/resources/images/'+filepath+'">';
+	    	var sHTML = '<img src="/ju/resources/images/'+filepath+'">';
 	    	oEditors.getById["board-contents"].exec("PASTE_HTML", [sHTML]);
 		}, 5000);
 	}

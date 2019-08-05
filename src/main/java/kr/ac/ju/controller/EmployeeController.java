@@ -141,10 +141,10 @@ public class EmployeeController {
 		return "employee/stud/noticedetail";
 	}
 	
-	@GetMapping("/stud/noticeupdate.do")
+	@GetMapping("/stud/noticeform.do")
 	public String noticeupdate(Model model) {
 		
-		return "employee/stud/noticedetail";
+		return "employee/stud/noticeform";
 	}
 	
 	

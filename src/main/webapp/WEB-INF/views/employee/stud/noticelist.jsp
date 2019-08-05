@@ -38,69 +38,69 @@
 			</div>
 			<div class="col-sm-10">
 				<h1 class="title">학생 공지사항</h1> 
-				<div class="row result">
 				
-				<div class="col-sm-12"> 
-					<div class="col-sm-6">
-                            <p>총 <strong><span id="search-result-count">${count }</span></strong>건 조회</p>
-                    </div>
-			  	    <div class="col-sm-6">
-					    <form method="get" action="noticelist.json" class="navbar-form">
-					      <select name="option">
-	                          <option value="none">검색조건</option>
-	                          <option value="noticeNo">번호</option>
-	                          <option value="title">제목</option>
-	                          <option value="createDate">작성일</option>
-	                      </select>	
-						  <div class="form-group">
-						    <input type="text" class="form-control" name="text" placeholder="Search">
-						  </div> 
-						  <button class="btn btn-default" type="button">검색</button>
-						</form>
-				   	</div>
-				</div>
-			
-				<div class="col-sm-12">
-					<table class="table table-striped">
-						<colgroup>
-							<col width="10%">
-							<col width="50%">
-							<col width="10%">
-							<col width="10%">
-							<col width="20%">
-						</colgroup>
-						<thead>
-							<tr>
-								<th>번호</th>
-								<th>제목</th>
-								<th>파일</th>
-								<th>작성자</th>
-								<th>작성일</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="notice" items="${notices }" varStatus="index">
+			<form method="get" action="noticelist.json" class="navbar-form">
+				<div class="row result">
+					<div class="col-sm-12"> 
+						<div class="col-sm-6">
+	                            <p>총 <strong><span id="search-result-count">${count }</span></strong>건 조회</p>
+	                    </div>
+				  	    <div class="col-sm-6">
+						      <select name="option">
+		                          <option value="none">검색조건</option>
+		                          <option value="noticeNo">번호</option>
+		                          <option value="title">제목</option>
+		                          <option value="createDate">작성일</option>
+		                      </select>	
+							  <div class="form-group">
+							    <input type="text" class="form-control" name="text" placeholder="Search">
+							  </div> 
+							  <button class="btn btn-default" type="button">검색</button>
+					   	</div>
+					</div>
+				
+					<div class="col-sm-12">
+						<table class="table table-striped">
+							<colgroup>
+								<col width="10%">
+								<col width="50%">
+								<col width="10%">
+								<col width="10%">
+								<col width="20%">
+							</colgroup>
+							<thead>
 								<tr>
-									<td>${index.count }</td>
-									<td class="text-left"><a href="noticedetail.do?noticeNo=${notice.no }">${notice.title }</a></td>
-									
-									<c:if test="${empty notice.extension }">
-										<td></td>
-									</c:if>
-									<c:if test="${not empty notice.extension && notice.extension eq 'pdf' }">
-										<td><img src="/ju/resources/images/pdf.png" style="width: 21px; height: 21px;"/></td>
-									</c:if>
-									<c:if test="${not empty notice.extension && notice.extension ne 'pdf' }">
-										<td><img src="/ju/resources/images/file.png" style="width: 18px; height: 18px;"/></td>
-									</c:if>
-									<td>${notice.writer }</td>
-									<td><fmt:formatDate value="${notice.createDate }"/></td>
+									<th>번호</th>
+									<th>제목</th>
+									<th>파일</th>
+									<th>작성자</th>
+									<th>작성일</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<%-- <c:forEach var="notice" items="${notices }" varStatus="index">
+									<tr>
+										<td>${index.count }</td>
+										<td class="text-left"><a href="noticedetail.do?noticeNo=${notice.no }">${notice.title }</a></td>
+										
+										<c:if test="${empty notice.extension }">
+											<td></td>
+										</c:if>
+										<c:if test="${not empty notice.extension && notice.extension eq 'pdf' }">
+											<td><img src="/ju/resources/images/pdf.png" style="width: 21px; height: 21px;"/></td>
+										</c:if>
+										<c:if test="${not empty notice.extension && notice.extension ne 'pdf' }">
+											<td><img src="/ju/resources/images/file.png" style="width: 18px; height: 18px;"/></td>
+										</c:if>
+										<td>${notice.writer }</td>
+										<td><fmt:formatDate value="${notice.createDate }"/></td>
+									</tr>
+								</c:forEach> --%>
+							</tbody>
+						</table>
+					</div>
 				</div>
-			</div>
+			</form>
 				
 				<div class="row">
 					<div class="col-sm-12 page">
