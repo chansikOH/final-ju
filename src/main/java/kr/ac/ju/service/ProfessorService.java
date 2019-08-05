@@ -9,7 +9,9 @@ import kr.ac.ju.vo.CoursePart;
 import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Major;
 import kr.ac.ju.vo.Professor;
+import kr.ac.ju.vo.Student;
 import kr.ac.ju.vo.Test;
+import kr.ac.ju.vo.TestResults;
 
 public interface ProfessorService {
 
@@ -34,4 +36,9 @@ public interface ProfessorService {
 	void addCourse(Course course);
 	void updateCourse(Course course);
 	void deleteCourse(int courseNo);
+	
+	List<Course> getTermClassByProfId(Map<String, Object> param);
+	List<Map<String, Object>> getStudentsByCourseNo(int courseNo);
+	
+	void updateRecordByCourseNoAndStudNo(Map<String, Object> info);
 }

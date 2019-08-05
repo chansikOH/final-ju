@@ -13,7 +13,9 @@ import kr.ac.ju.vo.CoursePart;
 import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Major;
 import kr.ac.ju.vo.Professor;
+import kr.ac.ju.vo.Student;
 import kr.ac.ju.vo.Test;
+import kr.ac.ju.vo.TestResults;
 
 @Service
 public class ProfessorServiceImpl implements ProfessorService{
@@ -103,5 +105,20 @@ public class ProfessorServiceImpl implements ProfessorService{
 	@Override
 	public void deleteCourse(int courseNo) {
 		professorDao.deleteCourse(courseNo);
+	}
+	
+	@Override
+	public List<Course> getTermClassByProfId(Map<String, Object> param) {
+		return professorDao.getTermClassByProfId(param);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getStudentsByCourseNo(int courseNo) {
+		return professorDao.getStudentsByCourseNo(courseNo);
+	}
+	
+	@Override
+	public void updateRecordByCourseNoAndStudNo(Map<String, Object> info) {
+		
 	}
 }

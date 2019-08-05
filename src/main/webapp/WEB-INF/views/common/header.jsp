@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<jsp:useBean id="now" class="java.util.Date" />
+	<fmt:parseDate value="0831" pattern="MMdd" var="termDate" />
+	
+	<fmt:formatDate value="${now }" pattern="MMdd" var="nowDate"/>
+	<fmt:formatDate value="${now }" pattern="yyyy" var="nowYear"/>
+	<fmt:formatDate value="${termDate }" pattern="MMdd" var="term" />
 	
 <style>
 	body {
@@ -149,10 +155,10 @@
 					<ul class="nav-sub navbar-nav">
 						<li><a href="#" id="menu1">학적관리</a></li>
 						<li><a href="#" id="menu2">강의</a></li>
-						<li><a href="/ju/student/mypage" id="menu3">개인정보관리</a></li>
-						<li><a href="#" id="menu4">강의평가</a></li>
-						<li><a href="#" id="menu5">등록금</a></li>
-						<li><a href="#" id="menu6">휴/복학 신청</a></li>
+						<li><a href="#" id="menu3">성적</a></li>
+						<li><a href="/ju/student/mypage" id="menu4">개인정보관리</a></li>
+						<li><a href="#" id="menu5">강의평가</a></li>
+						<li><a href="#" id="menu6">등록금</a></li>
 						<li><a href="#" id="menu7">학사일정</a></li>
 						<li><a href="#" id="menu8">공지사항</a></li>
 					</ul>
@@ -176,6 +182,19 @@
 					</ul>
 				</div>		
 				<div id="sub-menu3">
+					<ul>
+						<c:choose>
+							<c:when test="${nowDate < term }">
+
+								<li><a href="/ju/professor/grade/grade?term=1&year=${nowYear}">성적입력</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="/ju/professor/grade/grade?term=2">성적입력</a></li>
+							</c:otherwise>
+						</c:choose>
+						<li><a href="/ju/professor/class/form">성적조회</a></li>
+						<li><a href="/ju/professor/course/planform">강의평가 조회</a></li>
+					</ul>
 				</div>
 				<div id="sub-menu4">
 				</div>
