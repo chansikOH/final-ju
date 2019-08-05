@@ -15,10 +15,10 @@
 <style type="text/css">
 	 a{color: #000;}
      a:hover{text-decoration: none;}
-     .title{margin: 20px 0; font-size: 26px;}
-
+     .title{margin-top: 30; padding-bottom:20px; font-size: 40px;}
+		
 	.result{padding: 0 15px;}
-	.result p{text-align: right; font-size: 15px; color: #0000ff;}
+	.result p{text-align: left; font-size: 18px; padding-left: 30px;}
 	.result div:first-child{margin: 15px 0 5px 0; padding: 0;}
 	.result th{background: #faf6f0; }
 	.result th, td{text-align: center; }
@@ -29,7 +29,7 @@
     .pagination li a:hover{color: #777; text-decoration: none;}
 </style>
 </head>
-<body>
+<body> 
 	<div class="container-fluid">
 		<%@ include file="../../common/header.jsp"%>
 		<div class="row">
@@ -38,10 +38,27 @@
 			</div>
 			<div class="col-sm-10">
 				<h1 class="title">학생 공지사항</h1> 
+				
+			<form method="get" action="noticelist.json" class="navbar-form">
 				<div class="row result">
-					<div class="col-sm-12">
-                            <p>총 ${count }건 조회</p>
-                    </div>
+					<div class="col-sm-12"> 
+						<div class="col-sm-6">
+	                            <p>총 <strong><span id="search-result-count">${count }</span></strong>건 조회</p>
+	                    </div>
+				  	    <div class="col-sm-6">
+						      <select name="option">
+		                          <option value="none">검색조건</option>
+		                          <option value="noticeNo">번호</option>
+		                          <option value="title">제목</option>
+		                          <option value="createDate">작성일</option>
+		                      </select>	
+							  <div class="form-group">
+							    <input type="text" class="form-control" name="text" placeholder="Search">
+							  </div> 
+							  <button class="btn btn-default" type="button">검색</button>
+					   	</div>
+					</div>
+				
 					<div class="col-sm-12">
 						<table class="table table-striped">
 							<colgroup>
@@ -61,7 +78,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="notice" items="${notices }" varStatus="index">
+								<%-- <c:forEach var="notice" items="${notices }" varStatus="index">
 									<tr>
 										<td>${index.count }</td>
 										<td class="text-left"><a href="noticedetail.do?noticeNo=${notice.no }">${notice.title }</a></td>
@@ -78,17 +95,33 @@
 										<td>${notice.writer }</td>
 										<td><fmt:formatDate value="${notice.createDate }"/></td>
 									</tr>
-								</c:forEach>
+								</c:forEach> --%>
 							</tbody>
 						</table>
 					</div>
 				</div>
+			</form>
 				
 				<div class="row">
 					<div class="col-sm-12 page">
 						<ul class="pagination" id="pagination-box">
-							
-						</ul>
+							<c:if test="${not pagination.first }">
+								<li><a href="" data-pno="${pagination.page-1 }"><span class='glyphicon glyphicon-menu-left'></span></a></li>
+							</c:if>
+							<c:forEach begin="${pagination.begin}" end="${pagination.end}" var="no">
+								<c:choose>
+									<c:when test="${pagination.page eq no}">
+										<li class='page-active'><a href="" data-pno="${no }">${no }</a></li>								
+									</c:when>
+									<c:otherwise>
+										<li><a href="" data-pno="${no }">${no }</a></li>								
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+							<c:if test="${not pagination.last }">
+								<li><a href="" data-pno="${pagination.page+1 }"><span class='glyphicon glyphicon-menu-right'></span></a></li>
+							</c:if>
+						</ul> 
 					</div>
 				</div>
 				
@@ -96,9 +129,7 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-	$(function() {
-		$("#search-result-table tbody tr").hide();
-	})
+		
 	</script>
 </body>
 </html>

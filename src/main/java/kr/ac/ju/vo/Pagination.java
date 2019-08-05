@@ -37,11 +37,13 @@ public class Pagination {
 	public int getIndex() {
 		return (getPage() - 1) * size + 1;
 	}
-
+      
+	//현재 페이지 번호 
 	public int getPage() {
 		return page;
 	}
 
+	// 첫 페이지 여부 
 	public boolean isFirst() {
 		if (page == 1) {
 			return true;
@@ -49,6 +51,7 @@ public class Pagination {
 		return false;
 	}
 
+	// 마지막 페이지 여부 
 	public boolean isLast() {
 		if (page == totalPages) {
 			return true;
@@ -56,6 +59,7 @@ public class Pagination {
 		return false;
 	}
 
+	// 시작 페이지 번호 
 	public int getBegin() {
 		if (records <= 0) {
 			return 0;
@@ -67,6 +71,7 @@ public class Pagination {
 		return (currentBlock - 1) * pages + 1;
 	}
 
+	// 끝 페이지 번호 
 	public int getEnd() {
 		if (records <= 0) {
 			return 0;
