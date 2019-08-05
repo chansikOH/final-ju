@@ -1,13 +1,12 @@
 package kr.ac.ju.service;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.ac.ju.dao.DocDao;
-import kr.ac.ju.form.DocForm;
 import kr.ac.ju.vo.Doc;
 import kr.ac.ju.vo.DocFile;
 import kr.ac.ju.vo.DocLine;
@@ -15,6 +14,7 @@ import kr.ac.ju.vo.Draft;
 import kr.ac.ju.vo.Employee;
 import kr.ac.ju.vo.Person;
 import kr.ac.ju.vo.Retire;
+import kr.ac.ju.vo.Vacation;
 
 @Service
 public class DocServiceImpl implements DocService {
@@ -23,7 +23,7 @@ public class DocServiceImpl implements DocService {
 	DocDao docDao;
 	
 	@Override
-	public List<HashMap<String, Object>> getDocEmployeeByNo(int employeeNo) {
+	public List<Map<String, Object>> getDocEmployeeByNo(int employeeNo) {
 		
 		return docDao.getDocEmployeeByNo(employeeNo);
 	}
@@ -93,4 +93,24 @@ public class DocServiceImpl implements DocService {
 				docDao.insertDocfile(docfile);
 			}
 		}
+
+		@Override
+		public Draft getDraftByNo(int draftNo) {
+			
+			return docDao.getDraftByNo(draftNo);
+		}
+
+		@Override
+		public Retire getRetireByNo(int retireNo) {
+			
+			return docDao.getRetireByNo(retireNo);
+		}
+
+		@Override
+		public Vacation getVacationByNo(int vacationNo) {
+			
+			return docDao.getVacationByNo(vacationNo);
+		}
+
+		
 }

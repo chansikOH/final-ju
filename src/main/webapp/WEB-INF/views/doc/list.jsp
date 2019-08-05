@@ -25,23 +25,10 @@
 		</div>
 		<div class="col-sm-10">
 			<div class="row" id="doclist">
-				<div class="col-sm-5">
-					<form action="" class="form-inline">
-						<select class="form-contol">
-							<option value="">결재번호</option>
-							<option value="">제목</option>
-							<option value="">결재상태</option>
-						</select>
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="키워드 선택하세요"/>
-							<button type="submit" class="btn btn-primary">검색</button>
-						</div>
-					</form>
-				</div>
-				<div class="col-sm-5">
+				
+				<div class="col-sm-10">
 					<div class="button-righ">
-						<a href="" class="btn btn-success">대기중(1)</a>
-						<a href="" class="btn btn-warning">진행중(2)</a>
+						<a href="" class="btn btn-warning">결재중(2)</a>
 						<a href="" class="btn btn-info">반려(1)</a>
 						<a href="" class="btn btn-default">완료(1)</a>
 					</div>
@@ -76,12 +63,12 @@
 						<tbody>
 						<c:forEach var="doc" items="${docs }">
 							<tr>
-								<td><input type="checkbox" name="" />${doc.DOC_NO }</td>
+								<td><input type="checkbox"/>${doc.DOC_NO}</td>
 								<td><a href="/ju/doc/draft/detail">${doc.DRAFT_TITLE }</a></td>
 								<td>${doc.DOC_FILE_YN }</td>
 								<td>${doc.EMPLOYEE_NAME }</td>
 								<td>${doc.PROFESSOR_NAME }</td>
-								<td>${doc.DOC_CREATE_DATE }</td>
+								<td><fmt:formatDate value="${doc.DOC_CREATE_DATE }"/> </td>
 								<td><a href="/ju/doc/draft/update">${doc.DOC_STATE }</a></td>
 							</tr>
 						</c:forEach>
