@@ -43,20 +43,7 @@
 		<result property="division" column="student_div"/>
 		<result property="photoName" column="student_photo_name"/>
 	</resultMap>
-	
-	<resultMap type="java.util.HashMap" id="studentRecoredResultMap">
-		<result javaType="java.lang.Integer" property="courseNo" column="course_no"/>
-		<result javaType="java.lang.String" property="mustYn" column="course_must_yn"/>
-		<result javaType="java.lang.String" property="courseName" column="course_name"/>
-		<result javaType="java.lang.String" property="professorName" column="professor_name"/>
-		<result javaType="java.lang.Integer" property="credit" column="course_credit"/>
-		<result javaType="java.lang.Double" property="totalcnt" column="totalcnt"/>
-		<result javaType="java.lang.String" property="record" column="course_attend_record"/>
-		<result javaType="java.lang.Integer" property="courseOpinion" column="course_opinion"/>
-		<result javaType="java.lang.Integer" property="year" column="course_year"/>
-		<result javaType="java.lang.Integer" property="term" column="course_term"/>
-	</resultMap>
-	
+		
 	<!--  
 		작성자 : 오찬식
 		기능 : 교과목, 단원, 강의, 강의시청 정보를 담는 HashMap 객체
@@ -84,21 +71,7 @@
 		<result javaType="java.lang.Integer" property="week" column="course_part_week"/>
 		<result javaType="java.lang.Integer" property="avg" column="part_avg"/>
 	</resultMap>
-	
-	<resultMap type="hashmap" id="coursePlanResultMap">
-		<result javaType="java.lang.String" property="professorName" column="professor_name"/>
-		<result javaType="java.lang.Integer" property="courseNo" column="course_no"/>
-		<result javaType="java.lang.String" property="courseName" column="course_name"/>
-		<result javaType="java.lang.String" property="goal" column="plan_goal"/>
-		<result javaType="java.lang.String" property="summary" column="plan_summary"/>
-		<result javaType="java.lang.String" property="mainBook" column="plan_main_book"/>
-		<result javaType="java.lang.String" property="subBook1" column="plan_sub_book1"/>
-		<result javaType="java.lang.String" property="subBook2" column="plan_sub_book2"/>
-		<result javaType="java.lang.String" property="subBook3" column="plan_sub_book3"/>
-		<result javaType="java.lang.String" property="testProcess" column="plan_test_process"/>
-		<result javaType="java.util.Date" property="createDate" column="plan_create_date"/>
-	</resultMap>
-	
+		
 	<select id="getStudentByNo" parameterType="int" resultMap="studentWithMajorResultMap">
 		select *
 		from students S, majors M
@@ -249,7 +222,7 @@
 		order by C.course_no
 	</select>
 	
-	<select id="getAllRecordesByStudentNo" parameterType="map" resultMap="studentRecoredResultMap">
+	<select id="getAllRecordesByStudentNo" parameterType="map" resultType="map">
 		select 
 			H.course_no courseNo, 
 			Y.course_must_yn mustYn, 
@@ -648,7 +621,7 @@
 		where notice_no = #{value}
 	</select>
 	
-	<select id="getCoursePlanByNo" parameterType="int" resultMap="coursePlanResultMap">
+	<select id="getCoursePlanByNo" parameterType="int" resultType="map">
 		select 
 			P.professor_name professorName,
 			C.course_no courseNo,
@@ -708,5 +681,14 @@
 		where course_no = #{course.no}
 			and student_no = #{student.no}
 	</update>
+	
+	<insert id="insertMessage" parameterType="message">
+		insert into messages (message_no, message_contents, receiver_no, caller_no)
+		values (message_seq.nextval, #{contents}, #{person.receiver}, #{person.caller})
+	</insert>
+	
+	<select id="getReceiveMessageByNo" parameterType="int" resultType="message">
+		
+	</select>
 	
 </mapper>

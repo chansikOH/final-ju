@@ -7,16 +7,24 @@ import org.apache.commons.codec.digest.MessageDigestAlgorithms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.ac.ju.service.EmployeeService;
 import kr.ac.ju.service.HomeService;
+import kr.ac.ju.service.ProfessorService;
+import kr.ac.ju.service.StudentService;
+import kr.ac.ju.vo.Message;
 import kr.ac.ju.vo.Person;
+import kr.ac.ju.vo.Student;
 
 @Controller
 public class HomeController {
 	
 	@Autowired
 	private HomeService homeService;
-
+	
 	@RequestMapping("/")
 	public String login() {
 		
@@ -60,5 +68,25 @@ public class HomeController {
 		session.invalidate();
 		
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value="/sendmessage")
+	public @ResponseBody Message sendMessage(HttpSession session, 
+											@RequestParam("receiver") int receiver,
+											@RequestParam("contents") String contents) {
+		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
+
+		Message message = new Message();
+		message.setContents(contents);
+		message.setCaller(student);
+		
+		Person person = homeService.getPersonByNo(receiver);
+		if(person != null) {
+			message.setReceiver(person);
+		}
+				
+		homeService.insertMessage(message);
+		
+		return message;
 	}
 }

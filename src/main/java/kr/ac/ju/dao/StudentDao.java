@@ -10,6 +10,7 @@ import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.CourseOpinion;
 import kr.ac.ju.vo.CoursePart;
+import kr.ac.ju.vo.Message;
 import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Student;
 import kr.ac.ju.vo.StudentStatus;
@@ -66,4 +67,6 @@ public interface StudentDao {
 	List<CoursePart> getCoursePartByNo(int courseNo);
 	void insertCourseOpinion(CourseOpinion courseOpinion);
 	void updateCourseAttend(CourseAttend courseAttend);
+	void insertMessage(Message message);
+	Message getReceiveMessageByNo(int messageNo);
 }

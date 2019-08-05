@@ -7,6 +7,7 @@ import kr.ac.ju.dao.EmployeeDao;
 import kr.ac.ju.dao.ProfessorDao;
 import kr.ac.ju.dao.StudentDao;
 import kr.ac.ju.vo.Employee;
+import kr.ac.ju.vo.Message;
 import kr.ac.ju.vo.Person;
 import kr.ac.ju.vo.Professor;
 import kr.ac.ju.vo.Student;
@@ -47,5 +48,15 @@ public class HomeServiceImpl implements HomeService{
 		}
 		
 		return null;
+	}
+	
+	@Override
+	public void insertMessage(Message message) {
+		studentDao.insertMessage(message);
+	}
+	
+	@Override
+	public Message getReceiveMessageByNo(int messageNo) {
+		return studentDao.getReceiveMessageByNo(messageNo);
 	}
 }
