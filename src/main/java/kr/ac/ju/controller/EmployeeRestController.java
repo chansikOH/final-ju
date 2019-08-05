@@ -115,7 +115,9 @@ public class EmployeeRestController {
 			                              Model model) {
 		
 		Map<String, Object> searchOption = new HashMap<String, Object>();
-		
+		System.out.println(pageNo); 
+		System.out.println(option); 
+		System.out.println(search); 
 		if(!option.isEmpty() && !option.equals("")) {
 			if(option.equals("noticeNo")) {
 				searchOption.put("no",search); 

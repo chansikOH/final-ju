@@ -14,6 +14,7 @@ public interface EmployeeService {
 	void insertStudent(Student student); 
 	int getStudentNoSeq(int majorNo); 
 	Notice getNoticeByNoticeNo(int noticeNo); 
+	void addNotice(Notice notice); 
 	
 	// RestController
 	List<Student> searchStudents(Map<String, Object> searchOption ); 

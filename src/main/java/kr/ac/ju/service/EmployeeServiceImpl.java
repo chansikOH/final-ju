@@ -70,4 +70,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeedao.getAllNoticesCount(); 
 	}
 	
+	@Override
+	public void addNotice(Notice notice) {
+		employeedao.addNotice(notice); 
+		
+	}
+	
 }

@@ -201,8 +201,9 @@
 			notice_no = #{value}
 	</select>
 	
-<!-- 	<insert id="addNotice" parameterType="notice">
-		
-	</insert> -->
+	<insert id="addNotice" parameterType="notice">
+		insert into notices (notice_no, notice_writer, notice_title, notice_contents, notice_file_name) 
+		values (notice_seq.nextval, #{writer}, #{title}, #{contents}, #{fileName})
+	</insert>
 	
 </mapper>

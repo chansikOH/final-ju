@@ -119,9 +119,21 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/stud/noticeform.do")
-	public String noticeupdate(Model model) {
+	public String noticeform(Model model) {
 		
 		return "employee/stud/noticeform";
+	}
+	
+	@GetMapping("/stud/addnotice.do")
+	public String addnotice(String title, String writer, String contents) {
+		Notice notice = new Notice(); 
+		notice.setTitle(title);
+		notice.setContents(contents);
+		notice.setWriter(writer);
+		
+		employeeService.addNotice(notice);
+		
+		return "redirect:noticelist.do";  
 	}
 	
 	@InitBinder // 한국식 날짜 변환 

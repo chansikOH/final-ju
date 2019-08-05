@@ -25,15 +25,15 @@
 			</div>
 			<div class="col-sm-10">
 				<h1 class="title">학생 공지사항 입력</h1> 
-				<form id="register-form" method="post" action="register.do">
+				<form id="register-form" method="get" action="addnotice.do">
 				<div class="form-group">
 					<label>제목</label>
 					<input type="text" class="form-control" name="title" id="board-title"/>
 				</div>
 				<div class="form-group">
 					<label>작성자</label>
-					<input type="text" class="form-control" name="writer" id="board-writer"/>
-				</div>
+					<input type="text" class="form-control" name="writer" id="board-writer" placeholder="관리자" readonly="readonly" value="관리자"/>
+				</div> 
 				<div class="form-group">
 					<label>내용</label>
 					<textarea rows="10" class="form-control" name="contents" id="board-contents"></textarea>
@@ -59,7 +59,7 @@
 	// textArea에 이미지 첨부
 	function pasteHTML(filepath){
 		setTimeout(function() {
-	    	var sHTML = '<img src="/ju/resources/images/'+filepath+'">';
+	    	var sHTML = '<img src="/ju/resources/images/photo/'+filepath+'">';
 	    	oEditors.getById["board-contents"].exec("PASTE_HTML", [sHTML]);
 		}, 5000);
 	}

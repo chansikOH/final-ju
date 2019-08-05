@@ -172,7 +172,6 @@
 			var opt = $(this).val();
 			if (opt == "createDate"){
 				$("[name=search]").attr("type",'date')
-				alert(opt)
 			}
 		})
 		
@@ -184,10 +183,8 @@
 			gosearch();
 		})
 	
-		$("#pagination-box a").on("click", function(event){
+		$("#pagination-box").on("click", "a", function(event){
 			event.preventDefault() 
-			var aa = $(this)
-			alert(aa)
 			pageNo = $(this).attr("data-pno");
 			$("[name=pageNo]").val(pageNo);
 			$(".search form button").click(); 
