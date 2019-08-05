@@ -70,7 +70,15 @@
 							<tbody>
 							<c:choose>
 								<c:when test="${not empty sources.partInfos}">
-									<c:forEach var="partInfo" items="${sources.partInfos }">
+									<c:forEach var="partInfo" items="${sources.partInfos }" varStatus="loop">
+										<c:if test="${loop.count eq 8 }">
+											<tr>
+												<td></td>
+												<td colspan="2"><strong>${sources.courseName } 중간고사</strong></td>
+												<td><a href="test?cno=${param.courNo }" class="btn btn-default btn-sm">시험보기</a></td>
+												<td></td>
+											</tr>
+										</c:if>
 										<tr id="course-part-${partInfo.NO }" class="course-part">
 											<td>${partInfo.WEEK }</td>
 											<td colspan="2"><strong>${partInfo.NAME }</strong></td>
@@ -89,6 +97,12 @@
 											</c:if>
 										</c:forEach>
 									</c:forEach>
+									<tr>
+										<td></td>
+										<td colspan="2"><strong>${sources.courseName } 기말고사</strong></td>
+										<td><a href="test?cno=${param.courNo }" class="btn btn-default btn-sm">시험보기</a></td>
+										<td></td>
+									</tr>
 								</c:when>
 								<c:otherwise>
 									<tr class="text-center">

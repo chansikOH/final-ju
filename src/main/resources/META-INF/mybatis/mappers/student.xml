@@ -57,34 +57,6 @@
 		<result javaType="java.lang.Integer" property="term" column="course_term"/>
 	</resultMap>
 	
-	<!--  
-		작성자 : 오찬식
-		기능 : 교과목, 단원, 강의, 강의시청 정보를 담는 HashMap 객체
-	-->
-	<resultMap type="hashmap" id="coursedetailInfoResultMap">
-		<result javaType="java.lang.Integer" property="courseNo" column="course_no"/>
-		<result javaType="java.lang.String" property="courseName" column="course_name"/>
-		<result javaType="java.lang.Integer" property="partNo" column="course_part_no"/>
-		<result javaType="java.lang.Integer" property="classNo" column="class_no"/>
-		<result javaType="java.lang.String" property="className" column="class_name"/>
-		<result javaType="java.lang.String" property="video" column="class_video_name"/>
-		<result javaType="java.lang.Integer" property="viewNo" column="class_view_no"/>
-		<result javaType="java.lang.String" property="viewTime" column="view_time"/>
-		<result javaType="java.lang.String" property="viewYn" column="view_status_yn"/>
-		<result javaType="java.lang.Integer" property="percentage" column="view_percentage"/>
-	</resultMap>
-	
-	<!--  
-		작성자 : 오찬식
-		기능 : 단원 정보와 단원의 평균 진행도를 담는 HashMap 객체
-	-->
-	<resultMap type="hashmap" id="getAvgCoursepartsViewResultMap">
-		<result javaType="java.lang.Integer" property="no" column="course_part_no"/>
-		<result javaType="java.lang.String" property="name" column="course_part_name"/>
-		<result javaType="java.lang.Integer" property="week" column="course_part_week"/>
-		<result javaType="java.lang.Integer" property="avg" column="part_avg"/>
-	</resultMap>
-	
 	<resultMap type="hashmap" id="coursePlanResultMap">
 		<result javaType="java.lang.String" property="professorName" column="professor_name"/>
 		<result javaType="java.lang.Integer" property="courseNo" column="course_no"/>
@@ -301,7 +273,7 @@
 		작성자 : 오찬식
 		기능 : 특정 학생이 수강하는 특정 교과목의 교과목, 단원, 강의, 강의시청 정보를 뽑는 쿼리문
 	-->
-	<select id="getCoursedetailSource" parameterType="map" resultMap="coursedetailInfoResultMap">
+	<select id="getCoursedetailSource" parameterType="map" resultType="map">
 		select
 			X.course_no courseNo,
 		    X.course_name courseName,
@@ -366,7 +338,7 @@
 		작성자 : 오찬식
 		기능 : 특정 학생이 수강하는 특정 교과목의 단원정보와 단원 평균 진행도를 뽑는 쿼리문
 	-->
-	<select id="getPartInfos" parameterType="map" resultMap="getAvgCoursepartsViewResultMap">
+	<select id="getPartInfos" parameterType="map" resultType="map">
 		select
 		    Y.course_part_no no,
 		    Z.course_part_name name,
