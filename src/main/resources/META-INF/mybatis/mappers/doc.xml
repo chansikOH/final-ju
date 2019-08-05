@@ -5,24 +5,14 @@
   
 <mapper namespace="kr.ac.ju.dao.DocDao">
 
-	<resultMap type="doc" id="docsResultMap">
-		<result property="no" column="doc_no"/>
-		<result property="title" column="draft_title"/>
-		<result property="fileYn" column="doc_file_yn"/>
-		<result property="empName" column="employee_name"/>
-		<result property="proName" column="professor_name"/>
-		<result property="createDate" column="doc_create_date"/>
-		<result property="state" column="doc_state"/>
-	</resultMap>	
-
 	<!-- 직원 로그인 기안서, 휴가계획서, 퇴직서 정보 조회  -->
-	<select id="getDocEmployeeByNo" parameterType="int" resultMap="docsResultMap">
+	<select id="getDocEmployeeByNo" parameterType="map" resultType="hashmap">
 		SELECT 
-			A.DOC_NO as "NO", 
+			A.DOC_NO,
 			B.DRAFT_TITLE, 
 			A.DOC_FILE_YN, 
-			C.EMPLOYEE_NAME, 
-			D.PROFESSOR_NAME, 
+			C.EMPLOYEE_NAME , 
+			D.PROFESSOR_NAME , 
 			A.DOC_CREATE_DATE, 
 			A.DOC_STATE
 		FROM 
@@ -30,14 +20,28 @@
 			DRAFTS B, 
 			EMPLOYEES C, 
 			PROFESSORS D
-		WHERE 
+		WHERE
 			A.DOC_NO = B.DOCS_NO
 		AND 
 			A.EMPLOYEE_NO = C.EMPLOYEE_NO
 		AND 
 			A.DOC_FINAL_PERSON = D.PROFESSOR_NO
 		AND 
-			A.EMPLOYEE_NO = #{value}
+			A.EMPLOYEE_NO = #{person}
+		<choose>
+			<when test="option != null and option.equals('P') ">
+				and
+					A.doc_state == '결재중'
+			</when>
+			<when test="option != null and option.equals('I') ">
+				and
+					A.doc_state == '반려'
+			</when>
+			<when test="option != null and option.equals('C') ">
+				and
+					A.doc_state == '완료'
+			</when>
+		</choose>
 		UNION
 		SELECT 
 			A.DOC_NO, 
@@ -158,6 +162,26 @@
 			#{doc.no})
 	</insert>
 	
+	<!-- 직원 기안서 상세정보 -->
+	<select id="getDraftByNo" parameterType="int" resultType="draft">
+		SELECT
+		    D.DOC_MIDDLE_PERSON,
+		    D.DOC_FINAL_PERSON,
+		    R.DRAFT_TITLE,
+		    R.DRAFT_CONTENTS,
+		    F.FILE_NAME,
+		    R.DRAFT_KEEPING_YEAR,
+		    R.DRAFT_START_DATE
+		FROM
+		    DOCS D, DRAFTS R, DOC_FILES F
+		WHERE
+		    D.DOC_NO = R.DOCS_NO
+		AND
+		    D.DOC_NO = F.DOC_NO(+)
+		AND
+		    D.DOC_no = #{value}
+	</select>
+	
 	<!-- 직원 결재선 등록 -->
 	<insert id="insertDocLine" parameterType="docLine">
 		insert into Doc_lines
@@ -198,20 +222,88 @@
 		#{doc.no})
 	</insert>
 	
+	<!-- 직원 퇴직서 상세정보 -->
+	<select id="getRetireByNo" parameterType="int" resultType="retire">
+	SELECT
+	    D.DOC_MIDDLE_PERSON,
+	    D.DOC_FINAL_PERSON,
+	    R.RETIRE_DIV,
+	    R.RETIRE_DATE,
+	    R.RETIRE_CONTENTS,
+	    F.FILE_NAME
+	FROM
+	    DOCS D, RETIRES R, DOC_FILES F
+	WHERE
+	    D.DOC_NO = R.DOCS_NO
+	AND
+	    D.DOC_NO = F.DOC_NO(+)
+	AND
+	    R.DOCS_NO = #{value}
+	</select>
+	
 	<!-- 직원 휴가등록 -->
-	<insert id="">
+	<insert id="insertVacation" parameterType="vacation">
 	insert into vacations
-		(vacation_no, 
+		(vacation_no,
+		 vacation_div
 		vacation_contents, 
 		vacation_start_date, 
 		vacation_end_date, 
-		docs_no )
+		docs_nos)
 	values
-		(doc_detail_seq.nextval, 
+		(doc_detail_seq.nextval,
+		#{div}, 
 		#{contents}, 
 		#{startDate}, 
 		#{endDate},
 		#{doc.no})
 	</insert>
+	
+	<!-- 직원 휴가계획 상세정보 -->
+	<select id="getVacationByNo" parameterType="int" resultType="vacation">
+		   SELECT
+			    D.DOC_MIDDLE_PERSON,
+			    D.DOC_FINAL_PERSON,
+			    V.vacation_div,
+			    V.vacation_start_date,
+			    V.vacation_end_date,
+			    V.vacation_contents,
+			    F.FILE_NAME
+			FROM
+			    DOCS D, vacations V, DOC_FILES F
+			WHERE
+			    D.DOC_NO = V.DOCS_NO
+			AND
+			    D.DOC_NO = F.DOC_NO(+)
+			AND
+			    V.DOCS_NO = #{value}
+	</select>
+	
+	<!-- 직원 기안서 수정 -->
+	<!-- <update id="" parameterType="">
+		update drafts
+		set 
+			return_reason = #{returnReason}
+		where 
+			draft_no = #{no}
+			
+	</update>
+	직원 휴가서 수정
+	<update id="">
+		update vacation 
+		set
+			return_reason = #{returnReason}
+		where
+			docs_no = #{no}
+	</update>
+	
+	직원 퇴직서 수정
+	<update id="">
+		update retires
+		set
+			return_reson = #{returnReason}
+		where
+			docs_no = #{no}
+	</update> -->
 	
 </mapper>

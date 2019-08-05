@@ -36,32 +36,32 @@
 		    			<br/>
 		    			<label>최종결재자</label>
 		    			<select class="form-control" name="finalPersonNo"> 
-                            <option value=""> 처장</option>
+                            <option value="처장" ${doc.finalPerson=='처장' ? 'selected' : '' }> 처장</option>
+                            <option value="총장" ${doc.finalPerson=='총장' ? 'selected' : '' }> 총장</option>
                         </select>
 		    			<br/>
 		    			<label>제목</label>
-		    			<input type="text" class="form-control" name="title"/>
+		    			<input type="text" class="form-control" name="title" value="${draft.title }"/>
 		    			<br/>
 		    			<label>내용</label>
-		    			<textarea  rows="15" class="form-control" name="contents"></textarea>
+		    			<textarea  rows="15" class="form-control" name="contents" >${draft.contents }</textarea>
 		    			<br/>
 			    		<label>첨부파일</label>
-			    		<input type="file" name="upfile">
+			    		<input type="file" name="upfile" value="${docFile.name }">
 			    		<br/>
 		    			<label>보존년한</label>
 		    			<select class="form-control" name="keepingYear"> 
-                            <option value=""> 1년</option>
-                            <option value=""> 2년</option>
-                            <option value=""> 3년</option>
+                            <option value="1년"${draft.keepingYear}>1년</option>
+                            <option value="2년"${draft.keepingYear}>2년</option>
+                            <option value="3년"${draft.keepingYear}>3년</option>
                         </select>
                         <br/>
 		    			<label>시행일자</label>
-		    			<input type="date" class="form-control" name="startDate">
+		    			<input type="date" class="form-control" name="startDate" value="${draft.startDate }">
 		    		</div>
 		    		<br/>
 		    		<div class="text-right">
 			             <input type="button" class="btn btn-default" value="뒤로가기" onclick="history.back(-1);">
-			             <button type="submit" class="btn btn-info" value="제출">제출</button>
 		    		</div>
 		    	</form:form>
 		    </div>

@@ -259,12 +259,10 @@ public class ProfessorController {
 			CoursePart coursePart = new CoursePart();
 			BeanUtils.copyProperties(form, coursePart);
 			coursePart.setCourse(course);
-			
-			
 			coursePart.setName(form.getName()[i]);
 			coursePart.setWeek(form.getWeek()[i]);
 			coursePart.setContents(form.getContents()[i]);
-			
+
 			parts.add(coursePart);
 		}
 		

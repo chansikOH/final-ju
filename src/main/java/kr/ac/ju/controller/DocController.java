@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -43,11 +43,8 @@ public class DocController {
 	@RequestMapping("/list")
 	public String list(HttpSession session, Model model) {
 		Person person = (Person) session.getAttribute("LOGIN_EMPLOYEE");
-		List<HashMap<String, Object>> docs = docService.getDocEmployeeByNo(person.getNo());
+		List<Map<String, Object>> docs = docService.getDocEmployeeByNo(person.getNo());
 		
-		/*
-		 * for (HashMap<String, Object> d : docs) { d.get("") }
-		 */
 		model.addAttribute("docs", docs);
 		
 		return "doc/list";
@@ -109,6 +106,7 @@ public class DocController {
 	
 	@RequestMapping("/draft/detail")
 	public String draftform() {
+		
 		return "doc/draft/detail";
 	}
 	

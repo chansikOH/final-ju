@@ -1,6 +1,5 @@
 package kr.ac.ju.dao;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,11 +9,11 @@ import kr.ac.ju.vo.DocLine;
 import kr.ac.ju.vo.Draft;
 import kr.ac.ju.vo.Employee;
 import kr.ac.ju.vo.Retire;
+import kr.ac.ju.vo.Vacation;
 
 public interface DocDao {
 
-	List<HashMap<String, Object>> getDocEmployeeByNo(int employeeNo);
-	
+	List<Map<String, Object>> getDocEmployeeByNo(int employeeNo);
 	Doc getdocs(int no);
 	
 	void insertDoc(Doc doc);
@@ -23,7 +22,12 @@ public interface DocDao {
 	void insertDocfile(DocFile docFile);
 	void insertRetire(Retire retire);
 	
+	Draft getDraftByNo(int draftNo);
+	Retire getRetireByNo(int retireNo);
+	Vacation getVacationByNo(int vacationNo);
+	
 	int getDocSeq();
 	List<Employee> getAllEmployees();
+	
 
 }
