@@ -136,6 +136,13 @@ public class EmployeeController {
 		return "redirect:noticelist.do";  
 	}
 	
+	@GetMapping("/stud/changestatus")
+	public String changestatus(Model model) {
+		model.addAttribute("majors",employeeService.getAllMajors()); 
+		return "employee/stud/changestatus"; 
+	}
+
+	
 	@InitBinder // 한국식 날짜 변환 
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));

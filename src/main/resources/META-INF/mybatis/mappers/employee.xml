@@ -217,4 +217,89 @@
 		values (notice_seq.nextval, #{writer}, #{title}, #{contents}, #{fileName})
 	</insert>
 	
+	
+	<!-- ***************************************************************************************************************8 -->
+	<select id="getStudentStatusCount" parameterType="map" resultType="int">
+		select 
+			count(*)
+		from 
+			students A, majors B, student_status C
+		where 
+			A.major_no = B.major_no 
+			and A.student_no = C.student_no
+			<if test="statusDiv != null">
+				and A.student_div = #{statusDiv}
+			</if>
+			<if test="passYn != null">
+				and C.pass_yn = #{passYn}
+			</if>
+			<if test="requestDate != null">
+				and to_char(C.student_create_date, 'yyyy-mm-dd') = #{requestDate}
+			</if>
+			<if test="major != null">
+				and B.major_name = #{major}
+			</if>
+			<if test="name != null">
+				and A.student_name = #{name}
+			</if>
+			<if test="studentNo != null">
+				and A.student_no  = #{studentNo}
+			</if>
+	</select>
+	
+	<select id="getStudentStatus" parameterType="map" resultType="student" >
+		select 
+			student_no 	 				as no,
+			major_no					as "major.no",
+			professor_no				as "professor.no",
+			student_name				as name,
+			student_create_date			as "studentStatus.createDate",
+			student_div					as division,
+			major_name					as "major.name",
+			start_term  				as startTerm,
+			term_count					as termCount,
+			status_div					as "studentStatus.division",
+			pass_yn						as passYn
+		from(	select 
+					A.student_no,
+					A.major_no,
+					A.professor_no,
+					A.student_name,
+					A.student_div,
+					B.major_name,
+					C.start_term,
+					C.term_count,
+					C.status_div, 
+					C.pass_yn, 
+					C.student_create_date, 
+					row_number() over (order by C.student_create_date desc) as rn
+				from 
+					students A, majors B, student_status C
+				where 
+					A.major_no = B.major_no 
+					and A.student_no = C.student_no
+					<if test="statusDiv != null">
+						and A.student_div = #{statusDiv}
+					</if>
+					<if test="passYn != null">
+						and C.pass_yn = #{passYn}
+					</if>
+					<if test="requestDate != null">
+						and to_char(C.student_create_date, 'yyyy-mm-dd') = #{requestDate}
+					</if>
+					<if test="major != null">
+						and B.major_name = #{major}
+					</if>
+					<if test="name != null">
+						and A.student_name = #{name}
+					</if>
+					<if test="studentNo != null">
+						and A.student_no  = #{studentNo}
+					</if>
+				)
+		where 
+			rn >= #{beginIndex}
+			and rn &lt;= #{endIndex}		
+	</select> 
+	
 </mapper>
