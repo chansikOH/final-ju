@@ -22,10 +22,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.ju.form.ClaForm;
 import kr.ac.ju.form.CoursePlanForm;
+import kr.ac.ju.form.GradeForm;
 import kr.ac.ju.form.TestForm;
 import kr.ac.ju.service.ProfessorService;
+import kr.ac.ju.service.StudentService;
 import kr.ac.ju.vo.Cla;
 import kr.ac.ju.vo.Course;
+import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.CoursePart;
 import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Major;
@@ -48,6 +51,9 @@ public class ProfessorController {
 	
 	@Autowired
 	private ProfessorService service;
+	
+	@Autowired
+	private StudentService stuService;
 	
 	@RequestMapping("/class/list")
 	public String classlist(Model model, Integer profNo, HttpSession session,
@@ -184,9 +190,7 @@ public class ProfessorController {
 	public String classform(Model model, HttpSession session){
 		
 		Professor professor= (Professor) session.getAttribute("LOGIN_PROFESSOR");
-		
-		
-		
+
 		model.addAttribute("major", service.getMajor(professor.getNo()));
 		
 		return "professor/class/classform";
@@ -227,7 +231,7 @@ public class ProfessorController {
 	}
 	
 	@RequestMapping("/grade/grade")
-	public String grade(HttpSession session, Model model, int term, int year) {
+	public String grade(HttpSession session, Model model, Integer term, Integer year) {
 		
 		Professor professor= (Professor) session.getAttribute("LOGIN_PROFESSOR");
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -242,15 +246,57 @@ public class ProfessorController {
 	}
 	
 	@RequestMapping("/grade/gradeinsertlist")
-	public @ResponseBody Map<String, Object> gradeinsertlist(@RequestParam int courseNo){
+	public @ResponseBody Map<String, Object> gradeinsertlist(@RequestParam Integer courseNo){
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("course", service.getCourseByCourseNo(courseNo));
 		map.put("students", service.getStudentsByCourseNo(courseNo));
-		List<Map<String, Object>> a = service.getStudentsByCourseNo(courseNo);
 		
 		return map;
 	}
+	@RequestMapping("/grade/updategrade")
+	public String gradeinsert(GradeForm form, HttpSession session) {
+	
+		Course course = service.getCourseByCourseNo(form.getCourseNo());
+		
+		List<CourseAttend> grades = new ArrayList<CourseAttend>();
+		for(int i = 0; i<form.getStudentNo().length; i++) {
+			CourseAttend courseAttend = new CourseAttend();
+			BeanUtils.copyProperties(form, courseAttend);
+			Student student = stuService.getStudentInfoByNo(form.getStudentNo()[i]);
+			courseAttend.setCourse(course);
+			courseAttend.setStudent(student);
+			courseAttend.setRecord(form.getRecord()[i]);
+			
+			grades.add(courseAttend);
+		}
+		service.updateRecordByCourseNoAndStudNo(grades);
+		return "redirect:grade?term=1&year=2019";
+	}
+	@RequestMapping("/grade/gradelist")
+	public String gradelist(Model model, HttpSession session) {
+		
+		Professor professor = (Professor)session.getAttribute("LOGIN_PROFESSOR");
+		
+		model.addAttribute("courses", service.getAllClassByProfId(professor.getNo()));
+		
+		return "professor/grade/gradelist";
+	}
+	@RequestMapping("/grade/gradedetail")
+	public String gradedetail(Model model, Integer cno) {
+		
+		model.addAttribute("course", service.getCourseByCourseNo(cno));
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("course", service.getCourseByCourseNo(cno));
+		map.put("students", service.getStudentsByCourseNo(cno));
+		
+		model.addAttribute("grades", map);
+		
+		return "professor/grade/gradedetail";
+	}
+	
 	
 	@RequestMapping("/course/planform")
 	public String planform(HttpSession session, Model model) {
@@ -260,6 +306,7 @@ public class ProfessorController {
 		
 		return "professor/course/planform";
 	}
+	
 	
 	@RequestMapping("/course/addplanform")
 	public String addplanform(CoursePlanForm form, HttpSession session) {

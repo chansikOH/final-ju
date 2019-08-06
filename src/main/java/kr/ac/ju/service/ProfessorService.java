@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.ac.ju.vo.Cla;
 import kr.ac.ju.vo.Course;
+import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.CoursePart;
 import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Major;
@@ -40,5 +41,5 @@ public interface ProfessorService {
 	List<Course> getTermClassByProfId(Map<String, Object> param);
 	List<Map<String, Object>> getStudentsByCourseNo(int courseNo);
 	
-	void updateRecordByCourseNoAndStudNo(Map<String, Object> info);
+	void updateRecordByCourseNoAndStudNo(List<CourseAttend> attends);
 }

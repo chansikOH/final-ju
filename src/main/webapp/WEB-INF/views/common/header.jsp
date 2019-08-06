@@ -192,7 +192,7 @@
 								<li><a href="/ju/professor/grade/grade?term=2">성적입력</a></li>
 							</c:otherwise>
 						</c:choose>
-						<li><a href="/ju/professor/class/form">성적조회</a></li>
+						<li><a href="/ju/professor/grade/gradelist">성적조회</a></li>
 						<li><a href="/ju/professor/course/planform">강의평가 조회</a></li>
 					</ul>
 				</div>

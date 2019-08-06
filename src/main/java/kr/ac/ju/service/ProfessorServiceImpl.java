@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import kr.ac.ju.dao.ProfessorDao;
 import kr.ac.ju.vo.Cla;
 import kr.ac.ju.vo.Course;
+import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.CoursePart;
 import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Major;
@@ -118,7 +119,9 @@ public class ProfessorServiceImpl implements ProfessorService{
 	}
 	
 	@Override
-	public void updateRecordByCourseNoAndStudNo(Map<String, Object> info) {
-		
+	public void updateRecordByCourseNoAndStudNo(List<CourseAttend> attends) {
+		for(CourseAttend attend:attends) {
+			professorDao.updateRecordByCourseNoAndStudNo(attend);
+		}
 	}
 }

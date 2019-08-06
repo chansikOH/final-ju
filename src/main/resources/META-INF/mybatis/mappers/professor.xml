@@ -332,7 +332,8 @@
 		     Y.student_name name,
 		    X.student_no no,
             X.course_no sno,
-		    X.total_score score
+		    X.total_score score,
+		    A.course_attend_record record
 		from
 		    (select
 		         R.student_no student_no,
@@ -348,17 +349,22 @@
 		        C.course_no = #{value}
 		    group by
 		      	R.student_no, C.course_no
-		    order by
-		        R.student_no asc) X, students Y
+			) X, students Y, course_attends A
 		where
 		    X.student_no = Y.student_no
+    	and
+            A.course_no = X.course_no
+        and
+            A.student_no = X.student_no
+        order by x.student_no asc
+        
 	</select>
 	
-	<update id="updateRecordByCourseNoAndStudNo" parameterType="map">
+	<update id="updateRecordByCourseNoAndStudNo" parameterType="courseAttend">
 		update course_attends
 		set course_attend_record = #{record}
-		where student_no = #{studentNo}
-		and course_no = #{courseNo}
+		where student_no = #{student.no}
+		and course_no = #{course.no}
 	</update>
 	
 </mapper>

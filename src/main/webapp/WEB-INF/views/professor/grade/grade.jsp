@@ -76,7 +76,7 @@
 	    textarea {
 	    	resize: none;
 	    }
-		
+		#opinion .modal-body {height: 100%;}
     </style>
   	
 </head>
@@ -146,15 +146,15 @@
 						<div class="course-opinion-table">
 			                <h4>[성적입력]</h4>
 			                   
-			                <table class="table table-bordered course-info">
-				                <tbody>
-				                
-				                </tbody>
-			                </table>
-			
-			              	<h4>[수강생 목록]</h4>
-			
-							<form class="form" method="POST" action="updateRecord">
+							<form class="form" method="post" action="updategrade">
+				                <table class="table table-bordered course-info">
+					                <tbody>
+					                
+					                </tbody>
+				                </table>
+				
+				              	<h4>[수강생 목록]</h4>
+				
 				                <table class="table table-bordered course-opin">
 					                <thead>
 						                 <tr>
@@ -177,7 +177,7 @@
 							                </td>
 						                </tr>
 						            </tfoot>
-				                </table>
+					        	</table>
 			                </form> 
 		                </div>
 					</div>
@@ -191,7 +191,7 @@
 				
 				$.ajax({
 					type: "GET",
-					url: "gradeinsert",
+					url: "gradeinsertlist",
 					data: {courseNo : cno},
 					dataType:"json",
 					success: function(data){
@@ -215,18 +215,37 @@
 						
 						$.each(students, function(index, student){
 							var row = "<tr>";
-							row += "<td>"+(index+1)+"<input type='hidden' name='"+student.SNO+"'></td>"
-							row += "<td>"+student.NO+"<input type='hidden' name='"+student.NO+"'></td>";
-							row += "<td><a href='#' class='record-modal'>"+student.NAME+"</a><input type='hidden' name='"+student.NAME+"'></td>";
-							row += "<td>"+student.SCORE+"<input type='hidden' name='"+student.SCORE+"'></td>";
-							row += "<td><select class='form-control' name='grade'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option></select></td>";
+							row += "<td>"+(index+1)+"<input type='hidden' name='courseNo' value='"+student.SNO+"' ></td>"
+							row += "<td>"+student.NO+"<input type='hidden' name='studentNo' value='"+student.NO+"'></td>";
+							row += "<td><a href='#' class='record-modal'>"+student.NAME+"</a></td>";
+							row += "<td>"+student.SCORE+"</td>";
+							if(student.RECORD == 'A+'){
+								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+' selected>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
+							}else if(student.RECORD == 'A'){
+								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A' selected>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
+							}else if(student.RECORD == 'B+'){
+								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+' selected>B+</option><option value='B' >B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
+							}else if(student.RECORD == 'B'){
+								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B' selected>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
+							}else if(student.RECORD == 'C+'){
+								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+' selected>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
+							}else if(student.RECORD == 'C'){
+								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C' selected>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
+							}else if(student.RECORD == 'D+'){
+								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+' selected>D+</option><option value='D'>D</option><option value='F'>F</option>";
+							}else if(student.RECORD == 'D'){
+								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D' selected>D</option><option value='F'>F</option>";
+							}else if(student.RECORD == 'F'){
+								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F' selected>F</option>";
+							}else{
+								row += "<td><select class='form-control' name='record'><option selected>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
+							}
 							row += "</tr>"
 							$(".course-opin tbody").append(row);
 						});
 					}
 				})
 					
-				
 		 		$("#opinion").modal('show');
 				return false;
 		 		$(".close-modal").on('hide', function(){
