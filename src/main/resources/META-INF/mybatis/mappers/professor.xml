@@ -67,6 +67,36 @@
 			c.professor_no = f.professor_no
 	</select>
 	
+	<select id="getTermClassByProfId" parameterType="map" resultType="course">
+		select 
+			c.course_no no,
+			c.professor_no "professor.no",
+			f.professor_name "professor.name",
+			c.major_no "major.no",
+			m.major_name "major.name",
+			c.course_name name,
+			c.course_credit credit,
+			c.course_year year,
+			c.course_term term,
+			c.course_must_yn mustYn,
+			c.course_pass_yn passYn,
+			c.course_create_date createDate,
+			c.course_quota quota,
+			c.course_count count
+		from
+			courses c, majors m, professors f
+		where
+			c.professor_no = #{profId}
+		and
+			c.major_no = m.major_no
+		and
+			c.professor_no = f.professor_no
+		and
+			c.course_term = #{term}
+		and
+			c.course_year = #{year}
+	</select>
+	
 	<!-- 교과목 번호로 단원조회 -->
 	<select id="getCoursePartByCourseNo" parameterType="int" resultType="coursePart">
 		select 
@@ -144,7 +174,6 @@
 	<select id="searchByOptions" resultType="course" parameterType="map">
 		select 
 			*
-			
 		from
 			(
 				select
@@ -190,12 +219,14 @@
 					<if test="courseName != null">
 						and c.course_name like '%' || #{courseName} ||'%'
 					</if>
-				</where>	
+				</where>
 			)
 		where
 			rn >= #{beginIndex}
 		and
 			rn &lt;= #{endIndex}
+		order by no desc
+			
 	</select>
 	
 	<!-- 조건별로 갯수조회 -->
@@ -295,4 +326,39 @@
 		delete from courses
 		where course_no = #{value}
 	</delete>
+	
+	<select id="getStudentsByCourseNo" parameterType="int" resultType="map">
+		select
+		     Y.student_name name,
+		    X.student_no no,
+            X.course_no sno,
+		    X.total_score score
+		from
+		    (select
+		         R.student_no student_no,
+                C.course_no course_no,
+		        sum(R.result_score) total_score	
+		    from
+		        courses C, tests T, test_results R
+		    where
+		        C.course_no = T.course_no
+		    and
+		        T.test_no = R.test_no
+		    and
+		        C.course_no = #{value}
+		    group by
+		      	R.student_no, C.course_no
+		    order by
+		        R.student_no asc) X, students Y
+		where
+		    X.student_no = Y.student_no
+	</select>
+	
+	<update id="updateRecordByCourseNoAndStudNo" parameterType="map">
+		update course_attends
+		set course_attend_record = #{record}
+		where student_no = #{studentNo}
+		and course_no = #{courseNo}
+	</update>
+	
 </mapper>
