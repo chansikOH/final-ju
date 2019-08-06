@@ -24,10 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.ac.ju.dao.StudentDao;
 import kr.ac.ju.form.StudentForm;
 import kr.ac.ju.service.HomeService;
 import kr.ac.ju.service.StudentService;
+import kr.ac.ju.service.TestService;
 import kr.ac.ju.utils.DateUtils;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
@@ -51,6 +51,9 @@ public class StudentController {
 
 	@Autowired
 	private HomeService homeService;
+	
+	@Autowired
+	private TestService testService;
 
 	@RequestMapping("/course/apply")
 	public String courseApply(HttpSession session, Model model) {
@@ -220,6 +223,19 @@ public class StudentController {
 		Map<String, Object> sources = studentService.getCoursedetailSource(student.getNo(), courseNo);
 		// 모델에 정보를 담음
 		model.addAttribute("sources", sources);
+		
+		// getTestResultYn을 실행하기 위한 매개변수 map 생성
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("courseNo", courseNo);
+		map.put("studentNo", student.getNo());
+		
+		// 시험 응시 여부 조회
+		Map<String, Object> resultMap = testService.getTestResultYn(map);
+		model.addAttribute("resultMap", resultMap);
+		
+		// 교수가 시험문제를 입력했는지를 조회
+		Map<String, Object> courseMap = testService.getTestsByCourseNo(courseNo);
+		model.addAttribute("courseMap", courseMap);
 
 		// coursedetail 페이지를 반환
 		return "student/course/coursedetail";

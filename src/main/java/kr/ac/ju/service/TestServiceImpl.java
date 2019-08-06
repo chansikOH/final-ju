@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import kr.ac.ju.dao.TestDao;
 import kr.ac.ju.vo.Question;
 import kr.ac.ju.vo.Test;
-import kr.ac.ju.vo.TestResults;
 
 @Repository
 public class TestServiceImpl implements TestService{
@@ -29,16 +28,17 @@ public class TestServiceImpl implements TestService{
 	}
 	
 	@Override
-	public int getTestScore(List<Question> questions, int[] answers) {
+	public int getTestScore(List<Question> questions, Integer[] answers) {
 		int score = 0;
 		
 		for (int i=0; i<questions.size(); i++) {
-			Question question = questions.get(i);
-			int answer = question.getAnswer();
-			int checkAnswer = answers[i];
-			
-			if (answer == checkAnswer) {
-				score ++;
+			if (answers[i] != null) {
+				Question question = questions.get(i);
+				int answer = question.getAnswer();
+				int checkAnswer = answers[i];
+				if (answer == checkAnswer) {
+					score ++;
+				}
 			}
 		}
 		
@@ -46,7 +46,12 @@ public class TestServiceImpl implements TestService{
 	}
 	
 	@Override
-	public List<TestResults> getTestResultsByStudentNo(int studentNo) {
-		return testDao.getTestResultsByStudentNo(studentNo);
+	public Map<String, Object> getTestResultYn(Map<String, Object> map) {
+		return testDao.getTestResultYn(map);
+	}
+	
+	@Override
+	public Map<String, Object> getTestsByCourseNo(int courseNo) {
+		return testDao.getTestsByCourseNo(courseNo);
 	}
 }

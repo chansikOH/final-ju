@@ -30,6 +30,8 @@
 .course-table .table .class-view>th{padding: 15px;}
 .course-table .table .class-view{display: none;}
 .course-part{cursor: pointer;}
+td.disable-links {pointer-events:none;}
+.disable-btn {background-color: #ddd}
 </style>
 </head>
 <body>
@@ -72,12 +74,25 @@
 								<c:when test="${not empty sources.partInfos}">
 									<c:forEach var="partInfo" items="${sources.partInfos }" varStatus="loop">
 										<c:if test="${loop.count eq 8 }">
-											<tr>
-												<td></td>
-												<td colspan="2"><strong>${sources.courseName } 중간고사</strong></td>
-												<td><a href="test?cno=${param.courNo }" class="btn btn-default btn-sm">시험보기</a></td>
-												<td></td>
-											</tr>
+											<c:choose>
+												<c:when test="${resultMap.M eq 0 && courseMap.M eq 1 }">
+													<tr>
+														<td></td>
+														<td colspan="2"><strong>${sources.courseName } 중간고사</strong></td>
+														<td><a target="_blank" rel="noopener noreferrer" href="test?cno=${param.courNo }&term=M" class="btn btn-default btn-sm">시험보기</a></td>
+														<td></td>
+													</tr>
+												</c:when>
+												<c:otherwise>
+													<tr>
+														<td></td>
+														<td colspan="2"><strong>${sources.courseName } 중간고사</strong></td>
+														<td class="disable-links"><a href="test?cno=${param.courNo }&term=M" class="btn btn-default btn-sm disable-btn">시험보기</a></td>
+														<td></td>
+													</tr>
+												</c:otherwise>
+											</c:choose>
+										
 										</c:if>
 										<tr id="course-part-${partInfo.NO }" class="course-part">
 											<td>${partInfo.WEEK }</td>
@@ -97,12 +112,24 @@
 											</c:if>
 										</c:forEach>
 									</c:forEach>
-									<tr>
-										<td></td>
-										<td colspan="2"><strong>${sources.courseName } 기말고사</strong></td>
-										<td><a href="test?cno=${param.courNo }" class="btn btn-default btn-sm">시험보기</a></td>
-										<td></td>
-									</tr>
+									<c:choose>
+										<c:when test="${resultMap.F eq 0 && resultMap.M eq 1 && courseMap.F eq 1 }">
+											<tr>
+												<td></td>
+												<td colspan="2"><strong>${sources.courseName } 기말고사</strong></td>
+												<td><a target="_blank" rel="noopener noreferrer" href="test?cno=${param.courNo }&term=F" class="btn btn-default btn-sm">시험보기</a></td>
+												<td></td>
+											</tr>
+										</c:when>
+										<c:otherwise>
+											<tr>
+												<td></td>
+												<td colspan="2"><strong>${sources.courseName } 기말고사</strong></td>
+												<td class="disable-links"><a href="test?cno=${param.courNo }&term=F" class="btn btn-default btn-sm disable-btn">시험보기</a></td>
+												<td></td>
+											</tr>
+										</c:otherwise>
+									</c:choose>
 								</c:when>
 								<c:otherwise>
 									<tr class="text-center">
