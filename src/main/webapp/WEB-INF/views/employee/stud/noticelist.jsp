@@ -133,7 +133,7 @@
 						})
 					} else {
 						var row = "<tr>";
-	                    row += "<td colspan='12' class='text-center'>공지사항이 없습니다.</td>";
+	                    row += "<td colspan='12' class='text-center'> 조건에 해당하는 공지사항이 없습니다.</td>";
 	                    row += "</tr>";
 	                    $(".table-striped tbody").append(row); 
 					}
@@ -160,7 +160,7 @@
 	 				if (!last) {
 	 					row += "<li><a href='' data-pno='"+(pagination.page +1 )+"'><span class='glyphicon glyphicon-menu-right'></span></li>";
 	 				}
-	 				$("#pagination-box").html(row);				
+	 				$("#pagination-box").html(row);		
 	 				
 					/*갯수 변경*/
 		            $("#search-result-count").text(count); 
@@ -169,9 +169,12 @@
 		}
 		
 		$("[name=option]").on("click", function(){
+			$("[name=search]").val(''); 
 			var opt = $(this).val();
 			if (opt == "createDate"){
-				$("[name=search]").attr("type",'date')
+				$("[name=search]").attr("type",'date');
+			} else {
+				$("[name=search]").attr("type",'text');
 			}
 		})
 		

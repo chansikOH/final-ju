@@ -25,5 +25,5 @@ public interface EmployeeDao {
 	Student getStudentByNo(int studentNo); 
 	void updateStudentStatusByNo(Student student); 
 	List<Notice> getAllNotices(Map<String, Object> searchOption); 
-	int getAllNoticesCount(); 
+	int getAllNoticesCount(Map<String, Object> searchOption); 
 }

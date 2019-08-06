@@ -153,9 +153,20 @@
 			(#{no}, #{major.no}, #{name}, #{birth}, #{birth}, #{gender}, #{email} , #{phoneNumber}, #{address}, #{grade} , #{photoName} )
 	</insert> 
 	
-	<select id="getAllNoticesCount" resultType="int">
+	<select id="getAllNoticesCount" parameterType="map" resultType="int">
 		select count(*)
 		from notices 
+		<where>
+			<if test="no != null">
+				notice_no  = #{no} 
+			</if>
+			<if test="title != null">
+				notice_title like '%' || #{title} || '%'
+			</if>
+			<if test="createDate != null">
+				to_char(notice_create_date, 'yyyy-mm-dd') = #{createDate}
+			</if>
+		</where>
 	</select>
 	
 	<select id="getAllNotices" parameterType="map" resultType="notice">
@@ -176,10 +187,10 @@
 					notice_no  = #{no}
 				</if>
 				<if test="title != null">
-					notice_title = #{title}
+					notice_title like '%' || #{title} || '%'
 				</if>
 				<if test="createDate != null">
-					notice_create_date = #{createDate}
+					to_char(notice_create_date, 'yyyy-mm-dd') = #{createDate}
 				</if>
 			</where>)
 		where 

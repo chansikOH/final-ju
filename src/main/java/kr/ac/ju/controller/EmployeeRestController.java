@@ -132,7 +132,7 @@ public class EmployeeRestController {
 		int size = 10;				 					
 		int beginIndex  = (pageNo - 1)*size + 1 ;		
 		int endIndex   = pageNo*size ; 	
-		int count = employeeService.getAllNoticesCount();
+		int count = employeeService.getAllNoticesCount(searchOption); 
 		
 		searchOption.put("size", size); 
 		searchOption.put("beginIndex", beginIndex); 
