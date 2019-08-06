@@ -8,9 +8,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.ac.ju.service.StudentService;
@@ -58,4 +58,24 @@ public class StudentRestController {
 
 		return results;
 	}
+	
+//	@GetMapping("/notice/noticelist.json")
+//	@ResponseBody
+//	public Map<String, Object> noticelist(@RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
+//											@RequestParam(value = "option", required = false, defaultValue = "") String option,
+//											@RequestParam(value = "search", required = false, defaultValue = "") String search) {
+//		Map<String, Object> searchOption = new HashMap<>();
+//		
+//		if(!option.isEmpty() && !option.equals("")) {
+//			if(option.equals("noticeNo")) {
+//				searchOption.put("no",search); 
+//			} else if (option.equals("title")) {
+//				searchOption.put("title",search); 
+//			} else if (option.equals("createDate")) {
+//				searchOption.put("createDate",search); 
+//			}
+//		}
+//		
+//		return null;
+//	}
 }

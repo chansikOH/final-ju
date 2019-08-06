@@ -364,6 +364,7 @@ public class StudentController {
 	public String studentNoticeList(Model model) {
 		List<Notice> notices = studentService.getAllNotices();
 		model.addAttribute("notices", notices);
+		model.addAttribute("count", notices.size());
 		
 		return "student/notice/noticelist";
 	}
