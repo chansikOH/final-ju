@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
 <mapper namespace="kr.ac.ju.dao.DocDao">
 
 	<!-- 직원 로그인 기안서, 휴가계획서, 퇴직서 정보 조회  -->
@@ -245,11 +245,11 @@
 	<insert id="insertVacation" parameterType="vacation">
 	insert into vacations
 		(vacation_no,
-		 vacation_div
+		 vacation_div,
 		vacation_contents, 
 		vacation_start_date, 
 		vacation_end_date, 
-		docs_nos)
+		docs_no)
 	values
 		(doc_detail_seq.nextval,
 		#{div}, 
@@ -280,30 +280,35 @@
 	</select>
 	
 	<!-- 직원 기안서 수정 -->
-	<!-- <update id="" parameterType="">
+	<update id="updateDraft" parameterType="draft">
 		update drafts
-		set 
-			return_reason = #{returnReason}
+		set
+			draft_title = #{title},
+			draft_contents = #{contents},
 		where 
-			draft_no = #{no}
+			docs_no = #{value}
 			
 	</update>
-	직원 휴가서 수정
-	<update id="">
-		update vacation 
+	
+	<!-- 직원 휴가서 수정 -->
+	<update id="updateVacation" parameterType="vacation">
+		update vacations 
 		set
-			return_reason = #{returnReason}
+			vacation_contents = #{contents}
+			vacation_start_date = #{startDate}
+			vacation_end_date = #{endDate}
 		where
-			docs_no = #{no}
+			docs_no = #{value}
 	</update>
 	
-	직원 퇴직서 수정
-	<update id="">
+	<!-- 직원 퇴직서 수정 -->
+	<update id="updateRetire" parameterType="retire">
 		update retires
 		set
-			return_reson = #{returnReason}
+			retire_contents
+			retire_date
 		where
-			docs_no = #{no}
-	</update> -->
+			docs_no = #{value}
+	</update>
 	
 </mapper>

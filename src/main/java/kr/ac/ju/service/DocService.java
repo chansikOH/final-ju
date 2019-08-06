@@ -14,11 +14,17 @@ public interface DocService {
 	List<Map<String, Object>> getDocEmployeeByNo(int employeeNo);
 
 	void addDraft(Doc doc, Draft draft, List<Integer> nos, DocFile docfile);
-	void addRetire(Doc doc, Retire retire, List<Integer> nons , DocFile docfile );
+	void addRetire(Doc doc, Draft draft, Retire retire, List<Integer> nons , DocFile docfile );
+	void addVacation(Doc doc, Vacation vacation, List<Integer> non, DocFile docfile);
+	
+	void updateDraft(Draft draft);
+	void updateVacation(Vacation vacation);
+	void updateRetire(Retire retire);
 	
 	Draft getDraftByNo(int draftNo);
 	Retire getRetireByNo(int retireNo);
 	Vacation getVacationByNo(int vacationNo);
 	
 	List<Employee> getAllEmployees();
+
 }

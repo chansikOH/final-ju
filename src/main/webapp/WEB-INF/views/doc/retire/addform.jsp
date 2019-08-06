@@ -29,36 +29,36 @@
 		<div class="col-sm-10">
 			<h2 class="text-center">퇴직서 양식 등록</h2>
 		    <div class="well">
-		    	<form action="">
+		    	<form:form method="post" action="insertRetire" modelAttribute="RetireForm" enctype="multipart/form-data">
 		    		<div class="form-group">
 		    			<label>중간결재자</label>
-		    			<select class="form-control" name="middlePersonNo">
-		    			<c:forEach var="" items="">
-		    				<option value=""></option>
-		    			</c:forEach>
-		    			</select>
+						<select class="form-control" name="middlePersonNo">
+						<c:forEach var="emp" items="${employees }">
+                            <option value="${emp.no }"> ${emp.name } ${emp.position.name }</option>
+						</c:forEach> 
+                        </select>
 		    			<br/>
 		    			<label>최종결재자</label>
 		    			<select class="form-control" name="finalPersonNo"> 
-		    			<c:forEach var="" items="">
-		    				<option value=""></option>
+		    			<c:forEach var="emp" items="${employees }">
+                            <option value="${emp.no }"> ${emp.name } ${emp.position.name }</option>
 		    			</c:forEach>
                         </select>
 		    			<br/>
 		    			<label>구분</label>
-		    			<select class="form-control" name="">
-	                        <option value=""> 명예퇴직</option>
-	                        <option value=""> 불명예퇴직</option>
+		    			<select class="form-control" name="div">
+	                        <option value="1"> 명예퇴직</option>
+	                        <option value="2"> 불명예퇴직</option>
 	                    </select>
 		    			<br/>
 		    			<label>퇴직예정날짜</label>
-		    			<input type="date" class="form-control" name="">
+		    			<input type="date" class="form-control" name="retireDate">
 		    			<br/>
 		    			<label>내용</label>
-		    			<textarea type="text" rows="15" class="form-control" name=""></textarea>
+		    			<textarea rows="15" class="form-control" name="contents"></textarea>
 		    			<br/>
 			    		<label>파일</label>
-			    		<input type="file" name="">
+			    		<input type="file" name="upfile">
 			    		<br/>
 		    		</div>
 		    		<br/>
@@ -66,7 +66,7 @@
 			             <input type="button" class="btn btn-default" value="뒤로가기" onclick="history.back(-1);">
 			             <button type="submit" class="btn btn-info" value="제출">제출</button>
 		    		</div>
-		    	</form>
+		    	</form:form>
 		    </div>
 		</div>
 	</div>

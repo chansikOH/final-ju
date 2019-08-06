@@ -21,6 +21,11 @@ public interface DocDao {
 	void insertDocLine(DocLine docLine);
 	void insertDocfile(DocFile docFile);
 	void insertRetire(Retire retire);
+	void insertVacation(Vacation vacation);
+	
+	void updateDraft(Draft draft);
+	void updateVacation(Vacation vacation);
+	void updateRetire(Retire retire);
 	
 	Draft getDraftByNo(int draftNo);
 	Retire getRetireByNo(int retireNo);
@@ -29,5 +34,4 @@ public interface DocDao {
 	int getDocSeq();
 	List<Employee> getAllEmployees();
 	
-
 }

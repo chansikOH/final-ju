@@ -65,7 +65,7 @@ public class DocServiceImpl implements DocService {
 	}
 
 		@Override
-		public void addRetire(Doc doc, Retire retire, List<Integer> nons, DocFile docfile) {
+		public void addRetire(Doc doc, Draft draft, Retire retire, List<Integer> nons, DocFile docfile) {
 			int seq = docDao.getDocSeq();
 			doc.setNo(String.valueOf(seq));
 			docDao.insertDoc(doc);
@@ -95,6 +95,34 @@ public class DocServiceImpl implements DocService {
 		}
 
 		@Override
+		public void addVacation(Doc doc, Vacation vacation, List<Integer> non, DocFile docfile) {
+			int seq = docDao.getDocSeq();
+			doc.setNo(String.valueOf(seq));
+			docDao.insertDoc(doc);
+			Doc c = docDao.getdocs(seq);
+			
+			vacation.setDoc(c);
+			docDao.insertVacation(vacation);
+			for(Integer no : non) {
+				
+				Person person = new Person();
+				DocLine docLine = new DocLine();
+				
+				docLine.setDoc(c);
+				person.setNo(no);
+				docLine.setPerson(person);
+
+				docDao.insertDocLine(docLine);
+			}
+			
+			if(docfile != null) {
+				
+				docfile.setDoc(c);
+				docDao.insertDocfile(docfile);
+			}
+		}
+		
+		@Override
 		public Draft getDraftByNo(int draftNo) {
 			
 			return docDao.getDraftByNo(draftNo);
@@ -111,6 +139,22 @@ public class DocServiceImpl implements DocService {
 			
 			return docDao.getVacationByNo(vacationNo);
 		}
+
+		@Override
+		public void updateDraft(Draft draft) {
+			docDao.updateDraft(draft);
+		}
+
+		@Override
+		public void updateVacation(Vacation vacation) {
+			docDao.updateVacation(vacation);
+		}
+
+		@Override
+		public void updateRetire(Retire retire) {
+			docDao.updateRetire(retire);
+		}
+
 
 		
 }
