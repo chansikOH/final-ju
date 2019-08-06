@@ -25,7 +25,7 @@
 		background-color: #E3DCCC;
 	}
 	
-	 .modal-body {
+	 .modal-message-body {
         height: 440px;
     }
     
@@ -114,7 +114,7 @@
 					<tbody>
 						<tr>
 							<td class="bg-color-gray">학번</td>
-							<td>${LOGIN_STUDENT.no }</td>
+							<td class="sidebar-message-no">${LOGIN_STUDENT.no }</td>
 						</tr>
 						<tr>
 							<td class="bg-color-gray">학과</td>
@@ -180,7 +180,7 @@
 					<tbody>
 						<tr>
 							<td class="bg-color-gray">사원번호</td>
-							<td>${LOGIN_PROFESSOR.no }</td>
+							<td class="sidebar-message-no">${LOGIN_PROFESSOR.no }</td>
 						</tr>
 						<tr>
 							<td class="bg-color-gray">부서</td>
@@ -235,7 +235,7 @@
 					<tbody>
 						<tr>
 							<td class="bg-color-gray">사원번호</td>
-							<td>${LOGIN_EMPLOYEE.no }</td>
+							<td class="sidebar-message-no">${LOGIN_EMPLOYEE.no }</td>
 						</tr>
 						<tr>
 							<td class="bg-color-gray">부서</td>
@@ -270,14 +270,14 @@
 	<div class="modal fade" id="note-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullsize">
             <div class="modal-content modal-fullsize">
-                <div class="modal-body">
+                <div class="modal-body modal-message-body">
                     <button type="button" class="close" data-dismiss="modal" aria-l abel="Close"><span aria-hidden="true">&times;</span></button>
                     <div role="tabpanel">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#send-note" aria-controls="send-note" role="tab" data-toggle="tab">쪽지보내기</a></li>
                             <li role="presentation"><a href="#received-note" aria-controls="received-note" role="tab" data-toggle="tab">받은 쪽지</a></li>
-                            <li role="presentation"><a href="#sent-note" aria-controls="received-note" role="tab" data-toggle="tab">보낸 쪽지</a></li>
+                            <li role="presentation"><a href="#sent-note" aria-controls="sent-note" role="tab" data-toggle="tab">보낸 쪽지</a></li>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content">
@@ -336,12 +336,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="new">
-                                                <td><input type="checkbox" /></td>
-                                                <td>홍길동</td>
-                                                <td><span class="text-line"><a href="#note-detail" aria-controls="note-detail" role="tab" data-toggle="tab">비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요</a></span></td>
-                                                <td>2019-09-05</td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -358,8 +352,8 @@
                                         <colgroup>
                                             <col width="10%" />
                                             <col width="20%" />
-                                            <col width="50%" />
-                                            <col width="20%" />
+                                            <col width="45%" />
+                                            <col width="25%" />
                                         </colgroup>
                                         <thead>
                                             <tr>
@@ -370,12 +364,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td><input type="checkbox" /></td>
-                                                <td>홍길동</td>
-                                                <td><span class="text-line"><a href="#note-detail" aria-controls="note-detail" role="tab" data-toggle="tab">비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요비가오넫요</a></span></td>
-                                                <td>2019-09-05</td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -389,18 +377,6 @@
                                             <col width="80%" />
                                         </colgroup>
                                         <tbody>
-                                            <tr>
-                                                <td>받는/보낸 사람</td>
-                                                <td><input type="text" class="form-control" value="홍길동" disabled></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2"><textarea class="form-control"></textarea></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2"><a href="#send-note" aria-controls="send-note" role="tab" data-toggle="tab" class="btn btn-default">답장</a>
-                                                    <a href="#sent-note" aria-controls="sent-note" role="tab" data-toggle="tab" class="btn btn-default">목록</a>
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button></td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </form>
@@ -413,6 +389,78 @@
     </div>
     
     <script type="text/javascript">
+    	$(function() {
+        	var no = $(".sidebar-message-no").text();
+        		
+       		$.ajax({
+       			type:"POST",
+       			url:"/ju/message",
+       			data: {no:no},
+       			dataType:"json",
+       			success: function(map) {
+       				var receive = map.receiveMessage;
+       				var call = map.callMessage;
+       				
+       				$("#sent-note tbody").empty();
+       				$("#received-note tbody").empty();
+       					
+       				if(receive != null) {
+   	    				$.each(map.receiveMessage, function(index, m) {
+           					var d = new Date(m.createDate);
+           					var month = d.getMonth() + 1;
+           					var day = d.getDate();
+           					var year = d.getFullYear();
+           					var date = year + '-' + month + '-' + day;
+   	    					
+   	    					var row = "<tr>";
+   	    					row += "<td><input type='checkbox'></td>";
+   	    					row += "<td>"+m.receiver.name+"</td>";
+   	    					row += "<td><span class='text-line'><a href='#note-detail' aria-controls='note-detail' role='tab' data-toggle='tab' data-no='"+m.no+"'>"+m.contents+"</a></span></td>";
+   	    					row += "<td>"+date+"</td>";
+   	    					row += "</tr>";
+   	    					
+   	    					$("#sent-note tbody").append(row);
+   	    				})
+       				} else {
+       					var row = "<tr>";
+       					row += "<td colspan='4'>보낸 쪽지가 없습니다.</td>";
+       					row += "</tr>";
+       					
+       					$("#sent-note tbody").append(row);
+       				}
+       				
+       				if(call.length != 0) {
+       					$.each(map.callMessage, function(index, m) {
+           					var d = new Date(m.createDate);
+           					var month = d.getMonth() + 1;
+           					var day = d.getDate();
+           					var year = d.getFullYear();
+           					var h = d.getHours();
+           					
+           					var date = year + '.' + month + '.' + day;
+           					
+           					console.log(h);
+       						var row = "<tr>";
+       						row += "<td><input type='checkbox'></td>";
+       						row += "<td>"+m.caller.name+"</td>";
+       						row += "<td><span class='text-line'><a href='#note-detail' aria-controls='note-detail' role='tab' data-toggle='tab' data-no='"+m.no+"'>"+m.contents+"</a></span></td>";
+       						row += "<td>"+date+"</td>";
+       						row += "</tr>";
+       						
+       						$("#received-note tbody").append(row);
+       					})
+       				} else if(call.length == 0) {
+       					var row = "<tr>";
+       					row += "<td colspan='4'>받은 쪽지가 없습니다.</td>";
+       					row += "</tr>";
+       					
+       					$("#received-note tbody").append(row);
+       				}
+       				
+       			}
+       		})
+        })
+    
     	$("#sendMessage").click(function() {
     		
     		var receiver = $("[name=receiver]").val();
@@ -424,10 +472,12 @@
     			data: {receiver:receiver, contents:contents},
     			dataType: "json",
     			success: function(data) {
-    				$("#send-note tbody").empty();
+    				$("#send-note tbody input").val("");
+    				$("#send-note tbody textarea").val("");
+    				
     			},
     			error: function(request, error){
-    				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n");
+    				alert("쪽지 보내기를 실패하였습니다.");
     			}
     		});
     	})

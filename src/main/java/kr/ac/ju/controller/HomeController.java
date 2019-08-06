@@ -1,22 +1,26 @@
 package kr.ac.ju.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.codec.digest.MessageDigestAlgorithms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.ac.ju.service.EmployeeService;
 import kr.ac.ju.service.HomeService;
-import kr.ac.ju.service.ProfessorService;
-import kr.ac.ju.service.StudentService;
+import kr.ac.ju.vo.Employee;
 import kr.ac.ju.vo.Message;
 import kr.ac.ju.vo.Person;
+import kr.ac.ju.vo.Professor;
 import kr.ac.ju.vo.Student;
 
 @Controller
@@ -70,23 +74,56 @@ public class HomeController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping(value="/message", method=RequestMethod.POST)
+	public @ResponseBody Map<String, Object> message(Model model, int no) {
+		
+
+		List<Message> receiveMessage = homeService.getReceiveMessageByNo(no);
+		List<Message> callMessage = homeService.getCallMessageByNo(no);
+				
+		for(Message m : receiveMessage) {
+			Person receiverPerson = homeService.getPersonByNo(no);
+			
+			m.setReceiver(receiverPerson);
+		}
+		
+		for(Message m : callMessage) {
+			Person callerPerson = homeService.getPersonByNo(no);
+			m.setCaller(callerPerson);
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("receiveMessage", receiveMessage);
+		map.put("callMessage", callMessage);
+				
+		return map;
+	}
+		
 	@RequestMapping(value="/sendmessage")
-	public @ResponseBody Message sendMessage(HttpSession session, 
+	public @ResponseBody Map<String, Object> sendMessage(HttpSession session, 
 											@RequestParam("receiver") int receiver,
 											@RequestParam("contents") String contents) {
+		
 		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
-
-		Message message = new Message();
-		message.setContents(contents);
-		message.setCaller(student);
+		Employee employee = (Employee) session.getAttribute("LOGIN_EMPLOYEE");
+		Professor professor = (Professor) session.getAttribute("LOGIN_PROFESSOR");
 		
-		Person person = homeService.getPersonByNo(receiver);
-		if(person != null) {
-			message.setReceiver(person);
+		int caller = 0;
+		if(student.getNo() != null) {
+			caller = student.getNo();
+		} else if (employee.getNo() != null) {
+			caller = employee.getNo();
+		} else if (professor.getNo() != null) {
+			caller = professor.getNo();
 		}
-				
-		homeService.insertMessage(message);
 		
-		return message;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("contents", contents);
+		map.put("receiver", receiver);
+		map.put("caller", caller);
+		
+		homeService.insertMessage(map);
+		
+		return map;
 	}
 }

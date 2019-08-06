@@ -1,5 +1,8 @@
 package kr.ac.ju.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,12 +54,17 @@ public class HomeServiceImpl implements HomeService{
 	}
 	
 	@Override
-	public void insertMessage(Message message) {
-		studentDao.insertMessage(message);
+	public void insertMessage(Map<String, Object> map) {
+		studentDao.insertMessage(map);
 	}
 	
 	@Override
-	public Message getReceiveMessageByNo(int messageNo) {
-		return studentDao.getReceiveMessageByNo(messageNo);
+	public List<Message> getReceiveMessageByNo(int receiver) {
+		return studentDao.getReceiveMessageByNo(receiver);
+	}
+	
+	@Override
+	public List<Message> getCallMessageByNo(int caller) {
+		return studentDao.getCallMessageByNo(caller);
 	}
 }

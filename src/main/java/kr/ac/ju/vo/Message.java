@@ -10,6 +10,7 @@ public class Message {
 	private Person caller;
 	private Message reply;
 	private Date createDate;
+	private String readYn;
 
 	public Message() {
 
@@ -61,5 +62,13 @@ public class Message {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public String getReadYn() {
+		return readYn;
+	}
+
+	public void setReadYn(String readYn) {
+		this.readYn = readYn;
 	}
 }
