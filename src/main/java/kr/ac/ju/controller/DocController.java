@@ -109,12 +109,12 @@ public class DocController {
 		
 		return "redirect:../list";
 	}
-	
+	// 기안서 디테일
 	@RequestMapping("/draft/detail")
-	public String draftform(HttpSession session, Model model, @RequestParam("draftNo") int draftNo) {
-		Employee person = (Employee) session.getAttribute("LOGIN_EMPLOYEE");
+	public String draftform(Model model, int draftNo) {
+		Draft draft = docService.getDraftByNo(draftNo);
+		model.addAttribute("draft", draftNo);
 		
-		model.addAttribute("drafts", docService.getDraftByNo(draftNo));
 		return "doc/draft/detail";
 	}
 	
@@ -175,9 +175,13 @@ public class DocController {
 		return "redirect:../list";
 	}
 	
+	// 퇴직서 디테일
 	@RequestMapping("/retire/detail")
-	public String retireDetail() {
-		return "";
+	public String retireDetail(Model model, Integer retireNo) {
+		Retire retire= docService.getRetireByNo(retireNo);
+		model.addAttribute("retire", retire);
+		
+		return "doc/retire/detail";
 	}
 	
 	@RequestMapping("/retire/update")
@@ -244,9 +248,11 @@ public class DocController {
 	}
 	
 	@RequestMapping("/vacation/detail")
-	public String vacationDetail(Model model, int vacationNo) {
-		model.addAttribute("", docService.getVacationByNo(vacationNo));
-		return "doc/vacation/detail";
+	public String vacationDetail(Model model, Integer vacationNo) {
+		Vacation vacation = docService.getVacationByNo(vacationNo);
+		model.addAttribute("vacation", vacation);
+		
+		return "doc/retire/detail";
 	}
 	
 	@RequestMapping("/vacation/update")
