@@ -10,6 +10,7 @@
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  	<script src="https://www.gstatic.com/charts/loader.js"></script>
   	
   	<style>
         .wrapper {
@@ -84,6 +85,7 @@
 		.grade-tab li{width:50%; float: left; text-align: center; line-height: 30px; cursor: pointer; background: #eee;}
 		.grade-tab li.active {background: #fff; font-weight: bold;}
 		.grade-detail {display: none;}
+		.graph{margin-top: 40px;}
     </style>
   	
 </head>
@@ -179,7 +181,7 @@
 	                					<td>${grade.NO }</td>
 	                					<td>${grade.NAME }</td>
 	                					<td>${grade.SCORE }</td>
-	                					<td class="record">${grade.RECORD }</td>
+	                					<td class="record" data-value="${grade.RECORD }">${grade.RECORD }</td>
 	                				</tr>
                 				</c:forEach>
                 			</tbody>
@@ -194,23 +196,48 @@
                 			</thead>
                 			<tbody>
                 				<tr>
-                					<th>성적</th><td>A+</td><td>A</td><td>B+</td><td>B</td><td>C+</td><td>C</td><td>D+</td><td>D</td><td>F</td>
-                				</tr>
+									<th>성적</th>
+									<td>A+</td>
+									<td>A</td>
+									<td>B+</td>
+									<td>B</td>
+									<td>C+</td>
+									<td>C</td>
+									<td>D+</td>
+									<td>D</td>
+									<td>F</td>
+								</tr>
+                				<tr class="students">
+									<th>학생수</th>
+									<td class="aplus"></td>
+									<td class="a"></td>
+									<td class="bplus"></td>
+									<td class="b"></td>
+									<td class="cplus"></td>
+									<td class="c"></td>
+									<td class="dplus"></td>
+									<td class="d"></td>
+									<td class="f"></td>
+								</tr>
                 				<tr>
-                					<th>학생수</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                				</tr>
-                				<tr>
-                					<th>비율</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                				</tr>
+									<th>비율</th>
+									<td class="aplus-avg"></td>
+									<td class="a-avg"></td>
+									<td class="bplus-avg"></td>
+									<td class="b-avg"></td>
+									<td class="cplus-avg"></td>
+									<td class="c-avg"></td>
+									<td class="dplus-avg"></td>
+									<td class="d-avg"></td>
+									<td class="f-avg"></td>
+								</tr>
                 			</tbody>
                 		</table>
-                		<table class="table">
-                			<tbody>
-                				<tr>
-                					<th>b</th>
-                				</tr>
-                			</tbody>
-                		</table>
+                		<div class="graph">
+	                		<h4>[성적 그래프]</h4>
+	                		<div id="chart_div">
+	                		</div>
+                		</div>
                 	</div>
                 </div>
                
@@ -218,17 +245,132 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+		var count = {
+				Aplus : 0,
+				A : 0,
+				Bplus : 0,
+				B : 0,
+				Cplus : 0,
+				C : 0,
+				Dplus : 0,
+				D : 0,
+				F : 0
+		}
 		$(".detail-list").show();
 		$(".grade-tab").on("click","li", function(){
+			count.Aplus = 0;
+			count.A= 0;
+			count.Bplus = 0;
+			count.B= 0;
+			count.Cplus = 0;
+			count.C= 0;
+			count.Dplus = 0;
+			count.D = 0;
+			count.F = 0;
+			
 			$(this).addClass("active").siblings().removeClass('active');
 			var id = $(this).attr("id");
 			$('.detail-'+id).show().siblings().hide();
 			
-			var a = $(".record").text();
-			var b = (a.match(/C/g) || []).length;
+			$('.record').each(function(index,value){
+				var result = $(this).attr('data-value');
+				console.log(result);
+				
+				if(result == 'A+'){
+					count.Aplus++;
+				}else if(result == 'A'){
+					count.A++;
+				}else if(result == 'B+'){
+					count.Bplus++;
+				}else if(result == 'B'){
+					count.B++;
+				}else if(result == 'C+'){
+					count.Cplus++;
+				}else if(result == 'C'){
+					count.C++;
+				}else if(result == 'D+'){
+					count.Dplus++;
+				}else if(result == 'D'){
+					count.D++;
+				}else if(result == 'F'){
+					count.F++;
+				}
+			})
+			var plus = count.Aplus + count.A + count.Bplus + count.B + count.Cplus + count.C + count.Dplus + count.D + count.F;
+			var percent = 100/plus;
 			
-			alert(b);
+			var Aplusavg = percent * count.Aplus;
+			var Aavg = percent * count.A;
+			var Bplusavg = percent * count.Bplus;
+			var Bavg = percent * count.B;
+			var Cplusavg = percent * count.Cplus;
+			var Cavg = percent * count.C;
+			var Dplusavg = percent * count.Dplus;
+			var Davg = percent * count.D;
+			var Favg = percent * count.F;
+			
+			$(".aplus").text(count.Aplus);
+			$(".a").text(count.A);
+			$(".bplus").text(count.Bplus);
+			$(".b").text(count.B);
+			$(".cplus").text(count.Cplus);
+			$(".c").text(count.C);
+			$(".dplus").text(count.Dplus);
+			$(".d").text(count.D);
+			$(".f").text(count.F);
+			
+			$(".aplus-avg").text(Aplusavg);
+			$(".a-avg").text(Aavg);
+			$(".bplus-avg").text(Bplusavg);
+			$(".b-avg").text(Bavg);
+			$(".cplus-avg").text(Cplusavg);
+			$(".c-avg").text(Cavg);
+			$(".dplus-avg").text(Dplusavg);
+			$(".d-avg").text(Davg);
+			$(".f-avg").text(Favg); 
+			
+			google.charts.load('current', {packages:['corechart']});
+			
+			// 로딩 완료시 함수 실행하여 차트 생성
+			google.charts.setOnLoadCallback(drawChart);
+
+			function drawChart() {
+
+				// 차트 데이터 설정
+				var data = google.visualization.arrayToDataTable([
+					
+					['항목', '인원', {role:'style'}], // 항목 정의
+					['A+', count.Aplus, '#c4954e'], // 항목, 값 (값은 숫자로 입력하면 그래프로 생성됨)
+					['A', count.A, '#c99e5d'],
+					['B+', count.Bplus,'#cea76c'],
+					['B', count.B,'#d3af7a'],
+					['C+', count.Cplus,'#ddc198'],
+					['C', count.C,'#e1caa6'],
+					['D+', count.Dplus,'#e6d3b5'],
+					['D', count.D,'#f0e4d3'],
+					['F', count.F,'#f5ede1'],
+				]);
+
+				// 그래프 옵션
+				var options = {
+					width : 1550, // 가로 px
+					height : 400, // 세로 px
+					bar : {
+						groupWidth : '25%' // 그래프 너비 설정 %
+					},
+					legend : {
+						position : 'none' // 항목 표시 여부 (현재 설정은 안함)
+					},
+				};
+
+				var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+				chart.draw(data, options);
+			}
 		})
+		
+		
+		
+		
 	</script>
 </body>
 </html>
