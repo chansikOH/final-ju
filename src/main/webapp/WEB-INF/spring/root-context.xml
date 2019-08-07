@@ -40,6 +40,9 @@
 	<bean id="courseApplicantWebSocketHandler"
 		class="kr.ac.ju.websockethandler.CourseApplicantWebSocketHandler"></bean>
 		
+	<bean id="coursePlanPdfView"
+		class="kr.ac.ju.view.CoursePlanPdfView"></bean>
+		
 	<websocket:handlers>
 		<websocket:mapping handler="courseApplicantWebSocketHandler" path="/applicant.do"/>
 	</websocket:handlers>

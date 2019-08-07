@@ -415,11 +415,15 @@
    	    					var row = "<tr>";
    	    					row += "<td><input type='checkbox'></td>";
    	    					row += "<td>"+m.receiver.name+"</td>";
-   	    					row += "<td><span class='text-line'><a href='#note-detail' aria-controls='note-detail' role='tab' data-toggle='tab' data-no='"+m.no+"'>"+m.contents+"</a></span></td>";
+   	    					row += "<td><span class='text-line'><a href='javascript:void()' onclick='detail()'>"+m.contents+"</a></span></td>";
    	    					row += "<td>"+date+"</td>";
    	    					row += "</tr>";
    	    					
    	    					$("#sent-note tbody").append(row);
+   	    					
+   	    					function detail() {
+   	    						$("#sent-note table").empty();
+   	    					}
    	    				})
        				} else {
        					var row = "<tr>";
@@ -447,7 +451,7 @@
        						row += "<td>"+date+"</td>";
        						row += "</tr>";
        						
-       						$("#received-note tbody").append(row);
+       						$("#received-note tbody").append(row);     						
        					})
        				} else if(call.length == 0) {
        					var row = "<tr>";
@@ -456,7 +460,6 @@
        					
        					$("#received-note tbody").append(row);
        				}
-       				
        			}
        		})
         })
