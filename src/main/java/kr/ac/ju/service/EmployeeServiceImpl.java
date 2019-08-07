@@ -10,6 +10,7 @@ import kr.ac.ju.dao.EmployeeDao;
 import kr.ac.ju.vo.Major;
 import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Student;
+import kr.ac.ju.vo.StudentStatus;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -83,6 +84,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public int getStudentStatusCount(Map<String, Object> searchOption) {
 		return employeedao.getStudentStatusCount(searchOption); 
+	}
+	
+	@Override
+	public String getStatusChangeReaseon(int statusNo) {
+		return employeedao.getStatusChangeReaseon(statusNo); 
+	}
+	
+	@Override
+	public void chanageStudentStatusPassyn(int statusNo) {
+		employeedao.chanageStudentStatusPassyn(statusNo);
+	}
+	
+	@Override
+	public List<StudentStatus> getstatuschangenotice(int studentNo) {
+		return employeedao.getstatuschangenotice(studentNo); 
 	}
 	
 }

@@ -253,20 +253,22 @@
 			major_no					as "major.no",
 			professor_no				as "professor.no",
 			student_name				as name,
-			student_create_date			as "studentStatus.createDate",
 			student_div					as division,
 			major_name					as "major.name",
-			start_term  				as startTerm,
-			term_count					as termCount,
+			status_no					as "studentStatus.no", 
+			start_term  				as "studentStatus.startTerm",
+			term_count					as "studentStatus.termCount", 
 			status_div					as "studentStatus.division",
-			pass_yn						as passYn
-		from(	select 
+			pass_yn						as "studentStatus.passYn", 
+			student_create_date			as "studentStatus.createDate"
+		from(		select 
 					A.student_no,
 					A.major_no,
 					A.professor_no,
 					A.student_name,
 					A.student_div,
 					B.major_name,
+					C.status_no, 
 					C.start_term,
 					C.term_count,
 					C.status_div, 
@@ -301,5 +303,30 @@
 			rn >= #{beginIndex}
 			and rn &lt;= #{endIndex}		
 	</select> 
+
+	<select id="getStatusChangeReaseon" parameterType="int" resultType="string"> 
+		select status_contents 
+		from student_status 
+		where status_no = #{statusNo}
+	</select>
+	
+	<select id="chanageStudentStatusPassyn" parameterType="int">
+		update student_status 
+		set pass_yn ='P'
+		where status_no = #{statusNo}
+	</select>
+	
+	<select id="getstatuschangenotice" parameterType="int" resultType="studentStatus">
+		select 
+			status_no			as no,
+			status_div			as division,  
+			start_term			as startTerm,
+			term_count			as termCount,
+			pass_yn				as passYn,
+			student_create_date as createDate
+		from 
+			student_status 
+		where student_no = #{statusNo}
+	</select>
 	
 </mapper>

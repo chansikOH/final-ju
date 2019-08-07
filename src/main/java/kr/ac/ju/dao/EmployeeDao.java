@@ -7,6 +7,7 @@ import kr.ac.ju.vo.Employee;
 import kr.ac.ju.vo.Major;
 import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Student;
+import kr.ac.ju.vo.StudentStatus;
 
 public interface EmployeeDao {
 
@@ -28,4 +29,7 @@ public interface EmployeeDao {
 	int getAllNoticesCount(Map<String, Object> searchOption); 
 	List<Student> getStudentStatus(Map<String, Object> searchOption);
 	int getStudentStatusCount(Map<String, Object> searchOption);
+	String getStatusChangeReaseon(int statusNo); 
+	void chanageStudentStatusPassyn(int statusNo); 
+	List<StudentStatus> getstatuschangenotice(int studentNo); 
 }
