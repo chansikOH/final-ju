@@ -90,7 +90,7 @@
 					</a>
 					<ul class="nav-sub navbar-nav">
 						<li><a href="#" id="menu1">학적관리</a></li>
-						<li><a href="#" id="menu2">강의</a></li>
+						<li><a href="/ju/student/course/courselist" id="menu2">강의</a></li>
 						<li><a href="/ju/student/mypage" id="menu3">개인정보관리</a></li>
 						<li><a href="#" id="menu4">강의평가</a></li>
 						<li><a href="#" id="menu5">등록금</a></li>
@@ -111,10 +111,6 @@
 					</ul>
 				</div>
 				<div id="sub-menu2">
-					<ul>
-						<li><a href="/ju/student/course/courselist">수강교과</a></li>
-						<li><a href="/ju/student/course/testlist">시험보기</a></li>
-					</ul>
 				</div>		
 				<div id="sub-menu3">
 				</div>
