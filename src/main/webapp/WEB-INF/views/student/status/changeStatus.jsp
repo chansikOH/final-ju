@@ -330,7 +330,6 @@
 					return false;
 				}
 			});
-			
 		})
 	</script>
 	

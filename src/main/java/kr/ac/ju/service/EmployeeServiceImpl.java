@@ -66,14 +66,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public int getAllNoticesCount() {
-		return employeedao.getAllNoticesCount(); 
+	public int getAllNoticesCount(Map<String, Object> searchOption) {
+		return employeedao.getAllNoticesCount(searchOption); 
 	}
 	
 	@Override
 	public void addNotice(Notice notice) {
 		employeedao.addNotice(notice); 
-		
+	}
+	
+	@Override
+	public List<Student> getStudentStatus(Map<String, Object> searchOption) {
+		return employeedao.getStudentStatus(searchOption);
+	}
+	
+	@Override
+	public int getStudentStatusCount(Map<String, Object> searchOption) {
+		return employeedao.getStudentStatusCount(searchOption); 
 	}
 	
 }

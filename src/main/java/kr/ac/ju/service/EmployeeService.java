@@ -22,5 +22,7 @@ public interface EmployeeService {
 	Student getStudentByNo(int studentNo); 
 	void updateStudentStatusByNo(Student student); 
 	List<Notice> getAllNotices(Map<String, Object> searchOption); 
-	int getAllNoticesCount(); 
+	int getAllNoticesCount(Map<String, Object> searchOption); 
+	List<Student> getStudentStatus(Map<String, Object> searchOption);
+	int getStudentStatusCount(Map<String, Object> searchOption);
 }

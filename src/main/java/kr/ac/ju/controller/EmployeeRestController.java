@@ -132,7 +132,7 @@ public class EmployeeRestController {
 		int size = 10;				 					
 		int beginIndex  = (pageNo - 1)*size + 1 ;		
 		int endIndex   = pageNo*size ; 	
-		int count = employeeService.getAllNoticesCount();
+		int count = employeeService.getAllNoticesCount(searchOption); 
 		
 		searchOption.put("size", size); 
 		searchOption.put("beginIndex", beginIndex); 
@@ -149,4 +149,61 @@ public class EmployeeRestController {
 	
 		return result;
 	} 
+	
+	@GetMapping("/stud/changestatus.json")
+	@ResponseBody
+	public Map<String, Object> changestatus(@RequestParam(value = "pageNo", required = false, defaultValue = "1" ) int pageNo, 
+			                    @RequestParam(value = "statusDiv", required = false, defaultValue = "") String statusDiv,
+								@RequestParam(value = "passYn", required = false, defaultValue = "") String passYn, 
+								@RequestParam(value = "requestDate", required = false, defaultValue = "") String requestDate,
+								@RequestParam(value = "major", required = false, defaultValue = "") String major,
+								@RequestParam(value = "name", required = false, defaultValue = "") String name,
+								@RequestParam(value = "studentNo", required = false, defaultValue = "0") int studentNo, 
+			                    Model model) {
+		
+		Map<String, Object> searchOption = new HashMap<String, Object>();
+			
+		// search 관련
+		if(!statusDiv.isEmpty() && !statusDiv.equals("") && !statusDiv.equals("전체")) {
+			searchOption.put("statusDiv",statusDiv); 
+		} 
+		if(!passYn.isEmpty() && !passYn.equals("") && !passYn.equals("전체")) {
+			searchOption.put("passYn",passYn);  
+		}
+		if(!requestDate.isEmpty() && !requestDate.equals("")) {
+			searchOption.put("requestDate",requestDate);
+		}
+		if(!major.isEmpty() && !major.equals("") && !major.equals("전체")) {
+			searchOption.put("major",major); 
+		}
+		if(!name.isEmpty() && !name.equals("")) {
+			searchOption.put("name",name);
+		}
+		if(studentNo != 0) {
+			searchOption.put("studentNo",studentNo);
+		}
+		
+		// pagination 관련
+		int size = 5;									
+		int beginIndex  = (pageNo - 1)*size + 1 ;		
+		int endIndex   = pageNo*size ; 					
+		
+		searchOption.put("pageNo", pageNo); 	
+		searchOption.put("beginIndex",beginIndex);
+		searchOption.put("endIndex",endIndex);
+		
+		
+		List<Student> serarchStudents = employeeService.getStudentStatus(searchOption); 
+		int count = employeeService.getStudentStatusCount(searchOption); 
+		Pagination pagination = new Pagination(pageNo, size, count); 
+		
+		
+		// 값 담기
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("searchStudents", serarchStudents); 
+		result.put("pagination", pagination); 
+		result.put("count", count); 
+		
+		return result; 
+	}
 }
