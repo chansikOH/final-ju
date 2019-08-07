@@ -79,8 +79,8 @@
 			<div class="row">
 				<div class="col-sm-12 text-right">
 					<a href="/ju/doc/draft/addform" class="btn-sm btn-success">기안서작성</a> 
-					<a href="/ju/doc/vacation/detail" class="btn-sm btn-info">휴가서작성</a> 
-					<a href="/ju/doc/retire/detail" class="btn-sm btn-warning">퇴직서작성</a>
+					<a href="/ju/doc/vacation/addform" class="btn-sm btn-info">휴가서작성</a> 
+					<a href="/ju/doc/retire/addform" class="btn-sm btn-warning">퇴직서작성</a>
 				</div>
 			</div>
 			<div class="row">
