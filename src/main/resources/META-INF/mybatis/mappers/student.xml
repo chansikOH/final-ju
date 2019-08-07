@@ -709,13 +709,39 @@
 			and student_no = #{student.no}
 	</update>
 	
-	<insert id="insertMessage" parameterType="message">
+	<insert id="insertMessage" parameterType="map">
 		insert into messages (message_no, message_contents, receiver_no, caller_no)
-		values (message_seq.nextval, #{contents}, #{person.receiver}, #{person.caller})
+		values (message_seq.nextval, #{contents}, #{receiver}, #{caller})
 	</insert>
 	
 	<select id="getReceiveMessageByNo" parameterType="int" resultType="message">
-		
+		select 
+			message_no no, 
+			message_contents contents,
+			reply_no reply, 
+			messages_create_date createDate, 
+			receiver_no receiver, 
+			caller_no caller, 
+			message_read_yn readYn
+		from 
+			messages
+		where 
+			caller_no = #{value}
+	</select>
+	
+	<select id="getCallMessageByNo" parameterType="int" resultType="message">
+		select 
+			message_no no, 
+			message_contents contents, 
+			reply_no reply, 
+			messages_create_date createDate, 
+			receiver_no receiver, 
+			caller_no caller, 
+			message_read_yn readYn
+		from 
+			messages
+		where 
+			receiver_no = #{value}
 	</select>
 	
 </mapper>

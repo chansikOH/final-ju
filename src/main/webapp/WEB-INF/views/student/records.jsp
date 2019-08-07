@@ -134,7 +134,7 @@
 	                                    		<td></td>
 	                                    	</c:when>
 	                                    	<c:otherwise>
-			                                    <td>${record.totalcnt }</td>
+			                                    <td>${record.TOTALCNT }</td>
 			                                    <td>${record.RECORD }</td>
 	                                    	</c:otherwise>
 	                                    </c:choose>

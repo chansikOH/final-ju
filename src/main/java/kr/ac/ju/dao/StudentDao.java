@@ -67,6 +67,7 @@ public interface StudentDao {
 	List<CoursePart> getCoursePartByNo(int courseNo);
 	void insertCourseOpinion(CourseOpinion courseOpinion);
 	void updateCourseAttend(CourseAttend courseAttend);
-	void insertMessage(Message message);
-	Message getReceiveMessageByNo(int messageNo);
+	void insertMessage(Map<String, Object> map);
+	List<Message> getReceiveMessageByNo(int receiver);
+	List<Message> getCallMessageByNo(int caller);
 }

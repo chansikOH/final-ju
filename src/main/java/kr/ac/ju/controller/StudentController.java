@@ -291,6 +291,8 @@ public class StudentController {
 		List<Map<String, Object>> records = studentService.getAllRecordesByStudentNo(student.getNo());
 
 		model.addAttribute("records", records);
+		
+		System.out.println(records);
 
 		return "student/records";
 	}
@@ -310,8 +312,6 @@ public class StudentController {
 		CourseAttend courseAttend = new CourseAttend();
 		courseAttend.setStudent(student);
 		courseAttend.setCourse(courseOpinion.getCourse());
-		
-		System.out.println(courseAttend.getCourse());
 		
 		studentService.updateCourseAttend(courseAttend);
 		
