@@ -112,6 +112,7 @@
 			</div>
 			<div class="col-sm-3 right-box">
 				<form action="checkanswers" method="post" id="answers-form">
+					<input type="hidden" name="term" value="${param.term }">
 					<input type="hidden" name="cno" value="${course.no }">
 					<c:forEach var="question" items="${questions }">
 						<div class="row answer-div" id="answer-div-${question.no }">
@@ -135,7 +136,6 @@
 					</c:forEach>
 					<button type="button" class="btn" style="width: 100%">제출하기</button>
 				</form>
-				<!-- <a href="" id="submit-answers" class="btn" style="width: 100%;">제출하기</a> -->
 			</div>
 		</div>
 	</div>
@@ -185,8 +185,9 @@
 			});
 			
 			$("[type=button]").click(function() {
-				$(".answer-div").each(function (index) {
+				$(".answer-div").each(function (index, event) {
 					if($("#answer-div-" + (index + 1)).find(".active").attr('id') == null) {
+						event.preventDefault();
 						alert("정답을 체크하지 않은 문제가 있습니다.");
 						return false;
 					}
@@ -211,13 +212,38 @@
 				$spans.eq(3).html("④");
 			}
 			
-			var minute = 20;
-			var second = 10;
 			
-			var timerId;
+			var limitTime = 20 * 60;
+			var timer = setInterval(function() {
+				limitTime--;
+				var remainTime = getRemainTime();
+				$('.timer').text(remainTime);
+				
+			}, 1000)
 			
-			function startTimer() {
-				timerId = setInterval("decrementTime()", 1000);
+			setTimeout(function() {
+				if (limitTime <= 60) {
+					$('#div-line').prepend('<div class="alert alert-danger"><strong>경고</strong> 1분 남았습니다.</div>')
+				}
+			}, 60*1000)
+			
+			setTimeout(function() {
+				if (limitTime == 0) {
+					clearInterval(timer);
+				}
+				alert("시험시간이 경과되었습니다. 확인버튼을 클릭하면 지금까지 푼 답안이 즉시 제출됩니다.");
+				$("#answers-form").submit();
+				window.close();
+			}, 20*60*1000);
+			
+			function getRemainTime() {
+				var minute = Math.trunc(limitTime/60);
+				var minuteStr = minute>= 10 ? minute : '0'+ minute;
+				
+				var second = limitTime - (minute*60);
+				var secondStr = second >= 10 ? second : '0'+ second;
+			
+				return minuteStr + ":" + secondStr;
 			}
 		})
 	</script>

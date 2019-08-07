@@ -5,6 +5,7 @@
   
 <mapper namespace="kr.ac.ju.dao.TestDao">
 
+	<!-- 과목별 중간/기말 문제 반환 -->
 	<select id="getTestByCourseNoAndStatus" parameterType="map" resultType="test">
 		select	test_no as no,
 				course_no as "course.no",
@@ -13,7 +14,7 @@
 				test_create_date as createDate
 		from tests
 		where course_no = #{courseNo}
-			and test_status = 'M'
+			and test_status = #{term}
 	</select>
 	
 	<insert id="insertTestResults" parameterType="map">
@@ -21,14 +22,23 @@
 		values (test_result_seq.nextval, #{testNo}, #{studentNo}, #{score})
 	</insert>
 	
-	<select id="getTestResultsByStudentNo" parameterType="int" resultType="testResults">
-		select	test_result_no as no,
-				test_no as "test.no",
-				student_no as "student.no",
-				result_score as score,
-				result_create_date as createDate
-		from test_results
-		where student_no = #{value}
+	<!-- 중간/기말 시험을 봤으면 1, 시험을 보지 않았으면 0 반환 -->
+	<select id="getTestResultYn" parameterType="map" resultType="map">
+		select	nvl(sum(decode(B.TEST_STATUS, 'M', 1, 0)), 0) m,
+				nvl(sum(decode(B.TEST_STATUS, 'F', 1, 0)), 0) f
+		from courses A, tests B, test_results C 
+		where A.course_no = #{courseNo}
+			and A.course_no = B.COURSE_NO
+			and B.TEST_NO = C.TEST_NO
+			and C.STUDENT_NO = #{studentNo}
+	</select>
+	
+	<!-- 교수가 시험문제를 등록했는지를 반환. 등록했으면 1, 등록을 하지 않았으면 0 반환 -->
+	<select id="getTestsByCourseNo" parameterType="int" resultType="map">
+		select	nvl(sum(decode(TEST_STATUS, 'M', 1, 0)), 0) m,
+				nvl(sum(decode(TEST_STATUS, 'F', 1, 0)), 0) f
+		from tests
+		where course_no = #{courseNo}
 	</select>
 
 </mapper>
