@@ -76,20 +76,22 @@ public class HomeController {
 	
 	@RequestMapping(value="/message", method=RequestMethod.POST)
 	public @ResponseBody Map<String, Object> message(Model model, int no) {
+		System.out.println(no+"no");
 		
-
 		List<Message> receiveMessage = homeService.getReceiveMessageByNo(no);
 		List<Message> callMessage = homeService.getCallMessageByNo(no);
-				
+		
+		System.out.println(receiveMessage.get(0).getReceiver());
+		
 		for(Message m : receiveMessage) {
-			Person receiverPerson = homeService.getPersonByNo(no);
-			
-			m.setReceiver(receiverPerson);
+			Person person = homeService.getPersonByNo(no);
+			System.out.println(person);
+			m.setReceiver(person);
 		}
 		
-		for(Message m : callMessage) {
-			Person callerPerson = homeService.getPersonByNo(no);
-			m.setCaller(callerPerson);
+		for(Message c : callMessage) {
+			Person person = homeService.getPersonByNo(no);
+			c.setCaller(person);
 		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -102,7 +104,7 @@ public class HomeController {
 	@RequestMapping(value="/sendmessage")
 	public @ResponseBody Map<String, Object> sendMessage(HttpSession session, 
 											@RequestParam("receiver") int receiver,
-											@RequestParam("contents") String contents) {
+											@RequestParam("contents") String contents, int reply) {
 		
 		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
 		Employee employee = (Employee) session.getAttribute("LOGIN_EMPLOYEE");
@@ -121,6 +123,7 @@ public class HomeController {
 		map.put("contents", contents);
 		map.put("receiver", receiver);
 		map.put("caller", caller);
+		map.put("reply", reply);
 		
 		homeService.insertMessage(map);
 		

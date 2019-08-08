@@ -1,6 +1,5 @@
 package kr.ac.ju.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -47,8 +46,8 @@ public interface StudentService {
 	Student getLeaveStudentByNo(int studentNo);
 	List<Notice> getAllNotices();
 	Notice getNoticeByNoticeNo(int noticeNo);
-	CoursePlan getCoursePlanByNo(int courseNo);
-	ArrayList<CoursePart> getCoursePartByNo(int courseNo);
+	Map<String, Object> getCoursePlanByNo(int courseNo);
+	List<CoursePart> getCoursePartByNo(int courseNo);
 	void insertCourseOpinion(CourseOpinion courseOpinion);
 	void updateCourseAttend(CourseAttend courseAttend);
 	void updateStatusByNo(Map<String, Object> map);

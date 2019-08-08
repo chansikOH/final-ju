@@ -2,6 +2,7 @@ package kr.ac.ju.view;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,8 +34,8 @@ public class CoursePlanPdfView extends AbstractView {
 			HttpServletResponse response) throws Exception {
 		
 		// Model에 저장된 강의계획서 객체를 조회한다.
-		CoursePlan coursePlan = (CoursePlan) model.get("coursePlan");
-		CoursePart coursePart = (CoursePart) model.get("coursePart");
+		Map<String, Object> coursePlan = (Map<String, Object>) model.get("plan");
+		List<CoursePart> coursePart = (List<CoursePart>) model.get("part");
 
 		// 응답컨텐츠가 PDF로 제공되도록 응답메세지의 헤더를 설정한다.
 		response.setContentType("application/pdf");
@@ -62,19 +63,60 @@ public class CoursePlanPdfView extends AbstractView {
 		table.addCell(getHeaderCell("강의계획서", headerFont));
 		
 		// 테이블의 제목칸과 데이터칸(3칸짜리)을 추가한다.
-		table.addCell(getTitleCell("과목명", titleFont));
-		table.addCell(getDataCell(coursePlan.getCourse().getName(), dataFont, 3));
+		table.addCell(getTitleCell("과목명", titleFont, 1));
+		table.addCell(getDataCell(coursePlan.get("COURSE_NAME"), dataFont, 1));
 		
-		table.addCell(getTitleCell("학과", titleFont));
-		table.addCell(getDataCell(coursePlan.getCourse().getMajor().getName(), dataFont, 1));
-		table.addCell(getTitleCell("담당교수", titleFont));
-		table.addCell(getDataCell(coursePlan.getProfessor().getName(), dataFont, 1));
+		table.addCell(getTitleCell("학기", titleFont, 1));
 		
-		table.addCell(getTitleCell("학습목표", titleFont));
-		table.addCell(getDataCell(coursePlan.getGoal(), dataFont, 3));
+		String year = coursePlan.get("COURSE_YEAR").toString();
+		String term = coursePlan.get("COURSE_TERM").toString();
 		
-		table.addCell(getTitleCell("강의개요", titleFont));
-		table.addCell(getDataCell(coursePlan.getSummary(), dataFont, 3));
+		String yearTerm = year+"년도 "+term+"학기";
+		
+		table.addCell(getDataCell(yearTerm, dataFont, 1));
+		
+		table.addCell(getTitleCell("학과", titleFont, 1));
+		table.addCell(getDataCell(coursePlan.get("MAJOR_NAME"), dataFont, 1));
+		table.addCell(getTitleCell("담당교수", titleFont, 1));
+		table.addCell(getDataCell(coursePlan.get("PROFESSOR_NAME"), dataFont, 1));
+		
+		table.addCell(getTitleCell("교재", titleFont, 1));
+		table.addCell(getDataCell(coursePlan.get("PLAN_MAIN_BOOK"), dataFont, 1));
+		
+		table.addCell(getTitleCell("부교재", titleFont, 1));
+		
+		String subBook1 = "";
+		String subBook2 = "";
+		String subBook3 = "";
+		if(coursePlan.get("PLAN_SUB_BOOK1") != null) {
+			subBook1 = (String) coursePlan.get("PLAN_SUB_BOOK1");
+		}
+		if(coursePlan.get("PLAN_SUB_BOOK2") != null) {
+			subBook2 = (String) coursePlan.get("PLAN_SUB_BOOK2");
+		}
+		if(coursePlan.get("PLAN_SUB_BOOK3") != null) {
+			subBook3 = (String) coursePlan.get("PLAN_SUB_BOOK3");
+		}
+		
+		String subBook = subBook1 +"\n"+ subBook2 +"\n"+ subBook3;
+		table.addCell(getDataCell(subBook, dataFont, 1));
+		
+		table.addCell(getTitleCell("학습목표", titleFont, 1));
+		table.addCell(getDataCell(coursePlan.get("PLAN_GOAL"), dataFont, 3));
+		
+		table.addCell(getTitleCell("강의개요", titleFont, 1));
+		table.addCell(getDataCell(coursePlan.get("PLAN_SUMMARY"), dataFont, 3));
+		
+		table.addCell(getTitleCell("평가방법", titleFont, 1));
+		table.addCell(getDataCell(coursePlan.get("PLAN_TEST_PROCESS"), dataFont, 3));
+		
+		table.addCell(getTitleCell("회차", titleFont, 1));
+		table.addCell(getTitleCell("내용", titleFont, 3));
+		
+		for(CoursePart c:coursePart) {
+			table.addCell(getDataCell(c.getWeek(), dataFont, 1)).setHorizontalAlignment(Element.ALIGN_CENTER);;
+			table.addCell(getDataCell(c.getContents(), dataFont, 3));
+		}
 
 		document.add(table);
 		document.close();
@@ -92,18 +134,19 @@ public class CoursePlanPdfView extends AbstractView {
 	}
 	
 	// 테이블의 제목칸을 반환한다.
-	private PdfPCell getTitleCell(String title, Font font) {
+	private PdfPCell getTitleCell(String title, Font font, int colspan) {
 		PdfPCell cell = new PdfPCell(new Phrase(title, font));
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		cell.setPadding(5.0f);
 		cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+		cell.setColspan(colspan);
 	
 		return cell;
 	}
 	
 	// 테이블의 데이터칸을 반환한다.
-	private PdfPCell getDataCell(String data, Font font, int colspan) {
-		PdfPCell cell = new PdfPCell(new Phrase(data, font));
+	private PdfPCell getDataCell(Object data, Font font, int colspan) {
+		PdfPCell cell = new PdfPCell(new Phrase(data.toString(), font));
 		cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cell.setPadding(5.0f);
 		cell.setColspan(colspan);

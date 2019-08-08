@@ -415,15 +415,11 @@
    	    					var row = "<tr>";
    	    					row += "<td><input type='checkbox'></td>";
    	    					row += "<td>"+m.receiver.name+"</td>";
-   	    					row += "<td><span class='text-line'><a href='javascript:void()' onclick='detail()'>"+m.contents+"</a></span></td>";
+   	    					row += "<td><span class='text-line'><a href='#note-detail' aria-controls='note-detail' role='tab' data-toggle='tab' data-no='"+m.no+"' data-title='받는 사람' data-content='"+m.contents+"' data-name='"+m.receiver.name+"'>"+m.contents+"</a></span></td>";
    	    					row += "<td>"+date+"</td>";
    	    					row += "</tr>";
    	    					
    	    					$("#sent-note tbody").append(row);
-   	    					
-   	    					function detail() {
-   	    						$("#sent-note table").empty();
-   	    					}
    	    				})
        				} else {
        					var row = "<tr>";
@@ -447,7 +443,7 @@
        						var row = "<tr>";
        						row += "<td><input type='checkbox'></td>";
        						row += "<td>"+m.caller.name+"</td>";
-       						row += "<td><span class='text-line'><a href='#note-detail' aria-controls='note-detail' role='tab' data-toggle='tab' data-no='"+m.no+"'>"+m.contents+"</a></span></td>";
+       						row += "<td><span class='text-line'><a href='#note-detail' aria-controls='note-detail' role='tab' data-toggle='tab' data-no='"+m.no+"' data-title='보낸 사람' data-content='"+m.contents+"' data-name='"+m.caller.name+"'>"+m.contents+"</a></span></td>";
        						row += "<td>"+date+"</td>";
        						row += "</tr>";
        						
@@ -460,6 +456,29 @@
        					
        					$("#received-note tbody").append(row);
        				}
+       				
+       				$('a[href="#note-detail"]').click(function() {
+       					var no = $(this).data("no");
+       					var title = $(this).data("title");
+       					var content = $(this).data("content");
+       					var name = $(this).data("name");
+       					
+       					$("#note-detail tbody").empty();
+       					
+     		       		var r = "<tr>";
+   						r += "<td>"+title+"</td>";
+   						r += "<td><input type='text' class='form-control' value='"+name+"' disabled></td>";
+   						r += "</tr>";
+   						r += "<td colspan='2'><textarea class='form-control'>"+content+"</textarea></td>";
+   						r += "</tr>";
+   						r += "<tr>";
+   						r += "<td colspan='2'><a href='#send-note' aria-controls='send-note' role='tab' data-toggle='tab' class='btn btn-default'>답장</a>";
+   						r += "<a href='#sent-note' aria-controls='sent-note' role='tab' data-toggle='tab' class='btn btn-default'>목록</a>";
+   	   					r += "<button type='button' class='btn btn-default' data-dismiss='modal'>닫기</button></td>";
+   						r += "</tr>";
+   						
+   						$("#note-detail tbody").append(r);
+   					})
        			}
        		})
         })
