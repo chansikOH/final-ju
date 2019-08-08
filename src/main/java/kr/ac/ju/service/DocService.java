@@ -21,10 +21,11 @@ public interface DocService {
 	void updateVacation(Vacation vacation);
 	void updateRetire(Retire retire);
 	
-	Draft getDraftByNo(int draftNo);
-	Retire getRetireByNo(int retireNo);
-	Vacation getVacationByNo(int vacationNo);
+	Map<String, Object> getDraftByNo(Integer draftNo);
+	Map<String, Object> getRetireByNo(Integer retireNo);
+	Map<String, Object> getVacationByNo(Integer vacationNo);
 	
 	List<Employee> getAllEmployees();
+
 
 }

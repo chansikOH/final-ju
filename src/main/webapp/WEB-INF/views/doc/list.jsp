@@ -25,7 +25,6 @@
 		</div>
 		<div class="col-sm-10">
 			<div class="row" id="doclist">
-				
 				<div class="col-sm-10">
 					<div class="button-righ">
 						<a href="" class="btn btn-warning">결재중(2)</a>

@@ -24,48 +24,41 @@
 		</div>
 		<div class="col-sm-10">
 			<h2 class="text-center">기안서 상세페이지</h2>
-		    <div class="well">
-		    	<form:form method="post" action="insertdetail" modelAttribute="DocForm" enctype="multipart/form-data">
-		    		<div class="form-group">
-		    			<label>중간결재자</label>
-						<select class="form-control" name="middlePersonNo"> 
-                            <option value=""> 대리</option>
-                            <option value=""> 과장</option>
-                            <option value=""> 처장</option>
-                        </select>
-		    			<br/>
-		    			<label>최종결재자</label>
-		    			<select class="form-control" name="finalPersonNo"> 
-                            <option value="처장" ${doc.finalPerson=='처장' ? 'selected' : '' }> 처장</option>
-                            <option value="총장" ${doc.finalPerson=='총장' ? 'selected' : '' }> 총장</option>
-                        </select>
-		    			<br/>
-		    			<label>제목</label>
-		    			<input type="text" class="form-control" name="title" value="${draft.title }"/>
-		    			<br/>
-		    			<label>내용</label>
-		    			<textarea  rows="15" class="form-control" name="contents" >${draft.contents }</textarea>
-		    			<br/>
-			    		<label>첨부파일</label>
-			    		<input type="file" name="upfile" value="${docFile.name }">
-			    		<br/>
-		    			<label>보존년한</label>
-		    			<select class="form-control" name="keepingYear"> 
-                            <option value="1년"${draft.keepingYear}>1년</option>
-                            <option value="2년"${draft.keepingYear}>2년</option>
-                            <option value="3년"${draft.keepingYear}>3년</option>
-                        </select>
-                        <br/>
-		    			<label>시행일자</label>
-		    			<input type="date" class="form-control" name="startDate" value="${draft.startDate }">
-		    		</div>
-		    		<br/>
+		    	<table class="table">
+		    	<colgroup>
+		    		<col width="10%">
+		    		<col width="10%">
+		    		<col width="10%">
+		    		<col width="10%">
+		    		<col width="10%">
+		    		<col width="10%">
+		    	</colgroup>
+		    		<tbody>
+		    			<tr>
+		    				<th>중간결재자</th>
+		    				<td>${draft.MIDDLE_PERSON_NAME }</td>
+		    				<th>최종결재자</th>
+		    				<td>${draft.FINAL_PERSON_NAME}</td>
+		    			</tr>
+		    			<tr>
+		    				<th>제목</th>
+		    				<td>${draft.DRAFT_TITLE}</td>
+		    				<th>보존년한</th>
+		    				<td>${draft.DRAFT_KEEPING_YEAR}</td>
+		    			</tr>
+		    			<tr>
+		    				<th>내용</th>
+		    				<td colspan="3">${draft.DRAFT_CONTENTS}</td>
+		    			</tr>
+		    			<tr>
+		    				<th>시행일자</th>
+		    				<td colspan="3"><fmt:formatDate value="${draft.DRAFT_START_DATE}"/></td>
+		    			</tr>
+		    		</tbody>
+		    	</table>
 		    		<div class="text-right">
 			             <input type="button" class="btn btn-default" value="뒤로가기" onclick="history.back(-1);">
 		    		</div>
-		    	</form:form>
-		    </div>
-		    <dr>
 		</div>
 	</div>
 </div>
