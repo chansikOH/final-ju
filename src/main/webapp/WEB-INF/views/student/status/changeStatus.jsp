@@ -102,13 +102,14 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>시작년도</th>
+                                    <th>재적변경기간</th>
                                     <th>학기 수</th>
                                     <th>학부(과)</th>
                                     <th>신청구분</th>
                                     <th>변동사유</th>
                                     <th>신청일자</th>
                                     <th>승인여부</th>
+                                    <th>복학여부</th>
                                     <th>취소</th>
                                 </tr>
                             </thead>
@@ -123,7 +124,7 @@
                             			<c:forEach var="sta" items="${status }">
 		                            		<tr>
 		                            			<c:choose>
-		                            				<c:when test="${sta.studentStatus.startTerm != 0 && sta.studentStatus.division != '복학' }">
+		                            				<c:when test="${sta.studentStatus.startTerm != 0 }">
 					                                    <td>${sta.studentStatus.startTerm }</td>
 		                            				</c:when>
 		                            				<c:otherwise>
@@ -139,7 +140,14 @@
 		                            				</c:otherwise>
 		                            			</c:choose>
 			                                    <td>${sta.major.name }</td>
-			                                    <td>${sta.studentStatus.division }</td>
+			                                    <c:choose>
+			                                    	<c:when test="${sta.studentStatus.division eq '복학' }">
+			                                    		<td>휴학</td>
+			                                    	</c:when>
+			                                    	<c:otherwise>
+			                                    		<td>${sta.studentStatus.division }</td>
+			                                    	</c:otherwise>
+			                                    </c:choose>
 			                                    <td>${sta.studentStatus.contents }</td>
 			                                    <td><fmt:formatDate value="${sta.studentStatus.createDate }"/></td>
 			                                    <c:choose>
@@ -154,8 +162,16 @@
 			                                    	</c:when>
 			                                    </c:choose>
 			                                    <c:choose>
+			                                    	<c:when test="${sta.studentStatus.division eq '복학' }">
+			                                    		<td>복학</td>
+			                                    	</c:when>
+			                                    	<c:otherwise>
+			                                    		<td>-</td>
+			                                    	</c:otherwise>
+			                                    </c:choose>
+			                                    <c:choose>
 			                                    	<c:when test="${sta.studentStatus.passYn eq 'W' && sta.studentStatus.division != '복학' }">
-			                                    		<td><a href="delete.status?no=${sta.studentStatus.no }&sta=${param.sta }" class="btn btn-danger btn-xs" id="cancle">취소하기</a></td>
+			                                    		<td><a href="delete.status?no=${sta.studentStatus.no }&sta=${param.sta }" class="btn btn-danger btn-xs cancle">취소하기</a></td>
 			                                    	</c:when>
 			                                    	<c:otherwise>
 			                                    		<td>-</td>
@@ -177,19 +193,19 @@
                         
                         <c:choose>
                         	<c:when test="${param.sta eq 'leave' }">
-                        		<form class="form" method="post" action="changeStatus?sta=${param.sta }">
+                        		<form class="form" method="post" action="leaveStatus?sta=${param.sta }">
 		                            <table class="table form-table">
 		                                <tbody>
 		                                    <tr>
 		                                        <th>재적구분</th>
-		                                        <td><input type="text" value="휴학" class="form-control" name="division"></td>
+		                                        <td><input type="text" value="휴학" class="form-control" name="division" readonly></td>
 		                                                        
 		                                        <th>학기 수</th>
 		                                        <td><input type="text" class="form-control" name="termCount"></td>
 		                                        
-		                                        <th>휴학예정기간</th>
-		                                        <td class="expected"><input type="text" name="startTerm"> 년도
-		                                                        <input type="text"> 학기</td>
+		                                        <th>휴학신청학기</th>
+		                                        <td class="expected"><input type="text" name="year">년도
+		                                        					<input type="text" name="term">학기</td>
 		                                    </tr>
 		                                    <tr>
 		                                        <th>휴학사유</th>
@@ -197,7 +213,7 @@
 		                                    </tr>
 		                                    <tr>
 		                                        <td colspan="6">
-		                                            <button type="submit" class="btn btn-success" id="btn-insert">신청</button> 
+		                                            <button type="submit" class="btn btn-success" class="btn-insert">신청</button> 
 		                                            <button type="reset" class="btn btn-default">초기화</button>
 		                                        </td>
 		                                    </tr>
@@ -210,7 +226,7 @@
 		                        <p>※ 복학접수가 완료되면 수강신청 및 등록사항 반드시 확인</p>
 		                        <p>※ 복학 학부(과) 선택의 신청구분에 체크한 후 접수버튼 클릭</p>
 		                        <p class="danger">※ 복학 신청한 내용은 취소 불가</p>
-		                        <form class="form" method="POST" action="changeStatus?sta=${param.sta }" >
+		                        <form class="form" method="POST" action="goingbackStatus?sta=${param.sta }" >
 			                        <table class="table">
 			                            <thead>
 			                                <tr>
@@ -240,11 +256,8 @@
 							                        </tr>
 						                            <tr>
 						                                <td colspan="6">
-						                                	<input type="hidden" name="division" value="복학" class="form-control" />
-						                                	<input type="hidden" name="startTerm" value="${leaveStudents.studentStatus.no }" class="form-control" />
-						                                	<input type="hidden" name="termCount" value="0" class="form-control" />
-						                                	<input type="hidden" name="contents" value="-" class="form-control" />
-						                                	<button class="btn btn-success pull-right">신청</button>
+						                                	<input type="hidden" name="no" value="${leaveStudents.studentStatus.no }" class="form-control"/>
+						                                	<button type="submit" class="btn btn-success pull-right btn-insert">신청</button>
 						                                </td>
 						                            </tr>
 			                            		</c:otherwise>
@@ -255,15 +268,15 @@
                         	</c:when>
                         	
                         	<c:when test="${param.sta eq 'drop' }">
-		                        <form class="form" method="POST" action="changeStatus?sta=${param.sta }">
+		                        <form class="form" method="POST" action="leaveStatus?sta=${param.sta }">
 		                            <table class="table form-table">
 		                                <tbody>
 		                                    <tr>
 		                                        <th>재적구분</th>
-		                                        <td><input type="text" value="자퇴" class="form-control" name="division"></td>
+		                                        <td><input type="text" value="자퇴" class="form-control" name="division" readonly></td>
 		                                        		                                        
 		                                        <th>신청일자</th>
-		                                        <td><input type="date" id="currentDate" class="form-control" disabled></td>
+		                                        <td><input type="date" id="currentDate" class="form-control"></td>
 		                                    </tr>
 		                                    <tr>
 		                                        <th>자퇴사유</th>
@@ -271,9 +284,7 @@
 		                                    </tr>
 		                                    <tr>
 		                                        <td colspan="4">
-		                                        	<input type="hidden" name="startTerm" value="0" class="form-control" />
-		                                        	<input type="hidden" name="termCount" value="0" class="form-control" />
-		                                            <button type="submit" class="btn btn-success" id="btn-insert">신청</button>
+		                                            <button type="submit" class="btn btn-success" class="btn-insert">신청</button>
 		                                            <button type="reset" class="btn btn-default">초기화</button>
 		                                        </td>
 		                                    </tr>
@@ -292,7 +303,6 @@
 	<script type="text/javascript">
 	
 		$(function() {
-			
 			function getQueryStringObject() {
 			    var a = window.location.search.substr(1).split('&');
 			    if (a == "") return {};
@@ -315,7 +325,7 @@
 			
 			document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
 			
-			$("#cancle").click(function() {
+			$(".cancle").click(function() {
 				if(confirm("취소하시겠습니까?")) {
 					return true;
 				} else {
@@ -323,7 +333,7 @@
 				}
 			})
 			
-			$("#btn-insert").click(function() {
+			$(".btn-insert").click(function() {
 				if(confirm("신청하시겠습니까?")) {
 					return true;
 				} else {

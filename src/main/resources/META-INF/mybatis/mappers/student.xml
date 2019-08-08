@@ -517,6 +517,15 @@
 		where status_no = #{value}
 	</delete>
 	
+	<update id="updateStatusByNo" parameterType="map">
+		update student_status
+		set 
+			status_div = #{division}
+		where 
+			student_no = #{student}
+			and status_no = #{no}
+	</update>
+	
 	<select id="getStatusCheckByNo" parameterType="map" resultType="studentstatus">
 		select 
 			status_no no,
@@ -552,26 +561,6 @@
 				and S.student_no = #{no}
 				and SS.status_div = '휴학'
 				and SS.pass_yn = 'P'
-			minus
-			select 
-				SS.status_no  "studentStatus.no",
-				SS.start_term "studentStatus.startTerm", 
-				M.major_name "major.name", 
-				SS.status_div "studentStatus.division",
-				SS.status_contents,
-				SS.student_create_date "studentStatus.createDate"
-			from 
-				student_status SS, 
-				student_status B,
-				majors M, 
-				students S
-			where 
-				S.student_no = SS.student_no 
-				and S.major_no = M.major_no
-				and S.student_no = #{no}
-				and SS.status_div = '휴학'
-				and SS.pass_yn = 'P'
-				and SS.status_no = B.start_term
 	</select>
 	
 	<insert id="insertCourseAttendsByStudentNo" parameterType="courseAttend">
@@ -648,7 +637,7 @@
 		where notice_no = #{value}
 	</select>
 	
-	<select id="getCoursePlanByNo" parameterType="int" resultType="map">
+	<select id="getCoursePlanByNo" parameterType="int" resultType="coursePlan">
 		select 
 			P.professor_name professorName,
 			C.course_no courseNo,
@@ -673,9 +662,9 @@
 	
 	<select id="getCoursePartByNo" parameterType="int" resultType="coursePart">
 		select 
-			course_part_week,
-			course_part_name,
-			course_part_contents
+			course_part_week week,
+			course_part_name name,
+			course_part_contents contents
 		from 
 			course_parts
 		where 

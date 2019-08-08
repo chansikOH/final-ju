@@ -1,6 +1,6 @@
 package kr.ac.ju.dao;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +10,7 @@ import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.CourseOpinion;
 import kr.ac.ju.vo.CoursePart;
+import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Message;
 import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Student;
@@ -63,11 +64,12 @@ public interface StudentDao {
 	Student getLeaveStudentByNo(int studentNo);
 	List<Notice> getAllNotices();
 	Notice getNoticeByNoticeNo(int noticeNo);
-	HashMap<String, Object> getCoursePlanByNo(int courseNo);
-	List<CoursePart> getCoursePartByNo(int courseNo);
+	CoursePlan getCoursePlanByNo(int courseNo);
+	ArrayList<CoursePart> getCoursePartByNo(int courseNo);
 	void insertCourseOpinion(CourseOpinion courseOpinion);
 	void updateCourseAttend(CourseAttend courseAttend);
 	void insertMessage(Map<String, Object> map);
 	List<Message> getReceiveMessageByNo(int receiver);
 	List<Message> getCallMessageByNo(int caller);
+	void updateStatusByNo(Map<String, Object> map);
 }

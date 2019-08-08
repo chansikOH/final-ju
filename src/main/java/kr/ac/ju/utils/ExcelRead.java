@@ -1,4 +1,4 @@
-package kr.ac.ju.test;
+package kr.ac.ju.utils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

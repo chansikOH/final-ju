@@ -43,7 +43,7 @@
 						<colgroup>
 							<col width="10%">
 							<col width="10%">
-							<col width="*">
+							<col width="10%">
 							<col width="10%">
 							<col width="10%">
 							<col width="10%">
@@ -63,13 +63,35 @@
 						<tbody>
 						<c:forEach var="doc" items="${docs }">
 							<tr>
-								<td><input type="checkbox"/>${doc.DOC_NO}</td>
-								<td><a href="/ju/doc/draft/detail">${doc.DRAFT_TITLE }</a></td>
-								<td>${doc.DOC_FILE_YN }</td>
-								<td>${doc.EMPLOYEE_NAME }</td>
-								<td>${doc.PROFESSOR_NAME }</td>
-								<td><fmt:formatDate value="${doc.DOC_CREATE_DATE }"/> </td>
-								<td><a href="/ju/doc/draft/update">${doc.DOC_STATE }</a></td>
+								<c:choose>
+									<c:when test="${doc.DRAFT_TITLE eq '휴가신청서' }">
+										<td><input type="checkbox"/>${doc.DOC_NO}</td>
+										<td><a href="vacation/detail?no=${doc.DOC_NO }">${doc.DRAFT_TITLE }</a></td>
+										<td>${doc.DOC_FILE_YN }</td>
+										<td>${doc.EMPLOYEE_NAME }</td>
+										<td>${doc.EMPLOYEE_NAME_1 }</td>
+										<td><fmt:formatDate value="${doc.DOC_CREATE_DATE }"/> </td>
+										<td><a href="vacation/update?no=${doc.DOC_NO }">${doc.DOC_STATE }</a></td>
+									</c:when>
+									<c:when test="${doc.DRAFT_TITLE eq '퇴직신청서' }">
+										<td><input type="checkbox"/>${doc.DOC_NO}</td>
+										<td><a href="retire/detail?no=${doc.DOC_NO }">${doc.DRAFT_TITLE }</a></td>
+										<td>${doc.DOC_FILE_YN }</td>
+										<td>${doc.EMPLOYEE_NAME }</td>
+										<td>${doc.EMPLOYEE_NAME_1 }</td>
+										<td><fmt:formatDate value="${doc.DOC_CREATE_DATE }"/> </td>
+										<td><a href="retire/update?no=${doc.DOC_NO }">${doc.DOC_STATE }</a></td>
+									</c:when>
+									<c:otherwise>
+										<td><input type="checkbox"/>${doc.DOC_NO}</td>
+										<td><a href="draft/detail?no=${doc.DOC_NO }">${doc.DRAFT_TITLE }</a></td>
+										<td>${doc.DOC_FILE_YN }</td>
+										<td>${doc.EMPLOYEE_NAME }</td>
+										<td>${doc.EMPLOYEE_NAME_1 }</td>
+										<td><fmt:formatDate value="${doc.DOC_CREATE_DATE }"/> </td>
+										<td><a href="draft/update">${doc.DOC_STATE }</a></td>
+									</c:otherwise>
+								</c:choose>
 							</tr>
 						</c:forEach>
 						</tbody>
