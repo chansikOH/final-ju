@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.ac.ju.service.StudentService;
 import kr.ac.ju.vo.CourseAttend;
+import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Student;
 
 @RestController
@@ -59,23 +60,29 @@ public class StudentRestController {
 		return results;
 	}
 	
-//	@GetMapping("/notice/noticelist.json")
-//	@ResponseBody
-//	public Map<String, Object> noticelist(@RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
-//											@RequestParam(value = "option", required = false, defaultValue = "") String option,
-//											@RequestParam(value = "search", required = false, defaultValue = "") String search) {
-//		Map<String, Object> searchOption = new HashMap<>();
-//		
-//		if(!option.isEmpty() && !option.equals("")) {
-//			if(option.equals("noticeNo")) {
-//				searchOption.put("no",search); 
-//			} else if (option.equals("title")) {
-//				searchOption.put("title",search); 
-//			} else if (option.equals("createDate")) {
-//				searchOption.put("createDate",search); 
-//			}
-//		}
-//		
-//		return null;
-//	}
+	@GetMapping("/notice/noticelist.json")
+	@ResponseBody
+	public Map<String, Object> noticelist(@RequestParam(value = "option", required = false, defaultValue = "") String option,
+											@RequestParam(value = "search", required = false, defaultValue = "") String search) {
+		Map<String, Object> searchOption = new HashMap<>();
+		
+		System.out.println("option" + option);
+		System.out.println("search" + search);
+		
+		if(!option.isEmpty() && !option.equals("")) {
+			if (option.equals("title")) {
+				searchOption.put("title",search); 
+			} else if (option.equals("contents")) {
+				searchOption.put("contents",search); 
+			}
+		}
+		
+		List<Notice> resultNotices = studentService.getAllNotices(searchOption);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("notices", resultNotices);
+		result.put("count", resultNotices.size());
+		
+		return result;
+	}
 }

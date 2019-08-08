@@ -335,8 +335,8 @@ public class StudentServiceImpl implements StudentService {
 	}
 	
 	@Override
-	public List<Notice> getAllNotices() {
-		return studentDao.getAllNotices();
+	public List<Notice> getAllNotices(Map<String, Object> map) {
+		return studentDao.getAllNotices(map);
 	}
 	
 	@Override

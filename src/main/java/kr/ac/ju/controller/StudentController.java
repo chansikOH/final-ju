@@ -406,7 +406,9 @@ public class StudentController {
 
 	@RequestMapping("/notice/list")
 	public String studentNoticeList(Model model) {
-		List<Notice> notices = studentService.getAllNotices();
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<Notice> notices = studentService.getAllNotices(map);
 		model.addAttribute("notices", notices);
 		model.addAttribute("count", notices.size());
 		
