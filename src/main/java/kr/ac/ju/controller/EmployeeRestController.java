@@ -16,6 +16,7 @@ import kr.ac.ju.service.EmployeeService;
 import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Pagination;
 import kr.ac.ju.vo.Student;
+import kr.ac.ju.vo.StudentStatus;
 
 @Controller
 @RequestMapping("/employee")
@@ -85,26 +86,6 @@ public class EmployeeRestController {
 	public Student detailStudent(@RequestParam(value = "studentNo", required = true) int studentNo) {
 		Student student = employeeService.getStudentByNo(studentNo);
 		return student; 
-	}
-	
-	@GetMapping("/stud/statuscheck.json")
-	@ResponseBody
-	public Student statuscheck(@RequestParam(value = "studentNo", required = true) int studentNo) {
-		Student student = employeeService.getStudentByNo(studentNo);
-		return student; 
-	}
-	
-	@GetMapping("/stud/statuschange.json")
-	@ResponseBody
-	public Student statuschange (@RequestParam(value = "studentNo", required = true) int studentNo, 
-							  @RequestParam(value = "afterStatus", required = true) String afterStatus ) {
-		
-		Student student = employeeService.getStudentByNo(studentNo);
-		student.setDivision(afterStatus);
-		
-		employeeService.updateStudentStatusByNo(student); 
-		
-		return student;
 	}
 	
 	@GetMapping("/stud/noticelist.json")
@@ -197,6 +178,13 @@ public class EmployeeRestController {
 		int count = employeeService.getStudentStatusCount(searchOption); 
 		Pagination pagination = new Pagination(pageNo, size, count); 
 		
+		// 날짜 변환하기 
+		
+		/*
+		 * var d = new Date(날짜); var month = d.getMonth() + 1; var day = d.getDate();
+		 * var year = d.getFullYear(); var date = year + '-' + month + '-' + day;
+		 */
+		
 		
 		// 값 담기
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -206,4 +194,47 @@ public class EmployeeRestController {
 		
 		return result; 
 	}
+	
+	@GetMapping("/stud/statuschangereason.json")
+	@ResponseBody
+	public Map<String, String> statuschangereason(@RequestParam(value = "statusNo", required = true) int statusNo) {
+		String reason = employeeService.getStatusChangeReaseon(statusNo);
+		Map<String, String> result = new HashMap<String, String>(); 
+		result.put("reason", reason); 
+		
+		return result; 
+	}
+	
+	@GetMapping("/stud/statuscheck.json")
+	@ResponseBody
+	public Student statuscheck(@RequestParam(value = "studentNo", required = true) int studentNo) {
+		Student student = employeeService.getStudentByNo(studentNo);
+		return student; 
+	}
+	
+	@GetMapping("/stud/statuschange.json")
+	@ResponseBody
+	public Student statuschange (@RequestParam(value = "studentNo", required = true) int studentNo, 
+							     @RequestParam(value = "afterStatus", required = true) String afterStatus,
+							     @RequestParam(value = "statusNo", required = true) int statusNo) {
+		
+		Student student = employeeService.getStudentByNo(studentNo);
+		student.setDivision(afterStatus);
+		
+		employeeService.updateStudentStatusByNo(student); 
+		employeeService.chanageStudentStatusPassyn(statusNo); 
+		
+		return student;
+	}
+	
+	@GetMapping("/stud/statuschangenotice.json")
+	@ResponseBody
+	public List<StudentStatus> statuschangenotice(@RequestParam(value = "studentNo", required = true) int studentNo) {
+		List<StudentStatus> list = employeeService.getstatuschangenotice(studentNo); 
+		
+		return list; 
+	}
+	
+	
+	
 }

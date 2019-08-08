@@ -132,7 +132,8 @@
                             	<colgroup>
                             		<col width="5%">
                             		<col width="8%">
-                            		<col width="10%">
+                            		<col width="8%">
+                            		<col width="8%">
                             		<col width="8%">
                             		<col width="8%">
                             		<col width="10%">
@@ -148,8 +149,9 @@
                                         <th>번호</th>
                                         <th>학번</th>
                                         <th>이름</th>
+                                        <th>현재구분</th>
                                         <th>신청구분</th>
-                                        <th>적용일자</th>
+                                        <th>적용년도</th>
                                         <th>학기수</th>
                                         <th>학과</th>
                                         <th>신청날짜</th>
@@ -180,15 +182,16 @@
     
     <!-- 변경사유 modal -->
     <div class="modal fade bs-reason-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
         	<div class="modal-content">
 		     	<div class="modal-header">
 		       		<button type="button" class="close" data-dismiss="modal">&times;</button>
 		        	<h3>변경사유</h3>
 		      	</div> 
       			<div class="modal-body">
-        			<div class="row reason-of-change">
-    				</div>
+        			<div class="reason-of-change">
+        			
+        			</div>
       			</div>
       			<div class="modal-footer">
 		        	<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
@@ -299,14 +302,15 @@
 	                        row += "<td>"+(pagination.index + index)+"</td>";
 	                        row += "<td>"+stud.no+"</td>";
 	                        row += "<td>"+stud.name+"</td>";
+	                        row += "<td>"+stud.division+"</td>";
 	                        row += "<td>"+stud.studentStatus.division+"</td>";
 	                        row += "<td>"+stud.studentStatus.startTerm+"</td>";
 	                        row += "<td>"+stud.studentStatus.termCount+"</td>";
 	                        row += "<td>"+stud.major.name+"</td>";
 	                        row += "<td>"+stud.studentStatus.createDate+"</td>";
 	                        row += "<td>"+stud.studentStatus.passYn+"</td>";
-	                        row += "<td class='btn-update'><a href='#' id='reason-of-change' class='btn btn-default' data-toggle='modal' data-target='.bs-reason-modal-lg' data-no="+stud.no+">변경사유</a></td>";
-	                        row += "<td class='btn-update'><a href='#' id='student-status' class='btn btn-default' data-toggle='modal' data-target='.bs-status-modal-lg' data-no="+stud.no+">학적상태변경</a></td>";
+	                        row += "<td class='btn-update'><a href='#' id='reason-of-change' class='btn btn-default' data-toggle='modal' data-target='.bs-reason-modal-lg' data-no="+stud.studentStatus.no+">변경사유</a></td>";
+	                        row += "<td class='btn-update'><a href='#' id='student-status' class='btn btn-default' data-toggle='modal' data-target='.bs-status-modal-lg' data-no="+stud.no+" data-statusno ="+stud.studentStatus.no+">학적상태변경</a></td>";
 	                        row += "<td class='btn-update'><a href='#' id='status-change-notice' class='btn btn-default' data-toggle='modal' data-target='.bs-list-modal-lg' data-no="+stud.no+">변경내역</a></td>";
 	                        row += "</tr>";
 	                        $("#search-result-table tbody").append(row);
@@ -357,25 +361,25 @@
     	}); 
     	
     	
-    	/*모달 상세정보*/
+    	/*변경사유*/
     	$("#search-result-table").on('click',"#reason-of-change",function(event){
     		event.preventDefault();
-    		var studentNo = $(this).attr('data-no');
+    		var statusNo = $(this).attr('data-no');
     		$(".reason-of-change").empty();
     		
     		$.ajax({
     			type: "GET",
-    			url: "studentdetail.json",
-    			data: {studentNo:studentNo}, 
+    			url: "statuschangereason.json",
+    			data: {statusNo:statusNo}, 
     			dataType :"json",
-    			success : function (stud) {
-    				var row = "<p>+처음이야 내가 이렇게 내가 사랑에 난 빠져버렸어+</p>"
+    			success : function (data) {
+    				var row = "<p>"+data.reason+"</p>"
                     $(".reason-of-change").append(row); 		
     			}
     		});
     	});
     	
-    	/*학적상태변경 확인*/
+    	/*학적상태변경*/
     	$("#search-result-table").on('click','#student-status',function(event){
     		event.preventDefault();
     		var studentNo = $(this).attr('data-no');
@@ -413,14 +417,17 @@
     	$(".result-save").click(function(){
     		var afterStatus = $("#change-student-status").val(); 
     		var studentNo = $(".student-status td:first").text(); 
+    		var statusNo = $(this).attr('data-statusno');
+    		alert(afterStatus); 
+    		alert(studentNo); 
+    		alert(statusNo); 
     		
     	 	$.ajax({
     			type:"GET",
     			url:"statuschange.json",
-    			data:{afterStatus:afterStatus, studentNo:studentNo},
+    			data:{afterStatus:afterStatus, studentNo:studentNo, statusNo:statusNo},
     			dataType:"json",
     			success: function (student) {
-    				console.log(student)
     				$("#row-"+student.no).find('td:eq(5)').text(student.division);
     				$('#change-division-modal').modal('hide');
     				alert('학적상태 변경이 완료되었습니다.');
@@ -428,17 +435,17 @@
     		}); 
     	})
     	
-    	/*학적상태변경 내역*/
+    	/*변경내역*/
     	$("#search-result-table").on('click','#status-change-notice',function(event){
     		event.preventDefault();
     		var studentNo = $(this).attr('data-no');
     		
     		$.ajax({
     			type:"GET",
-    			url:"statuscheck.json",
+    			url:"statuschangenotice.json",
     			data:{studentNo:studentNo}, 
     			dataType:"json",
-    			success: function (stud) {
+    			success: function (data) {
     				var row = "<tr>"; 
                     row += "<td>+변경번호+</td>";
                     row += "<td>+시작년도+</td>";
