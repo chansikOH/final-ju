@@ -61,7 +61,7 @@ public interface StudentDao {
 	// 작성자 : 오찬식
 	ClassView getClassViewByClassViewNo(int viewNo);
 	Student getLeaveStudentByNo(int studentNo);
-	List<Notice> getAllNotices();
+	List<Notice> getAllNotices(Map<String, Object> map);
 	Notice getNoticeByNoticeNo(int noticeNo);
 	Map<String, Object> getCoursePlanByNo(int courseNo);
 	List<CoursePart> getCoursePartByNo(int courseNo);

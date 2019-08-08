@@ -33,24 +33,18 @@
 				<h1>공지사항</h1>
 				<div class="row">
 					<div class="col-sm-6">
-						<p class="title">총 <strong>${count }</strong>건 조회</p>
+						<p class="title">총 <strong id="notice-count">${count }</strong>건 조회</p>
 					</div>
 					<div class="col-sm-6 search">
-						<form method="get" action="#" class="navbar-form">
-							<div class="form-group">
-								<input type="hidden" name="pageNo" value="1">
-							</div>
-							<select class="form-control" name="option">
+						<div class="input-group title">
+							<select class="form-control" name="option" style="width: 100px;">
 								<option value="" selected="selected">전체</option>
-								<option value="noticeNo">번호</option>
 								<option value="title">제목</option>
-								<option value="createDate">작성일</option>
+								<option value="contents">내용</option>
 							</select>
-							<div class="form-group">
-								<input type="text" class="form-control" name="search" placeholder="Search">
-							</div>
-							<button class="btn btn-default" type="button">검색</button>
-						</form>
+							<input class="form-control" type="text" name="search" placeholder="Search" style="width: 350px;" value="">
+							<button class="btn btn-default" type="button" id="search-word-btn">검색</button>
+						</div>
 					</div>
 				</div>
 				<div class="row result">
@@ -99,45 +93,50 @@
 		</div>
 	</div>
 	
-	<!-- <script type="text/javascript">
-		var pageNo = $("[name=pageNo]").val();
-		var option = $("[name=option]").val();
-		var search = $("[name=search]").val();
-		
-		gosearch();
-		
-		function gosearch() {
-			$.ajax({
-				type:"GET",
-				url:"noticelist.json",
-				data:{pageNo:pageNo, option:option, search:search},
-				dataType: "json",
-				success:function(data){
-					var notices = data.notices;
-					var pagination = data.pagination;
-					var count = data.count;
-
-					$(".table-striped tbody").empty();
-					if(notices.length != 0){
-						$.each(notices, function(index, notice){
-							var row = "<tr>"
-							row += "<td>"+notice.no+"</td>";
-							row += "<td class='text-left'><a href='noticedetail.do?noticeNo="+notice.no+"'>"+notice.title+"</a></td>";
-							row += "<td></td>";
-							row += "<td>"+notice.writer+"</td>";
-							row += "<td>"+notice.createDateStr+"</td>";
-							row += "<tr>" 
-							$(".table-striped tbody").append(row); 
-						})
-					} else {
-						var row = "<tr>";
-	                    row += "<td colspan='12' class='text-center'>공지사항이 없습니다.</td>";
-	                    row += "</tr>";
-	                    $(".table-striped tbody").append(row); 
+	<script type="text/javascript">
+		$(function() {
+			//var pageNo = $("[name=pageNo]").val();
+			
+			$("[name=option]").change(function() {
+				$("[name=search]").val("");
+			});
+			
+			$("#search-word-btn").click(function() {
+				var option = $("[name=option]").val();
+				var search = $("[name=search]").val();
+				$.ajax({
+					type:"GET",
+					url:"noticelist.json",
+					data:{option:option, search:search},
+					dataType: "json",
+					success:function(data){
+						var notices = data.notices;
+						var count = data.count;
+	
+						$(".table-striped tbody").empty();
+						if(notices.length != 0){
+							$.each(notices, function(index, notice){
+								var row = "<tr>"
+								row += "<td>"+notice.no+"</td>";
+								row += "<td class='text-left'><a href='detail?no="+notice.no+"'>"+notice.title+"</a></td>";
+								row += "<td></td>";
+								row += "<td>"+notice.writer+"</td>";
+								row += "<td>"+notice.createDateStr+"</td>";
+								row += "<tr>" 
+								$(".table-striped tbody").append(row); 
+							})
+							
+							$("#notice-count").text(count);
+						} else {
+							var row = "<tr>";
+		                    row += "<td colspan='12' class='text-center'>공지사항이 없습니다.</td>";
+		                    row += "</tr>";
+		                    $(".table-striped tbody").append(row); 
+						}
 					}
-				}
+				});
 			})
-		}
-	</script> -->
+		})
+	</script>
 </body>
 </html>
