@@ -8,26 +8,26 @@
 	<!-- 직원 로그인 기안서, 휴가계획서, 퇴직서 정보 조회  -->
 	<select id="getDocEmployeeByNo" parameterType="map" resultType="hashmap">
 		SELECT 
-			A.DOC_NO,
-			B.DRAFT_TITLE, 
-			A.DOC_FILE_YN, 
-			C.EMPLOYEE_NAME , 
-			D.PROFESSOR_NAME , 
-			A.DOC_CREATE_DATE, 
-			A.DOC_STATE
-		FROM 
-			DOCS A, 
-			DRAFTS B, 
-			EMPLOYEES C, 
-			PROFESSORS D
-		WHERE
-			A.DOC_NO = B.DOCS_NO
-		AND 
-			A.EMPLOYEE_NO = C.EMPLOYEE_NO
-		AND 
-			A.DOC_FINAL_PERSON = D.PROFESSOR_NO
-		AND 
-			A.EMPLOYEE_NO = #{person}
+         A.DOC_NO, 
+         B.DRAFT_TITLE, 
+         A.DOC_FILE_YN, 
+         C.EMPLOYEE_NAME EMPLOYEE_NAME, 
+         D.EMPLOYEE_NAME EMPLOYEE_NAME_1, 
+         A.DOC_CREATE_DATE, 
+         A.DOC_STATE
+      FROM 
+         DOCS A, 
+         DRAFTS B, 
+         EMPLOYEES C, 
+         EMPLOYEES D
+      WHERE 
+         A.DOC_NO = B.DOCS_NO
+      AND 
+         A.EMPLOYEE_NO = C.EMPLOYEE_NO
+      AND 
+         A.DOC_FINAL_PERSON = D.EMPLOYEE_NO
+      AND 
+         A.EMPLOYEE_NO = #{value}
 		<choose>
 			<when test="option != null and option.equals('P') ">
 				and
@@ -44,48 +44,76 @@
 		</choose>
 		UNION
 		SELECT 
-			A.DOC_NO, 
-			'휴가신청서', 
-			A.DOC_FILE_YN, 
-			C.EMPLOYEE_NAME, 
-			D.PROFESSOR_NAME,  
-			A.DOC_CREATE_DATE, 
-			A.DOC_STATE
-		FROM 
-			DOCS A,
-			VACATIONS B, 
-			EMPLOYEES C, 
-			PROFESSORS D
-		WHERE 
-			A.EMPLOYEE_NO = C.EMPLOYEE_NO
-		AND 
-			A.DOC_FINAL_PERSON = D.PROFESSOR_NO
-		AND 
-			A.DOC_NO = B.DOCS_NO
-		AND 
-			A.EMPLOYEE_NO = #{value}
+         A.DOC_NO, 
+         '휴가신청서', 
+         A.DOC_FILE_YN, 
+         C.EMPLOYEE_NAME EMPLOYEE_NAME, 
+         D.EMPLOYEE_NAME EMPLOYEE_NAME_1,  
+         A.DOC_CREATE_DATE, 
+         A.DOC_STATE
+      FROM 
+         DOCS A,
+         VACATIONS B, 
+         EMPLOYEES C,
+         EMPLOYEES D
+      WHERE 
+         A.EMPLOYEE_NO = C.EMPLOYEE_NO
+      AND 
+         A.DOC_FINAL_PERSON = D.EMPLOYEE_NO
+      AND 
+         A.DOC_NO = B.DOCS_NO
+      AND 
+         A.EMPLOYEE_NO = #{value}
+			<choose>
+			<when test="option != null and option.equals('P') ">
+				and
+					A.doc_state == '결재중'
+			</when>
+			<when test="option != null and option.equals('I') ">
+				and
+					A.doc_state == '반려'
+			</when>
+			<when test="option != null and option.equals('C') ">
+				and
+					A.doc_state == '완료'
+			</when>
+		</choose>
 		UNION
 		SELECT 
-			A.DOC_NO, 
-			'퇴직신청서', 
-			A.DOC_FILE_YN, 
-			B.EMPLOYEE_NAME, 
-			C.PROFESSOR_NAME, 
-			A.DOC_CREATE_DATE, 
-			A.DOC_STATE 
-		FROM 
-			DOCS A, 
-			EMPLOYEES B, 
-			PROFESSORS C,
-			RETIRES D
-		WHERE 
-			A.EMPLOYEE_NO = B.EMPLOYEE_NO
-		AND 
-			A.DOC_FINAL_PERSON = C.PROFESSOR_NO
-		AND 
-			A.DOC_NO = D.DOCS_NO
-		AND
-			A.EMPLOYEE_NO = #{value}
+         A.DOC_NO, 
+         '퇴직신청서', 
+         A.DOC_FILE_YN, 
+         B.EMPLOYEE_NAME EMPLOYEE_NAME, 
+         C.EMPLOYEE_NAME EMPLOYEE_NAME_1, 
+         A.DOC_CREATE_DATE, 
+         A.DOC_STATE 
+      FROM 
+         DOCS A, 
+         EMPLOYEES B, 
+         EMPLOYEES C,
+         RETIRES D
+      WHERE 
+         A.EMPLOYEE_NO = B.EMPLOYEE_NO
+      AND 
+         A.DOC_FINAL_PERSON = C.EMPLOYEE_NO
+      AND 
+         A.DOC_NO = D.DOCS_NO
+      AND
+         A.EMPLOYEE_NO = #{value}
+			<choose>
+			<when test="option != null and option.equals('P') ">
+				and
+					A.doc_state = '결재중'
+			</when>
+			<when test="option != null and option.equals('I') ">
+				and
+					A.doc_state = '반려'
+			</when>
+			<when test="option != null and option.equals('C') ">
+				and
+					A.doc_state = '완료'
+			</when>
+		</choose>
 	</select>
 	 
 	<!-- SEQ 생성 -->
