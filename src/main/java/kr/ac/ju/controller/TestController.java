@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.ac.ju.service.StudentService;
 import kr.ac.ju.service.TestService;
-import kr.ac.ju.test.ExcelRead;
+import kr.ac.ju.utils.ExcelRead;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.Question;
 import kr.ac.ju.vo.Student;
@@ -31,19 +31,6 @@ public class TestController {
 	
 	@Autowired
 	private TestService testService;
-
-	@RequestMapping("/course/testlist")
-	public String testList(HttpSession session, Model model) {
-		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
-
-		List<Course> courses = studentService.getAllCoursesWithProfessorAndMajorByStudentNo(student.getNo());
-		Integer countCourses = studentService.countCurrentCoursesByStudentNo(student.getNo());
-
-		model.addAttribute("courses", courses);
-		model.addAttribute("countCourses", countCourses);
-		
-		return "student/course/testlist";
-	}
 
 	@RequestMapping("/course/test")
 	public String testMain(int cno, String term, Model model, HttpSession session)  throws IOException {
