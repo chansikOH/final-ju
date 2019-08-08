@@ -1,6 +1,7 @@
 package kr.ac.ju.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,7 @@ import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.CourseOpinion;
 import kr.ac.ju.vo.CoursePart;
-import kr.ac.ju.vo.Message;
+import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Student;
 import kr.ac.ju.vo.StudentStatus;
@@ -344,12 +345,12 @@ public class StudentServiceImpl implements StudentService {
 	}
 	
 	@Override
-	public List<CoursePart> getCoursePartByNo(int courseNo) {
+	public ArrayList<CoursePart> getCoursePartByNo(int courseNo) {
 		return studentDao.getCoursePartByNo(courseNo);
 	}
 	
 	@Override
-	public HashMap<String, Object> getCoursePlanByNo(int courseNo) {
+	public CoursePlan getCoursePlanByNo(int courseNo) {
 		return studentDao.getCoursePlanByNo(courseNo);
 	}
 	
@@ -362,11 +363,9 @@ public class StudentServiceImpl implements StudentService {
 	public void updateCourseAttend(CourseAttend courseAttend) {
 		studentDao.updateCourseAttend(courseAttend);
 	}
-	/*
-	 * @Override public void insertMessage(Message message) {
-	 * studentDao.insertMessage(message); }
-	 * 
-	 * @Override public Message getReceiveMessageByNo(int messageNo) { return
-	 * studentDao.getReceiveMessageByNo(messageNo); }
-	 */
+	
+	@Override
+	public void updateStatusByNo(Map<String, Object> map) {
+		studentDao.updateStatusByNo(map);
+	}
 }

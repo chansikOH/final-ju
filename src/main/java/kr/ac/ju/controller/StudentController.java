@@ -1,6 +1,7 @@
 package kr.ac.ju.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,16 +25,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.ac.ju.form.StudentForm;
 import kr.ac.ju.service.HomeService;
 import kr.ac.ju.service.StudentService;
 import kr.ac.ju.service.TestService;
 import kr.ac.ju.utils.DateUtils;
+import kr.ac.ju.view.CoursePlanPdfView;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.CourseOpinion;
 import kr.ac.ju.vo.CoursePart;
+import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Message;
 import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Person;
@@ -54,6 +59,9 @@ public class StudentController {
 	
 	@Autowired
 	private TestService testService;
+	
+	@Autowired
+	private CoursePlanPdfView coursePlanPdfView;
 
 	@RequestMapping("/course/apply")
 	public String courseApply(HttpSession session, Model model) {
@@ -340,8 +348,8 @@ public class StudentController {
 		return "redirect:chStatus?sta=" + sta;
 	}
 
-	@RequestMapping("/status/changeStatus")
-	public String changeStatus(StudentStatus studentStatus, String sta, HttpSession session) {
+	@RequestMapping("/status/leaveStatus")
+	public String leaveStatus(StudentStatus studentStatus, String sta, HttpSession session, String year, String term) {
 		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -353,10 +361,46 @@ public class StudentController {
 		if (!"복학".equals(studentStatus.getDivision()) && queriedStudentStatus != null) {
 			return "redirect:chStatus?sta=" + sta + "&result=fail";
 		}
-
+		
+		System.out.println(studentStatus.getDivision());
+		
+		int startTerm = 0;
+		if(!"자퇴".equals(studentStatus.getDivision())) {
+			startTerm = Integer.parseInt(year+"0"+term);
+		} else {
+			startTerm = 0;
+		}
+		
 		studentStatus.setStudent(student);
+		studentStatus.setStartTerm(startTerm);
+		studentStatus.setTermCount("0");
 		studentService.insertStudentStatus(studentStatus);
 
+		return "redirect:chStatus?sta=" + sta;
+	}
+	
+	@RequestMapping("/status/goingbackStatus")
+	public String goingbackStatus(HttpSession session, String sta, StudentStatus studentStatus) {
+		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
+		
+		System.out.println(studentStatus.getNo());
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("no", student.getNo());
+		map.put("division", studentStatus.getDivision());
+
+		StudentStatus queriedStudentStatus = studentService.getStatusCheckByNo(map);
+		if (!"복학".equals(studentStatus.getDivision()) && queriedStudentStatus != null) {
+			return "redirect:chStatus?sta=" + sta + "&result=fail";
+		}
+		
+		Map<String, Object> statusMap = new HashMap<String, Object>();
+		statusMap.put("division", studentStatus.getDivision());
+		statusMap.put("student", student.getNo());
+		statusMap.put("no", studentStatus.getNo());
+		
+		studentService.updateStatusByNo(statusMap);
+		
 		return "redirect:chStatus?sta=" + sta;
 	}
 
@@ -377,19 +421,18 @@ public class StudentController {
 		return "student/notice/noticedetail";
 	}
 	
-	@RequestMapping("/course/courseplan")
-	public String coursePlan(Model model, @RequestParam("cno") int courseNo) {
-		System.out.println(courseNo);
+	@RequestMapping("/courseplan.pdf")
+	public ModelAndView coursePlan(@RequestParam("cno") int courseNo) {
+		System.out.println(courseNo+"!!!!!!!!!!!!!!!!!!!!");
 		
-		List<CoursePart> part = studentService.getCoursePartByNo(courseNo);
-		HashMap<String, Object> plan = studentService.getCoursePlanByNo(courseNo);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("coursePlan", studentService.getCoursePlanByNo(courseNo));
+		mav.addObject("coursePart", studentService.getCoursePlanByNo(courseNo));
+		mav.setView(coursePlanPdfView);
 		
-		System.out.println(plan);
-		
-		model.addAttribute("part", part);
-		model.addAttribute("plan", plan);
-		
-		return "student/course/courseplan";
+		return mav;
 	}
+	
+	
 	
 }
