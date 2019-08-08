@@ -191,23 +191,25 @@
 	</insert>
 	
 	<!-- 직원 기안서 상세정보 -->
-	<select id="getDraftByNo" parameterType="int" resultType="draft">
+	<select id="getDraftByNo" parameterType="int" resultType="hashmap">
 		SELECT
-		    D.DOC_MIDDLE_PERSON,
-		    D.DOC_FINAL_PERSON,
+		    R.DRAFT_NO,
+		    M.EMPLOYEE_NAME MIDDLE_PERSON_NAME,
+		    F.EMPLOYEE_NAME FINAL_PERSON_NAME,
 		    R.DRAFT_TITLE,
 		    R.DRAFT_CONTENTS,
-		    F.FILE_NAME,
 		    R.DRAFT_KEEPING_YEAR,
 		    R.DRAFT_START_DATE
-		FROM
-		    DOCS D, DRAFTS R, DOC_FILES F
-		WHERE
-		    D.DOC_NO = R.DOCS_NO
-		AND
-		    D.DOC_NO = F.DOC_NO(+)
-		AND
-		    D.DOC_no = #{value}
+		FROM 
+			EMPLOYEES M, EMPLOYEES F, DRAFTS R, DOCS D
+		WHERE 
+			R.DOCS_NO = D.DOC_NO 
+		AND 
+			D.DOC_MIDDLE_PERSON = M.EMPLOYEE_NO 
+		AND 
+			D.DOC_FINAL_PERSON = F.EMPLOYEE_NO 
+		AND 
+			D.DOC_NO = #{VALUE}
 	</select>
 	
 	<!-- 직원 결재선 등록 -->
@@ -251,22 +253,24 @@
 	</insert>
 	
 	<!-- 직원 퇴직서 상세정보 -->
-	<select id="getRetireByNo" parameterType="int" resultType="retire">
+	<select id="getRetireByNo" parameterType="int" resultType="hashmap">
 	SELECT
-	    D.DOC_MIDDLE_PERSON,
-	    D.DOC_FINAL_PERSON,
-	    R.RETIRE_DIV,
-	    R.RETIRE_DATE,
-	    R.RETIRE_CONTENTS,
-	    F.FILE_NAME
-	FROM
-	    DOCS D, RETIRES R, DOC_FILES F
-	WHERE
-	    D.DOC_NO = R.DOCS_NO
-	AND
-	    D.DOC_NO = F.DOC_NO(+)
-	AND
-	    R.DOCS_NO = #{value}
+		R.RETIRE_NO,
+		M.EMPLOYEE_NAME MIDDLE_PERSON_NAME,
+		F.EMPLOYEE_NAME FINAL_PERSON_NAME,
+		R.RETIRE_DIV RETIRE_DIV,
+		R.RETIRE_DATE RETIRE_DATE,
+		R.RETIRE_CONTENTS RETIRE_CONTENTS
+	FROM 
+		EMPLOYEES M, EMPLOYEES F, RETIRES R, DOCS D
+	WHERE 
+		R.DOCS_NO = D.DOC_NO
+	AND 
+		D.DOC_MIDDLE_PERSON = M.EMPLOYEE_NO
+	AND 
+		D.DOC_FINAL_PERSON = F.EMPLOYEE_NO
+	AND 
+		R.DOCS_NO = #{VALUE}
 	</select>
 	
 	<!-- 직원 휴가등록 -->
@@ -288,23 +292,25 @@
 	</insert>
 	
 	<!-- 직원 휴가계획 상세정보 -->
-	<select id="getVacationByNo" parameterType="int" resultType="vacation">
+	<select id="getVacationByNo" parameterType="int" resultType="hashmap">
 		   SELECT
-			    D.DOC_MIDDLE_PERSON,
-			    D.DOC_FINAL_PERSON,
-			    V.vacation_div,
-			    V.vacation_start_date,
-			    V.vacation_end_date,
-			    V.vacation_contents,
-			    F.FILE_NAME
-			FROM
-			    DOCS D, vacations V, DOC_FILES F
-			WHERE
-			    D.DOC_NO = V.DOCS_NO
-			AND
-			    D.DOC_NO = F.DOC_NO(+)
-			AND
-			    V.DOCS_NO = #{value}
+				V.VACATION_NO,
+				M.EMPLOYEE_NAME MIDDLE_PERSON_NAME,
+				F.EMPLOYEE_NAME FINAL_PERSON_NAME,
+				V.VACATION_DIV VACATION_DIV,
+				V.VACATION_START_DATE START_DATE,
+				V.VACATION_END_DATE END_DATE,
+				V.VACATION_CONTENTS CONTENTS
+			FROM 
+				EMPLOYEES M, EMPLOYEES F, VACATIONS V, DOCS D
+			WHERE 
+				V.DOCS_NO = D.DOC_NO
+			AND 
+				D.DOC_MIDDLE_PERSON = M.EMPLOYEE_NO
+			AND 
+				D.DOC_FINAL_PERSON = F.EMPLOYEE_NO
+			AND 
+				V.DOCS_NO = #{VALUE}
 	</select>
 	
 	<!-- 직원 기안서 수정 -->

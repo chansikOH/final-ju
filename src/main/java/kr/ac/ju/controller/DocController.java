@@ -111,9 +111,9 @@ public class DocController {
 	}
 	// 기안서 디테일
 	@RequestMapping("/draft/detail")
-	public String draftform(Model model, int draftNo) {
-		Draft draft = docService.getDraftByNo(draftNo);
-		model.addAttribute("draft", draftNo);
+	public String draftform(Model model, @RequestParam("no") Integer draftNo) {
+		Map<String, Object> draft = docService.getDraftByNo(draftNo);
+		model.addAttribute("draft", draft);
 		
 		return "doc/draft/detail";
 	}
@@ -149,7 +149,7 @@ public class DocController {
 		retireForm.setMiddlePersonNo(retireForm.getMiddlePersonNo());
 		doc.setMiddlePerson(retireForm.getMiddlePersonNo());
 		doc.setFinalPerson(retireForm.getFinalPersonNo());
-		retire.setDiv(retireForm.getDiv());
+		retire.setRetireDiv(retireForm.getDiv());
 		retire.setRetireDate(retireForm.getRetireDate());
 		retire.setContents(retireForm.getContents());
 		nons.add(retireForm.getMiddlePersonNo());
@@ -177,8 +177,8 @@ public class DocController {
 	
 	// 퇴직서 디테일
 	@RequestMapping("/retire/detail")
-	public String retireDetail(Model model, Integer retireNo) {
-		Retire retire= docService.getRetireByNo(retireNo);
+	public String retireDetail(Model model, @RequestParam("no")Integer retireNo) {
+		Map<String, Object> retire= docService.getRetireByNo(retireNo);
 		model.addAttribute("retire", retire);
 		
 		return "doc/retire/detail";
@@ -247,22 +247,23 @@ public class DocController {
 		return "redirect:../list";
 	}
 	
+	//휴가 디테일
 	@RequestMapping("/vacation/detail")
-	public String vacationDetail(Model model, Integer vacationNo) {
-		Vacation vacation = docService.getVacationByNo(vacationNo);
+	public String vacationDetail(Model model,@RequestParam("no") Integer vacationNo) {
+		Map<String, Object> vacation = docService.getVacationByNo(vacationNo);
 		model.addAttribute("vacation", vacation);
 		
 		return "doc/retire/detail";
 	}
-	
+	//휴가 업데이트
 	@RequestMapping("/vacation/update")
-	public String vacationUpdate(Vacation vacation) {
+	public String vacationUpdate(HttpSession session, Vacation vacation, int vacatioNo) {
 		
 		docService.updateVacation(vacation);
 		return "redirect:../list";
 	}
 	
-	@InitBinder
+	@InitBinder // 날짜 변환
 	public void initBinder(WebDataBinder dataBinder) {
 		dataBinder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
 	}

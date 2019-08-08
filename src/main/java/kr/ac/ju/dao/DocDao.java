@@ -27,9 +27,9 @@ public interface DocDao {
 	void updateVacation(Vacation vacation);
 	void updateRetire(Retire retire);
 	
-	Draft getDraftByNo(int draftNo);
-	Retire getRetireByNo(int retireNo);
-	Vacation getVacationByNo(int vacationNo);
+	Map<String, Object> getDraftByNo(int draftNo);
+	Map<String, Object> getRetireByNo(int retireNo);
+	Map<String, Object> getVacationByNo(int vacationNo);
 	
 	int getDocSeq();
 	List<Employee> getAllEmployees();

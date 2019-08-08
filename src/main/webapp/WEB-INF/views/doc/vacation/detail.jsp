@@ -28,44 +28,41 @@
 		</div>
 		<div class="col-sm-10">
 			<h2 class="text-center">휴가계획서 양식</h2>
-		    <div class="well">
-		    	<form action="">
-		    		<div class="form-group">
-		    			<label>작성자</label>
-		    			<input type="text" class="form-control">
-		    			<br/>
-		    			<label>중간결재자</label>
-		    			<input type="text" class="form-control">
-		    			<br/>
-		    			<label>최종결재자</label>
-		    			<input type="text" class="form-control">
-		    			<br/>
-		    			<label>종류</label>
-		    			<select class="form-control">
-	                        <option value="3"> 연차</option>
-	                        <option value="4"> 월차</option>
-	                    </select>
-		    			<br/>
-		    			<label>휴가시작</label>
-		    			<input type="date" class="form-control">
-		    			<br/>
-		    			<label>휴가종료</label>
-		    			<input type="date" class="form-control">
-		    			<br/>
-		    			<label>내용</label>
-		    			<textarea type="text" rows="15" class="form-control"></textarea>
-		    			<br/>
-		    			<label>파일</label>
-			    		<input type="file">
-			    		<br/>
-		    		</div>
-		    		<br/>
-		    		<div class="text-right">
-			             <input type="button" class="btn btn-default" value="뒤로가기" onclick="history.back(-1);">
-			             <button type="submit" class="btn btn-info" value="">제출</button>
-		    		</div>
-		    	</form>
-		    </div>
+		    <table class="table">
+	    	<colgroup>
+	    		<col width="10%">
+	    		<col width="10%">
+	    		<col width="10%">
+	    		<col width="10%">
+	    		<col width="10%">
+	    		<col width="10%">
+	    	</colgroup>
+	    		<tbody>
+	    			<tr>
+	    				<th>중간결재자</th>
+	    				<td>${vacation.MIDDLE_PERSON_NAME }</td>
+	    				<th>최종결재자</th>
+	    				<td>${vacation.FINAL_PERSON_NAME}</td>
+	    			</tr>
+	    			<tr>
+	    				<th>휴가시작</th>
+	    				<td><fmt:formatDate value="${vacation.START_DATE }"/></td>
+	    				<th>휴가종료</th>
+	    				<td><fmt:formatDate value="${vacation.END_DATE }"/></td>
+	    			</tr>
+	    			<tr>
+	    				<th>종류</th>
+	    				<td colspan="3">${vacation.VACATION_DIV}</td>
+	    			</tr>
+	    			<tr>
+	    				<th>내용</th>
+	    				<td colspan="3">${vacation.CONTENTS}</td>
+	    			</tr>
+	    		</tbody>
+	    	</table>
+    		<div class="text-right">
+	             <input type="button" class="btn btn-default" value="뒤로가기" onclick="history.back(-1);">
+    		</div>
 		</div>
 	</div>
 </div>

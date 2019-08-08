@@ -31,43 +31,33 @@
 		    <div class="well">
 		    	<form action="">
 		    		<div class="form-group">
-		    			<label>결재자</label>
-		    			<input type="text" class="form-control">
-		    			<br/>
 		    			<label>중간결재자</label>
-		    			<input type="text" class="form-control">
+		    			<input type="text" class="form-control" value="${draft.doc.middlePerson }" disabled>
 		    			<br/>
 		    			<label>최종결재자</label>
-		    			<input type="text" class="form-control">
+		    			<input type="text" class="form-control" value="${draft.doc.finalPerson}" disabled>
 		    			<br/>
 		    			<label>제목</label>
-		    			<input type="text" rows="1" class="form-control">
+		    			<input type="text" class="form-control" value="${draft.title}">
 		    			<br/>
 		    			<label>내용</label>
-		    			<textarea type="text" rows="15" class="form-control"></textarea>
+		    			<input type="text" class="form-control" value="${draft.contents}"/>
 		    			<br/>
 			    		<label>첨부파일</label>
-			    		<input type="file">
+			    		<input type="file" class="form-control">
 			    		<br/>
-		    			<label>보존년한</label>
-		    			<select class="form-control">
-                            <option value=""> 1년</option>
-                            <option value=""> 2년</option>
-                            <option value=""> 3년</option>
-                        </select>
-                        <br/>
 		    			<label>시행일자</label>
-		    			<input type="date" class="form-control">
+		    			<input type="date" class="form-control" value="startDate">
 		    		</div>
 		    		<br/>
 		    		<div class="text-center">
 		    			<div class="radio">
 		    				<label class="radio-inline"></label>
-		    				<input type="radio" name="license" value="1" checked="checked"> 결재중
+		    				<input type="radio" name="license" value="결재중" checked="checked"> 결재중
 		    				<label class="radio-inline"></label>
-		    				<input type="radio" name="license" value="0"> 완료
+		    				<input type="radio" name="license" value="완료"> 완료
 		    				<label class="radio-inline"></label>
-		    				<input type="radio" name="license" value="0"> 반려
+		    				<input type="radio" name="license" value="반려"> 반려
 		    			</div>
 		    		</div>
 		    		<div class="form-group">
@@ -75,8 +65,8 @@
 	                 	<textarea class="form-control" rows="5"></textarea> 
 	             	</div>
 		    		<div class="text-right">
-			             <button type="reset" class="btn btn-danger" value="">반려</button>
-			             <button type="submit" class="btn btn-info" value="">승인</button>
+			             <button type="reset" class="btn btn-danger" value="반려">반려</button>
+			             <button type="submit" class="btn btn-info" value="승인">승인</button>
 		    		</div>
 		    	</form>
 		    </div>

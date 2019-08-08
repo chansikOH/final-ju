@@ -123,23 +123,23 @@ public class DocServiceImpl implements DocService {
 		}
 		
 		@Override
-		public Draft getDraftByNo(int draftNo) {
+		public Map<String, Object> getDraftByNo(Integer draftNo) {
 			
 			return docDao.getDraftByNo(draftNo);
 		}
 
 		@Override
-		public Retire getRetireByNo(int retireNo) {
+		public Map<String, Object> getRetireByNo(Integer retireNo) {
 			
 			return docDao.getRetireByNo(retireNo);
 		}
 
 		@Override
-		public Vacation getVacationByNo(int vacationNo) {
+		public Map<String, Object> getVacationByNo(Integer vacationNo) {
 			
 			return docDao.getVacationByNo(vacationNo);
 		}
-
+	
 		@Override
 		public void updateDraft(Draft draft) {
 			docDao.updateDraft(draft);
