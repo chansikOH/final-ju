@@ -148,7 +148,7 @@ public class EmployeeRestController {
 		if(!statusDiv.isEmpty() && !statusDiv.equals("") && !statusDiv.equals("전체")) {
 			searchOption.put("statusDiv",statusDiv); 
 		} 
-		if(!passYn.isEmpty() && !passYn.equals("") && !passYn.equals("전체")) {
+		if(!passYn.isEmpty() && !passYn.equals("") && !passYn.equals("전체")) {   
 			searchOption.put("passYn",passYn);  
 		}
 		if(!requestDate.isEmpty() && !requestDate.equals("")) {
@@ -177,14 +177,6 @@ public class EmployeeRestController {
 		List<Student> serarchStudents = employeeService.getStudentStatus(searchOption); 
 		int count = employeeService.getStudentStatusCount(searchOption); 
 		Pagination pagination = new Pagination(pageNo, size, count); 
-		
-		// 날짜 변환하기 
-		
-		/*
-		 * var d = new Date(날짜); var month = d.getMonth() + 1; var day = d.getDate();
-		 * var year = d.getFullYear(); var date = year + '-' + month + '-' + day;
-		 */
-		
 		
 		// 값 담기
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -226,15 +218,5 @@ public class EmployeeRestController {
 		
 		return student;
 	}
-	
-	@GetMapping("/stud/statuschangenotice.json")
-	@ResponseBody
-	public List<StudentStatus> statuschangenotice(@RequestParam(value = "studentNo", required = true) int studentNo) {
-		List<StudentStatus> list = employeeService.getstatuschangenotice(studentNo); 
-		
-		return list; 
-	}
-	
-	
-	
+
 }

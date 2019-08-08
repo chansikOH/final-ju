@@ -224,12 +224,10 @@
 					</a>
 					<ul class="nav-sub navbar-nav">
 						<li><a href="#" id="menu1">구성원 관리</a></li>
-						<li><a href="#" id="menu2">신청내역 확인</a></li>
-						<li><a href="#" id="menu3">학교현황</a></li>
-						<li><a href="#" id="menu4">개인일정</a></li>
-						<li><a href="#" id="menu5">공지사항 관리</a></li>
-						<li><a href="/ju/doc/list" id="menu6">결재</a></li>
-						<li><a href="#" id="menu7">마이페이지</a></li>
+						<li><a href="#" id="menu2">신청내역</a></li>
+						<li><a href="/ju/employee/statistic" id="menu3">학교현황</a></li>
+						<li><a href="#" id="menu4">공지사항 관리</a></li>
+						<li><a href="#" id="menu5">결재</a></li>
 					</ul>
 				</div>
 			</div>
@@ -239,37 +237,24 @@
 			<div class="col-sm-12 sub-menu header-under">
 				<div id="sub-menu1">
 					<ul>
-						<li><a href="/ju/employee/stud/register.do">학생 등록</a></li>
-						<li><a href="/ju/employee/stud/checklist.do">학생 조회</a></li>
-						<li><a href="/ju/employee/emp/register.do">직원 등록</a></li>
-						<li><a href="/ju/employee/emp/checklist.do">직원 조회</a></li>
-						<li><a href="/ju/employee/pro/register.do">교원 등록</a></li>
-						<li><a href="/ju/employee/pro/checklist.do">교원 조회</a></li>
+						<li><a href="/ju/employee/stud/register">학생 등록</a></li>
+						<li><a href="/ju/employee/stud/checklist">학생 조회</a></li>
 					</ul>
 				</div>
 				<div id="sub-menu2">
 					<ul>
-						<li><a href="#">학생</a></li>
-						<li><a href="#">직원</a></li>
-						<li><a href="#">교원</a></li>
+						<li><a href="/ju/employee/stud/changestatus">학적변경신청</a></li>
 					</ul>
 				</div>		
 				<div id="sub-menu3">
 				</div>
 				<div id="sub-menu4">
+					<ul>
+						<li><a href="/ju/employee/stud/noticelist">공지사항</a></li>
+						<li><a href="/ju/employee/stud/noticeform">공지사항 등록</a></li>
+					</ul>
 				</div>
 				<div id="sub-menu5">
-					<ul>
-						<li><a href="#">학생 공지사항 관리</a></li>
-						<li><a href="#">임직원 공지사항 관리</a></li>
-					</ul>
-				</div>
-				<div id="sub-menu6">
-				</div>
-				<div id="sub-menu7">
-					<ul>
-						<li><a href="#">개인정보 관리</a></li>
-					</ul>
 				</div>
 			</div>
 		</div>
