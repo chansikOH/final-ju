@@ -1,7 +1,6 @@
 package kr.ac.ju.service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -345,12 +344,12 @@ public class StudentServiceImpl implements StudentService {
 	}
 	
 	@Override
-	public ArrayList<CoursePart> getCoursePartByNo(int courseNo) {
+	public List<CoursePart> getCoursePartByNo(int courseNo) {
 		return studentDao.getCoursePartByNo(courseNo);
 	}
 	
 	@Override
-	public CoursePlan getCoursePlanByNo(int courseNo) {
+	public Map<String, Object> getCoursePlanByNo(int courseNo) {
 		return studentDao.getCoursePlanByNo(courseNo);
 	}
 	

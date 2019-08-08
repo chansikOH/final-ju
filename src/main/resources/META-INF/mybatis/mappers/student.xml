@@ -98,7 +98,7 @@
 		<result javaType="java.lang.Integer" property="week" column="course_part_week"/>
 		<result javaType="java.lang.Integer" property="avg" column="part_avg"/>
 	</resultMap>
-		
+	
 	<select id="getStudentByNo" parameterType="int" resultMap="studentWithMajorResultMap">
 		select *
 		from students S, majors M
@@ -637,26 +637,18 @@
 		where notice_no = #{value}
 	</select>
 	
-	<select id="getCoursePlanByNo" parameterType="int" resultType="coursePlan">
+	<select id="getCoursePlanByNo" parameterType="int" resultType="hashmap">
 		select 
-			P.professor_name professorName,
-			C.course_no courseNo,
-			C.course_name courseName,
-			PL.plan_goal goal,
-			PL.plan_summary summary,
-			PL.plan_main_book mainBook,
-			PL.plan_sub_book1 subBook1,
-			PL.plan_sub_book2 subBook2,
-			PL.plan_sub_book3 subBook3,
-			PL.plan_test_process testProcess,
-			PL.plan_create_date createDate
+			*
 		from 
 			professors P,
 			courses C,
-			course_plans PL
+			course_plans PL,
+			majors M
 		where 
 			PL.course_no = C.course_no
 			and PL.professor_no = P.professor_no
+			and C.major_no = M.major_no
 			and PL.course_no = #{no}
 	</select>
 	
@@ -669,6 +661,7 @@
 			course_parts
 		where 
 			course_no = #{no}
+		order by course_part_no
 	</select>
 	
 	<insert id="insertCourseOpinion" parameterType="courseOpinion">
@@ -699,8 +692,8 @@
 	</update>
 	
 	<insert id="insertMessage" parameterType="map">
-		insert into messages (message_no, message_contents, receiver_no, caller_no)
-		values (message_seq.nextval, #{contents}, #{receiver}, #{caller})
+		insert into messages (message_no, message_contents, receiver_no, caller_no, reply_no)
+		values (message_seq.nextval, #{contents}, #{receiver}, #{caller}, #{reply})
 	</insert>
 	
 	<select id="getReceiveMessageByNo" parameterType="int" resultType="message">

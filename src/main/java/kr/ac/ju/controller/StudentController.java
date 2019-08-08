@@ -1,7 +1,6 @@
 package kr.ac.ju.controller;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +36,6 @@ import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.CourseOpinion;
 import kr.ac.ju.vo.CoursePart;
 import kr.ac.ju.vo.CoursePlan;
-import kr.ac.ju.vo.Message;
 import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Person;
 import kr.ac.ju.vo.Student;
@@ -72,7 +69,7 @@ public class StudentController {
 
 		List<Course> myCourses = studentService.getAllCoursesWithProfessorAndMajorByStudentNo(student.getNo());
 		model.addAttribute("myCourses", myCourses);
-
+		
 		int creditCount = 0;
 		int totalCount = 0;
 
@@ -423,11 +420,14 @@ public class StudentController {
 	
 	@RequestMapping("/courseplan.pdf")
 	public ModelAndView coursePlan(@RequestParam("cno") int courseNo) {
-		System.out.println(courseNo+"!!!!!!!!!!!!!!!!!!!!");
+		
+		Map<String, Object> plan = studentService.getCoursePlanByNo(courseNo);
+		List<CoursePart> part = studentService.getCoursePartByNo(courseNo);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("coursePlan", studentService.getCoursePlanByNo(courseNo));
-		mav.addObject("coursePart", studentService.getCoursePlanByNo(courseNo));
+		
+		mav.addObject("part", part);
+		mav.addObject("plan", plan);
 		mav.setView(coursePlanPdfView);
 		
 		return mav;
