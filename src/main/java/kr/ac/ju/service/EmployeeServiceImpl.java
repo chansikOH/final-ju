@@ -96,9 +96,5 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employeedao.chanageStudentStatusPassyn(statusNo);
 	}
 	
-	@Override
-	public List<StudentStatus> getstatuschangenotice(int studentNo) {
-		return employeedao.getstatuschangenotice(studentNo); 
-	}
 	
 }

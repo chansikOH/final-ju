@@ -59,7 +59,7 @@ public class HomeController {
 			if(("직원").equals(person.getGubun())) {
 				if (digestPwd.toUpperCase().equals(person.getPassword())) {
 					session.setAttribute("LOGIN_EMPLOYEE", person);
-					return "redirect:employee/stud/register.do";
+					return "redirect:employee/statistic";
 				}
 			}
 			return "redirect:/?result=fail";

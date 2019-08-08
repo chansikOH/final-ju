@@ -10,17 +10,14 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style type="text/css">
-	 .img-rounded {width: 150px; height: 150px; margin-left: 0; margin-bottom: 20px;}
 	 .header {margin: 30px;}
 	 .btn-success {margin: 30px;}
 	 .form-group {width: 750px;}
 	 .input-group {width: 750px; margin: 10px; margin-left: 0; margin-top: 0;}
 	 .shadow {padding:0; box-shadow: 1px 1px 1px 1px #999;}
   	 .submit {margin: 0 auto 15px;}
-  	 
 	 .radio-inline {font-size: 15px; width: 50px;}  	 
   	 .form-group select {width:174px; height: 22px;} 
-  	 
   	 .form-error {color: red; font-style: italic;}
 </style>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js""></script>
@@ -38,10 +35,7 @@
 	  			<h2>학생등록</h2>
 	  		</div>
 	  		<div class="col-sm-12 ">
-	  			<div>
-	  				<img src="/ju/resources/images/profile.jpg" class="img-rounded">
-	  			</div>
-		  		<form:form  method="post" action="studentRegister.do"  modelAttribute="studentRegisterForm"  enctype="multipart/form-data">
+		  		<form:form  method="post" action="studentRegister"  modelAttribute="studentRegisterForm"  enctype="multipart/form-data">
 					<div class="form-group">
 						<label>이름</label>
 						<form:input path="name" cssClass="form-control"/>
@@ -126,17 +120,17 @@
 	
 	/* 주소 API */
 	function execPostCode() {
-        new daum.Postcode({
-           oncomplete: function(data) {
-              $('[name=postalcode]').val(data.zonecode);       // 우편번호 (5자리)
-              $('[name=address]').val(data.address);
-              $('[name=detailaddress]').val(data.buildingName);
-           }
-           }).open();
-       }
+		new daum.Postcode({
+			oncomplete: function(data) {
+				$('[name=userpostalcode]').val(data.zonecode); // 우편번호 (5자리)
+				$('[name=address]').val(data.address);
+				$('[name=detailaddress]').val(data.buildingName);
+			}
+		}).open();
+	}
 	
-	/* grade select창 */
-	$("[name=tranfer]").click(function(){
+	/* 학년 select창 */
+	$("[name=transferYn]").click(function(){
 		var istransfer = $(this).val();
 		
 		var n = "<select name='grade' id='grade-transfer-n'>"; 

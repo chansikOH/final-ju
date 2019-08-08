@@ -31,5 +31,4 @@ public interface EmployeeDao {
 	int getStudentStatusCount(Map<String, Object> searchOption);
 	String getStatusChangeReaseon(int statusNo); 
 	void chanageStudentStatusPassyn(int statusNo); 
-	List<StudentStatus> getstatuschangenotice(int studentNo); 
 }

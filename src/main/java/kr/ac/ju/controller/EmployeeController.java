@@ -47,7 +47,7 @@ public class EmployeeController {
 	@Value("${dir.image.profile}")
 	private String profileImageSaveDirectory;
 	
-	@GetMapping("/stud/register.do")
+	@GetMapping("/stud/register")
 	public String studentregister(Model model) {
 		
 		model.addAttribute("majors",employeeService.getAllMajors()); 
@@ -55,7 +55,7 @@ public class EmployeeController {
 		return "employee/stud/register";
 	}
 	
-	@RequestMapping(value = "/stud/studentRegister.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/stud/studentRegister", method = RequestMethod.POST)
 	public String studentRegister(@Valid StudentRegisterForm studentRegisterForm, BindingResult errors,
 								  Model model) throws Exception {
 		if(errors.hasErrors()) { 
@@ -94,10 +94,10 @@ public class EmployeeController {
 		}
 		employeeService.insertStudent(student);
 		
-		return "redirect:/employee/stud/register.do";
+		return "redirect:/employee/stud/register";
 	}
 	
-	@GetMapping("/stud/checklist.do")
+	@GetMapping("/stud/checklist")
 	public String studentselect(Model model) {
 		
 		model.addAttribute("majors",employeeService.getAllMajors()); 
@@ -105,12 +105,12 @@ public class EmployeeController {
 		return "employee/stud/checklist";
 	}
 	
-	@GetMapping("/stud/noticelist.do")
+	@GetMapping("/stud/noticelist")
 	public String noticelist(Model model){
 		return "employee/stud/noticelist";
 	}
 	
-	@GetMapping("/stud/noticedetail.do")
+	@GetMapping("/stud/noticedetail")
 	public String noticedetail(int noticeNo, Model model) {
 		Notice notice = employeeService.getNoticeByNoticeNo(noticeNo);
 		model.addAttribute("notice", notice);
@@ -118,13 +118,13 @@ public class EmployeeController {
 		return "employee/stud/noticedetail";
 	}
 	
-	@GetMapping("/stud/noticeform.do")
+	@GetMapping("/stud/noticeform")
 	public String noticeform(Model model) {
 		
 		return "employee/stud/noticeform";
 	}
 	
-	@GetMapping("/stud/addnotice.do")
+	@GetMapping("/stud/addnotice")
 	public String addnotice(String title, String writer, String contents) {
 		Notice notice = new Notice(); 
 		notice.setTitle(title);
@@ -133,7 +133,7 @@ public class EmployeeController {
 		
 		employeeService.addNotice(notice);
 		
-		return "redirect:noticelist.do";  
+		return "redirect:noticelist";  
 	}
 	
 	@GetMapping("/stud/changestatus")
@@ -141,6 +141,14 @@ public class EmployeeController {
 		model.addAttribute("majors",employeeService.getAllMajors()); 
 		return "employee/stud/changestatus"; 
 	}
+	
+	@GetMapping("/statistic")
+	public String lectureevaluaiton(Model model) {
+		
+		
+		return "employee/statistic"; 
+	}
+	
 
 	
 	@InitBinder // 한국식 날짜 변환 

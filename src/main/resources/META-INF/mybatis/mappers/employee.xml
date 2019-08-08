@@ -206,7 +206,6 @@
 		values (notice_seq.nextval, #{writer}, #{title}, #{contents}, #{fileName})
 	</insert>
 	
-	<!-- ***************************************************************************************************************8 -->
 	<select id="getStudentStatusCount" parameterType="map" resultType="int">
 		select 
 			count(*)
@@ -302,19 +301,6 @@
 		update student_status 
 		set pass_yn ='P'
 		where status_no = #{statusNo}
-	</select>
-	
-	<select id="getstatuschangenotice" parameterType="int" resultType="studentStatus">
-		select 
-			status_no			as no,
-			status_div			as division,  
-			start_term			as startTerm,
-			term_count			as termCount,
-			pass_yn				as passYn,
-			student_create_date as createDate
-		from 
-			student_status 
-		where student_no = #{statusNo}
 	</select>
 	
 </mapper>
