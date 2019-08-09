@@ -296,7 +296,21 @@ public class ProfessorController {
 		
 		return "professor/grade/gradedetail";
 	}
-	
+	@RequestMapping("/grade/classopinion")
+	public String classopinion(HttpSession session, Integer term, Integer year, Model model) {
+		
+		Professor professor = (Professor) session.getAttribute("LOGIN_PROFESSOR");
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("profId", professor.getNo());
+		map.put("term", term);
+		map.put("year", year);
+		
+		model.addAttribute("courses", service.getOpCourseByProfId(map));
+		model.addAttribute("opinions", service.getOpinionByProfId(map));
+		
+		return "professor/grade/classopinion";
+	}
 	
 	@RequestMapping("/course/planform")
 	public String planform(HttpSession session, Model model) {

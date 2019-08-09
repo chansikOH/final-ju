@@ -10,6 +10,7 @@ import kr.ac.ju.dao.ProfessorDao;
 import kr.ac.ju.vo.Cla;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
+import kr.ac.ju.vo.CourseOpinion;
 import kr.ac.ju.vo.CoursePart;
 import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Major;
@@ -123,5 +124,13 @@ public class ProfessorServiceImpl implements ProfessorService{
 		for(CourseAttend attend:attends) {
 			professorDao.updateRecordByCourseNoAndStudNo(attend);
 		}
+	}
+	@Override
+	public List<CourseOpinion> getOpinionByProfId(Map<String, Object> param) {
+		return professorDao.getOpinionByProfId(param);
+	}
+	@Override
+	public List<Course> getOpCourseByProfId(Map<String, Object> param) {
+		return professorDao.getOpCourseByProfId(param);
 	}
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.ac.ju.vo.Cla;
 import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
+import kr.ac.ju.vo.CourseOpinion;
 import kr.ac.ju.vo.CoursePart;
 import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Major;
@@ -43,4 +44,7 @@ public interface ProfessorDao {
 	List<Map<String, Object>> getStudentsByCourseNo(int courseNo);
 	
 	void updateRecordByCourseNoAndStudNo(CourseAttend attend);
+	
+	List<CourseOpinion> getOpinionByProfId(Map<String, Object>param);
+	List<Course> getOpCourseByProfId(Map<String, Object> param);
 }
