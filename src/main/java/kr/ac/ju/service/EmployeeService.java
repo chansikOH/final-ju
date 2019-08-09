@@ -28,5 +28,6 @@ public interface EmployeeService {
 	int getStudentStatusCount(Map<String, Object> searchOption);
 	String getStatusChangeReaseon(int statusNo); 
 	void chanageStudentStatusPassyn(int statusNo); 
+	List<Student> getStudentsStatistic(int year);
 	
 }

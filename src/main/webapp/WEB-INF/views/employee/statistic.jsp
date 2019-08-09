@@ -9,15 +9,94 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+     <script type="text/javascript">
+    // 구글차트 
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart1);
+      google.charts.setOnLoadCallback(drawChart2);
+      google.charts.setOnLoadCallback(drawChart3);
+      google.charts.setOnLoadCallback(drawChart4);
+
+     /*  $("[name=option]").click(function(){
+    	  
+      }) */
+      
+      function drawChart1() {
+    	  
+          var data1 = new google.visualization.DataTable();
+          data1.addColumn('string', 'Topping');
+          data1.addColumn('number', 'Slices');
+          data1.addRows([
+            ['남성', 3],
+            ['여성', 1],
+          ]);
+          
+          var options1 = {'width':700,
+                         'height':300};
+          
+          var chart1 = new google.visualization.PieChart(document.getElementById('chart-div1'));
+          chart1.draw(data1, options1);
+      } 
+                  
+      function drawChart2() {
+      
+          var data2 = new google.visualization.DataTable();
+          data2.addColumn('string', 'Topping');
+          data2.addColumn('number', 'Slices');
+          data2.addRows([
+            ['신입생', 1],
+            ['편입생', 3],
+          ]);
+          
+          var options2 = {'width':700,
+                         'height':300};
+          
+          var chart2 = new google.visualization.PieChart(document.getElementById('chart-div2'));
+          chart2.draw(data2, options2);
+      }
+      function drawChart3() {
+      
+          var data3 = new google.visualization.DataTable();
+          data3.addColumn('string', 'Topping');
+          data3.addColumn('number', 'Slices');
+          data3.addRows([
+            ['컴퓨터공학과', 1],
+            ['소프트웨어공학과', 1],
+            ['영어영문학과', 1],
+            ['국어국문학과', 3],
+          ]);
+          
+          var options3 = {'width':700,
+                         'height':300};
+          
+          var chart3 = new google.visualization.PieChart(document.getElementById('chart-div3'));
+          chart3.draw(data3, options3);
+      }
+      function drawChart4() {
+      
+          var data4 = new google.visualization.DataTable();
+          data4.addColumn('string', 'Topping');
+          data4.addColumn('number', 'Slices');
+          data4.addRows([
+              ['20대', 1],
+              ['30대', 1],
+              ['40대', 1],
+              ['50대 이상', 3],
+          ]);
+          
+          var options4 = {'width':700,
+                         'height':300};
+          
+          var chart4 = new google.visualization.PieChart(document.getElementById('chart-div4'));
+          chart4.draw(data4, options4);
+      }
+
+    </script>
 	<style>
-	 a{color: #000;}
-     a:hover{text-decoration: none;}
-    .student-search .title{margin: 20px 0;}
-    .student-search .title h1{font-size: 26px;}
-    
-
-
-    
+		.panel-heading{font-size: 20px;}
+		.yaer-select{width: 200px; margin-top: 20px}
+		.search-option p{font-size: 14px; margin: 15px; text-align: right;}
 	</style>
 </head>
 <body>
@@ -28,81 +107,72 @@
 				<%@include file="../common/sidebar.jsp" %>
 			</div>
 			<div class="col-sm-10">
-				<div class="col-sm-12 title">
-				  <h1>학사통계</h1>
+				<div class="form-group yaer-select">
+					<select class="form-control" name="option" >
+                        <option value="2019">2019</option>
+                        <option value="2018">2018</option>
+                        <option value="2017">2017</option>
+                        <option value="2016">2016</option>
+                    </select>
 				</div>
-
 				<ul class="nav nav-tabs" role="tablist" id="statisticTab">
 				  <li role="presentation" class="active"><a href="#studnet-statistic" aria-controls="studnet-statistic" role="tab" data-toggle="tab">학사통계</a></li>
 				  <li role="presentation"><a href="#employee-statistic" aria-controls="employee-statistic" role="tab" data-toggle="tab">교원통계</a></li>
 				</ul>
 				
-				<div class="tab-content">
+				<div class="tab-content" style="margin-top:10px;">
 				  <div role="tabpanel" class="tab-pane active" id="studnet-statistic">
-				  	<html>
-					  <head>
-					    <!--Load the AJAX API-->
-					    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-					    <script type="text/javascript">
-					
-					      // Load the Visualization API and the corechart package.
-					      google.charts.load('current', {'packages':['corechart']});
-					
-					      // Set a callback to run when the Google Visualization API is loaded.
-					      google.charts.setOnLoadCallback(drawChart);
-					
-					      // Callback that creates and populates a data table,
-					      // instantiates the pie chart, passes in the data and
-					      // draws it.
-					      function drawChart() {
-					
-					        // Create the data table.
-					        var data = new google.visualization.DataTable();
-					        data.addColumn('string', 'Topping');
-					        data.addColumn('number', 'Slices');
-					        data.addRows([
-					          ['Mushrooms', 3],
-					          ['Onions', 1],
-					          ['Olives', 1],
-					          ['Zucchini', 1],
-					          ['Pepperoni', 2]
-					        ]);
-					
-					        // Set chart options
-					        var options = {'title':'How Much Pizza I Ate Last Night',
-					                       'width':400,
-					                       'height':300};
-					
-					        // Instantiate and draw our chart, passing in some options.
-					        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-					        chart.draw(data, options);
-					      }
-					    </script>
-					  </head>
-					
-					  <body>
-					    <!--Div that will hold the pie chart-->
-					    <div id="chart_div"></div>
-					  </body>
-					</html>
+				  	<div class="row">
+				  		<div class="col-sm-6">
+				  			<div class="panel panel-default">
+				  				<div class="panel-heading"> 2019 입학생 성비</div>
+				  				<div class="panel-body">
+				  					<div id="chart-div1"></div>
+				  				</div>
+				  			</div>
+				  		</div>
+				  		<div class="col-sm-6">
+				  			<div class="panel panel-default">
+				  				<div class="panel-heading">2019 신ㆍ편입생 비율</div>
+				  				<div class="panel-body">
+				  					<div id="chart-div2"></div>
+				  				</div>
+				  			</div>
+				  		</div>
+				  	</div>
+				  	<div class="row">
+				  		<div class="col-sm-6">
+				  			<div class="panel panel-default">
+				  				<div class="panel-heading">2019 학과별 신입생</div>
+				  				<div class="panel-body">
+				  					<div id="chart-div3"></div>
+				  				</div> 
+				  			</div>
+				  		</div>
+				  		<div class="col-sm-6">
+				  			<div class="panel panel-default">
+				  				<div class="panel-heading">2019 신입생 연령비</div>
+				  				<div class="panel-body">
+				  					<div id="chart-div4"></div>
+				  				</div> 
+				  			</div>
+				  		</div>
+				  	
+				  	</div>
+				  	<div class="search-option">
+				  		<p><strong>※ 언젠가 쓰이겠지</strong></p>
+				  	</div>
+				  </div> 
+				  <div role="tabpanel" class="tab-pane active" id="employee-statistic">
+				  	
 				  </div>
-				  
-				  
-				  <div role="tabpanel" class="tab-pane" id="employee-statistic">
-				  	왜 안될까 ..? 
-				  </div>
-				  
 				</div>
 				
-				<script>
-				  $(function () {
-				    $('#statisticTab a:last').tab('show')
-				  })
-				</script>
+				
+			
+			
 			</div>
 		</div>
 	</div>
-    
-
 </body>
 </html>

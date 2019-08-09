@@ -96,5 +96,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employeedao.chanageStudentStatusPassyn(statusNo);
 	}
 	
+	@Override
+	public List<Student> getStudentsStatistic(int year) {
+		return employeedao.getStudentsStatistic(year); 
+	}
+	
 	
 }
