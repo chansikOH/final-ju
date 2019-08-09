@@ -367,4 +367,86 @@
 		and course_no = #{course.no}
 	</update>
 	
+	<select id="getOpinionByProfId" parameterType="map" resultType="courseOpinion">
+		select 
+		    c.course_name "course.name", 
+		    c.course_credit "course.credit",
+		    c.course_no "course.no",
+		    c.course_term "course.term", 
+		    c.course_year "course.year",
+		    x.opinion_question01 "q01",
+		    x.opinion_question02 "q02",
+		    x.opinion_question03 "q03",
+		    x.opinion_question04 "q04",
+		    x.opinion_question05 "q05",
+		    x.opinion_question06 "q06", 
+		    x.opinion_question07 "q07", 
+		    x.opinion_question08 "q08", 
+		    x.opinion_question09 "q09", 
+		    x.opinion_question10 "q10", 
+		    x.opinion_question11 "q11"
+		from
+		    course_opinions x, courses c
+		where 
+		    c.course_no = x.course_no
+		and
+		    c.professor_no = #{profId}
+		minus
+		select 
+		    c.course_name, 
+		    c.course_credit,
+		    c.course_no,
+		    c.course_term, 
+		    c.course_year,
+		    x.opinion_question01,
+		    x.opinion_question02,
+		    x.opinion_question03,
+		    x.opinion_question04,
+		    x.opinion_question05,
+		    x.opinion_question06, 
+		    x.opinion_question07, 
+		    x.opinion_question08, 
+		    x.opinion_question09, 
+		    x.opinion_question10, 
+		    x.opinion_question11
+		from
+		    course_opinions x, courses c
+		where 
+		    c.course_no = x.course_no
+		and
+		    c.professor_no = #{profId}
+		and
+		    c.course_term = #{term}
+		and
+		    c.course_year = #{year}
+	</select>
+	
+	<select id="getOpCourseByProfId" parameterType="map" resultType="course">
+		select
+		    course_name name, 
+		    course_credit credit,
+		    course_no no,
+		    course_term term, 
+		    course_year year
+		from
+		    courses
+		where
+		    professor_no = #{profId}
+		minus
+		select 
+		    course_name, 
+		    course_credit,
+		    course_no,
+		    course_term, 
+		    course_year
+		from
+		    courses
+		where
+		    professor_no = #{profId}
+		and
+		    course_term = #{term}
+		and
+		    course_year = #{year}
+	</select>
+	
 </mapper>

@@ -86,6 +86,7 @@
 		.grade-tab li.active {background: #fff; font-weight: bold;}
 		.grade-detail {display: none;}
 		.graph{margin-top: 40px;}
+		h4{font-weight: bold;}
     </style>
   	
 </head>
@@ -101,8 +102,7 @@
 			<div class="col-sm-10 wrapper">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4>[강의정보]</h4>               
-                        <p>※ 이번학기 담당강좌 성적만 입력 가능</p>
+                        <h4>강의정보</h4>               
                     </div>
                 </div>
 
@@ -138,7 +138,28 @@
 	                                    <td>${course.name }</td>
 	                                    <td>${course.credit}</td>
 	                                    <td>${course.count}</td>
-	                                    <td>${course.mustYn}</td>
+	                                    <c:choose>
+                                       		<c:when test="${course.mustYn eq 'Y'}">
+                                       			<c:choose>
+	                                       			<c:when test="${course.major.no ne 40 }">
+	                                       				<td>전공필수</td>
+	                                       			</c:when>
+	                                       			<c:otherwise>
+		                                       			<td>교양필수</td>
+	                                       			</c:otherwise>
+                                       			</c:choose>
+                                       		</c:when>
+                                       		<c:otherwise>
+                                       			<c:choose>
+	                                       			<c:when test="${course.major.no ne 40 }">
+	                                       				<td>전공선택</td>
+	                                       			</c:when>
+	                                       			<c:otherwise>
+		                                       			<td>교양선택</td>
+	                                       			</c:otherwise>
+                                       			</c:choose>
+                                       		</c:otherwise>
+                                       	</c:choose>
                                 	</tr>
                             </tbody>
                         </table>
@@ -146,7 +167,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4>[성적 상세조회]</h4>               
+                        <h4>성적 상세조회</h4>               
                     </div>
                 </div>
                 <div class="row">
@@ -189,9 +210,23 @@
                 	</div>
                 	<div class="col-sm-12 grade-detail detail-graph">
                 		<table class="table .table-bordered">
+                			<colgroup>
+                				<col width="15%">
+                				<col width="8.5%">
+                				<col width="8.5%">
+                				<col width="8.5%">
+                				<col width="8.5%">
+                				<col width="8.5%">
+                				<col width="8.5%">
+                				<col width="8.5%">
+                				<col width="8.5%">
+                				<col width="8.5%">
+                				<col width="8.5%">
+                				
+                			</colgroup>
                 			<thead>
                 				<tr>
-                					<th colspan="10">성적분포</th>
+                					<th colspan="11">성적분포</th>
                 				</tr>
                 			</thead>
                 			<tbody>
@@ -206,6 +241,7 @@
 									<td>D+</td>
 									<td>D</td>
 									<td>F</td>
+									<td>합계</td>
 								</tr>
                 				<tr class="students">
 									<th>학생수</th>
@@ -218,9 +254,10 @@
 									<td class="dplus"></td>
 									<td class="d"></td>
 									<td class="f"></td>
+									<td class="student-total"></td>
 								</tr>
                 				<tr>
-									<th>비율</th>
+									<th>비율(%)</th>
 									<td class="aplus-avg"></td>
 									<td class="a-avg"></td>
 									<td class="bplus-avg"></td>
@@ -230,11 +267,12 @@
 									<td class="dplus-avg"></td>
 									<td class="d-avg"></td>
 									<td class="f-avg"></td>
+									<td class="percent-total"></td>
 								</tr>
                 			</tbody>
                 		</table>
                 		<div class="graph">
-	                		<h4>[성적 그래프]</h4>
+	                		<h4>성적 그래프</h4>
 	                		<div id="chart_div">
 	                		</div>
                 		</div>
@@ -300,14 +338,31 @@
 			var percent = 100/plus;
 			
 			var Aplusavg = percent * count.Aplus;
+			var Aplusavg1 = Aplusavg.toFixed(1);
+			
 			var Aavg = percent * count.A;
+			var Aavg1 = Aavg.toFixed(1);
+			
 			var Bplusavg = percent * count.Bplus;
+			var Bplusavg1 = Bplusavg.toFixed(1);
+			
 			var Bavg = percent * count.B;
+			var Bavg1 = Bavg.toFixed(1);
+			
 			var Cplusavg = percent * count.Cplus;
+			var Cplusavg1 = Cplusavg.toFixed(1);
+			
 			var Cavg = percent * count.C;
+			var Cavg1 = Cavg.toFixed(1);
+			
 			var Dplusavg = percent * count.Dplus;
+			var Dplusavg1 = Dplusavg.toFixed(1);
+			
 			var Davg = percent * count.D;
+			var Davg1 = Davg.toFixed(1);
+			
 			var Favg = percent * count.F;
+			var Favg1 = Favg.toFixed(1);
 			
 			$(".aplus").text(count.Aplus);
 			$(".a").text(count.A);
@@ -319,15 +374,19 @@
 			$(".d").text(count.D);
 			$(".f").text(count.F);
 			
-			$(".aplus-avg").text(Aplusavg);
-			$(".a-avg").text(Aavg);
-			$(".bplus-avg").text(Bplusavg);
-			$(".b-avg").text(Bavg);
-			$(".cplus-avg").text(Cplusavg);
-			$(".c-avg").text(Cavg);
-			$(".dplus-avg").text(Dplusavg);
-			$(".d-avg").text(Davg);
-			$(".f-avg").text(Favg); 
+			$(".aplus-avg").text(Aplusavg1);
+			$(".a-avg").text(Aavg1);
+			$(".bplus-avg").text(Bplusavg1);
+			$(".b-avg").text(Bavg1);
+			$(".cplus-avg").text(Cplusavg1);
+			$(".c-avg").text(Cavg1);
+			$(".dplus-avg").text(Dplusavg1);
+			$(".d-avg").text(Davg1);
+			$(".f-avg").text(Favg1); 
+			
+			var percenttotal = Aplusavg+Aavg+Bplusavg+Bavg+Cplusavg+Cavg+Dplusavg+Davg+Favg;
+			$(".student-total").text(plus);
+			$(".percent-total").text(percenttotal);
 			
 			google.charts.load('current', {packages:['corechart']});
 			
@@ -353,7 +412,8 @@
 
 				// 그래프 옵션
 				var options = {
-					width : 1550, // 가로 px
+						
+					width : 1600, // 가로 px
 					height : 400, // 세로 px
 					bar : {
 						groupWidth : '25%' // 그래프 너비 설정 %
@@ -361,8 +421,10 @@
 					legend : {
 						position : 'none' // 항목 표시 여부 (현재 설정은 안함)
 					},
+					vAxis : {
+						title : '학생 수(명)'
+					}
 				};
-
 				var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
 				chart.draw(data, options);
 			}

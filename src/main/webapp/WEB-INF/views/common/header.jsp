@@ -189,7 +189,14 @@
 							</c:otherwise>
 						</c:choose>
 						<li><a href="/ju/professor/grade/gradelist">성적조회</a></li>
-						<li><a href="/ju/professor/course/planform">강의평가 조회</a></li>
+						<c:choose>
+							<c:when test="${nowDate < term }">
+								<li><a href="/ju/professor/grade/classopinion?term=1&year=${nowYear}">강의평가 조회</a></li>					
+							</c:when>
+							<c:otherwise>							
+								<li><a href="/ju/professor/grade/classopinion?term=2&year=${nowYear}">강의평가 조회</a></li>					
+							</c:otherwise>
+						</c:choose>
 					</ul>
 				</div>
 				<div id="sub-menu4">
