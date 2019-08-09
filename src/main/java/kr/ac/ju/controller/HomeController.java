@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.ju.service.HomeService;
+import kr.ac.ju.vo.Department;
 import kr.ac.ju.vo.Employee;
+import kr.ac.ju.vo.Major;
 import kr.ac.ju.vo.Message;
 import kr.ac.ju.vo.Person;
 import kr.ac.ju.vo.Professor;
@@ -76,28 +78,54 @@ public class HomeController {
 	
 	@RequestMapping(value="/message", method=RequestMethod.POST)
 	public @ResponseBody Map<String, Object> message(Model model, int no) {
-		System.out.println(no+"no");
+		Person p = homeService.getPersonByNo(no);
 		
-		List<Message> receiveMessage = homeService.getReceiveMessageByNo(no);
-		List<Message> callMessage = homeService.getCallMessageByNo(no);
+		List<Message> receiveMessage = homeService.getReceiveMessageByNo(p.getNo());
+		System.out.println(receiveMessage.get(0).getCaller() + " CALLER");
+		System.out.println(receiveMessage.get(0).getReceiver() + " RECEIVER");
 		
-		System.out.println(receiveMessage.get(0).getReceiver());
+		List<Message> callMessage = homeService.getCallMessageByNo(p.getNo());
+		System.out.println(callMessage.get(0).getCaller() + "-CALLER");
+		System.out.println(callMessage.get(0).getReceiver() + "-RECEIVER");
 		
 		for(Message m : receiveMessage) {
 			Person person = homeService.getPersonByNo(no);
-			System.out.println(person);
-			m.setReceiver(person);
 		}
 		
 		for(Message c : callMessage) {
 			Person person = homeService.getPersonByNo(no);
-			c.setCaller(person);
 		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("receiveMessage", receiveMessage);
 		map.put("callMessage", callMessage);
 				
+		return map;
+	}
+	
+	@RequestMapping(value="/findgubun", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> findgubun() {
+		List<Major> majors = homeService.getAllMajors();
+		List<Department> departments = homeService.getAllDepartments();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("majors", majors);
+		map.put("departments", departments);
+		
+		return map;
+	}
+	
+	@RequestMapping(value="/findperson", method=RequestMethod.POST)
+	public @ResponseBody Map<String, Object> findperson(int majorNo, String deptId) {
+		List<Student> student = homeService.getStudentByMajorNo(majorNo);
+		List<Professor> professor = homeService.getProfessorByMajorNo(majorNo);
+		List<Employee> employee = homeService.getEmployeeByDeptNo(deptId);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("student", student);
+		map.put("professor", professor);
+		map.put("employee", employee);
+		
 		return map;
 	}
 		

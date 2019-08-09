@@ -11,9 +11,18 @@ public class Message {
 	private Message reply;
 	private Date createDate;
 	private String readYn;
+	private String receiverType;
 
 	public Message() {
 
+	}
+	
+	public String getReceiverType() {
+		return receiverType;
+	}
+
+	public void setReceiverType(String receiverType) {
+		this.receiverType = receiverType;
 	}
 
 	public Integer getNo() {

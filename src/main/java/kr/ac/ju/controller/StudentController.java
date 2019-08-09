@@ -380,8 +380,6 @@ public class StudentController {
 	public String goingbackStatus(HttpSession session, String sta, StudentStatus studentStatus) {
 		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
 		
-		System.out.println(studentStatus.getNo());
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("no", student.getNo());
 		map.put("division", studentStatus.getDivision());
@@ -392,7 +390,7 @@ public class StudentController {
 		}
 		
 		Map<String, Object> statusMap = new HashMap<String, Object>();
-		statusMap.put("division", studentStatus.getDivision());
+		statusMap.put("division", "복학");
 		statusMap.put("student", student.getNo());
 		statusMap.put("no", studentStatus.getNo());
 		
