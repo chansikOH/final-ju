@@ -88,7 +88,7 @@
 						<img src="/ju/resources/images/profile.jpg" id="profile" style="width: 50%; height: 50%; margin-bottom: 20px;" />
 					</c:when>
 					<c:otherwise>
-						<img src="/ju/resources/images/students/${LOGIN_STUDENT.photoName }" style="width: 50%; height: 50%; margin-bottom: 20px;" />
+						<img src="/ju/resources/images/students/${LOGIN_STUDENT.photoName }" id="profile" style="width: 50%; height: 50%; margin-bottom: 20px;" />
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -155,7 +155,7 @@
 						<img src="/ju/resources/images/profile.jpg" id="profile" style="width: 50%; height: 50%; margin-bottom: 20px;" />
 					</c:when>
 					<c:otherwise>
-						<img src="/ju/resources/images/students/${LOGIN_PROFESSOR.photoName }" style="width: 50%; height: 50%; margin-bottom: 20px;" />
+						<img src="/ju/resources/images/students/${LOGIN_PROFESSOR.photoName }" id="profile" style="width: 50%; height: 50%; margin-bottom: 20px;" />
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -216,7 +216,14 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<br>
-				<img src="/ju/resources/images/profile.jpg" style="width: 50%; height: 50%; margin-bottom: 20px;" />
+				<c:choose>
+					<c:when test="${empty LOGIN_EMPLOYEE.photoName }">
+						<img src="/ju/resources/images/profile.jpg" id="profile" style="width: 50%; height: 50%; margin-bottom: 20px;" />
+					</c:when>
+					<c:otherwise>
+						<img src="/ju/resources/images/students/${LOGIN_EMPLOYEE.photoName }" id="profile" style="width: 50%; height: 50%; margin-bottom: 20px;" />
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 		
