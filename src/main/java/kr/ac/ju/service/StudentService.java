@@ -44,6 +44,7 @@ public interface StudentService {
 	// 작성자 : 오찬식
 	void updateClassView(int viewNo, String currentTime, int percentage);
 	Student getLeaveStudentByNo(int studentNo);
+	int getAllNoticeCount();
 	List<Notice> getAllNotices(Map<String, Object> map);
 	Notice getNoticeByNoticeNo(int noticeNo);
 	Map<String, Object> getCoursePlanByNo(int courseNo);

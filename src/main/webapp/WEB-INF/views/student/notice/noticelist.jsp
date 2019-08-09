@@ -67,9 +67,9 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="notice" items="${notices }" varStatus="index">
+								<c:forEach var="notice" items="${notices }">
 									<tr>
-										<td>${index.count }</td>
+										<td>${notice.no }</td>
 										<td class="text-left"><a href="detail?no=${notice.no }">${notice.title }</a></td>
 										
 										<c:if test="${empty notice.extension }">
@@ -87,6 +87,42 @@
 								</c:forEach>
 							</tbody>
 						</table>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-sm-12 text-center">
+						<ul class="pagination" id="pagination-box">
+						<!-- &laquo;를 나타내는 c:choose -->
+						<c:choose>	
+							<c:when test="${pagination.first }">
+								<li class="disabled"><a href="#">&laquo;</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="list?pno=${pagination.page - 1 }" data-pno="${pagination.page - 1 }">&laquo;</a></li>
+							</c:otherwise>
+						</c:choose>
+						
+						<!-- 1페이지, 2페이지 등 페이지번호를 나타내는 c:foreach -->
+						<c:forEach begin="${pagination.begin }" end="${pagination.end }" varStatus="index">
+							<c:if test="${index.count eq pagination.page }">
+								<li class="active"><a href="list?pno=${index.count }">${index.count }</a></li>
+							</c:if>
+							<c:if test="${index.count ne pagination.page }">
+								<li><a href="list?pno=${index.count }">${index.count }</a></li>
+							</c:if>
+						</c:forEach>
+						
+						<!-- &raquo;를 나타내는 c:choose -->
+						<c:choose>	
+						<c:when test="${pagination.last }">
+							<li class="disabled"><a href="#">&raquo;</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="list?pno=${pagination.page + 1 }" data-pno="${pagination.page + 1 }">&raquo;</a></li>
+						</c:otherwise>
+						</c:choose>
+						</ul>
 					</div>
 				</div>
 			</div>

@@ -615,23 +615,36 @@
 			class_view_no = #{value}
 	</select>
 	
-	<select id="getAllNotices" parameterType="map" resultType="notice">
-		select	notice_no as no,
-				notice_writer as writer,
-				notice_title as title,
-				notice_contents as contents,
-				notice_file_name as fileName,
-				notice_create_date as createDate
+	<select id="getAllNoticeCount" resultType="int">
+		select count(*)
 		from notices
-		<where>
-			<if test="title != null">
-				notice_title like '%' || #{title} || '%'
-			</if>
-			<if test="contents != null">
-				notice_contents like '%' || #{contents} ||'%'
-			</if>
-		</where>
-		order by notice_no desc
+	</select>
+	
+	<select id="getAllNotices" parameterType="map" resultType="notice">
+		select *
+		from
+			(select	
+				notice_no 			as no,
+				notice_writer 		as writer,
+				notice_title 		as title,
+				notice_contents	 	as contents,
+				notice_file_name 	as fileName,
+				notice_create_date	as createDate,
+				row_number() over (order by notice_no desc) as rn
+			from 
+				notices
+			<where>
+				<if test="title != null">
+					notice_title like '%' || #{title} || '%'
+				</if>
+				<if test="contents != null">
+					notice_contents like '%' || #{contents} ||'%'
+				</if>
+			</where>)
+		where 
+			rn >= #{beginIndex}
+			and rn &lt;= #{endIndex}
+		<!-- order by notice_no desc -->
 	</select>
 	
 	<select id="getNoticeByNoticeNo" parameterType="int" resultType="notice">

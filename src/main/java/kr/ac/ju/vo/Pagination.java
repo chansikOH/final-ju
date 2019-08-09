@@ -1,14 +1,14 @@
 package kr.ac.ju.vo;
 
 public class Pagination {
-	private int page;				
-	private int size;	
-	private int pages;	
-	private int records;	
+	private int page;		// 현재 페이지번호				
+	private int size;		// 한 화면에 표시할 데이터 갯수
+	private int pages;		// 한 화면에 표시할 페이지 번호 갯수
+	private int records;	// 검색결과와 일치하는 총 데이터 건수
 
-	private int totalPages;			
-	private int totalBlocks;			
-	private int currentBlock;		
+	private int totalPages;			// 총 데이터 건수로 계산한 총 페이지 개수
+	private int totalBlocks;		// 총 페이지 갯수로 계산한 총 블록 갯수
+	private int currentBlock;		// 현재 페이지번호에 해당하는 블록번호 -> 페이지번호들 표시에 사용
 
 	public Pagination(int page, int records) {   
 		this.page = page;
@@ -34,6 +34,7 @@ public class Pagination {
 		init();
 	}
 	
+	// 현재 페이지에서 페이지되는 항목의 시작번호를 제공한다.
 	public int getIndex() {
 		return (getPage() - 1) * size + 1;
 	}
@@ -43,7 +44,7 @@ public class Pagination {
 		return page;
 	}
 
-	// 첫 페이지 여부 
+	// 첫 페이지 여부  page 1이면 true
 	public boolean isFirst() {
 		if (page == 1) {
 			return true;
@@ -51,7 +52,7 @@ public class Pagination {
 		return false;
 	}
 
-	// 마지막 페이지 여부 
+	// 마지막 페이지 여부  page == totalPages true
 	public boolean isLast() {
 		if (page == totalPages) {
 			return true;
@@ -59,7 +60,7 @@ public class Pagination {
 		return false;
 	}
 
-	// 시작 페이지 번호 
+	// 시작 페이지 번호 -> 현재 페이지 블록의 시작페이지 번호
 	public int getBegin() {
 		if (records <= 0) {
 			return 0;
