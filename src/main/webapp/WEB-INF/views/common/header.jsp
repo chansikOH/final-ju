@@ -2,10 +2,12 @@
 	pageEncoding="UTF-8"%>
 	<jsp:useBean id="now" class="java.util.Date" />
 	<fmt:parseDate value="0831" pattern="MMdd" var="termDate" />
+	<fmt:parseDate value="0801" pattern="MMdd" var="termDate2"/> 
 	
 	<fmt:formatDate value="${now }" pattern="MMdd" var="nowDate"/>
 	<fmt:formatDate value="${now }" pattern="yyyy" var="nowYear"/>
 	<fmt:formatDate value="${termDate }" pattern="MMdd" var="term" />
+	<fmt:formatDate value="${termDate2 }" pattern="MMdd" var="term2" />
 	
 <style>
 	body {
@@ -190,7 +192,7 @@
 						</c:choose>
 						<li><a href="/ju/professor/grade/gradelist">성적조회</a></li>
 						<c:choose>
-							<c:when test="${nowDate < term }">
+							<c:when test="${nowDate < term2 }">
 								<li><a href="/ju/professor/grade/classopinion?term=1&year=${nowYear}">강의평가 조회</a></li>					
 							</c:when>
 							<c:otherwise>							

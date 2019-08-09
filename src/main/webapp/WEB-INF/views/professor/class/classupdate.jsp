@@ -23,13 +23,14 @@
 	    .course-create .table-wrap .table>tbody>tr>th{padding: 40px 20px 18px;}
 	    .course-create .table-wrap .table .search{text-align: right; padding: 30px 20px 37px 0;}
 	    .check-text{color: #ff0000;}
+	    .side-padding{padding-left:0;}
 	</style>
 </head>
 <body>
 <%@include file="../../common/header.jsp" %>
 <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-2">
+            <div class="col-sm-2 side-padding">
                 <!-- 정보 넣는 곳-->
                 <%@include file="../../common/sidebar.jsp" %>
             </div>

@@ -74,14 +74,15 @@
     a, a:hover, a:link {
         text-decoration: none;   
     }
-	
+    .profile-img-padding{padding:10px;}
+	.profile-padding{padding-left: 22px; padding-right: 21px;}
 	#student-info-table td {text-align: left;}
 </style>
 <div class="sidebar" style="height: 100vh;">
 
 	<c:if test="${not empty LOGIN_STUDENT }">
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-sm-12 profile-img-padding">
 				<br>
 				<c:choose>
 					<c:when test="${empty LOGIN_STUDENT.photoName }">
@@ -105,7 +106,7 @@
 		</div>
 		
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-sm-12 profile-padding">
 				<table class="table" id="student-info-table">
 					<colgroup>
 						<col width="25%">
@@ -148,7 +149,7 @@
 
 	<c:if test="${not empty LOGIN_PROFESSOR }">
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-sm-12 profile-img-padding">
 				<br>
 				<c:choose>
 					<c:when test="${empty LOGIN_PROFESSOR.photoName }">
@@ -162,7 +163,7 @@
 		</div>
 		
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-sm-12 profile-img-padding">
 				<p class="text-center">
 					<strong>${LOGIN_PROFESSOR.name }</strong>님 환영합니다.
 					<a href="/ju/logout" class="btn btn-default btn-xs">로그아웃</a>
@@ -171,7 +172,7 @@
 		</div>
 		
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-sm-12 profile-padding">
 				<table class="table" id="student-info-table">
 					<colgroup>
 						<col width="25%">
@@ -230,7 +231,7 @@
 		</div>
 		
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-sm-12 profile-padding">
 				<table class="table">
 					<tbody>
 						<tr>
@@ -503,5 +504,22 @@
     			}
     		});
     	})
+    	
+    	
+			$(window).scroll(function() {
+			var scroll = $(window).scrollTop();
+			console.log(scroll);
+			//console.log(scroll);
+			if (scroll >= 60) {
+				//console.log('a');
+				$(".sidebar").css({"height" : "200vh"});
+			}else if(scroll > 150){
+				$(".sidebar").css({"height" : "230vh"});
+			} else {
+				//console.log('a');
+				
+			}
+});
+		
     </script>
 </div>

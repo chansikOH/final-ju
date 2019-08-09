@@ -76,12 +76,12 @@ public class HomeController {
 	
 	@RequestMapping(value="/message", method=RequestMethod.POST)
 	public @ResponseBody Map<String, Object> message(Model model, int no) {
-		System.out.println(no+"no");
+		//System.out.println(no+"no");
 		
 		List<Message> receiveMessage = homeService.getReceiveMessageByNo(no);
 		List<Message> callMessage = homeService.getCallMessageByNo(no);
 		
-		System.out.println(receiveMessage.get(0).getReceiver());
+		//System.out.println(receiveMessage.get(0).getReceiver());
 		
 		for(Message m : receiveMessage) {
 			Person person = homeService.getPersonByNo(no);

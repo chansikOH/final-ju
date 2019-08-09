@@ -133,4 +133,20 @@ public class ProfessorServiceImpl implements ProfessorService{
 	public List<Course> getOpCourseByProfId(Map<String, Object> param) {
 		return professorDao.getOpCourseByProfId(param);
 	}
+	
+	@Override
+	public Map<String, Object> getOpinionAvg(int courseNo) {
+		return professorDao.getOpinionAvg(courseNo);
+	}
+	@Override
+	public Map<String, Object> getOpinionMax(int courseNo) {
+		return professorDao.getOpinionMax(courseNo);
+	}@Override
+	public Map<String, Object> getOpinionMin(int courseNo) {
+		return professorDao.getOpinionMin(courseNo);
+	}
+	@Override
+	public List<CourseOpinion> getOpinionComment(int courseNo) {
+		return professorDao.getOpinionComment(courseNo);
+	}
 }
