@@ -318,31 +318,30 @@
 		update drafts
 		set
 			draft_title = #{title},
-			draft_contents = #{contents},
+			draft_contents = #{contents}
 		where 
-			docs_no = #{value}
-			
+			docs_no = #{no}
 	</update>
 	
 	<!-- 직원 휴가서 수정 -->
 	<update id="updateVacation" parameterType="vacation">
 		update vacations 
 		set
-			vacation_contents = #{contents}
-			vacation_start_date = #{startDate}
+			vacation_contents = #{contents},
+			vacation_start_date = #{startDate},
 			vacation_end_date = #{endDate}
 		where
-			docs_no = #{value}
+			docs_no = #{no}
 	</update>
 	
 	<!-- 직원 퇴직서 수정 -->
 	<update id="updateRetire" parameterType="retire">
 		update retires
 		set
-			retire_contents
-			retire_date
+			retire_contents = #{contents}, 
+			retire_date = #{retireDate} 
 		where
-			docs_no = #{value}
+			docs_no = #{no}
 	</update>
 	
 </mapper>

@@ -234,7 +234,7 @@
 						<li><a href="#" id="menu2">신청내역</a></li>
 						<li><a href="/ju/employee/statistic" id="menu3">학교현황</a></li>
 						<li><a href="#" id="menu4">공지사항 관리</a></li>
-						<li><a href="#" id="menu5">결재</a></li>
+						<li><a href="/ju/doc/list" id="menu5">결재</a></li>
 					</ul>
 				</div>
 			</div>

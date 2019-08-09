@@ -29,25 +29,25 @@
 		<div class="col-sm-10">
     		<h2 class="text-center">기안서 결재 확인</h2>
 		    <div class="well">
-		    	<form action="">
+		    	<form method="post" action="draftUpdate">
 		    		<div class="form-group">
 		    			<label>중간결재자</label>
-		    			<input type="text" class="form-control" value="${draft.doc.middlePerson }" disabled>
+		    			<input type="text" class="form-control" name="middlePerson" value="${draft.doc.middlePerson }" readonly >
 		    			<br/>
 		    			<label>최종결재자</label>
-		    			<input type="text" class="form-control" value="${draft.doc.finalPerson}" disabled>
+		    			<input type="text" class="form-control" name="finalPerson" value="${draft.doc.finalPerson}" readonly >
 		    			<br/>
 		    			<label>제목</label>
-		    			<input type="text" class="form-control" value="${draft.title}">
+		    			<input type="text" class="form-control" name="title" value="${draft.title}" />
 		    			<br/>
 		    			<label>내용</label>
-		    			<input type="text" class="form-control" value="${draft.contents}"/>
+		    			<input type="text" class="form-control" name="contents" value="${draft.contents}" />
 		    			<br/>
 			    		<label>첨부파일</label>
 			    		<input type="file" class="form-control">
 			    		<br/>
 		    			<label>시행일자</label>
-		    			<input type="date" class="form-control" value="startDate">
+		    			<input type="date" class="form-control" name="startDate" value="${draft.startDate }" />
 		    		</div>
 		    		<br/>
 		    		<div class="text-center">

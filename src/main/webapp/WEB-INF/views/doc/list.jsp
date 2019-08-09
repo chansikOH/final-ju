@@ -88,7 +88,7 @@
 										<td>${doc.EMPLOYEE_NAME }</td>
 										<td>${doc.EMPLOYEE_NAME_1 }</td>
 										<td><fmt:formatDate value="${doc.DOC_CREATE_DATE }"/> </td>
-										<td><a href="draft/update">${doc.DOC_STATE }</a></td>
+										<td><a href="draft/update?no=${doc.DOC_NO }">${doc.DOC_STATE }</a></td>
 									</c:otherwise>
 								</c:choose>
 							</tr>

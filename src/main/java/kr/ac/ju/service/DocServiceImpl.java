@@ -1,5 +1,6 @@
 package kr.ac.ju.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -124,6 +125,10 @@ public class DocServiceImpl implements DocService {
 		
 		@Override
 		public Map<String, Object> getDraftByNo(Integer draftNo) {
+			Map<String, Object> draft = new HashMap<String, Object>();
+			draft.put("draftNo", draft);
+			
+			Map<String, Object> drafts = new HashMap<String, Object>();
 			
 			return docDao.getDraftByNo(draftNo);
 		}
