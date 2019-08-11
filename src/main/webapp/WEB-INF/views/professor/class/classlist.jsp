@@ -10,8 +10,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<style>
-		a{color: #000;}
-	    a:hover{text-decoration: none;}
+		/* a{color: #000;}
+	    a:hover{text-decoration: none;} */
 	    .course-search .title{margin: 20px 0;}
 	    .course-search .table-wrap .table{border: 1px solid #ccc;}
 	    .course-search .title h1{font-size: 26px;}
@@ -55,16 +55,17 @@
 	    .bs-example-modal-lg .save-btn{text-align: right; padding: 12px 20px 0px;}
 	    .bs-example-modal-lg .save-btn button{padding: 5px 15px;}
 	    
-	    .text-center{margin: 0 auto;}
+	    .table-wrap .text-center{margin: 0 auto;}
 	    .pagination{width: auto;}
 	    .file{color: #ff0000;}
+	    .side-padding{padding-left:0;}
 	</style>
 </head>
 <body>
 <%@include file="../../common/header.jsp" %>
 <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-2">
+            <div class="col-sm-2 side-padding">
                 <!-- 정보 넣는 곳-->
                 <%@include file="../../common/sidebar.jsp" %>
             </div>

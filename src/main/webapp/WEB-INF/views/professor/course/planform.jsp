@@ -10,11 +10,11 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<style>
-		a{color: #000;}
+	a{color: #000;}
     a:hover{text-decoration: none;}
     .course-create .title{margin: 20px 0;}
     .course-create .title h1{font-size: 26px;}
-    .course-create .btn{padding: 8px 30px;}
+    .table-wrap .btn{padding: 8px 30px;}
     .course-create .table-wrap .table{padding: 10px 0 30px; border: 1px solid #ccc;}
     .course-create .table-wrap .table th, .course-create .table-wrap .table td{border: none; padding-top: 25px}
     .course-create .table-wrap .table>tbody>tr>td{padding: 8px 20px;}
@@ -46,13 +46,14 @@
     .delete-btn{font-size: 12px;}
     .check-text{color: #ff0000; text-align: left;}
     .course-create .table-wrap .table .add{text-align: right;}
+    .side-padding{padding-left: 0;}
 	</style>
 </head>
 <body>
 <%@include file="../../common/header.jsp" %>
 <div class="container-fluid">
         <div class="row course-create">
-            <div class="col-sm-2">
+            <div class="col-sm-2 side-padding">
                 <!-- 정보 넣는 곳-->
                 <%@include file="../../common/sidebar.jsp" %>
             </div>

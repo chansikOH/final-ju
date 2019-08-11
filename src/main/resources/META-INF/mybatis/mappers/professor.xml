@@ -448,5 +448,73 @@
 		and
 		    course_year = #{year}
 	</select>
+	<select id="getOpinionAvg" parameterType="int" resultType="map">
+		select 
+		    avg(opinion_question01) q1,	 
+		    avg(opinion_question02) q2,
+		    avg(opinion_question03) q3,
+		    avg(opinion_question04) q4,
+		    avg(opinion_question05) q5,
+		    avg(opinion_question06) q6,
+		    avg(opinion_question07) q7,
+		    avg(opinion_question08) q8,
+		    avg(opinion_question09) q9,
+		    avg(opinion_question10) q10
+		  
+		from
+		    course_opinions
+		where
+		    course_no = #{value}
+		group by
+		    course_no
+	</select>
+	<select id="getOpinionMin" parameterType="int" resultType="map">
+		select 
+		    min(opinion_question01) q1,	 
+		    min(opinion_question02) q2,
+		    min(opinion_question03) q3,
+		    min(opinion_question04) q4,
+		    min(opinion_question05) q5,
+		    min(opinion_question06) q6,
+		    min(opinion_question07) q7,
+		    min(opinion_question08) q8,
+		    min(opinion_question09) q9,
+		    min(opinion_question10) q10
+		  
+		from
+		    course_opinions
+		where
+		    course_no = #{value}
+		group by
+		    course_no
+	</select>
+	<select id="getOpinionMax" parameterType="int" resultType="map">
+		select 
+		    max(opinion_question01) q1,	 
+		    max(opinion_question02) q2,
+		    max(opinion_question03) q3,
+		    max(opinion_question04) q4,
+		    max(opinion_question05) q5,
+		    max(opinion_question06) q6,
+		    max(opinion_question07) q7,
+		    max(opinion_question08) q8,
+		    max(opinion_question09) q9,
+		    max(opinion_question10) q10
+		  
+		from
+		    course_opinions
+		where
+		    course_no = #{value}
+		group by
+		    course_no
+	</select>
+	<select id="getOpinionComment" parameterType="int" resultType="courseOpinion">
+		select 
+            opinion_question11 q11
+        from 
+            course_opinions
+        where
+            course_no = #{value}
+	</select>
 	
 </mapper>

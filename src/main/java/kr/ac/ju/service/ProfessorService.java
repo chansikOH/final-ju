@@ -45,4 +45,8 @@ public interface ProfessorService {
 	void updateRecordByCourseNoAndStudNo(List<CourseAttend> attends);
 	List<CourseOpinion> getOpinionByProfId(Map<String, Object>param);
 	List<Course> getOpCourseByProfId(Map<String, Object> param);
+	Map<String, Object> getOpinionAvg(int courseNo);
+	Map<String, Object> getOpinionMin(int courseNo);
+	Map<String, Object> getOpinionMax(int courseNo);
+	List<CourseOpinion> getOpinionComment(int courseNo);
 }

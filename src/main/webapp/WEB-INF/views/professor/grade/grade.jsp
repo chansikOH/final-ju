@@ -16,7 +16,7 @@
         	margin-top: 20px;
             padding: 20px;
         }
-        .wrapper a, #opinion a{color: #000;}
+        /* .wrapper a, #opinion a{color: #000;} */
         
         .wrapper table {
             padding: 20px;
@@ -77,6 +77,7 @@
 	    	resize: none;
 	    }
 		#opinion .modal-body {height: 100%;}
+		.side-padding{padding-left: 0;}
     </style>
   	
 </head>
@@ -85,7 +86,7 @@
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-2 shadow">
+			<div class="col-sm-2 shadow side-padding">
 				<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 			</div>
 			

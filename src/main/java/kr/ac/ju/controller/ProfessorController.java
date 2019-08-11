@@ -311,6 +311,19 @@ public class ProfessorController {
 		
 		return "professor/grade/classopinion";
 	}
+	@RequestMapping("/grade/opiniondetail")
+	public @ResponseBody Map<String, Object> opiniondetail(Integer cno) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("course", service.getCourseByCourseNo(cno));
+		map.put("avg", service.getOpinionAvg(cno));
+		map.put("min", service.getOpinionMin(cno));
+		map.put("max", service.getOpinionMax(cno));
+		map.put("comments", service.getOpinionComment(cno));
+		
+		return map;
+	}
 	
 	@RequestMapping("/course/planform")
 	public String planform(HttpSession session, Model model) {

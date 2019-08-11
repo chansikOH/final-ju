@@ -72,7 +72,11 @@
 	    textarea {
 	    	resize: none;
 	    }
-
+	    .course-info td{text-align: center;}
+		.course-opin td{text-align: center;}
+		.course-opin tr td:nth-child(2){text-align: left;}
+		.close-box{text-align: center;}
+		.side-padding{padding-left: 0;}
     </style>
   	
 </head>
@@ -81,7 +85,7 @@
 	<div class="container-fluid">
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<div class="row">
-			<div class="col-sm-2 shadow">
+			<div class="col-sm-2 shadow side-padding">
 				<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 			</div>
 			
@@ -98,6 +102,7 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
+                                    <th>순번</th>
                                     <th>교과목번호</th>
                                     <th>교과목명</th>
                                     <th>강의년도</th>
@@ -106,12 +111,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            	<c:forEach	var="course" items="${courses }">
+                            	<c:forEach	var="course" items="${courses }" varStatus="loop">
                             		<tr>
+                            			<td>${loop.count }</td>
 	                            		<td>${course.no }</td>
-	                            		<td>${course.name }</td>
-	                            		<td>${course.term }</td>
-	                            		<td>${course.year }</td>
+	                            		<td class="course-name"><a href="#" class="open-opinionModal" >${course.name }</a><input class="course-no" type="hidden" name="cno" value="${course.no }"></td>
+	                            		<td class="course-year">${course.year }</td>
+	                            		<td class="course-term">${course.term }</td>
 	                            		<td>${course.credit }</td>
                             		<tr>
                             	</c:forEach>
@@ -127,22 +133,12 @@
 				<div class="modal-content">
 					<div class="modal-body">
 						<div class="course-opinion-table">
-			                <h4>[강의평가]</h4>
+			                <h4>[강의평가 조회]</h4>
 			                   
 			                <table class="table table-bordered course-info">
-				                <tr>
-					                <th>교과목번호</th>
-					                <td id="modalCourseNo"></td>
-					                
-					                <th>교과목명</th>
-					                <td id="modalCourseName"></td>
-					
-					                <th>담당교수</th>
-					                <td id="modalProfessorName"></td>
-					
-					                <th>학기</th>
-					                <td id="modalCourseYearTerm"></td>
-				                </tr>
+				                <tbody>
+				                
+				                </tbody>
 			                </table>
 			
 			                <div class="score-check">
@@ -152,167 +148,191 @@
 				                <p>각 문항별로 여러분이 동의하는 정도에 따라 1~5 중 하나를 선택해주십시오.</p>
 				                <p>1: 전혀 그렇지 않다. 2: 그렇지 않다. 3: 보통이다. 4: 그렇다. 5: 정말 그렇다.</p>
 			                </div>
-			
-							<form class="form" method="POST" action="updateOpinion">
-				                <table class="table table-bordered course-opin">
-					                <thead>
-						                <tr>
-							                <th>문항</th>
-							                <th>설문내용</th>
-							                <th>점수</th>
-						                </tr>
-					                </thead>
-					                <tbody>
-						                <tr>
-							                <td>1</td>
-							                <td>교수님의 강의 준비는 충실 하였습니까?</td>
-							                <td>
-							                	
-							                
-								                <input type="radio" value="1" name="q01"> 1
-								                <input type="radio" value="2" name="q01"> 2
-								                <input type="radio" value="3" name="q01"> 3
-								                <input type="radio" value="4" name="q01"> 4
-								                <input type="radio" value="5" name="q01"> 5
-							                </td>
-						                </tr>
-						                <tr>
-							                <td>2</td>
-							                <td>교수님은 임의로 지각, 단축수업, 휴강 후 보강미실시 등 수업 결손 없이 강의를 성실하게 진행하셨습니까?</td>
-							                <td>
-								                <input type="radio" value="1" name="q02"> 1
-								                <input type="radio" value="2" name="q02"> 2
-								                <input type="radio" value="3" name="q02"> 3
-								                <input type="radio" value="4" name="q02"> 4
-								                <input type="radio" value="5" name="q02"> 5
-							                </td>
-						                </tr>
-						                <tr>
-							                <td>3</td>
-							                <td>과제물이나 기말평가에 관한 충분한 정보와 설명이 사전에 주어졌습니까?</td>
-							                <td>
-								                <input type="radio" value="1" name="q03"> 1
-								                <input type="radio" value="2" name="q03"> 2
-								                <input type="radio" value="3" name="q03"> 3
-								                <input type="radio" value="4" name="q03"> 4
-								                <input type="radio" value="5" name="q03"> 5
-							                </td>
-						                </tr>
-						                <tr>
-							                <td>4</td>
-							                <td>교수님은 학생들의 기말평가나 과제물을 공정하고 정확하게 평가하였습니까?</td>
-							                <td>
-								                <input type="radio" value="1" name="q04"> 1
-								                <input type="radio" value="2" name="q04"> 2
-								                <input type="radio" value="3" name="q04"> 3
-								                <input type="radio" value="4" name="q04"> 4
-								                <input type="radio" value="5" name="q04"> 5
-							                </td>
-						                </tr>
-						                <tr>
-							                <td>5</td>
-							                <td>시험이나 퀴즈, 과제물 등 학생의 성취도 평가에 대한 피드백은 빠른 시간 내에 이루어졌습니까?</td>
-							                <td>
-								                <input type="radio" value="1" name="q05"> 1
-								                <input type="radio" value="2" name="q05"> 2
-								                <input type="radio" value="3" name="q05"> 3
-								                <input type="radio" value="4" name="q05"> 4
-								                <input type="radio" value="5" name="q05"> 5
-							                </td>
-						                </tr>
-						                <tr>
-							                <td>6</td>
-							                <td>수업 중에는 질문을 자유롭게 하고 충분한 토론을 할 기회가 주어졌습니까?</td>
-							                <td>
-								                <input type="radio" value="1" name="q06"> 1
-								                <input type="radio" value="2" name="q06"> 2
-								                <input type="radio" value="3" name="q06"> 3
-								                <input type="radio" value="4" name="q06"> 4
-								                <input type="radio" value="5" name="q06"> 5
-							                </td>
-						                </tr>
-						                <tr>
-							                <td>7</td>
-							                <td>강의내용은 귀하의 전공과 적절하게 연계가 되어있습니까?</td>
-							                <td>
-								                <input type="radio" value="1" name="q07"> 1
-								                <input type="radio" value="2" name="q07"> 2
-								                <input type="radio" value="3" name="q07"> 3
-								                <input type="radio" value="4" name="q07"> 4
-								                <input type="radio" value="5" name="q07"> 5
-							                </td>
-						                </tr>
-						                <tr>
-							                <td>8</td>
-							                <td>강의 내용이 졸업 후 실무에 도움이 될 것이라 생각합니까?</td>
-							                <td>
-								                <input type="radio" value="1" name="q08"> 1
-								                <input type="radio" value="2" name="q08"> 2
-								                <input type="radio" value="3" name="q08"> 3
-								                <input type="radio" value="4" name="q08"> 4
-								                <input type="radio" value="5" name="q08"> 5
-							                </td>
-						                </tr>
-						                <tr>
-							                <td>9</td>
-							                <td>귀하는 학기초 이 강좌를 통하여 기대하였던 학습 목표가 달성되었다고 생각하십니까?</td>
-							                <td>
-								                <input type="radio" value="1" name="q09"> 1
-								                <input type="radio" value="2" name="q09"> 2
-								                <input type="radio" value="3" name="q09"> 3
-								                <input type="radio" value="4" name="q09"> 4
-								                <input type="radio" value="5" name="q09"> 5
-							                </td>
-						                </tr>
-						                <tr>
-							                <td>10</td>
-							                <td>이 강좌를 동일한 교수님이 다음 학기에 강의한다면 귀하의 친구나 선,후배에게 추천하겠습니까?</td>
-							                <td>
-								                <input type="radio" value="1" name="q10"> 1
-								                <input type="radio" value="2" name="q10"> 2
-								                <input type="radio" value="3" name="q10"> 3
-								                <input type="radio" value="4" name="q10"> 4
-								                <input type="radio" value="5" name="q10"> 5
-							                </td>
-						                </tr>
-						                <tr>
-							                <td>11</td>
-							                <td colspan="2">
-							                	<p>기타 의견 : </p>
-							                	<textarea class="form-control" name="q11"></textarea>
-							                </td>
-						                </tr>
-						                <tr>
-							                <td colspan="3">
-							                	<input type="hidden" value="" name="courseNo" id="hiddenCourseNo" class="form-control">
-							                	<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-							                	<button type="submit" class="btn btn-success">제출</button>
-							                </td>
-						                </tr>
-					                </tbody>
-				                </table>
-			                </form> 
+			                <table class="table table-bordered course-opin">
+			                	<colgroup>
+			                		<col width="5%">
+			                		<col width="62%">
+			                		<col width="5%">
+			                		<col width="5%">
+			                		<col width="5%">
+			                	</colgroup>
+				                <thead>
+					                <tr>
+						                <th>문항</th>
+						                <th>설문내용</th>
+						                <th>최저</th>
+						                <th>최고</th>
+						                <th>평균</th>
+					                </tr>
+				                </thead>
+				                <tbody>
+					                <tr>
+						                <td>1</td>
+						                <td>교수님의 강의 준비는 충실 하였습니까?</td>
+						                <td class="q1-min question"></td>
+						                <td class="q1-max question"></td>
+						                <td class="q1-avg question"></td>
+					                </tr>
+					                <tr>
+						                <td>2</td>
+						                <td>교수님은 임의로 지각, 단축수업, 휴강 후 보강미실시 등 수업 결손 없이 강의를 성실하게 진행하셨습니까?</td>
+						                <td class="q2-min question"></td>
+						                <td class="q2-max question"></td>
+						                <td class="q2-avg question"></td>
+					                </tr>
+					                <tr>
+						                <td>3</td>
+						                <td>과제물이나 기말평가에 관한 충분한 정보와 설명이 사전에 주어졌습니까?</td>
+						                <td class="q3-min question"></td>
+						                <td class="q3-max question"></td>
+						                <td class="q3-avg question"></td>
+					                </tr>
+					                <tr>
+						                <td>4</td>
+						                <td>교수님은 학생들의 기말평가나 과제물을 공정하고 정확하게 평가하였습니까?</td>
+						                <td class="q4-min question"></td>
+						                <td class="q4-max question"></td>
+						                <td class="q4-avg question"></td>
+					                </tr>
+					                <tr>
+						                <td>5</td>
+						                <td>시험이나 퀴즈, 과제물 등 학생의 성취도 평가에 대한 피드백은 빠른 시간 내에 이루어졌습니까?</td>
+						                <td class="q5-min question"></td>
+						                <td class="q5-max question"></td>
+						                <td class="q5-avg question"></td>
+					                </tr>
+					                <tr>
+						                <td>6</td>
+						                <td>수업 중에는 질문을 자유롭게 하고 충분한 토론을 할 기회가 주어졌습니까?</td>
+						                <td class="q6-min question"></td>
+						                <td class="q6-max question"></td>
+						                <td class="q6-avg question"></td>
+					                </tr>
+					                <tr>
+						                <td>7</td>
+						                <td>강의내용은 귀하의 전공과 적절하게 연계가 되어있습니까?</td>
+						                <td class="q7-min question"></td>
+						                <td class="q7-max question"></td>
+						                <td class="q7-avg question"></td>
+					                </tr>
+					                <tr>
+						                <td>8</td>
+						                <td>강의 내용이 졸업 후 실무에 도움이 될 것이라 생각합니까?</td>
+						                <td class="q8-min question"></td>
+						                <td class="q8-max question"></td>
+						                <td class="q8-avg question"></td>
+					                </tr>
+					                <tr>
+						                <td>9</td>
+						                <td>귀하는 학기초 이 강좌를 통하여 기대하였던 학습 목표가 달성되었다고 생각하십니까?</td>
+						                <td class="q9-min question"></td>
+						                <td class="q9-max question"></td>
+						                <td class="q9-avg question"></td>
+					                </tr>
+					                <tr>
+						                <td>10</td>
+						                <td>이 강좌를 동일한 교수님이 다음 학기에 강의한다면 귀하의 친구나 선,후배에게 추천하겠습니까?</td>
+						                <td class="q10-min question"></td>
+						                <td class="q10-max question"></td>
+						                <td class="q10-avg question"></td>
+					                </tr>
+					                
+				                </tbody>
+			                </table>
+			                <div class="close-box">
+			                	<button type="button" class="btn btn-default close-btn" data-dismiss="modal">닫기</button>
+			                </div>
 		                </div>
 					</div>
 				</div>
 			</div>
 		</div>
 		
-		<script type="text/javascript">
+		<script>
+			
+		
+		
 			$(document).on("click", ".open-opinionModal", function () {
-				var courseNo = $(this).data('courseno');
-				$(".modal-body #modalCourseNo").text(courseNo);
-				$("#hiddenCourseNo").val(courseNo);
+				var courseNo = $(this).next().val();
+				$(".question").empty();
+				$.ajax({
+					type:"GET",
+					url:"opiniondetail",
+					data: {cno : courseNo},
+					dataType : "json",
+					success:function(data){
+						$(".course-opin tbody tr.comments").empty();
+						$("#opinion .course-info tbody").empty();
+						
+						var c = data.course;
+						var avg = data.avg;
+						var min = data.min;
+						var max = data.max;
+						var comments = data.comments;
+						console.log(data);
+						
+						var row = "<tr>";
+						row += "<th>교과목번호</th>";
+						row += "<td>"+c.no+"</td>";
+						row += "<th>교과목명</th>";
+						row += "<td>"+c.name+"</td>"
+						row += "<th>강의년도</th>";
+						row += "<td>"+c.year+"</td>";
+						row += "<th>강의학기</th>";
+						row += "<td>"+c.term+"</td>";
+						$("#opinion .course-info tbody").append(row);
+						
+						$(".q1-avg").text(avg.Q1);
+						$(".q2-avg").text(avg.Q2);
+						$(".q3-avg").text(avg.Q3);
+						$(".q4-avg").text(avg.Q4);
+						$(".q5-avg").text(avg.Q5);
+						$(".q6-avg").text(avg.Q6);
+						$(".q7-avg").text(avg.Q7);
+						$(".q8-avg").text(avg.Q8);
+						$(".q9-avg").text(avg.Q9);
+						$(".q10-avg").text(avg.Q10);
+						
+						$(".q1-min").text(min.Q1);
+						$(".q2-min").text(min.Q2);
+						$(".q3-min").text(min.Q3);
+						$(".q4-min").text(min.Q4);
+						$(".q5-min").text(min.Q5);
+						$(".q6-min").text(min.Q6);
+						$(".q7-min").text(min.Q7);
+						$(".q8-min").text(min.Q8);
+						$(".q9-min").text(min.Q9);
+						$(".q10-min").text(min.Q10);
+						
+						$(".q1-max").text(max.Q1);
+						$(".q2-max").text(max.Q2);
+						$(".q3-max").text(max.Q3);
+						$(".q4-max").text(max.Q4);
+						$(".q5-max").text(max.Q5);
+						$(".q6-max").text(max.Q6);
+						$(".q7-max").text(max.Q7);
+						$(".q8-max").text(max.Q8);
+						$(".q9-max").text(max.Q9);
+						$(".q10-max").text(max.Q10);
+						
+						$.each(comments, function(index, comment){
+							var commentRow = "<tr class='comments'>"
+							commentRow += "<td>기타</td>";
+							commentRow +="<td colspan='5'>";
+							commentRow += comment.q11;
+							commentRow += "</td><br>";
+							commentRow += "</tr>"
+							$(".course-opin tbody").append(commentRow);
+						})
+						
+					}
+				})
+					$('#opinion').modal('show');
+			 		return false;
+			 		$(".close-btn").on('hide', function(){
+			 			
+			 		});
 				
-				var courseName = $(this).data('coursename');
-				$(".modal-body #modalCourseName").text(courseName);
-				
-				var professorName = $(this).data('professor');
-				$(".modal-body #modalProfessorName").text(professorName);
-				
-				var year = $(this).data('year');
-				var term = $(this).data('term');
-				$(".modal-body #modalCourseYearTerm").text(year + "년 " + term + "학기");
 			});
 		</script>
 		
