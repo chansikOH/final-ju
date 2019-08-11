@@ -37,6 +37,7 @@ import kr.ac.ju.vo.CourseOpinion;
 import kr.ac.ju.vo.CoursePart;
 import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Notice;
+import kr.ac.ju.vo.Pagination;
 import kr.ac.ju.vo.Person;
 import kr.ac.ju.vo.Student;
 import kr.ac.ju.vo.StudentStatus;
@@ -402,12 +403,19 @@ public class StudentController {
 	}
 
 	@RequestMapping("/notice/list")
-	public String studentNoticeList(Model model) {
+	public String studentNoticeList(Model model, @RequestParam(value="pno", required=false, defaultValue="1")int pno) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		int beginIndex = (pno -1) * 15 + 1;
+		map.put("beginIndex", beginIndex);
+		map.put("endIndex", pno * 15);
 		
+		int totalCount = studentService.getAllNoticeCount();
 		List<Notice> notices = studentService.getAllNotices(map);
 		model.addAttribute("notices", notices);
-		model.addAttribute("count", notices.size());
+		model.addAttribute("count", totalCount);
+		
+		Pagination pagination = new Pagination(pno, 15, totalCount);
+		model.addAttribute("pagination", pagination);
 		
 		return "student/notice/noticelist";
 	}

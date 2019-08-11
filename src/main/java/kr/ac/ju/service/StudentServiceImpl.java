@@ -24,7 +24,7 @@ import kr.ac.ju.websockethandler.CourseApplicantWebSocketHandler;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-
+	
 	@Autowired
 	private StudentDao studentDao;
 
@@ -331,6 +331,11 @@ public class StudentServiceImpl implements StudentService {
 		Student leaveStudent = studentDao.getLeaveStudentByNo(studentNo);
 
 		return leaveStudent;
+	}
+	
+	@Override
+	public int getAllNoticeCount() {
+		return studentDao.getAllNoticeCount();
 	}
 	
 	@Override
