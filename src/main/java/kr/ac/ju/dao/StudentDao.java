@@ -10,8 +10,11 @@ import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.CourseOpinion;
 import kr.ac.ju.vo.CoursePart;
 import kr.ac.ju.vo.CoursePlan;
+import kr.ac.ju.vo.Department;
+import kr.ac.ju.vo.Employee;
 import kr.ac.ju.vo.Message;
 import kr.ac.ju.vo.Notice;
+import kr.ac.ju.vo.Professor;
 import kr.ac.ju.vo.Student;
 import kr.ac.ju.vo.StudentStatus;
 
@@ -72,4 +75,9 @@ public interface StudentDao {
 	List<Message> getReceiveMessageByNo(int receiver);
 	List<Message> getCallMessageByNo(int caller);
 	void updateStatusByNo(Map<String, Object> map);
+	void deleteMessage(int no);
+	List<Department> getAllDepartments();
+	List<Employee> getEmployeeByDeptNo(String id);
+	List<Professor> getProfessorByMajorNo(int no);
+	List<Student> getStudentByMajorNo(int no);
 }

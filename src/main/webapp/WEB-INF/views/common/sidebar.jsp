@@ -292,25 +292,34 @@
                             <div role="tabpanel" class="tab-pane active" id="send-note">
                                 <form class="form" id="sendNote">
                                     <table class="table">
-                                        <colgroup>
-                                            <col width="20%" />
-                                            <col width="80%" />
-                                        </colgroup>
+                                    	<colgroup>
+                                    		<col width="30%">
+                                    		<col width="70%">                                    		
+                                    	</colgroup>
                                         <tbody>
                                             <tr>
-                                                <td>받는 사람</td>
-                                                <!--<td><div class="input-group">
-                                                            <input type="text" class="form-control" placeholder="Search" name="search">
-                                                            <div class="input-group-btn">
-                                                              <button class="btn btn-default" type="submit">
-                                                                <i class="glyphicon glyphicon-search"></i>
-                                                              </button>
-                                                            </div>
-                                                          </div></td>-->
-                                                <td><input type="text" class="form-control" name="receiver"></td>
+                                                <th>받는 사람</th>
+                                                <td><input type="radio" value="학생" name="type"> 학생
+                                                	<input type="radio" value="교수" name="type"> 교수
+                                                	<input type="radio" value="직원" name="type"> 직원</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2"><textarea class="form-control" name="contents" ></textarea></td>
+                                                <td colspan="2">
+                                                	<select id="selectTypeDetail" class="form-control">
+                                                		<option value="">선택</option>
+                                                	</select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                            	<td>
+                                            		<form class="form">
+                                            			<table class="tale">
+                                            				<tbody>
+                                            					
+                                            				</tbody>
+                                            			</table>
+                                            		</form>
+                                            	</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2"><button type="button" id="sendMessage" class="btn btn-info">전송</button>
@@ -323,7 +332,7 @@
 
                             <div role="tabpanel" class="tab-pane" id="received-note">
                                 <div class="note-list-button">
-                                    <button type="button" class="btn btn-default btn-xs">전체 선택</button>
+                                    <button type="button" class="btn btn-default btn-xs" class="allCheck">전체 선택</button>
                                     <button type="button" class="btn btn-default btn-xs">읽음 표시</button>
                                     <button type="button" class="btn btn-default btn-xs">삭제</button>
                                 </div>
@@ -398,7 +407,50 @@
     
     <script type="text/javascript">
     	$(function() {
-        	var no = $(".sidebar-message-no").text();
+    		$("#selectTypeDetail").hide();
+    		
+    		$("#send-note input:radio[name='type']").click(function() {
+	    		var checkedType = $(this).val();
+    			
+	    		if(checkedType == '학생' || checkedType == '교수') {
+		    		$.ajax({
+		    			type:"POST",
+		    			url:"/ju/findgubun",
+		    			success: function(map) {
+		    				$.each(map.majors, function(index, m) {
+		    					var row = "<option value='"+m.name+"'>"+m.name+"</option>";
+		    					
+		    					$("#selectTypeDetail").append(row);
+		    				})
+		    			}
+		    		})
+		    		
+		    		$("#selectTypeDetail").show();	    		
+	    		} else if(checkedType == '직원') {
+	    			$.ajax({
+	    				type:"POST",
+	    				url:"/ju/findgubun",
+	    				success: function(map) {
+	    					$.each(map.departments, function(index, d) {
+	    						var row = "<option value-'"+d.name+"'>"+d.name+"</option>";
+	    						
+	    						$("#selectTypeDetail").append(row);
+	    					})
+	    				}
+	    			})
+
+		    		$("#selectTypeDetail").show();	 
+	    		}
+    		})
+    		
+    		
+    		
+       		$('#note-modal').on('hidden.bs.modal', function (e) {
+       			$("#send-note").addClass('active').siblings().removeClass('active');
+       			$('.nav-tabs li:nth-child(1)').addClass('active').siblings().removeClass('active');
+			})
+    	})
+        	/* var no = $(".sidebar-message-no").text();
         		
        		$.ajax({
        			type:"POST",
@@ -442,12 +494,10 @@
            					var d = new Date(m.createDate);
            					var month = d.getMonth() + 1;
            					var day = d.getDate();
-           					var year = d.getFullYear();
-           					var h = d.getHours();
+           					var year = d.getFullYear(); 
            					
            					var date = year + '.' + month + '.' + day;
            					
-           					console.log(h);
        						var row = "<tr>";
        						row += "<td><input type='checkbox'></td>";
        						row += "<td>"+m.caller.name+"</td>";
@@ -481,7 +531,7 @@
    						r += "</tr>";
    						r += "<tr>";
    						r += "<td colspan='2'><a href='#send-note' aria-controls='send-note' role='tab' data-toggle='tab' class='btn btn-default'>답장</a>";
-   						r += "<a href='#sent-note' aria-controls='sent-note' role='tab' data-toggle='tab' class='btn btn-default'>목록</a>";
+   						r += "<a href='' aria-controls='sent-note' role='tab' data-toggle='tab' class='btn btn-default'>목록</a>";
    	   					r += "<button type='button' class='btn btn-default' data-dismiss='modal'>닫기</button></td>";
    						r += "</tr>";
    						
@@ -489,8 +539,19 @@
    					})
        			}
        		})
-        })
-    
+       		
+       		$('#note-modal').on('hidden.bs.modal', function (e) {
+       			$("#send-note").addClass('active').siblings().removeClass('active');
+       			$('.nav-tabs li:nth-child(1)').addClass('active').siblings().removeClass('active');
+			})
+			
+			/* $(".allCheck").click(function(){
+		        if($(".allCheck").is(":checked")){
+		            $("input[type=checkbox]").prop("checked",true);
+		        }else{
+		            $("input[type=checkbox]").prop("checked",false);
+		    } */
+		    /* 
     	$("#sendMessage").click(function() {
     		
     		var receiver = $("[name=receiver]").val();
@@ -509,6 +570,7 @@
     			error: function(request, error){
     				alert("쪽지 보내기를 실패하였습니다.");
     			}
+<<<<<<< HEAD
     		});
     	})
     	
@@ -528,5 +590,8 @@
 			}
 });
 		
+=======
+    		}) */
+>>>>>>> 0aaf88c5e757672f562756ab8747437b20b9d327
     </script>
 </div>
