@@ -42,7 +42,6 @@
     
     .student-search .table .btn-update{padding: 18px 10px !important;}
     .dl-horizontal dt {text-align: left; font-size: 17px;}
-    .img-rounded {width: 250px; height: 250px;}
     
     .bs-grade-modal-lg .input-sm {height: 30px;}
     .result-save{padding: 15px 0 0 0 !important;}

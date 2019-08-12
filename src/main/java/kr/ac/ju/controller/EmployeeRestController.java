@@ -1,5 +1,7 @@
 package kr.ac.ju.controller;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -217,6 +219,19 @@ public class EmployeeRestController {
 		employeeService.chanageStudentStatusPassyn(statusNo); 
 		
 		return student;
+	}
+	
+	@GetMapping("searchstudentstatistic.json")
+	@ResponseBody
+	public List<Student> searchstudentstatistic(@RequestParam(value = "year", required = false, defaultValue = "0") int year){
+		if (year == 0) {
+			Calendar calendar = Calendar.getInstance();
+			year = calendar.get(Calendar.YEAR);
+		}
+		
+		List<Student> students = employeeService.getStudentsStatistic(year); 
+		
+		return students;
 	}
 
 }

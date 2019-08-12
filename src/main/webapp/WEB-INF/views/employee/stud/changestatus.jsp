@@ -42,7 +42,6 @@
     
     .student-search .table .btn-update{padding: 18px 10px !important;}
     .dl-horizontal dt {text-align: left; font-size: 17px;}
-    .img-rounded {width: 250px; height: 250px;}
     
     .bs-grade-modal-lg .input-sm {height: 30px;}
     .result-save{padding: 15px 0 0 0 !important;}
@@ -256,7 +255,7 @@
 	               data:{statusDiv:statusDiv, passYn:passYn, requestDate:requestDate, major:major, name:name, studentNo:studentNo, pageNo:pageNo},
 	               dataType:"json", 
 	               success:function(data) {
-	    	      $("#search-result-table tbody tr").empty();
+	    	    	  $("#search-result-table tbody tr").empty();
 	            	  var students = data.searchStudents;
                  	  var pagination = data.pagination;
                  	  

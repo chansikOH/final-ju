@@ -136,14 +136,19 @@
 	</select>
 	
 	<update id="updateStudentStatusByNo" parameterType="student">
-		update students
-		set student_div = #{division}
-		where student_no = #{no}
+		update 
+			students
+		set 
+			student_div = #{division}
+		where 
+			student_no = #{no}
 	</update>
 	
 	<select id="getStudentNoSeq" parameterType="int" resultType="int">
-		select to_char(sysdate, 'yyyy') || #{value} || lpad(student_seq.nextval, 2, '0') 
-		from dual
+		select 
+			to_char(sysdate, 'yyyy') || #{value} || lpad(student_seq.nextval, 2, '0') 
+		from 
+			dual
 	</select>
 	
 	<insert id="insertStudent" parameterType="student"> 
@@ -292,9 +297,12 @@
 	</select> 
 
 	<select id="getStatusChangeReaseon" parameterType="int" resultType="string"> 
-		select status_contents 
-		from student_status 
-		where status_no = #{statusNo}
+		select 
+			status_contents 
+		from 
+			student_status 
+		where 
+			status_no = #{statusNo}
 	</select>
 	
 	<select id="chanageStudentStatusPassyn" parameterType="int">
@@ -303,4 +311,20 @@
 		where status_no = #{statusNo}
 	</select>
 	
+	<select id="getStudentsStatistic" parameterType="int" resultType="student"> 
+			select 
+				A.student_no						as no ,
+				A.major_no							as "major.no",
+				A.student_birth						as	createDate,	
+				A.student_gender					as gender,
+				A.student_grade						as grade,
+				A.transfer_yn						as transferYn,
+				B.major_name 						as "major.name"
+			from 
+				students A, majors B 
+			where 
+				A.major_no = B.major_no  
+			and 
+				A.student_no like to_char(#{value}) || '%'	
+	</select>
 </mapper>
