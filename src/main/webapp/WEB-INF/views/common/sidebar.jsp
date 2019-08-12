@@ -450,148 +450,15 @@
        			$('.nav-tabs li:nth-child(1)').addClass('active').siblings().removeClass('active');
 			})
     	})
-        	/* var no = $(".sidebar-message-no").text();
-        		
-       		$.ajax({
-       			type:"POST",
-       			url:"/ju/message",
-       			data: {no:no},
-       			dataType:"json",
-       			success: function(map) {
-       				var receive = map.receiveMessage;
-       				var call = map.callMessage;
-       				
-       				$("#sent-note tbody").empty();
-       				$("#received-note tbody").empty();
-       					
-       				if(receive != null) {
-   	    				$.each(map.receiveMessage, function(index, m) {
-           					var d = new Date(m.createDate);
-           					var month = d.getMonth() + 1;
-           					var day = d.getDate();
-           					var year = d.getFullYear();
-           					var date = year + '-' + month + '-' + day;
-   	    					
-   	    					var row = "<tr>";
-   	    					row += "<td><input type='checkbox'></td>";
-   	    					row += "<td>"+m.receiver.name+"</td>";
-   	    					row += "<td><span class='text-line'><a href='#note-detail' aria-controls='note-detail' role='tab' data-toggle='tab' data-no='"+m.no+"' data-title='받는 사람' data-content='"+m.contents+"' data-name='"+m.receiver.name+"'>"+m.contents+"</a></span></td>";
-   	    					row += "<td>"+date+"</td>";
-   	    					row += "</tr>";
-   	    					
-   	    					$("#sent-note tbody").append(row);
-   	    				})
-       				} else {
-       					var row = "<tr>";
-       					row += "<td colspan='4'>보낸 쪽지가 없습니다.</td>";
-       					row += "</tr>";
-       					
-       					$("#sent-note tbody").append(row);
-       				}
-       				
-       				if(call.length != 0) {
-       					$.each(map.callMessage, function(index, m) {
-           					var d = new Date(m.createDate);
-           					var month = d.getMonth() + 1;
-           					var day = d.getDate();
-           					var year = d.getFullYear(); 
-           					
-           					var date = year + '.' + month + '.' + day;
-           					
-       						var row = "<tr>";
-       						row += "<td><input type='checkbox'></td>";
-       						row += "<td>"+m.caller.name+"</td>";
-       						row += "<td><span class='text-line'><a href='#note-detail' aria-controls='note-detail' role='tab' data-toggle='tab' data-no='"+m.no+"' data-title='보낸 사람' data-content='"+m.contents+"' data-name='"+m.caller.name+"'>"+m.contents+"</a></span></td>";
-       						row += "<td>"+date+"</td>";
-       						row += "</tr>";
-       						
-       						$("#received-note tbody").append(row);     						
-       					})
-       				} else if(call.length == 0) {
-       					var row = "<tr>";
-       					row += "<td colspan='4'>받은 쪽지가 없습니다.</td>";
-       					row += "</tr>";
-       					
-       					$("#received-note tbody").append(row);
-       				}
-       				
-       				$('a[href="#note-detail"]').click(function() {
-       					var no = $(this).data("no");
-       					var title = $(this).data("title");
-       					var content = $(this).data("content");
-       					var name = $(this).data("name");
-       					
-       					$("#note-detail tbody").empty();
-       					
-     		       		var r = "<tr>";
-   						r += "<td>"+title+"</td>";
-   						r += "<td><input type='text' class='form-control' value='"+name+"' disabled></td>";
-   						r += "</tr>";
-   						r += "<td colspan='2'><textarea class='form-control'>"+content+"</textarea></td>";
-   						r += "</tr>";
-   						r += "<tr>";
-   						r += "<td colspan='2'><a href='#send-note' aria-controls='send-note' role='tab' data-toggle='tab' class='btn btn-default'>답장</a>";
-   						r += "<a href='' aria-controls='sent-note' role='tab' data-toggle='tab' class='btn btn-default'>목록</a>";
-   	   					r += "<button type='button' class='btn btn-default' data-dismiss='modal'>닫기</button></td>";
-   						r += "</tr>";
-   						
-   						$("#note-detail tbody").append(r);
-   					})
-       			}
-       		})
-       		
-       		$('#note-modal').on('hidden.bs.modal', function (e) {
-       			$("#send-note").addClass('active').siblings().removeClass('active');
-       			$('.nav-tabs li:nth-child(1)').addClass('active').siblings().removeClass('active');
-			})
-			
-			/* $(".allCheck").click(function(){
-		        if($(".allCheck").is(":checked")){
-		            $("input[type=checkbox]").prop("checked",true);
-		        }else{
-		            $("input[type=checkbox]").prop("checked",false);
-		    } */
-		    /* 
-    	$("#sendMessage").click(function() {
-    		
-    		var receiver = $("[name=receiver]").val();
-    		var contents = $("[name=contents]").val();
-    		
-    		$.ajax({
-    			type:"GET",
-    			url:"/ju/sendmessage",
-    			data: {receiver:receiver, contents:contents},
-    			dataType: "json",
-    			success: function(data) {
-    				$("#send-note tbody input").val("");
-    				$("#send-note tbody textarea").val("");
-    				
-    			},
-    			error: function(request, error){
-    				alert("쪽지 보내기를 실패하였습니다.");
-    			}
-<<<<<<< HEAD
-    		});
-    	})
-    	
-    	
-			$(window).scroll(function() {
+		$(window).scroll(function() {
 			var scroll = $(window).scrollTop();
-			console.log(scroll);
-			//console.log(scroll);
 			if (scroll >= 60) {
-				//console.log('a');
 				$(".sidebar").css({"height" : "200vh"});
 			}else if(scroll > 150){
 				$(".sidebar").css({"height" : "230vh"});
 			} else {
-				//console.log('a');
 				
 			}
-});
-		
-=======
-    		}) */
->>>>>>> 0aaf88c5e757672f562756ab8747437b20b9d327
+		});
     </script>
 </div>

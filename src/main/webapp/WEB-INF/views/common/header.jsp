@@ -87,18 +87,16 @@
 		<div class="row">
 			<div class="col-sm-12 header-nav navbar-default">
 				<div class="navbar-header">
-					<a href="" class="logo">
+					<a href="/ju/student/mypage" class="logo">
 						<img alt="logo" src="/ju/resources/images/logo.png" width="200" height="50">
 					</a>
 					<ul class="nav-sub navbar-nav">
 						<li><a href="#" id="menu1">학적관리</a></li>
 						<li><a href="/ju/student/course/courselist" id="menu2">강의</a></li>
 						<li><a href="/ju/student/mypage" id="menu3">개인정보관리</a></li>
-						<li><a href="#" id="menu4">강의평가</a></li>
-						<li><a href="#" id="menu5">등록금</a></li>
-						<li><a href="#" id="menu6">휴/복학 신청</a></li>
-						<li><a href="#" id="menu7">학사일정</a></li>
-						<li><a href="/ju/student/notice/list" id="menu8">공지사항</a></li>
+						<li><a href="/ju/student/records" id="menu4">성적조회</a></li>
+						<li><a href="#" id="menu5">휴/복학 신청</a></li>
+						<li><a href="/ju/student/notice/list" id="menu6">공지사항</a></li>
 					</ul>
 				</div>
 			</div>
@@ -117,27 +115,15 @@
 				<div id="sub-menu3">
 				</div>
 				<div id="sub-menu4">
-					<ul>
-						<li><a href="/ju/student/records">성적 조회</a></li>
-						<li><a href="#">강의 평가</a></li>
-					</ul>
 				</div>
 				<div id="sub-menu5">
-					<ul>
-						<li><a href="#">등록금 납부내역</a></li>
-						<li><a href="#">통지서 조회</a></li>
-					</ul>
-				</div>
-				<div id="sub-menu6">
 					<ul>
 						<li><a href="/ju/student/status/chStatus?sta=leave">휴학 신청</a></li>
 						<li><a href="/ju/student/status/chStatus?sta=goingback">복학 신청</a></li>
 						<li><a href="/ju/student/status/chStatus?sta=drop">자퇴 신청</a></li>
 					</ul>
 				</div>
-				<div id="sub-menu7">
-				</div>
-				<div id="sub-menu8">
+				<div id="sub-menu6">
 				</div>
 			</div>
 		</div>

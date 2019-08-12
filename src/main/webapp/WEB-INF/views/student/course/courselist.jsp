@@ -30,13 +30,14 @@
 .course-table .table>tfoot>tr>th, 
 .course-table .table>thead>tr>td, 
 .course-table .table>thead>tr>th{padding:25px 20px;}
+.side-padding{padding-left: 0;}
 </style>
 </head>
 <body>
 	<div class="container-fluid">
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<div class="row">
-			<div class="col-sm-2 shadow">
+			<div class="col-sm-2 shadow side-padding">
 				<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 			</div>
 			

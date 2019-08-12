@@ -32,13 +32,14 @@
 .course-part{cursor: pointer;}
 td.disable-links {pointer-events:none;}
 .disable-btn {background-color: #ddd}
+.side-padding{padding-left: 0;}
 </style>
 </head>
 <body>
 	<div class="container-fluid">
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<div class="row">
-			<div class="col-sm-2 shadow">
+			<div class="col-sm-2 shadow side-padding">
 				<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 			</div>
 			
