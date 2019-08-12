@@ -118,11 +118,14 @@ public class DocController {
 		return "doc/draft/detail";
 	}
 	
+	// 기안서 업데이트
 	@RequestMapping("/draft/update")
 	public String draftUpdate(Draft draft) {
+		System.out.println("ddd: "+draft.getTitle());
+		
 		docService.updateDraft(draft);
-		System.out.println("변경실행");
-		return "redirect:../list";
+		
+		return "doc/draft/update";
 	}
 	
 	// 퇴직서
@@ -183,12 +186,12 @@ public class DocController {
 		
 		return "doc/retire/detail";
 	}
-	
+	// 퇴직서 업데이트
 	@RequestMapping("/retire/update")
 	public String retireuUpdate(Retire retire) {
 		docService.updateRetire(retire);
 		
-		return "redirect:../list";
+		return "doc/retire/update";
 	}
 	
 	//휴가
@@ -257,10 +260,10 @@ public class DocController {
 	}
 	//휴가 업데이트
 	@RequestMapping("/vacation/update")
-	public String vacationUpdate(HttpSession session, Vacation vacation, int vacatioNo) {
+	public String vacationUpdate(HttpSession session, Vacation vacation) {
 		
 		docService.updateVacation(vacation);
-		return "redirect:../list";
+		return "doc/vacation/update";
 	}
 	
 	@InitBinder // 날짜 변환
