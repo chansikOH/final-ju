@@ -774,21 +774,25 @@
 	<select id="getProfessorByMajorNo" parameterType="int" resultType="professor">
 		select 
 			P.professor_no no, 
-			P.professor_name name
+			P.professor_name name,
+			PO.position_name "position.name"
 		from 
 			professors P, 
-			majors M
+			majors M,
+			position PO
 		where 
 			P.major_no = M.major_no
+			and P.position_id = PO.position_id
 			and P.major_no = #{value}
 			and P.professor_status = 'Y'
 	</select>
 	
 	<select id="getEmployeeByDeptNo" parameterType="string" resultType="employee">
 		select 
-			E.employee_no, 
-			E.employee_name, 
-			P.position_name
+			E.employee_no no, 
+			E.employee_name name, 
+			P.position_name "position.name",
+			D.department_name "department.name"
 		from 
 			employees E, 
 			departments D, 

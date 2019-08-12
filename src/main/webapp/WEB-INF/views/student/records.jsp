@@ -72,6 +72,10 @@
 	    textarea {
 	    	resize: none;
 	    }
+	    
+	    .side-padding {
+	    	padding-left: 0;
+	    }
 
     </style>
   	
@@ -81,7 +85,7 @@
 	<div class="container-fluid">
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<div class="row">
-			<div class="col-sm-2 shadow">
+			<div class="col-sm-2 side-padding">
 				<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 			</div>
 			

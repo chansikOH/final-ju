@@ -24,7 +24,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import kr.ac.ju.vo.CoursePart;
-import kr.ac.ju.vo.CoursePlan;
 
 @Component
 public class CoursePlanPdfView extends AbstractView {
@@ -36,7 +35,7 @@ public class CoursePlanPdfView extends AbstractView {
 		// Model에 저장된 강의계획서 객체를 조회한다.
 		Map<String, Object> coursePlan = (Map<String, Object>) model.get("plan");
 		List<CoursePart> coursePart = (List<CoursePart>) model.get("part");
-
+		
 		// 응답컨텐츠가 PDF로 제공되도록 응답메세지의 헤더를 설정한다.
 		response.setContentType("application/pdf");
 		response.setHeader("Content-Transper-Encoding", "binary");
@@ -117,11 +116,10 @@ public class CoursePlanPdfView extends AbstractView {
 			table.addCell(getDataCell(c.getWeek(), dataFont, 1)).setHorizontalAlignment(Element.ALIGN_CENTER);;
 			table.addCell(getDataCell(c.getContents(), dataFont, 3));
 		}
-
+		
 		document.add(table);
 		document.close();
 	}
-	
 	// 테이블의 헤더제목셀을 반환한다.
 	private PdfPCell getHeaderCell(String headerTitle, Font font) {
 		PdfPCell headerCell = new PdfPCell(new Phrase(headerTitle, font));
