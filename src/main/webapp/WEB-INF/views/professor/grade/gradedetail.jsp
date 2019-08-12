@@ -88,6 +88,14 @@
 		.graph{margin-top: 40px;}
 		h4{font-weight: bold;}
 		.side-padding{padding-left: 0;}
+		.wrapper h4{font-size: 26px;}
+		.wrapper h3 {
+		    margin: 25px 0 15px 0px;
+		    font-size: 20px;
+		    font-weight: bold;
+		    color: #555;
+		}
+		.class-info h3{margin-top: 15px;}
     </style>
   	
 </head>
@@ -102,8 +110,8 @@
 			
 			<div class="col-sm-10 wrapper">
                 <div class="row">
-                    <div class="col-sm-6">
-                        <h4>강의정보</h4>               
+                    <div class="col-sm-6 class-info">
+                        <h3>강의정보</h3>               
                     </div>
                 </div>
 
@@ -168,7 +176,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4>성적 상세조회</h4>               
+                        <h3>성적 상세조회</h3>               
                     </div>
                 </div>
                 <div class="row">
@@ -430,10 +438,7 @@
 				chart.draw(data, options);
 			}
 		})
-		
-		
-		
-		
+
 	</script>
 </body>
 </html>

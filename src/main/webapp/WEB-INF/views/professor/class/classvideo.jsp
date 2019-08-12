@@ -94,7 +94,7 @@
                                     <td></td>
                                     <td class="search">
                                         <button id="addbtn" class="btn btn-default" type="submit">등록</button>
-                                        <a href="#" class="search-btn btn btn-default btn-danger">취소</a>
+                                        <a href="list" class="search-btn btn btn-default btn-danger">취소</a>
                                     </td>
                                 </tr>
                             </tbody>

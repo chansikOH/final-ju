@@ -78,6 +78,13 @@
 	    }
 		#opinion .modal-body {height: 100%;}
 		.side-padding{padding-left: 0;}
+		.wrapper h4{font-size: 26px;}
+		.modal-content h4 {
+		    margin: 25px 0 15px 0px;
+		    font-size: 20px;
+		    font-weight: bold;
+		    color: #555;
+		}
     </style>
   	
 </head>
@@ -93,8 +100,8 @@
 			<div class="col-sm-10 wrapper">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4>[성적조회]</h4>               
-                        <p>※ 이번학기 담당강좌 성적만 입력 가능</p>
+                        <h4>성적조회</h4>               
+                        <p>※ 모든학기 성적조회</p>
                     </div>
                 </div>
 

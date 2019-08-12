@@ -77,6 +77,13 @@
 		.course-opin tr td:nth-child(2){text-align: left;}
 		.close-box{text-align: center;}
 		.side-padding{padding-left: 0;}
+		.wrapper h4{font-size: 26px;}
+		.modal-content h4 {
+		    margin: 25px 0 15px 0px;
+		    font-size: 20px;
+		    font-weight: bold;
+		    color: #555;
+		}
     </style>
   	
 </head>
@@ -92,7 +99,7 @@
 			<div class="col-sm-10 wrapper">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4>[성적조회]</h4>               
+                        <h4>강의평가 조회</h4>               
                         <p>※ 강의평가 후 성적조회 가능</p>
                     </div>
                 </div>
@@ -133,7 +140,7 @@
 				<div class="modal-content">
 					<div class="modal-body">
 						<div class="course-opinion-table">
-			                <h4>[강의평가 조회]</h4>
+			                <h4>강의평가 조회</h4>
 			                   
 			                <table class="table table-bordered course-info">
 				                <tbody>

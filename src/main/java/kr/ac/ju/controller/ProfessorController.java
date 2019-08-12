@@ -69,6 +69,7 @@ public class ProfessorController {
 		
 		return "professor/class/classlist";
 	}
+	
 	@RequestMapping("/class/listdetail")
 	public @ResponseBody Map<String, Object> listdetail(@RequestParam(value="courseNo", required=false, defaultValue = "")int courseNo){
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -129,6 +130,7 @@ public class ProfessorController {
 		
 		return courseMap;
 	}
+	
 	@RequestMapping("/class/addtest")
 	public String addtest(TestForm testForm, Integer courseNo) throws IOException {
 		
@@ -137,16 +139,12 @@ public class ProfessorController {
 		test.setNo(courseNo);
 		BeanUtils.copyProperties(testForm, test);
 		
-		System.out.println(test.getNo());
-		System.out.println(test.getStatus());
-		
 		if(!testForm.getTestfile().isEmpty()) {
 			MultipartFile mf = testForm.getTestfile();
 			String filename = mf.getOriginalFilename();
 			
 			FileCopyUtils.copy(mf.getBytes(), new File(attachmentFileSaveDirectory, filename));
 			test.setFileName(filename);
-			System.out.println(filename);
 		} else {
 			return "redirect:list";
 		}
@@ -154,6 +152,7 @@ public class ProfessorController {
 		
 		return "redirect:list";
 	}
+	
 	@RequestMapping("/class/classvideo")
 	public String classvideo(int courseNo, Model model) {
 		
@@ -166,8 +165,6 @@ public class ProfessorController {
 	public String addvideo(ClaForm claForm, Integer coursePartNo) throws IOException {
 		Cla cla = new Cla();
 		cla.setNo(coursePartNo);
-		System.out.println(claForm.getName());
-		System.out.println(claForm.getVideoFile());
 		BeanUtils.copyProperties(claForm, cla);
 		if(!claForm.getVideoFile().isEmpty()) {
 			MultipartFile mf = claForm.getVideoFile();
@@ -175,8 +172,6 @@ public class ProfessorController {
 			
 			FileCopyUtils.copy(mf.getBytes(), new File(attachmentVideoFileSaveDirectory, filename));
 			cla.setVideoName(filename);
-			System.out.println(filename);
-			
 		} else {
 			return "redirect:list";
 		}
@@ -184,7 +179,6 @@ public class ProfessorController {
 		
 		return "redirect:list";
 	}
-	
 	
 	@RequestMapping("/class/form")
 	public String classform(Model model, HttpSession session){
@@ -195,6 +189,7 @@ public class ProfessorController {
 		
 		return "professor/class/classform";
 	}
+	
 	@RequestMapping("/class/addcourse")
 	public String addcourse(Course course, HttpSession session, int mno){
 		
@@ -215,13 +210,14 @@ public class ProfessorController {
 		
 		return "professor/class/classupdate";
 	}
+	
 	@RequestMapping("/class/update")
 	public String classupdate(Course course) {
 				
 		service.updateCourse(course);
-		System.out.println("실행완료");
 		return "redirect:list";
 	}
+	
 	@RequestMapping("/class/delete")
 	public String classdelete(int no) {
 		
@@ -254,6 +250,7 @@ public class ProfessorController {
 		
 		return map;
 	}
+	
 	@RequestMapping("/grade/updategrade")
 	public String gradeinsert(GradeForm form, HttpSession session) {
 	
@@ -273,6 +270,7 @@ public class ProfessorController {
 		service.updateRecordByCourseNoAndStudNo(grades);
 		return "redirect:grade?term=1&year=2019";
 	}
+	
 	@RequestMapping("/grade/gradelist")
 	public String gradelist(Model model, HttpSession session) {
 		
@@ -282,6 +280,7 @@ public class ProfessorController {
 		
 		return "professor/grade/gradelist";
 	}
+	
 	@RequestMapping("/grade/gradedetail")
 	public String gradedetail(Model model, Integer cno) {
 		
@@ -296,6 +295,7 @@ public class ProfessorController {
 		
 		return "professor/grade/gradedetail";
 	}
+	
 	@RequestMapping("/grade/classopinion")
 	public String classopinion(HttpSession session, Integer term, Integer year, Model model) {
 		
@@ -311,6 +311,7 @@ public class ProfessorController {
 		
 		return "professor/grade/classopinion";
 	}
+	
 	@RequestMapping("/grade/opiniondetail")
 	public @ResponseBody Map<String, Object> opiniondetail(Integer cno) {
 		
@@ -333,7 +334,6 @@ public class ProfessorController {
 		
 		return "professor/course/planform";
 	}
-	
 	
 	@RequestMapping("/course/addplanform")
 	public String addplanform(CoursePlanForm form, HttpSession session) {
@@ -361,8 +361,6 @@ public class ProfessorController {
 		}
 		
 		service.addCoursePlanAndParts(coursePlan, parts);
-		
-		System.out.println(form.getWeek());
 		
 		return "redirect: ../class/list";
 	}

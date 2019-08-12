@@ -27,33 +27,29 @@ public class ProfessorServiceImpl implements ProfessorService{
 	
 	@Override
 	public Professor getProfessorByNo(int professorNo) {
-		
 		return professorDao.getProfessorByNo(professorNo);
 	}
 
 	@Override
 	public List<Course> getAllClassByProfId(int professorNo) {
-		
 		return professorDao.getAllClassByProfId(professorNo);
 	}
 
 	@Override
 	public int getAllClassCount(int professorNo) {
-		
 		return professorDao.getAllClassCount(professorNo);
 	}
 
 	@Override
 	public List<CoursePart> getCoursePartByCourseNo(int courseNo) {
-
 		return professorDao.getCoursePartByCourseNo(courseNo);
 	}
 
 	@Override
 	public Course getCourseByCourseNo(int courseNo) {
-		
 		return professorDao.getCourseByCourseNo(courseNo);
 	}
+	
 	@Override
 	public List<Course> getYearByProfessorNo(int professorNo) {
 		return professorDao.getYearByProfessorNo(professorNo);
@@ -68,6 +64,7 @@ public class ProfessorServiceImpl implements ProfessorService{
 	public List<Course> searchByOptions(Map<String, Object> param) {
 		return professorDao.searchByOptions(param);
 	}
+	
 	@Override
 	public int getRows(Map<String, Object> param) {
 		return professorDao.getRows(param);
@@ -91,10 +88,12 @@ public class ProfessorServiceImpl implements ProfessorService{
 			professorDao.addCoursePart(part);
 		}
 	}
+	
 	@Override
 	public Major getMajor(int profNo) {
 		return professorDao.getMajor(profNo);
 	}
+	
 	@Override
 	public void addCourse(Course course) {
 		professorDao.addCourse(course);
@@ -104,6 +103,7 @@ public class ProfessorServiceImpl implements ProfessorService{
 	public void updateCourse(Course course) {
 		professorDao.updateCourse(course);
 	}
+	
 	@Override
 	public void deleteCourse(int courseNo) {
 		professorDao.deleteCourse(courseNo);
@@ -125,10 +125,12 @@ public class ProfessorServiceImpl implements ProfessorService{
 			professorDao.updateRecordByCourseNoAndStudNo(attend);
 		}
 	}
+	
 	@Override
 	public List<CourseOpinion> getOpinionByProfId(Map<String, Object> param) {
 		return professorDao.getOpinionByProfId(param);
 	}
+	
 	@Override
 	public List<Course> getOpCourseByProfId(Map<String, Object> param) {
 		return professorDao.getOpCourseByProfId(param);
@@ -138,13 +140,17 @@ public class ProfessorServiceImpl implements ProfessorService{
 	public Map<String, Object> getOpinionAvg(int courseNo) {
 		return professorDao.getOpinionAvg(courseNo);
 	}
+	
 	@Override
 	public Map<String, Object> getOpinionMax(int courseNo) {
 		return professorDao.getOpinionMax(courseNo);
-	}@Override
+	}
+	
+	@Override
 	public Map<String, Object> getOpinionMin(int courseNo) {
 		return professorDao.getOpinionMin(courseNo);
 	}
+	
 	@Override
 	public List<CourseOpinion> getOpinionComment(int courseNo) {
 		return professorDao.getOpinionComment(courseNo);

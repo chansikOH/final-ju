@@ -27,6 +27,7 @@
 		font-size: 20px;
 		color: #333;
 	}
+	
 	.nav-sub {
  		width: 840px;
 		float: right;
@@ -81,6 +82,10 @@
 	}
 	.header-under a {
 		color: #402600;
+	}
+	.prof .header-under{left: 40% !important;}
+	.prof-sub{
+		width:370px !important;
 	}
 </style>
 	<c:if test="${not empty LOGIN_STUDENT }">
@@ -150,40 +155,30 @@
 					<a href="#" class="logo">
 						<img alt="logo" src="/ju/resources/images/logo.png" width="200" height="50">
 					</a>
-					<ul class="nav-sub navbar-nav">
-						<li><a href="#" id="menu1">학적관리</a></li>
-						<li><a href="#" id="menu2">강의</a></li>
-						<li><a href="#" id="menu3">성적</a></li>
-						<li><a href="/ju/student/mypage" id="menu4">개인정보관리</a></li>
-						<li><a href="#" id="menu5">강의평가</a></li>
-						<li><a href="#" id="menu6">등록금</a></li>
-						<li><a href="#" id="menu7">학사일정</a></li>
-						<li><a href="#" id="menu8">공지사항</a></li>
+					<ul class="nav-sub navbar-nav prof-sub">
+						<!-- <li><a href="#" id="menu1">학적관리</a></li> -->
+						<li><a href="#" id="menu1">강의</a></li>
+						<li><a href="#" id="menu2">성적</a></li>
+						<li><a href="#" id="menu3">강의평가</a></li>
+						<li><a href="#" id="menu4">공지사항</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 	
-		<div class="row">
+		<div class="row prof">
 			<div class="col-sm-12 sub-menu header-under">
 				<div id="sub-menu1">
-					<ul>
-						<li><a href="/ju/student/course/apply">수강 신청</a></li>
-						<li><a href="/ju/student/course/select">수강 조회</a></li>
-					</ul>
-				</div>
-				<div id="sub-menu2">
 					<ul>
 						<li><a href="/ju/professor/class/list">강의조회</a></li>
 						<li><a href="/ju/professor/class/form">강의개설</a></li>
 						<li><a href="/ju/professor/course/planform">강의계획작성</a></li>
 					</ul>
 				</div>		
-				<div id="sub-menu3">
+				<div id="sub-menu2">
 					<ul>
 						<c:choose>
 							<c:when test="${nowDate < term }">
-
 								<li><a href="/ju/professor/grade/grade?term=1&year=${nowYear}">성적입력</a></li>
 							</c:when>
 							<c:otherwise>
@@ -191,6 +186,10 @@
 							</c:otherwise>
 						</c:choose>
 						<li><a href="/ju/professor/grade/gradelist">성적조회</a></li>
+					</ul>
+				</div>
+				<div id="sub-menu3">
+					<ul>
 						<c:choose>
 							<c:when test="${nowDate < term2 }">
 								<li><a href="/ju/professor/grade/classopinion?term=1&year=${nowYear}">강의평가 조회</a></li>					
@@ -202,23 +201,6 @@
 					</ul>
 				</div>
 				<div id="sub-menu4">
-				</div>
-				<div id="sub-menu5">
-					<ul>
-						<li><a href="#">등록금 납부내역</a></li>
-						<li><a href="#">통지서 조회</a></li>
-					</ul>
-				</div>
-				<div id="sub-menu6">
-					<ul>
-						<li><a href="#">휴학 신청</a></li>
-						<li><a href="#">복학 신청</a></li>
-						<li><a href="#">자퇴 신청</a></li>
-					</ul>
-				</div>
-				<div id="sub-menu7">
-				</div>
-				<div id="sub-menu8">
 				</div>
 			</div>
 		</div>
