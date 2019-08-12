@@ -315,7 +315,7 @@
 			select 
 				A.student_no						as no ,
 				A.major_no							as "major.no",
-				to_char(A.student_birth,'yyyy')		as	createDate,	
+				A.student_birth						as	createDate,	
 				A.student_gender					as gender,
 				A.student_grade						as grade,
 				A.transfer_yn						as transferYn,
@@ -325,6 +325,6 @@
 			where 
 				A.major_no = B.major_no  
 			and 
-				A.student_no like #{value} || '%'	
+				A.student_no like to_char(#{value}) || '%'	
 	</select>
 </mapper>
