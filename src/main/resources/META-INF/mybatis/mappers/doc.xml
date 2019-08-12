@@ -14,7 +14,11 @@
          C.EMPLOYEE_NAME EMPLOYEE_NAME, 
          D.EMPLOYEE_NAME EMPLOYEE_NAME_1, 
          A.DOC_CREATE_DATE, 
-         A.DOC_STATE
+         A.DOC_STATE,
+         A.DOC_MIDDLE_STATUS,
+         A.DOC_FINAL_STATUS,
+         A.DOC_MIDDLE_PERSON,
+         A.DOC_FINAL_PERSON
       FROM 
          DOCS A, 
          DRAFTS B, 
@@ -23,11 +27,13 @@
       WHERE 
          A.DOC_NO = B.DOCS_NO
       AND 
+         A.DOC_USE_YN = 'Y'
+      AND 
          A.EMPLOYEE_NO = C.EMPLOYEE_NO
       AND 
          A.DOC_FINAL_PERSON = D.EMPLOYEE_NO
       AND 
-         A.EMPLOYEE_NO = #{value}
+         (A.EMPLOYEE_NO = #{value} or A.DOC_MIDDLE_PERSON = #{value} or A.DOC_FINAL_PERSON = #{value})
 		<choose>
 			<when test="option != null and option.equals('P') ">
 				and
@@ -50,7 +56,11 @@
          C.EMPLOYEE_NAME EMPLOYEE_NAME, 
          D.EMPLOYEE_NAME EMPLOYEE_NAME_1,  
          A.DOC_CREATE_DATE, 
-         A.DOC_STATE
+         A.DOC_STATE,
+         A.DOC_MIDDLE_STATUS,
+         A.DOC_FINAL_STATUS,
+         A.DOC_MIDDLE_PERSON,
+         A.DOC_FINAL_PERSON
       FROM 
          DOCS A,
          VACATIONS B, 
@@ -59,11 +69,13 @@
       WHERE 
          A.EMPLOYEE_NO = C.EMPLOYEE_NO
       AND 
+         A.DOC_USE_YN = 'Y'   
+      AND 
          A.DOC_FINAL_PERSON = D.EMPLOYEE_NO
       AND 
          A.DOC_NO = B.DOCS_NO
       AND 
-         A.EMPLOYEE_NO = #{value}
+         (A.EMPLOYEE_NO = #{value} or A.DOC_MIDDLE_PERSON = #{value} or A.DOC_FINAL_PERSON = #{value})
 			<choose>
 			<when test="option != null and option.equals('P') ">
 				and
@@ -86,7 +98,11 @@
          B.EMPLOYEE_NAME EMPLOYEE_NAME, 
          C.EMPLOYEE_NAME EMPLOYEE_NAME_1, 
          A.DOC_CREATE_DATE, 
-         A.DOC_STATE 
+         A.DOC_STATE,
+         A.DOC_MIDDLE_STATUS,
+         A.DOC_FINAL_STATUS,
+         A.DOC_MIDDLE_PERSON,
+         A.DOC_FINAL_PERSON 
       FROM 
          DOCS A, 
          EMPLOYEES B, 
@@ -95,11 +111,13 @@
       WHERE 
          A.EMPLOYEE_NO = B.EMPLOYEE_NO
       AND 
+         A.DOC_USE_YN = 'Y'
+      AND 
          A.DOC_FINAL_PERSON = C.EMPLOYEE_NO
       AND 
          A.DOC_NO = D.DOCS_NO
       AND
-         A.EMPLOYEE_NO = #{value}
+         (A.EMPLOYEE_NO = #{value} or A.DOC_MIDDLE_PERSON = #{value} or A.DOC_FINAL_PERSON = #{value})
 			<choose>
 			<when test="option != null and option.equals('P') ">
 				and
@@ -115,7 +133,7 @@
 			</when>
 		</choose>
 	</select>
-	 
+	
 	<!-- SEQ 생성 -->
 	<select id="getDocSeq" resultType="int">
 		select 
@@ -137,6 +155,24 @@
 			A.position_id = B.position_id
 		order by B.position_level desc, A.employee_name asc
 	</select>
+	
+	<!-- 중간결재자 결재상태 변경 -->
+	<update id="changeDocMiddleStatus" parameterType="doc">
+		update 
+			docs
+		set
+			doc_middle_status = 'Y'
+		where doc_no = #{no}
+	</update>
+	
+	<!-- 최종결재자 결재상태 변경 -->
+	<update id="changeDocFinalStatus" parameterType="doc">
+		update
+			docs
+		set
+			doc_final_status = 'Y'
+		where doc_no = #{no}
+	</update>
 	
 	<!-- 직원 결재문서등록 Doc -->
 	<insert id="insertDoc" parameterType="doc">
@@ -165,7 +201,9 @@
 			doc_state as state, 
 			doc_final_person as finalPerson, 
 			doc_file_yn as fileYn,  
-			doc_middle_person as middlePerson 
+			doc_middle_person as middlePerson,
+         	DOC_MIDDLE_STATUS middleStatus,
+         	DOC_FINAL_STATUS finalStatus
 		from 
 			docs
 		where 
@@ -189,6 +227,19 @@
 			#{keepingYear},
 			#{doc.no})
 	</insert>
+	
+	 <!-- 파일조회 -->
+	<select id="getFileName" parameterType="int" resultType="docFile">
+		select
+			doc_file_no no,
+			doc_no doc,
+			file_name fileName,
+			file_create_date createDate
+		from
+			doc_files
+		where
+			doc_no = #{no}
+	</select>
 	
 	<!-- 직원 기안서 상세정보 -->
 	<select id="getDraftByNo" parameterType="int" resultType="hashmap">
@@ -246,7 +297,7 @@
 		docs_no)
 	values
 		(doc_detail_seq.nextval,
-		#{div}, 
+		#{retireDiv}, 
 		#{contents}, 
 		#{retireDate}, 
 		#{doc.no})
@@ -260,7 +311,7 @@
 		F.EMPLOYEE_NAME FINAL_PERSON_NAME,
 		R.RETIRE_DIV RETIRE_DIV,
 		R.RETIRE_DATE RETIRE_DATE,
-		R.RETIRE_CONTENTS RETIRE_CONTENTS
+		R.RETIRE_CONTENTS RETIRE_CONTENT
 	FROM 
 		EMPLOYEES M, EMPLOYEES F, RETIRES R, DOCS D
 	WHERE 
@@ -343,5 +394,15 @@
 		where
 			docs_no = #{no}
 	</update>
+	
+	<!-- 결재문서 삭제 -->
+	<update id="deleteDocs" parameterType="doc">
+		update docs
+		set
+			doc_use_YN = 'N'
+		where
+			doc_no = #{value}
+	</update>
+	
 	
 </mapper>

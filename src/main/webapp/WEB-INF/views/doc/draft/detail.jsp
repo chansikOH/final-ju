@@ -54,10 +54,22 @@
 		    				<th>시행일자</th>
 		    				<td colspan="3"><fmt:formatDate value="${draft.DRAFT_START_DATE}"/></td>
 		    			</tr>
+		    			<tr>
+		    				<th>첨부파일</th>
+		    				<c:choose>
+								<c:when test="${not empty file.fileName }">
+									<td>${file.fileName }</td>
+								</c:when>
+								<c:otherwise>
+									<td>없음</td>
+								</c:otherwise>
+							</c:choose>
+	    				</tr>
 		    		</tbody>
 		    	</table>
 		    		<div class="text-right">
-			             <input type="button" class="btn btn-default" value="뒤로가기" onclick="history.back(-1);">
+		    			 <a href="draft/update?no=${doc.DOC_NO }" class="btn btn-primary btn btn-sm ">반려</a> 
+			             <input type="button" class="btn btn-default btn btn-sm" value="뒤로가기" onclick="history.back(-1);">
 		    		</div>
 		</div>
 	</div>

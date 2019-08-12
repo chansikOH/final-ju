@@ -15,7 +15,10 @@ public class Doc {
 	private Integer finalPerson;
 	private String fileYn;
 	private Integer middlePerson;
-
+	private String useYn;
+	private String middleStatus;
+	private String finalStatus;
+	
 	public Doc() {
 
 	}
@@ -108,5 +111,27 @@ public class Doc {
 		this.middlePerson = middlePerson;
 	}
 
-	
+	public String getUseYn() {
+		return useYn;
+	}
+
+	public void setUseYn(String useYn) {
+		this.useYn = useYn;
+	}
+
+	public String getMiddleStatus() {
+		return middleStatus;
+	}
+
+	public void setMiddleStatus(String middleStatus) {
+		this.middleStatus = middleStatus;
+	}
+
+	public String getFinalStatus() {
+		return finalStatus;
+	}
+
+	public void setFinalStatus(String finalStatus) {
+		this.finalStatus = finalStatus;
+	}
 }

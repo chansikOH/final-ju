@@ -64,6 +64,31 @@ public class DocController {
 		
 		return "doc/draft/addform";
 	}
+	
+	// 중간결재자 변경
+	@RequestMapping("/changeDocMiddleStatus") 
+	public String changeDocMiddleStatus(String docNo) {
+		
+		Doc doc = new Doc();
+		
+		doc.setNo(docNo);
+		docService.changeDocMiddleStatus(doc);
+		
+		return "redirect:list";
+	}
+	
+	// 최종결재자 변경
+	@RequestMapping("/changeDocFinalStatus")
+	public String changeDocFinalStatus (String docNo) {
+		
+		Doc doc = new Doc();
+		
+		doc.setNo(docNo);
+		docService.changeDocFinalStatus(doc);
+		
+		return "redirect:list";
+	}
+	
 	// 기안서 등록
 	@RequestMapping("/draft/insertDoc")
 	public String draft(DocForm docForm, HttpSession session) throws IOException {
@@ -111,21 +136,31 @@ public class DocController {
 	}
 	// 기안서 디테일
 	@RequestMapping("/draft/detail")
-	public String draftform(Model model, @RequestParam("no") Integer draftNo) {
+	public String draftform(Model model, @RequestParam("no") Integer draftNo, int no) {
 		Map<String, Object> draft = docService.getDraftByNo(draftNo);
 		model.addAttribute("draft", draft);
+		DocFile file = docService.getFileName(no);
+		model.addAttribute("file",file );
 		
 		return "doc/draft/detail";
 	}
 	
+	@RequestMapping("dtaft/update")
+	public String drafUpdate(HttpSession session, Model model, @RequestParam("no") Integer draft, int no) {
+		
+		model.addAttribute("draft", docService.getDraftByNo(draft));	
+		
+		return "doc/draft/update";
+	}
+	
 	// 기안서 업데이트
-	@RequestMapping("/draft/update")
+	@RequestMapping("/update")
 	public String draftUpdate(Draft draft) {
 		System.out.println("ddd: "+draft.getTitle());
 		
 		docService.updateDraft(draft);
 		
-		return "doc/draft/update";
+		return "redirect:list";
 	}
 	
 	// 퇴직서
@@ -180,10 +215,12 @@ public class DocController {
 	
 	// 퇴직서 디테일
 	@RequestMapping("/retire/detail")
-	public String retireDetail(Model model, @RequestParam("no")Integer retireNo) {
+	public String retireDetail(Model model, @RequestParam("no")Integer retireNo, int no) {
 		Map<String, Object> retire= docService.getRetireByNo(retireNo);
 		model.addAttribute("retire", retire);
-		
+		DocFile file = docService.getFileName(no);
+		model.addAttribute("file",file );
+	
 		return "doc/retire/detail";
 	}
 	// 퇴직서 업데이트
@@ -252,11 +289,13 @@ public class DocController {
 	
 	//휴가 디테일
 	@RequestMapping("/vacation/detail")
-	public String vacationDetail(Model model,@RequestParam("no") Integer vacationNo) {
+	public String vacationDetail(Model model,@RequestParam("no") Integer vacationNo, int no) {
 		Map<String, Object> vacation = docService.getVacationByNo(vacationNo);
 		model.addAttribute("vacation", vacation);
+		DocFile file = docService.getFileName(no);
+		model.addAttribute("file",file );
 		
-		return "doc/retire/detail";
+		return "doc/vacation/detail";
 	}
 	//휴가 업데이트
 	@RequestMapping("/vacation/update")
@@ -264,6 +303,15 @@ public class DocController {
 		
 		docService.updateVacation(vacation);
 		return "doc/vacation/update";
+	}
+	
+	//문서 삭제
+	@RequestMapping("/deleteDocs")
+	public String deleteDocs(Doc doc) {
+		
+		docService.deleteDocs(doc);
+		return "redirect:../list";
+		
 	}
 	
 	@InitBinder // 날짜 변환

@@ -27,11 +27,17 @@ public interface DocDao {
 	void updateVacation(Vacation vacation);
 	void updateRetire(Retire retire);
 	
+	void changeDocMiddleStatus(Doc doc);
+	void changeDocFinalStatus(Doc doc);
+	
+	void deleteDocs(Doc doc);
+	
 	Map<String, Object> getDraftByNo(int draftNo);
 	Map<String, Object> getRetireByNo(int retireNo);
 	Map<String, Object> getVacationByNo(int vacationNo);
 	
 	int getDocSeq();
+	DocFile getFileName(int no);
 	List<Employee> getAllEmployees();
 	
 }

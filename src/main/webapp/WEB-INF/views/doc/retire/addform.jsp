@@ -47,7 +47,7 @@
 		    			<br/>
 		    			<label>구분</label>
 		    			<select class="form-control" name="div">
-	                        <option value="1"> 명예퇴직</option>
+	                        <option value=1> 명예퇴직</option>
 	                        <option value="2"> 불명예퇴직</option>
 	                    </select>
 		    			<br/>

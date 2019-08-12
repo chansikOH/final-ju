@@ -27,7 +27,7 @@
 		<%@ include file="/WEB-INF/views/common/sidebar.jsp"%>
 		</div>
 		<div class="col-sm-10">
-		<h2 class="text-center">휴가계획서 양식</h2>
+		<h2 class="text-center">퇴직서 상세페이지</h2>
 	    <table class="table">
 	    	<colgroup>
 	    		<col width="10%">
@@ -39,27 +39,35 @@
 	    		<tbody>
 	    			<tr>
 	    				<th>중간결재자</th>
-	    				<td>${vacation.MIDDLE_PERSON_NAME }</td>
+	    				<td>${retire.MIDDLE_PERSON_NAME }</td>
 	    				<th>최종결재자</th>
-	    				<td>${vacation.FINAL_PERSON_NAME }</td>
+	    				<td>${retire.FINAL_PERSON_NAME }</td>
 	    			</tr>
 	    			<tr>
-	    				<th>휴가시작</th>
-	    				<td><fmt:formatDate value="${vacation.START_DATE }"/></td>
-	    				<th>휴가종료</th>
-	    				<td><fmt:formatDate value="${vacation.END_DATE }"/></td>
-	    			</tr>
-	    			<tr>
-	    				<th>종류</th>
-	    				<td colspan="3">${vacation.VACATION_DIV }</td>
+	    				<th>구분</th>
+	    				<td>${retire.RETIRE_DIV }</td>
+	    				<th>퇴직예정날짜</th>
+	    				<td><fmt:formatDate value="${retire.RETIRE_DATE }"/></td>
 	    			</tr>
 	    			<tr>
 	    				<th>내용</th>
-	    				<td colspan="3">${vacation.CONTENTS}</td>
+	    				<td colspan="3">${retire.RETIRE_CONTENT }</td>
+	    			</tr>
+	    			<tr>
+	    				<th>첨부파일</th>
+	    				<c:choose>
+							<c:when test="${not empty file.fileName }">
+								<td>${file.fileName }</td>
+							</c:when>
+							<c:otherwise>
+								<td>없음</td>
+							</c:otherwise>
+						</c:choose>
 	    			</tr>
 	    		</tbody>
 	    	</table>
     		<div class="text-right">
+    			 <a href="/ju/doc/draft/update" class="btn btn-primary btn btn-sm ">반려</a> 
 	             <input type="button" class="btn btn-default" value="뒤로가기" onclick="history.back(-1);">
     		</div>
 		</div>
