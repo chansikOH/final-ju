@@ -334,8 +334,8 @@ public class StudentServiceImpl implements StudentService {
 	}
 	
 	@Override
-	public int getAllNoticeCount() {
-		return studentDao.getAllNoticeCount();
+	public int getAllNoticeCount(Map<String, Object> map) {
+		return studentDao.getAllNoticeCount(map);
 	}
 	
 	@Override

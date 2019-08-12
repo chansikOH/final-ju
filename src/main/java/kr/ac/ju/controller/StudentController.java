@@ -407,7 +407,7 @@ public class StudentController {
 		map.put("beginIndex", beginIndex);
 		map.put("endIndex", pno * 15);
 		
-		int totalCount = studentService.getAllNoticeCount();
+		int totalCount = studentService.getAllNoticeCount(map);
 		List<Notice> notices = studentService.getAllNotices(map);
 		model.addAttribute("notices", notices);
 		model.addAttribute("count", totalCount);

@@ -614,9 +614,17 @@
 			class_view_no = #{value}
 	</select>
 	
-	<select id="getAllNoticeCount" resultType="int">
+	<select id="getAllNoticeCount" parameterType="map" resultType="int">
 		select count(*)
 		from notices
+		<where>
+			<if test="title != null">
+				notice_title like '%' || #{title} || '%'
+			</if>
+			<if test="contents != null">
+				notice_contents like '%' || #{contents} ||'%'
+			</if>
+		</where>
 	</select>
 	
 	<select id="getAllNotices" parameterType="map" resultType="notice">
@@ -643,7 +651,6 @@
 		where 
 			rn >= #{beginIndex}
 			and rn &lt;= #{endIndex}
-		<!-- order by notice_no desc -->
 	</select>
 	
 	<select id="getNoticeByNoticeNo" parameterType="int" resultType="notice">

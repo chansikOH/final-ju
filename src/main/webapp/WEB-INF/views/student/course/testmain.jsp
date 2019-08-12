@@ -193,6 +193,8 @@
 					}
 					
 					$("#answers-form").submit();
+
+					window.close();
 				});
 			});
 			

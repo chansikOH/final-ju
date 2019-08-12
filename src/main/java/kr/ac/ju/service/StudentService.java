@@ -7,7 +7,6 @@ import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.CourseOpinion;
 import kr.ac.ju.vo.CoursePart;
-import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Notice;
 import kr.ac.ju.vo.Student;
 import kr.ac.ju.vo.StudentStatus;
@@ -44,7 +43,7 @@ public interface StudentService {
 	// 작성자 : 오찬식
 	void updateClassView(int viewNo, String currentTime, int percentage);
 	Student getLeaveStudentByNo(int studentNo);
-	int getAllNoticeCount();
+	int getAllNoticeCount(Map<String, Object> map);
 	List<Notice> getAllNotices(Map<String, Object> map);
 	Notice getNoticeByNoticeNo(int noticeNo);
 	Map<String, Object> getCoursePlanByNo(int courseNo);
