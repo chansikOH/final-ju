@@ -231,7 +231,6 @@
                             <th>학기</th>
                             <th>교과목명</th>
                             <th>교수명</th>
-                            <th>강의계획서</th>
                             <th>동영상 등록</th>
                         </tr>
                     </thead>
@@ -429,7 +428,6 @@
     				courseRow += "<td>"+course.term+"</td>";
     				courseRow += "<td>"+course.name+"</td>";
     				courseRow += "<td>"+course.professor.name+"</td>";
-    				courseRow += "<td class='move-btn'><a href='#' id='plan-detail'class='btn btn-default'>보기</a></td>";
     				courseRow += "<td class='btn-update'><a href='classvideo?courseNo="+course.no+"' class='btn btn-default'>등록</a></td>";
     				$("#course-detail-modal .course-detail-show tbody").append(courseRow); 
 	    				
@@ -451,6 +449,7 @@
 	 		
     	})
     	$(".course-detail-modal").on("click", ".test-detail", function(event){
+    		
     		event.preventDefault();
     		var no = $(this).attr('data-value');
     		$.ajax({
@@ -501,9 +500,11 @@
  		
  		
  		 $("#course-test-modal").on("click",".addbtn",function(){
+ 			$(".file").remove();
  			var file =$("#file").val();
  			if(file == ""){ 				
-	 			$("#file").after("<span class='file'>* 파일을 선택해주세요</span>");
+	 			$("#file").after("<span class='file'>* 파일을 첨부해주세요</span>");
+	 			return false;
  			}
  		});	
  		

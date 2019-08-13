@@ -22,26 +22,19 @@ public interface ProfessorService {
 	int getAllClassCount(int professorNo);
 	List<CoursePart>getCoursePartByCourseNo(int courseNo);
 	Course getCourseByCourseNo(int courseNo);
-	
 	List<Course> getYearByProfessorNo(int professorNo);
 	List<Course> getMajorByProfessorNo(int professorNo);
-	
 	List<Course> searchByOptions(Map<String, Object> param);
 	int getRows(Map<String, Object> param);
-	
 	void addTest(Test test);
 	void addVideo(Cla cla);
-	
 	void addCoursePlanAndParts(CoursePlan coursePlan, List<CoursePart> parts);
-	
 	Major getMajor(int profNo);
 	void addCourse(Course course);
 	void updateCourse(Course course);
 	void deleteCourse(int courseNo);
-	
 	List<Course> getTermClassByProfId(Map<String, Object> param);
 	List<Map<String, Object>> getStudentsByCourseNo(int courseNo);
-	
 	void updateRecordByCourseNoAndStudNo(List<CourseAttend> attends);
 	List<CourseOpinion> getOpinionByProfId(Map<String, Object>param);
 	List<Course> getOpCourseByProfId(Map<String, Object> param);

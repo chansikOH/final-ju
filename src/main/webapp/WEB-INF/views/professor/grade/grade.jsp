@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+	<fmt:parseDate value="0810" pattern="MMdd" var="sDate" />
+	<fmt:parseDate value="0811" pattern="MMdd" var="eDate"/> 
+	
+	<fmt:formatDate value="${sDate }" pattern="MMdd" var="startDate" />
+	<fmt:formatDate value="${eDate }" pattern="MMdd" var="endDate" />
     
 <!DOCTYPE html>
 <html lang="ko">
@@ -78,6 +84,13 @@
 	    }
 		#opinion .modal-body {height: 100%;}
 		.side-padding{padding-left: 0;}
+		.wrapper h4{font-size: 26px;}
+		.modal-content h4 {
+		    margin: 25px 0 15px 0px;
+		    font-size: 20px;
+		    font-weight: bold;
+		    color: #555;
+		}
     </style>
   	
 </head>
@@ -93,8 +106,8 @@
 			<div class="col-sm-10 wrapper">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4>[성적입력]</h4>               
-                        <p>※ 이번학기 담당강좌 성적만 입력 가능</p>
+                        <h4>성적입력</h4>               
+                        <p>※ 이번학기 담당강의 성적만 입력 가능</p>
                     </div>
                 </div>
 
@@ -130,7 +143,7 @@
 	                                    <td>${course.no}</td>
 	                                    <td><a href="#" class="course-modal" data-value="${course.no }">${course.name }</a></td>
 	                                    <td>${course.credit}</td>
-	                                   	<td>2019-08-01 ~ 2019-08-07</td>
+	                                   	<td class="date" data-sdate="${startDate }" data-edate="${endDate }" data-ndate="${nowDate }"> 2019-08-01 ~ 2019-08-07</td>
                                 	</tr>
                             	</c:forEach>
                             </tbody>
@@ -145,7 +158,7 @@
 				<div class="modal-content">
 					<div class="modal-body">
 						<div class="course-opinion-table">
-			                <h4>[성적입력]</h4>
+			                <h4>성적입력</h4>
 			                   
 							<form class="form" method="post" action="updategrade">
 				                <table class="table table-bordered course-info">
@@ -154,7 +167,7 @@
 					                </tbody>
 				                </table>
 				
-				              	<h4>[수강생 목록]</h4>
+				              	<h4>수강생 목록</h4>
 				
 				                <table class="table table-bordered course-opin">
 					                <thead>
@@ -188,6 +201,16 @@
 		
 		<script type="text/javascript">
 			$(document).on("click", ".course-modal", function () {
+				var n = $(".date").attr("data-ndate");
+				var s = $(".date").attr("data-sdate");
+				var e = $(".date").attr("data-sdate");
+				if(s <= n && n <= e){
+					
+				}else{
+					alert("성적입력 기간이 아닙니다.");
+					return false;
+				}
+				
 				var cno = $(this).attr('data-value');
 				
 				$.ajax({
@@ -252,9 +275,14 @@
 		 		$(".close-modal").on('hide', function(){
 		 			
 		 		});
+		 		
 				
 			});
 			
+			
+
+			 
+
 		
 		</script>
 		

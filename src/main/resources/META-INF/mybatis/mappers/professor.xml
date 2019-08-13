@@ -66,7 +66,7 @@
 		and
 			c.professor_no = f.professor_no
 	</select>
-	
+	<!-- 교수번호로 년도, 학기별 강의 조회 -->
 	<select id="getTermClassByProfId" parameterType="map" resultType="course">
 		select 
 			c.course_no no,
@@ -277,21 +277,21 @@
 		values
 		(class_seq.nextval, #{no}, #{name}, #{videoName})
 	</insert>
-	
+	<!-- 강의계획서 등록 -->
 	<insert id='addCoursePlan' parameterType="coursePlan">
 		insert into course_plans
 		(course_plan_no, professor_no, course_no, plan_goal, plan_summary, plan_main_book, plan_sub_book1, plan_sub_book2, plan_sub_book3, plan_test_process)
 		values
 		(#{no}, #{professor.no}, #{course.no}, #{goal}, #{summary}, #{mainBook}, #{subBook1}, #{subBook2}, #{subBook3}, #{testProcess})
 	</insert>
-	
+	<!-- 단원 등록 -->
 	<insert id="addCoursePart" parameterType="coursePart">
 		insert into course_parts
 		(course_part_no, course_no, course_part_name, course_part_week, course_part_contents)
 		values
 		(course_part_seq.nextval, #{course.no}, #{name}, #{week}, #{contents})
 	</insert>
-	
+	<!-- 교수번호로 학과조회 -->
 	<select id="getMajor" parameterType="int" resultType="major">
 		select
    			M.major_name as name, M.major_no as no, P.professor_no as "professor.no" 
@@ -302,14 +302,14 @@
 		and
 		    P.professor_no = #{value}
 	</select>
-	
+	<!-- 강의추가 -->
 	<insert id="addCourse" parameterType="course">
 		insert into courses
 		(course_no, professor_no, major_no, course_name, course_credit, course_year, course_term, course_must_yn, course_quota)
 		values
 		(#{no}, #{professor.no}, #{major.no}, #{name}, #{credit}, #{year}, #{term}, #{mustYn}, #{quota})
 	</insert>
-	
+	<!-- 강의수정 -->
 	<update id="updateCourse" parameterType="course">
 		update courses
 		set 
@@ -321,12 +321,12 @@
 		    course_quota = #{quota}
 		where course_no = #{no}
 	</update>
-	
+	<!-- 강의삭제 -->
 	<delete id="deleteCourse" parameterType="int">
 		delete from courses
 		where course_no = #{value}
 	</delete>
-	
+	<!-- 교과목번호로 학생, 점수, 성적조회 -->
 	<select id="getStudentsByCourseNo" parameterType="int" resultType="map">
 		select
 		     Y.student_name name,
@@ -359,14 +359,14 @@
         order by x.student_no asc
         
 	</select>
-	
+	<!-- 성적입력 -->
 	<update id="updateRecordByCourseNoAndStudNo" parameterType="courseAttend">
 		update course_attends
 		set course_attend_record = #{record}
 		where student_no = #{student.no}
 		and course_no = #{course.no}
 	</update>
-	
+	<!-- 교수번호로 강의평가 결과 조회 -->
 	<select id="getOpinionByProfId" parameterType="map" resultType="courseOpinion">
 		select 
 		    c.course_name "course.name", 
@@ -420,7 +420,7 @@
 		and
 		    c.course_year = #{year}
 	</select>
-	
+	<!-- 교수번호로 해당학기 제외한 강의 조회 -->
 	<select id="getOpCourseByProfId" parameterType="map" resultType="course">
 		select
 		    course_name name, 
@@ -448,6 +448,7 @@
 		and
 		    course_year = #{year}
 	</select>
+	<!-- 강의평가 평균점수 -->
 	<select id="getOpinionAvg" parameterType="int" resultType="map">
 		select 
 		    avg(opinion_question01) q1,	 
@@ -468,6 +469,7 @@
 		group by
 		    course_no
 	</select>
+	<!-- 강의평가 최저점수 조회 -->
 	<select id="getOpinionMin" parameterType="int" resultType="map">
 		select 
 		    min(opinion_question01) q1,	 
@@ -488,6 +490,7 @@
 		group by
 		    course_no
 	</select>
+	<!-- 강의평가 최고점수 조회 -->
 	<select id="getOpinionMax" parameterType="int" resultType="map">
 		select 
 		    max(opinion_question01) q1,	 
@@ -508,6 +511,7 @@
 		group by
 		    course_no
 	</select>
+	<!-- 강의평가 기타의견 조회 -->
 	<select id="getOpinionComment" parameterType="int" resultType="courseOpinion">
 		select 
             opinion_question11 q11
