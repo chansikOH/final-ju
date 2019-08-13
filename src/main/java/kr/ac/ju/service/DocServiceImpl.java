@@ -160,6 +160,25 @@ public class DocServiceImpl implements DocService {
 			docDao.updateRetire(retire);
 		}
 
+		@Override
+		public DocFile getFileName(int no) {
+			
+			return docDao.getFileName(no);
+		}
 
-		
+		@Override
+		public void deleteDocs(Doc doc) {
+			docDao.deleteDocs(doc);
+		}
+
+		@Override
+		public void changeDocMiddleStatus(Doc doc) {
+			docDao.changeDocMiddleStatus(doc);
+		}
+
+		@Override
+		public void changeDocFinalStatus(Doc doc) {
+			docDao.deleteDocs(doc);
+		}
+
 }

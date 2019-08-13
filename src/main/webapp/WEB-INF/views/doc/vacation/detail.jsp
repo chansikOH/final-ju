@@ -27,7 +27,7 @@
 		<%@ include file="/WEB-INF/views/common/sidebar.jsp"%>
 		</div>
 		<div class="col-sm-10">
-			<h2 class="text-center">휴가계획서 양식</h2>
+			<h2 class="text-center">휴가계획서 상세페이지</h2>
 		    <table class="table">
 	    	<colgroup>
 	    		<col width="10%">
@@ -58,9 +58,21 @@
 	    				<th>내용</th>
 	    				<td colspan="3">${vacation.CONTENTS}</td>
 	    			</tr>
+	    			<tr>
+	    				<th>첨부파일</th>
+	    				<c:choose>
+							<c:when test="${not empty file.fileName }">
+								<td>${file.fileName }</td>
+							</c:when>
+							<c:otherwise>
+								<td>없음</td>
+							</c:otherwise>
+						</c:choose>
+    				</tr>
 	    		</tbody>
 	    	</table>
     		<div class="text-right">
+    			 <a href="/ju/doc/draft/update" class="btn btn-primary btn btn-sm ">반려</a> 
 	             <input type="button" class="btn btn-default" value="뒤로가기" onclick="history.back(-1);">
     		</div>
 		</div>

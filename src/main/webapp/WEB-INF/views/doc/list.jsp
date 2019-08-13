@@ -13,7 +13,7 @@
 </head>
 <style>
 #doclist {margin-top: 20px;}
-.btn {background-color: #E3DCCC;}
+.btn-doc {background-color: #E3DCCC;}
 #tr {background-color: #faf6f0;}
 </style>
 <body>
@@ -27,13 +27,14 @@
 			<div class="row" id="doclist">
 				<div class="col-sm-10">
 					<div class="button-righ">
-						<a href="" class="btn btn-warning">결재중(2)</a>
-						<a href="" class="btn btn-info">반려(1)</a>
-						<a href="" class="btn btn-default">완료(1)</a>
+						<a href="" class="btn btn-warning btn-doc">결재중(2)</a>
+						<a href="" class="btn btn-warning btn-doc">결재대기(2)</a>
+						<a href="" class="btn btn-info btn-doc">반려(1)</a>
+						<a href="" class="btn btn-default btn-doc">완료(1)</a>
 					</div>
 				</div>
 				<div class="col-sm-2 tetxt-right">
-					<a href="" class="btn btn-danger" >선택삭제</a>
+					<a href="deleteDocs?no=${doc.no }" class="btn btn-danger  btn-doc"  >선택삭제</a>
 				</div>
 				<br/>
 			<div class="row" style="maring-top:20px;">
@@ -70,7 +71,24 @@
 										<td>${doc.EMPLOYEE_NAME }</td>
 										<td>${doc.EMPLOYEE_NAME_1 }</td>
 										<td><fmt:formatDate value="${doc.DOC_CREATE_DATE }"/> </td>
-										<td><a href="vacation/update?no=${doc.DOC_NO }">${doc.DOC_STATE }</a></td>
+										<td>
+											<c:if test="${doc.DOC_STATE eq '결재중' }">
+												<c:choose>
+													<c:when test="${doc.DOC_MIDDLE_STATUS eq 'N' and doc.DOC_FINAL_STATUS eq 'N' and doc.DOC_MIDDLE_PERSON eq LOGIN_EMPLOYEE.no}">
+														<span class="label label-warning">결재대기</span><a href="changeDocMiddleStatus?docNo=${doc.DOC_NO }" class="btn  btn-success btn-xs" >결재하기</a>
+													</c:when>
+													<c:when test="${doc.DOC_MIDDLE_STATUS eq 'Y' and doc.DOC_FINAL_STATUS eq 'N' and doc.DOC_FINAL_PERSON eq LOGIN_EMPLOYEE.no}">
+														<span class="label label-warning">결재대기</span> <a href="changeDocMiddleStatus?docNo=${doc.DOC_NO }" class="btn  btn-success btn-xs" >결재하기</a>
+													</c:when>
+													<c:otherwise>
+														<span class="label label-info">결재중</span> 
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+											<c:if test="${doc.DOC_STATE eq '완료' }">
+												<span class="label label-primary">결재완료</span>
+											</c:if>
+										</td>
 									</c:when>
 									<c:when test="${doc.DRAFT_TITLE eq '퇴직신청서' }">
 										<td><input type="checkbox"/>${doc.DOC_NO}</td>
@@ -79,7 +97,24 @@
 										<td>${doc.EMPLOYEE_NAME }</td>
 										<td>${doc.EMPLOYEE_NAME_1 }</td>
 										<td><fmt:formatDate value="${doc.DOC_CREATE_DATE }"/> </td>
-										<td><a href="retire/update?no=${doc.DOC_NO }">${doc.DOC_STATE }</a></td>
+										<td>
+											<c:if test="${doc.DOC_STATE eq '결재중' }">
+												<c:choose>
+													<c:when test="${doc.DOC_MIDDLE_STATUS eq 'N' and doc.DOC_FINAL_STATUS eq 'N' and doc.DOC_MIDDLE_PERSON eq LOGIN_EMPLOYEE.no}">
+														<span class="label label-warning">결재대기</span><a href="changeDocMiddleStatus?docNo=${doc.DOC_NO }" class="btn  btn-success btn-xs" >결재하기</a>
+													</c:when>
+													<c:when test="${doc.DOC_MIDDLE_STATUS eq 'Y' and doc.DOC_FINAL_STATUS eq 'N' and doc.DOC_FINAL_PERSON eq LOGIN_EMPLOYEE.no}">
+														<span class="label label-warning">결재대기</span> <a href="changeDocMiddleStatus?docNo=${doc.DOC_NO }" class="btn  btn-success btn-xs" >결재하기</a>
+													</c:when>
+													<c:otherwise>
+														<span class="label label-info">결재중</span> 
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+											<c:if test="${doc.DOC_STATE eq '완료' }">
+												<span class="label label-primary">결재완료</span>
+											</c:if>
+										</td>
 									</c:when>
 									<c:otherwise>
 										<td><input type="checkbox"/>${doc.DOC_NO}</td>
@@ -88,7 +123,24 @@
 										<td>${doc.EMPLOYEE_NAME }</td>
 										<td>${doc.EMPLOYEE_NAME_1 }</td>
 										<td><fmt:formatDate value="${doc.DOC_CREATE_DATE }"/> </td>
-										<td><a href="draft/update?no=${doc.DOC_NO }">${doc.DOC_STATE }</a></td>
+										<td>
+											<c:if test="${doc.DOC_STATE eq '결재중' }">
+												<c:choose>
+													<c:when test="${doc.DOC_MIDDLE_STATUS eq 'N' and doc.DOC_FINAL_STATUS eq 'N' and doc.DOC_MIDDLE_PERSON eq LOGIN_EMPLOYEE.no}">
+														<span class="label label-warning">결재대기</span><a href="changeDocMiddleStatus?docNo=${doc.DOC_NO }" class="btn  btn-success btn-xs" >결재하기</a>
+													</c:when>
+													<c:when test="${doc.DOC_MIDDLE_STATUS eq 'Y' and doc.DOC_FINAL_STATUS eq 'N' and doc.DOC_FINAL_PERSON eq LOGIN_EMPLOYEE.no}">
+														<span class="label label-warning">결재대기</span> <a href="changeDocMiddleStatus?docNo=${doc.DOC_NO }" class="btn  btn-success btn-xs" >결재하기</a>
+													</c:when>
+													<c:otherwise>
+														<span class="label label-info">결재중</span> 
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+											<c:if test="${doc.DOC_STATE eq '완료' }">
+												<span class="label label-primary">결재완료</span>
+											</c:if>
+										</td>
 									</c:otherwise>
 								</c:choose>
 							</tr>
@@ -99,16 +151,16 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12 text-right">
-					<a href="/ju/doc/draft/addform" class="btn-sm btn-success">기안서작성</a> 
-					<a href="/ju/doc/vacation/addform" class="btn-sm btn-info">휴가서작성</a> 
-					<a href="/ju/doc/retire/addform" class="btn-sm btn-warning">퇴직서작성</a>
+					<a href="/ju/doc/draft/addform" class="btn btn-primary btn-sm ">기안서작성</a> 
+					<a href="/ju/doc/vacation/addform" class="btn btn-sm btn-info">휴가서작성</a> 
+					<a href="/ju/doc/retire/addform" class="btn btn-sm btn-warning">퇴직서작성</a>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 text-center">
 					<ul class="pagination">
-						<li><a href="#">1</a></li>
-						<li class="active"><a href="#">2</a></li>
+						<li class="active"><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
 						<li><a href="#">3</a></li>
 						<li><a href="#">4</a></li>
 						<li><a href="#">5</a></li>

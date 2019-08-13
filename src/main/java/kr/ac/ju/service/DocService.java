@@ -21,10 +21,17 @@ public interface DocService {
 	void updateVacation(Vacation vacation);
 	void updateRetire(Retire retire);
 	
+	void changeDocMiddleStatus (Doc doc);
+	void changeDocFinalStatus (Doc doc);
+	
+	void deleteDocs (Doc doc);
+	
+	
 	Map<String, Object> getDraftByNo(Integer draftNo);
 	Map<String, Object> getRetireByNo(Integer retireNo);
 	Map<String, Object> getVacationByNo(Integer vacationNo);
 	
+	DocFile getFileName(int no);
 	List<Employee> getAllEmployees();
 
 
