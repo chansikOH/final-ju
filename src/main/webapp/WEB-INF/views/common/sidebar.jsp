@@ -30,11 +30,9 @@
     }
     
     .text-line {
-        display: block;
-        width:300px; 
-        overflow:hidden; 
-        text-overflow:ellipsis; 
-        white-space:nowrap;
+    	display: block;
+        height: 250px;   
+        overflow:auto; 
     }
     
     textarea {
@@ -290,7 +288,7 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="send-note">
-                                <form class="form" id="sendNote">
+                                <form class="form" id="sendNote" method="POST" action="/ju/sendmessage">
                                     <table class="table">
                                     	<colgroup>
                                     		<col width="30%">
@@ -311,18 +309,18 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                            	<td>
-                                            		<form class="form">
-                                            			<table class="tale">
-                                            				<tbody>
-                                            					
-                                            				</tbody>
-                                            			</table>
-                                            		</form>
+                                            	<td id="personlist" colspan="2">
+                                            		<span></span>
+                                            		<div class="text-line">
+	                                            		<table class="table"></table>                                            		
+                                            		</div>
                                             	</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2"><button type="button" id="sendMessage" class="btn btn-info">전송</button>
+                                            	<td colspan="2"><textarea class="form-control" name="contents"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><button type="submit" id="sendMessage" class="btn btn-info">전송</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button></td>
                                             </tr>
                                         </tbody>
@@ -408,6 +406,12 @@
     <script type="text/javascript">
     	$(function() {
     		$("#selectTypeDetail").hide();
+    		$("#personlist").hide();
+    		
+    		$("#send-note input:radio[name='type']").change(function() {
+    			$("#selectTypeDetail option:eq(0)").prop("selected", true);
+    			$("#personlist table").empty();
+    		})
     		
     		$("#send-note input:radio[name='type']").click(function() {
 	    		var checkedType = $(this).val();
@@ -418,7 +422,7 @@
 		    			url:"/ju/findgubun",
 		    			success: function(map) {
 		    				$.each(map.majors, function(index, m) {
-		    					var row = "<option value='"+m.name+"'>"+m.name+"</option>";
+		    					var row = "<option value='"+m.no+"'>"+m.name+"</option>";
 		    					
 		    					$("#selectTypeDetail").append(row);
 		    				})
@@ -432,7 +436,7 @@
 	    				url:"/ju/findgubun",
 	    				success: function(map) {
 	    					$.each(map.departments, function(index, d) {
-	    						var row = "<option value-'"+d.name+"'>"+d.name+"</option>";
+	    						var row = "<option value='"+d.id+"'>"+d.name+"</option>";
 	    						
 	    						$("#selectTypeDetail").append(row);
 	    					})
@@ -443,13 +447,151 @@
 	    		}
     		})
     		
+    		$('#selectTypeDetail').change(function() {
+    			var selectOption = $('#selectTypeDetail option:selected').val();
+    			var checkedType = $("#send-note input:radio[name='type']:checked").val();
+    			
+    			console.log(selectOption);
+    			console.log(checkedType);
+    			
+    			$.ajax({
+    				type:"POST",
+    				url:"/ju/findperson",
+    				data:{checkedType:checkedType, majorNo:selectOption, deptId:""},
+    				dataType:"json",
+    				success:function(map) {
+    					var student = map.student;
+    					var professor = map.professor;
+    					
+    					if(checkedType == '학생') {
+	    					$("#personlist table").empty();
+	    						
+	    					var row = "<thead>";
+	    					row += "<tr>";
+	    					row += "<th>선택</th>";
+	    					row += "<th>학번</th>";
+	    					row += "<th>학년</th>";
+	    					row += "<th>이름</th>";
+	    					row += "</tr>";
+	    					row += "</thead>";
+	    						
+	    					$.each(map.student, function(index, s) {
+	    						row += "<tbody>";
+	    						row += "<tr>";
+	    						row += "<td><input type='checkbox' name='receiver' value='"+s.no+"'></td>";
+	    						row += "<td>"+s.no+"</td>";
+	    						row += "<td>"+s.grade+"</td>";
+	    						row += "<td>"+s.name+"</td>";
+	    						row += "</tr>"
+	    						row += "</tbody>";
+    						})
+	    					$("#personlist table").append(row);
+	    					$("#personlist").show();
+	    					
+    					} else if(checkedType == '교수') {
+	    					$("#personlist table").empty();
+	    						
+	    					var row = "<thead>";
+	    					row += "<tr>";
+	    					row += "<th>선택</th>";
+	    					row += "<th>교수번호</th>";
+	    					row += "<th>직위</th>";
+	    					row += "<th>이름</th>";
+	    					row += "</tr>";
+	    					row += "</thead>";
+	    						
+    						$.each(map.professor, function(index, p) {
+	    						row += "<tbody>";
+	    						row += "<tr>";
+	    						row += "<td><input type='checkbox' name='receiver' value='"+p.no+"'></td>";
+	    						row += "<td>"+p.no+"</td>";
+	    						row += "<td>"+p.position.name+"</td>";
+	    						row += "<td>"+p.name+"</td>";
+	    						row += "</tr>";
+	    						row += "</tbody>";
+    						})
+    						$("#personlist table").append(row);
+	    					$("#personlist").show();
+    						
+    					}
+    				}
+    			})
+    					
+    			$.ajax({
+    				type:"POST",
+    				url:"/ju/findperson",
+    				data:{checkedType:checkedType, deptId:selectOption, majorNo:0},
+    				dataType:"json",
+    				success:function(map) {
+    					var employee = map.employee;
+    					
+    					if(checkedType == '직원') {
+	    					$("#personlist table").empty();
+	    						
+	    					var row = "<thead>";
+	    					row += "<tr>";
+	    					row += "<th>선택</th>";
+	    					row += "<th>직원번호</th>";
+	    					row += "<th>부서</th>";
+	    					row += "<th>직위</th>";
+	    					row += "<th>이름</th>";
+	    					row += "</tr>";
+	    					row += "</thead>";
+	    						
+    						$.each(map.employee, function(index, e) {
+	    						row += "<tbody>";
+	    						row += "<tr>";
+	    						row += "<td><input type='checkbox' name='receiver' value='"+e.no+"'></td>";
+	    						row += "<td>"+e.no+"</td>";
+	    						row += "<td>"+e.department.name+"</td>";
+	    						row += "<td>"+e.position.name+"</td>";
+	    						row += "<td>"+e.name+"</td>";
+	    						row += "</tr>"
+	    						row += "</tbody>";	    						
+    						})
+    						$("#personlist table").append(row);
+	    					$("#personlist").show();
+    					}
+    				}
+    			})
+    		})
     		
+    		/* $("#sendMessage").click (function() {
+    			var contents = $("[name=contents]").val();
+    			var receiver = $("[name=receiver]").val();
+    			var type = $("#send-note input:radio[name='type']:checked").val();
+    			
+    			console.log(contents, "con");
+    			console.log(receiver, "rec");
+    			console.log(type, "type");
+    			
+    			$.ajax({
+    				type:"POST",
+    				url:"/ju/sendmessage",
+    				data:{contents:contents, receiver:receiver, receiverType:type},
+    				dataType:"json",
+    				success:function(map) {
+    					console.log("!!!");
+    				}
+    			})
+    		}) */
     		
        		$('#note-modal').on('hidden.bs.modal', function (e) {
        			$("#send-note").addClass('active').siblings().removeClass('active');
        			$('.nav-tabs li:nth-child(1)').addClass('active').siblings().removeClass('active');
+       			
+       			$("#selectTypeDetail option:eq(0)").prop("selected", true);
+      			$("#selectTypeDetail").hide();
+    			$("#personlist").hide();
 			})
-    	})
+			
+			$("#sendMessage").submit(function(event) {
+				event.preventDefault();
+			});
+
+			$("#sendMessage").submit();
+		});
+			
 		$(window).scroll(function() {
 			var scroll = $(window).scrollTop();
 			if (scroll >= 60) {

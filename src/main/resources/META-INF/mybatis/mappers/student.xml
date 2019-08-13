@@ -729,8 +729,8 @@
 			message_contents contents,
 			reply_no reply, 
 			messages_create_date createDate, 
-			receiver_no "person.receiver", 
-			caller_no "person.caller", 
+			receiver_no receiver, 
+			caller_no caller, 
 			message_read_yn readYn
 		from 
 			messages
@@ -738,86 +738,83 @@
 			caller_no = #{value}
 	</select>
 	
-	<select id="getCallMessageByNo" parameterType="person" resultType="message">
-		<!-- select 
+	<select id="getCallMessageByNo" parameterType="int" resultType="message">
+		select 
 			message_no no, 
 			message_contents contents, 
 			reply_no reply, 
 			messages_create_date createDate, 
-			receiver_no "caller.name", 
-			caller_no "person.caller", 
+			receiver_no receiver, 
+			caller_no caller, 
 			message_read_yn readYn
 		from 
-			<choose>
-				<when test="gubun == '학생'">
-				</when>
-				<when test="gubun == '교수'">
-				</when>
-				<when test="gubun == '직원'">
-				</when>
-			</choose>
+			messages
 		where 
-			receiver_no = #{value} -->
+			receiver_no = #{value}
 	</select>
 	
 	<delete id="deleteMessage" parameterType="int">
-		delete
-		from messages
-		where
-			message_no = #{no}
-	</delete>
-	
-	<select id="getAllDepartments" resultType="department">
-		select
-			department_id id,
-			department_name name,
-			department_head head,
-			department_create_date createDate
-		from
-			departments
-	</select>
-	
-	<select id="getStudentByMajorNo" parameterType="int" resultType="student">
-		select 
-			S.student_name name, 
-			S.student_no no, 
-			S.student_grade grade
-		from 
-			students S, 
-			majors M
-		where 
-			S.major_no = M.major_no
-			and S.major_no = #{value}
-			and S.student_div = '재학'
-	</select>
-	
-	<select id="getProfessorByMajorNo" parameterType="int" resultType="professor">
-		select 
-			P.professor_no no, 
-			P.professor_name name
-		from 
-			professors P, 
-			majors M
-		where 
-			P.major_no = M.major_no
-			and P.major_no = #{value}
-			and P.professor_status = 'Y'
-	</select>
-	
-	<select id="getEmployeeByDeptNo" parameterType="string" resultType="employee">
-		select 
-			E.employee_no, 
-			E.employee_name, 
-			P.position_name
-		from 
-			employees E, 
-			departments D, 
-			position P
-		where 
-			E.department_id = D.department_id
-			and E.position_id = P.position_id
-			and E.employee_status = 'Y'
-			and D.department_id = #{value}
-	</select>
+      delete
+      from messages
+      where
+         message_no = #{no}
+   </delete>
+   
+   <select id="getAllDepartments" resultType="department">
+      select
+         department_id id,
+         department_name name,
+         department_head head,
+         department_create_date createDate
+      from
+         departments
+   </select>
+   
+   <select id="getStudentByMajorNo" parameterType="int" resultType="student">
+      select 
+         S.student_name name, 
+         S.student_no no, 
+         S.student_grade grade
+      from 
+         students S, 
+         majors M
+      where 
+         S.major_no = M.major_no
+         and S.major_no = #{value}
+         and S.student_div = '재학'
+   </select>
+   
+   <select id="getProfessorByMajorNo" parameterType="int" resultType="professor">
+      select 
+         P.professor_no no, 
+         P.professor_name name,
+         PO.position_name "position.name"
+      from 
+         professors P, 
+         majors M,
+         position PO
+      where 
+         P.major_no = M.major_no
+         and P.position_id = PO.position_id
+         and P.major_no = #{value}
+         and P.professor_status = 'Y'
+   </select>
+   
+   <select id="getEmployeeByDeptNo" parameterType="string" resultType="employee">
+      select 
+         E.employee_no no, 
+         E.employee_name name, 
+         P.position_name "position.name",
+         D.department_name "department.name"
+      from 
+         employees E, 
+         departments D, 
+         position P
+      where 
+         E.department_id = D.department_id
+         and E.position_id = P.position_id
+         and E.employee_status = 'Y'
+         and D.department_id = #{value}
+   </select>
 	
 </mapper>

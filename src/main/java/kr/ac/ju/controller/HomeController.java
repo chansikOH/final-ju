@@ -1,5 +1,6 @@
 package kr.ac.ju.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.ju.service.HomeService;
@@ -117,24 +117,25 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/findperson", method=RequestMethod.POST)
-	public @ResponseBody Map<String, Object> findperson(int majorNo, String deptId) {
-		List<Student> student = homeService.getStudentByMajorNo(majorNo);
-		List<Professor> professor = homeService.getProfessorByMajorNo(majorNo);
-		List<Employee> employee = homeService.getEmployeeByDeptNo(deptId);
-		
+	public @ResponseBody Map<String, Object> findperson(int majorNo, String deptId, String checkedType) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("student", student);
-		map.put("professor", professor);
-		map.put("employee", employee);
+		
+		if("학생".equals(checkedType)) {
+			List<Student> student = homeService.getStudentByMajorNo(majorNo);
+			map.put("student", student);
+		} else if("교수".equals(checkedType)) {
+			List<Professor> professor = homeService.getProfessorByMajorNo(majorNo);
+			map.put("professor", professor);			
+		} else if("직원".equals(checkedType)) {
+			List<Employee> employee = homeService.getEmployeeByDeptNo(deptId);
+			map.put("employee", employee);			
+		}
 		
 		return map;
 	}
-		
-	@RequestMapping(value="/sendmessage")
-	public @ResponseBody Map<String, Object> sendMessage(HttpSession session, 
-											@RequestParam("receiver") int receiver,
-											@RequestParam("contents") String contents, int reply) {
-		
+	
+	@RequestMapping(value="/sendmessage", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> sendMessage(HttpSession session, String contents, String type, int[] receiver) {
 		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
 		Employee employee = (Employee) session.getAttribute("LOGIN_EMPLOYEE");
 		Professor professor = (Professor) session.getAttribute("LOGIN_PROFESSOR");
@@ -149,12 +150,15 @@ public class HomeController {
 		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("contents", contents);
-		map.put("receiver", receiver);
-		map.put("caller", caller);
-		map.put("reply", reply);
-		
-		homeService.insertMessage(map);
+
+		for(Integer r : receiver) {
+			map.put("receiver", r);
+			map.put("contents", contents);
+			map.put("receiverType", type);
+			map.put("caller", caller);
+
+			homeService.insertMessage(map);
+		}
 		
 		return map;
 	}

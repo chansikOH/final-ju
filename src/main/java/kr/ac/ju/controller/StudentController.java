@@ -1,11 +1,14 @@
 package kr.ac.ju.controller;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -425,22 +428,25 @@ public class StudentController {
 		
 		return "student/notice/noticedetail";
 	}
-	
-	@RequestMapping("/courseplan.pdf")
-	public ModelAndView coursePlan(@RequestParam("cno") int courseNo) {
 		
+	@RequestMapping("/courseplan.pdf")
+	public ModelAndView courseplanpdf(@RequestParam("cno") int courseNo, HttpServletResponse response) throws Exception { 		
 		Map<String, Object> plan = studentService.getCoursePlanByNo(courseNo);
 		List<CoursePart> part = studentService.getCoursePartByNo(courseNo);
-		
+
 		ModelAndView mav = new ModelAndView();
-		
+
+			 
+		if(plan == null){
+			response.setContentType("text/html; charset=UTF-8");
+		    PrintWriter writer = response.getWriter();
+		    writer.println ("<script>alert('강의계획서를 준비 중입니다.'); self.close(); </script>");
+		    return null;
+		};    
 		mav.addObject("part", part);
 		mav.addObject("plan", plan);
-		mav.setView(coursePlanPdfView);
+		mav.setView(coursePlanPdfView);			
 		
 		return mav;
 	}
-	
-	
-	
 }

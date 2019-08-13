@@ -55,6 +55,10 @@
         .danger {
             color: red;
         }
+        
+        .side-padding {
+        	padding-left: 0;
+        }
     </style>
   	
 </head>
@@ -63,7 +67,7 @@
 	<div class="container-fluid">
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<div class="row">
-			<div class="col-sm-2 shadow">
+			<div class="col-sm-2 side-padding">
 				<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 			</div>
 			
@@ -117,7 +121,7 @@
                             	<c:choose>
                             		<c:when test="${empty status }">
                             			<tr>
-                            				<td colspan="8">조회된 신청내역이 없습니다.</td>
+                            				<td colspan="9">조회된 신청내역이 없습니다.</td>
                             			</tr>
                             		</c:when>
                             		<c:otherwise>
