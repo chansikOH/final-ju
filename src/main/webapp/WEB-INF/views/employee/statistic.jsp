@@ -11,6 +11,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<style>
+		.side-padding{padding-left: 0;}
 		.panel-heading{font-size: 20px;}
 		.yaer-select{width: 200px; margin-top: 20px}
 		.search-option p{font-size: 14px; margin: 15px; text-align: right;}
@@ -20,7 +21,7 @@
 <%@ include file="../common/header.jsp" %>
 	<div class="container-fluid">
 		<div class="row student-search">
-			<div class="col-sm-2">
+			<div class="col-sm-2 side-padding">
 				<%@include file="../common/sidebar.jsp" %>
 			</div>
 			<div class="col-sm-10">
@@ -112,10 +113,7 @@
           var data2 = new google.visualization.DataTable();
           data2.addColumn('string', 'Topping');
           data2.addColumn('number', 'Slices');
-          data2.addRows([
-            ['신입생', 1],
-            ['편입생', 3],
-          ]);
+          data2.addRows(chart2Data);
           
           var options2 = {'width':700,
                          'height':300};
@@ -141,12 +139,7 @@
           var data4 = new google.visualization.DataTable();
           data4.addColumn('string', 'Topping');
           data4.addColumn('number', 'Slices');
-          data4.addRows([
-              ['20대', 1],
-              ['30대', 1],
-              ['40대', 1],
-              ['50대 이상', 3],
-          ]);
+          data4.addRows(chart4Data);
           
           var options4 = {'width':700,
                          'height':300};
@@ -189,20 +182,56 @@
     					  male++;
     				  }
     				  
+    				  if (item.transferYn == 'Y'){
+    					  transferY++;
+    				  } else {
+    					  transferN++; 
+    				  }
+    				  
     				  var name = item.major.name;
     				  if (!departments[name] ) {
     					  departments[name] = 1;
     				  } else {
     					  departments[name] = departments[name] + 1;
     				  }
+    				  
+    				  var age = item.birthStr
+    				  
+    				  var birthday = new Date(age);
+    				  var today = new Date();
+    				  var years = today.getFullYear() - birthday.getFullYear();
+    				   
+    				  birthday.setFullYear(today.getFullYear());
+    				   
+    				  if (today < birthday){
+    				      years--;
+    				  } 
+    				      
+   				      if(20 <= years && years < 30 ){
+   				    	  two ++; 
+   				      } else if(30 <= years && years < 40){
+   				    	  three ++; 
+   				      } else if(40 <= years && years < 50){
+   				    	  four ++; 
+   				      } else {
+   				    	  five ++; 
+   				      }
     			  })
     			  
     			  chart1Data.push(['남성', male]);
     			  chart1Data.push(['여성', female]);
     			  
+    			  chart2Data.push(['신입생', transferN]);
+    			  chart2Data.push(['편입생', transferY]);
+    			  
     			  for (var prop in departments) {
     				  chart3Data.push([prop, departments[prop]]);
     			  }
+    			  
+    			  chart4Data.push(['20대', two]);
+    			  chart4Data.push(['30대', three]);
+    			  chart4Data.push(['40대', four]);
+    			  chart4Data.push(['50대 이상', five]);
     			  
     			  google.charts.load('current', {'packages':['corechart']});
     		      google.charts.setOnLoadCallback(drawChart1);

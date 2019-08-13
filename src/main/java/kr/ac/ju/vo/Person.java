@@ -2,6 +2,8 @@ package kr.ac.ju.vo;
 
 import java.util.Date;
 
+import kr.ac.ju.utils.DateUtils;
+
 public class Person {
 
 	private Integer no;
@@ -40,6 +42,10 @@ public class Person {
 		this.password = password;
 	}
 
+	public String getbirthStr() {
+		return DateUtils.dateToString(birth);
+	}
+	
 	public Date getBirth() {
 		return birth;
 	}

@@ -10,6 +10,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<style>
+	.side-padding{padding-left: 0;}
+	
 	 a{color: #000;}
      a:hover{text-decoration: none;}
     .student-search .title{margin: 20px 0;}
@@ -32,7 +34,7 @@
     .result .file{box-sizing: border-box;}
     .result .attach {padding-left: 41px;}
     
-    .pagination li{text-align: center; width: 100%;}
+    .page {text-align: center !important; width: 100%;}
     .pagination li a{color: #777; font-size: 15px; padding: 10px;}
     .page-active{color: #0000ff; font-weight: bold;}
     .pagination li a:hover{color: #777; text-decoration: none;}
@@ -54,7 +56,7 @@
 <%@ include file="../../common/header.jsp" %>
 	<div class="container-fluid">
         <div class="row student-search">
-            <div class="col-sm-2">
+            <div class="col-sm-2 side-padding">
                <%@include file="../../common/sidebar.jsp" %>
             </div>
             <div class="col-sm-10">
@@ -191,7 +193,7 @@
     				</div>
       			</div>
       			<div class="modal-footer">
-		        	<a class="result-modify" href="#"><button class="btn btn-default input-sm"">개인정보 수정</button></a>
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 		      	</div>
     		</div>   
         </div>
@@ -339,6 +341,10 @@
                     row += "<dt>연락처</dt><dd>"+stud.phoneNumber+"</dd>";
                     row += "<dt>주소</dt><dd>"+stud.address+"</dd>";
                     $(".dl-horizontal").html(row); 		
+                    if(stud.photoName != null){
+	                    var img = '/ju/resources/images/students/'+ stud.photoName ;
+	                    $(".img-thumbnail").attr('src',img); 
+                    }
     			}
     		});
     	});

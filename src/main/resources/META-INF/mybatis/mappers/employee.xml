@@ -158,9 +158,20 @@
 			(#{no}, #{major.no}, #{name}, #{birth}, #{birth}, #{gender}, #{email} , #{phoneNumber}, #{address}, #{grade} , #{photoName} )
 	</insert> 
 	
-	<select id="getAllNoticesCount" resultType="int">
+	<select id="getAllNoticesCount" parameterType="map" resultType="int">
 		select count(*)
 		from notices 
+		<where>
+			<if test="no != null">
+				notice_no  = #{no}
+			</if>
+			<if test="title != null">
+				notice_title like '%'||#{title}||'%'
+			</if>
+			<if test="createDate != null">
+				notice_create_date = #{createDate}
+			</if>
+		</where>
 	</select>
 	
 	<select id="getAllNotices" parameterType="map" resultType="notice">
@@ -181,10 +192,10 @@
 					notice_no  = #{no}
 				</if>
 				<if test="title != null">
-					notice_title = #{title}
+					notice_title like '%'||#{title}||'%'	
 				</if>
 				<if test="createDate != null">
-					notice_create_date = #{createDate}
+					to_char(notice_create_date,'YYYY-MM-DD') = #{createDate}
 				</if>
 			</where>)
 		where 
@@ -315,7 +326,7 @@
 			select 
 				A.student_no						as no ,
 				A.major_no							as "major.no",
-				A.student_birth						as	createDate,	
+				A.student_birth						as birth,	
 				A.student_gender					as gender,
 				A.student_grade						as grade,
 				A.transfer_yn						as transferYn,
