@@ -280,7 +280,7 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="send-note">
-                                <form class="form" id="sendNote" method="POST" action="/ju/sendmessage" target="">
+                                <form class="form" id="sendNote" method="POST" action="/ju/sendmessage">
                                     <table class="table">
                                     	<colgroup>
                                     		<col width="30%">
@@ -428,7 +428,7 @@
 	    				url:"/ju/findgubun",
 	    				success: function(map) {
 	    					$.each(map.departments, function(index, d) {
-	    						var row = "<option value-'"+d.id+"'>"+d.name+"</option>";
+	    						var row = "<option value='"+d.id+"'>"+d.name+"</option>";
 	    						
 	    						$("#selectTypeDetail").append(row);
 	    					})
@@ -443,15 +443,17 @@
     			var selectOption = $('#selectTypeDetail option:selected').val();
     			var checkedType = $("#send-note input:radio[name='type']:checked").val();
     			
+    			console.log(selectOption);
+    			console.log(checkedType);
+    			
     			$.ajax({
     				type:"POST",
     				url:"/ju/findperson",
-    				data:{checkedType:checkedType, majorNo:selectOption, deptId:selectOption},
+    				data:{checkedType:checkedType, majorNo:selectOption, deptId:""},
     				dataType:"json",
     				success:function(map) {
     					var student = map.student;
     					var professor = map.professor;
-    					var employee = map.employee;
     					
     					if(checkedType == '학생') {
 	    					$("#personlist table").empty();
@@ -503,7 +505,19 @@
     						$("#personlist table").append(row);
 	    					$("#personlist").show();
     						
-    					} else if(checkedType == '직원') {
+    					}
+    				}
+    			})
+    					
+    			$.ajax({
+    				type:"POST",
+    				url:"/ju/findperson",
+    				data:{checkedType:checkedType, deptId:selectOption, majorNo:0},
+    				dataType:"json",
+    				success:function(map) {
+    					var employee = map.employee;
+    					
+    					if(checkedType == '직원') {
 	    					$("#personlist table").empty();
 	    						
 	    					var row = "<thead>";
@@ -561,6 +575,12 @@
       			$("#selectTypeDetail").hide();
     			$("#personlist").hide();
 			})
+			
+			$("#sendMessage").submit(function(event) {
+				event.preventDefault();
+			});
+
+			$("#sendMessage").submit();
     	})
     </script>
 </div>
