@@ -37,6 +37,8 @@ div {
 input:read-only {
 	color:#333;
 }
+
+.side-padding{padding-left: 0;}
 </style>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 </head>
@@ -45,7 +47,7 @@ input:read-only {
 	<div class="container-fluid">
 <%@ include file="../common/header.jsp" %>
 		<div class="row">
-			<div class="col-sm-2" style="padding-right: 0px;">
+			<div class="col-sm-2 side-padding" style="padding-right: 0px;">
 				<%@ include file="../common/sidebar.jsp"%>
 			</div>
 

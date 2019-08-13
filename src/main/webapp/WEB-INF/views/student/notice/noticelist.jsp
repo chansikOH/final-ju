@@ -20,13 +20,15 @@
 	
 	.title{padding-left: 30px; font-size: 20px; padding-top: 15px;}
 	.search {text-align: right;}
+	
+.side-padding{padding-left: 0;}
 </style>
 </head>
 <body>
 	<div class="container-fluid">
 		<%@ include file="../../common/header.jsp"%>
 		<div class="row">
-			<div class="col-sm-2">
+			<div class="col-sm-2 side-padding">
 				<%@ include file="../../common/sidebar.jsp"%>
 			</div>
 			<div class="col-sm-10">
@@ -140,10 +142,11 @@
 			$("#search-word-btn").click(function() {
 				var option = $("[name=option]").val();
 				var search = $("[name=search]").val();
+				var pno;
 				$.ajax({
 					type:"GET",
 					url:"noticelist.json",
-					data:{option:option, search:search},
+					data:{option:option, search:search, pno:pno},
 					dataType: "json",
 					success:function(data){
 						var notices = data.notices;

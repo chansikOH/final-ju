@@ -29,6 +29,8 @@
 	.result div:first-child{margin: 15px 0 5px 0; padding: 0;}
 	.result th{background: #faf6f0; }
 	.result th,td{text-align: center; }
+	
+.side-padding{padding-left: 0;}
 </style>
 </head>
 
@@ -36,7 +38,7 @@
 	<div class="container-fluid">
 		<%@ include file="../../common/header.jsp" %>
 		<div class="row">
-			<div class="col-sm-2">
+			<div class="col-sm-2 side-padding">
 				<%@ include file="../../common/sidebar.jsp" %>
 			</div>
 			

@@ -9,7 +9,6 @@ import kr.ac.ju.vo.Course;
 import kr.ac.ju.vo.CourseAttend;
 import kr.ac.ju.vo.CourseOpinion;
 import kr.ac.ju.vo.CoursePart;
-import kr.ac.ju.vo.CoursePlan;
 import kr.ac.ju.vo.Department;
 import kr.ac.ju.vo.Employee;
 import kr.ac.ju.vo.Message;
@@ -64,7 +63,7 @@ public interface StudentDao {
 	// 작성자 : 오찬식
 	ClassView getClassViewByClassViewNo(int viewNo);
 	Student getLeaveStudentByNo(int studentNo);
-	int getAllNoticeCount();
+	int getAllNoticeCount(Map<String, Object> map);
 	List<Notice> getAllNotices(Map<String, Object> map);
 	Notice getNoticeByNoticeNo(int noticeNo);
 	Map<String, Object> getCoursePlanByNo(int courseNo);

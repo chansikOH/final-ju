@@ -63,11 +63,13 @@ public class StudentRestController {
 	@GetMapping("/notice/noticelist.json")
 	@ResponseBody
 	public Map<String, Object> noticelist(@RequestParam(value = "option", required = false, defaultValue = "") String option,
-											@RequestParam(value = "search", required = false, defaultValue = "") String search) {
+											@RequestParam(value = "search", required = false, defaultValue = "") String search,
+											@RequestParam(value = "pno", required = false, defaultValue = "1") int pno) {
 		Map<String, Object> searchOption = new HashMap<>();
 		
-		System.out.println("option" + option);
-		System.out.println("search" + search);
+		int beginIndex = (pno -1) * 15 + 1;
+		searchOption.put("beginIndex", beginIndex);
+		searchOption.put("endIndex", pno * 15);
 		
 		if(!option.isEmpty() && !option.equals("")) {
 			if (option.equals("title")) {
@@ -81,7 +83,7 @@ public class StudentRestController {
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("notices", resultNotices);
-		result.put("count", resultNotices.size());
+		result.put("count", studentService.getAllNoticeCount(searchOption));
 		
 		return result;
 	}
