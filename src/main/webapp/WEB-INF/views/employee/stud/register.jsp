@@ -10,6 +10,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style type="text/css">
+	 .side-padding{padding-left: 0;}
 	 .header {margin: 30px;}
 	 .btn-success {margin: 30px;}
 	 .form-group {width: 750px;}
@@ -27,7 +28,7 @@
 <%@ include file="../../common/header.jsp" %>
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-sm-2 shadow"> 
+		<div class="col-sm-2 shadow side-padding"> 
 			<%@include file="../../common/sidebar.jsp" %>
 		</div>
 	  	<div class="col-sm-10">

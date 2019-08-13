@@ -98,9 +98,6 @@ public class EmployeeRestController {
 			                              Model model) {
 		
 		Map<String, Object> searchOption = new HashMap<String, Object>();
-		System.out.println(pageNo); 
-		System.out.println(option); 
-		System.out.println(search); 
 		if(!option.isEmpty() && !option.equals("")) {
 			if(option.equals("noticeNo")) {
 				searchOption.put("no",search); 
@@ -111,18 +108,26 @@ public class EmployeeRestController {
 			}
 		} 
 		
-		// pagination 관련2019
+		// pagination 관련 
 		int size = 10;				 					
 		int beginIndex  = (pageNo - 1)*size + 1 ;		
 		int endIndex   = pageNo*size ; 	
-		int count = employeeService.getAllNoticesCount(searchOption); 
 		
 		searchOption.put("size", size); 
 		searchOption.put("beginIndex", beginIndex); 
 		searchOption.put("endIndex", endIndex); 
 
-		List<Notice> notices = employeeService.getAllNotices(searchOption); 
+		System.out.println(beginIndex);
+		System.out.println(endIndex);
+		
+		int count = employeeService.getAllNoticesCount(searchOption); 
 		Pagination pagination = new Pagination(pageNo, size, count); 
+		
+		List<Notice> notices = employeeService.getAllNotices(searchOption); 
+		
+		for(Notice notice:notices) {
+			System.out.println(notice.getTitle());
+		}
 		
 		// 값 담기 
 		Map<String, Object> result = new HashMap<String, Object>();

@@ -10,6 +10,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<style>
+	.side-padding{padding-left: 0;}
+	
 	 a{color: #000;}
      a:hover{text-decoration: none;}
     .student-search .title{margin: 20px 0;}
@@ -32,7 +34,7 @@
     .result .file{box-sizing: border-box;}
     .result .attach {padding-left: 41px;}
     
-    .pagination li{text-align: center; width: 100%;}
+    .page{text-align: center; width: 100%;}
     .pagination li a{color: #777; font-size: 15px; padding: 10px;}
     .page-active{color: #0000ff; font-weight: bold;}
     .pagination li a:hover{color: #777; text-decoration: none;}
@@ -47,14 +49,13 @@
     .result-save{padding: 15px 0 0 0 !important;}
     .result-modify{padding: 15px 0 0 0 !important;}
     .result-close{text-align: right;}s
-    
 	</style>
 </head>
 <body>
 <%@ include file="../../common/header.jsp" %>
 	<div class="container-fluid">
         <div class="row student-search">
-            <div class="col-sm-2">
+            <div class="col-sm-2 side-padding">
                <%@include file="../../common/sidebar.jsp" %>
             </div>
             <div class="col-sm-10">
@@ -238,6 +239,12 @@
         $(".search-btn").click(function(){
         	searchStudent(1)
         });
+    	
+    	/*페이지번호 클릭*/
+        $('#pagination-box').on('click', 'a', function() {
+        	searchStudent($(this).attr('data-pno'));
+    	   	return false;
+    	}); 
 
     	/*검색 및 페이징처리*/
     	function searchStudent(pageNo){
@@ -371,13 +378,7 @@
 		    		$(".bs-status-modal-lg").modal('show')
     			}
     		});
-    		
     	})	    
-   
-    	$('#pagination-box').on('click', 'a', function() {
-    	    searchCourse($(this).attr('data-pno'));
-    	   	return false;
-    	}); 
     	
     	/*학적상태변경 저장*/
     	$(".result-save").click(function(){
@@ -392,6 +393,7 @@
     			dataType:"json",
     			success: function (student) {
     				$("#row-"+statusNo).find('td:eq(3)').text(student.division);
+    				$("#row-"+statusNo).find('td:eq(9)').text('P');
     				$('#change-division-modal').modal('hide');
     				alert('학적상태 변경이 완료되었습니다.');
     			}

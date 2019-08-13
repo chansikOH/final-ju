@@ -12,6 +12,7 @@
 	<!-- 스마트에디터 관련 자바스크립트 라이브러리 추가 -->
 	<script type="text/javascript" src="/ju/resources/js/se2/js/HuskyEZCreator.js"></script>
 <style type="text/css">
+	.side-padding{padding-left: 0;}
 	.title {margin-top: 30; padding-bottom:20px; font-size: 40px;}
 	iframe {width: 101% !important;}
 </style>
@@ -20,7 +21,7 @@
 	<%@ include file="../../common/header.jsp"%>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-2">
+			<div class="col-sm-2 side-padding">
 				<%@ include file="../../common/sidebar.jsp"%>
 			</div>
 			<div class="col-sm-10">

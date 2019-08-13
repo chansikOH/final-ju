@@ -13,6 +13,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style type="text/css">
+	.side-padding{padding-left: 0;}
 	 a{color: #000;}
      a:hover{text-decoration: none;}
      .title{margin-top: 30; padding-bottom:20px; font-size: 40px;}
@@ -24,7 +25,7 @@
 	.result th{background: #faf6f0; }
 	.result th, td{text-align: center; }
 	
-	.pagination li{text-align: center;}
+    .page {text-align: center !important; width: 100%;}
     .pagination li a{color: #777; font-size: 15px; padding: 10px;}
     .page-active{color: #0000ff; font-weight: bold;}
     .pagination li a:hover{color: #777; text-decoration: none;}
@@ -34,7 +35,7 @@
 	<div class="container-fluid">
 		<%@ include file="../../common/header.jsp"%>
 		<div class="row">
-			<div class="col-sm-2">
+			<div class="col-sm-2 side-padding">
 				<%@ include file="../../common/sidebar.jsp"%>
 			</div>
 			<div class="col-sm-10">

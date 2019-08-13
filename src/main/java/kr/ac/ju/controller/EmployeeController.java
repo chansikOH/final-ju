@@ -94,7 +94,7 @@ public class EmployeeController {
 		}
 		employeeService.insertStudent(student);
 		
-		return "redirect:/employee/stud/register";
+		return "redirect:/employee/stud/checklist";
 	}
 	
 	@GetMapping("/stud/checklist")
