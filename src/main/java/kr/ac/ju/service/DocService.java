@@ -33,6 +33,8 @@ public interface DocService {
 	
 	DocFile getFileName(int no);
 	List<Employee> getAllEmployees();
+	List<Employee> getMiddleId();
+	List<Employee> getFinalId();
 
 
 }
