@@ -729,13 +729,14 @@
 			message_contents contents,
 			reply_no reply, 
 			messages_create_date createDate, 
-			receiver_no receiver, 
-			caller_no caller, 
+			receiver_no "receiver.no", 
+			caller_no "caller.no", 
 			message_read_yn readYn
 		from 
 			messages
 		where 
 			caller_no = #{value}
+		order by message_no desc
 	</select>
 	
 	<select id="getCallMessageByNo" parameterType="int" resultType="message">
@@ -744,13 +745,14 @@
 			message_contents contents, 
 			reply_no reply, 
 			messages_create_date createDate, 
-			receiver_no receiver, 
-			caller_no caller, 
+			receiver_no "receiver.no", 
+			caller_no "caller.no", 
 			message_read_yn readYn
 		from 
 			messages
 		where 
 			receiver_no = #{value}
+		order by message_no desc
 	</select>
 	
 	<delete id="deleteMessage" parameterType="int">
