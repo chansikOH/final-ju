@@ -594,10 +594,10 @@
 			
 		$(window).scroll(function() {
 			var scroll = $(window).scrollTop();
-			if (scroll >= 60) {
-				$(".sidebar").css({"height" : "200vh"});
-			}else if(scroll > 150){
+			if (scroll >= 70) {
 				$(".sidebar").css({"height" : "230vh"});
+			}else if(scroll >= 75 && scroll < 130){
+				$(".sidebar").css({"height" : "250vh"});
 			} else {
 				
 			}

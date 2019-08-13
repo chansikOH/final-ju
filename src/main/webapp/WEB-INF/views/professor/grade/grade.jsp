@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 	<fmt:parseDate value="0810" pattern="MMdd" var="sDate" />
-	<fmt:parseDate value="0811" pattern="MMdd" var="eDate"/> 
+	<fmt:parseDate value="0812" pattern="MMdd" var="eDate"/> 
 	
 	<fmt:formatDate value="${sDate }" pattern="MMdd" var="startDate" />
 	<fmt:formatDate value="${eDate }" pattern="MMdd" var="endDate" />
@@ -203,78 +203,78 @@
 			$(document).on("click", ".course-modal", function () {
 				var n = $(".date").attr("data-ndate");
 				var s = $(".date").attr("data-sdate");
-				var e = $(".date").attr("data-sdate");
+				var e = $(".date").attr("data-edate");
 				if(s <= n && n <= e){
+					var cno = $(this).attr('data-value');
 					
+					$.ajax({
+						type: "GET",
+						url: "gradeinsertlist",
+						data: {courseNo : cno},
+						dataType:"json",
+						success: function(data){
+							$(".course-info tbody").empty();
+							$(".course-opin tbody").empty();
+							var course = data.course
+							var students = data.students
+							
+							var row = "<tr>";
+							row += "<th>교과목번호</th>";
+							row += "<td>"+course.no+"</td>";
+							row += "<th>교과목명</th>";
+							row += "<td>"+course.name+"</td>";
+							row += "<th>강의학점</th>";
+							row += "<td>"+course.credit+"</td>";
+							row += "<th>학기</th>";
+							row += "<td>"+course.term+"</td>";
+							row += "</tr>"
+							
+							$(".course-info tbody").append(row);
+							
+							$.each(students, function(index, student){
+								var row = "<tr>";
+								row += "<td>"+(index+1)+"<input type='hidden' name='courseNo' value='"+student.SNO+"' ></td>"
+								row += "<td>"+student.NO+"<input type='hidden' name='studentNo' value='"+student.NO+"'></td>";
+								row += "<td><a href='#' class='record-modal'>"+student.NAME+"</a></td>";
+								row += "<td>"+student.SCORE+"</td>";
+								if(student.RECORD == 'A+'){
+									row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+' selected>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
+								}else if(student.RECORD == 'A'){
+									row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A' selected>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
+								}else if(student.RECORD == 'B+'){
+									row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+' selected>B+</option><option value='B' >B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
+								}else if(student.RECORD == 'B'){
+									row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B' selected>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
+								}else if(student.RECORD == 'C+'){
+									row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+' selected>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
+								}else if(student.RECORD == 'C'){
+									row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C' selected>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
+								}else if(student.RECORD == 'D+'){
+									row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+' selected>D+</option><option value='D'>D</option><option value='F'>F</option>";
+								}else if(student.RECORD == 'D'){
+									row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D' selected>D</option><option value='F'>F</option>";
+								}else if(student.RECORD == 'F'){
+									row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F' selected>F</option>";
+								}else{
+									row += "<td><select class='form-control' name='record'><option selected>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
+								}
+								row += "</tr>"
+								$(".course-opin tbody").append(row);
+							});
+						}
+					})
+						
+			 		$("#opinion").modal('show');
+					return false;
+			 		$(".close-modal").on('hide', function(){
+			 			
+			 		});
 				}else{
 					alert("성적입력 기간이 아닙니다.");
 					return false;
 				}
 				
-				var cno = $(this).attr('data-value');
 				
-				$.ajax({
-					type: "GET",
-					url: "gradeinsertlist",
-					data: {courseNo : cno},
-					dataType:"json",
-					success: function(data){
-						$(".course-info tbody").empty();
-						$(".course-opin tbody").empty();
-						var course = data.course
-						var students = data.students
-						
-						var row = "<tr>";
-						row += "<th>교과목번호</th>";
-						row += "<td>"+course.no+"</td>";
-						row += "<th>교과목명</th>";
-						row += "<td>"+course.name+"</td>";
-						row += "<th>강의학점</th>";
-						row += "<td>"+course.credit+"</td>";
-						row += "<th>학기</th>";
-						row += "<td>"+course.term+"</td>";
-						row += "</tr>"
-						
-						$(".course-info tbody").append(row);
-						
-						$.each(students, function(index, student){
-							var row = "<tr>";
-							row += "<td>"+(index+1)+"<input type='hidden' name='courseNo' value='"+student.SNO+"' ></td>"
-							row += "<td>"+student.NO+"<input type='hidden' name='studentNo' value='"+student.NO+"'></td>";
-							row += "<td><a href='#' class='record-modal'>"+student.NAME+"</a></td>";
-							row += "<td>"+student.SCORE+"</td>";
-							if(student.RECORD == 'A+'){
-								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+' selected>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
-							}else if(student.RECORD == 'A'){
-								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A' selected>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
-							}else if(student.RECORD == 'B+'){
-								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+' selected>B+</option><option value='B' >B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
-							}else if(student.RECORD == 'B'){
-								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B' selected>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
-							}else if(student.RECORD == 'C+'){
-								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+' selected>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
-							}else if(student.RECORD == 'C'){
-								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C' selected>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
-							}else if(student.RECORD == 'D+'){
-								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+' selected>D+</option><option value='D'>D</option><option value='F'>F</option>";
-							}else if(student.RECORD == 'D'){
-								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D' selected>D</option><option value='F'>F</option>";
-							}else if(student.RECORD == 'F'){
-								row += "<td><select class='form-control' name='record'><option>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F' selected>F</option>";
-							}else{
-								row += "<td><select class='form-control' name='record'><option selected>선택</option><option value='A+'>A+</option><option value='A'>A</option><option value='B+'>B+</option><option value='B'>B</option><option value='C+'>C+</option><option value='C'>C</option><option value='D+'>D+</option><option value='D'>D</option><option value='F'>F</option>";
-							}
-							row += "</tr>"
-							$(".course-opin tbody").append(row);
-						});
-					}
-				})
-					
-		 		$("#opinion").modal('show');
-				return false;
-		 		$(".close-modal").on('hide', function(){
-		 			
-		 		});
 		 		
 				
 			});
