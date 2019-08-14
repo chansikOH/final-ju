@@ -426,6 +426,7 @@
     </div>
     
     <script type="text/javascript">
+    	/* 
     	$(function() {
     		$("#selectTypeDetail").hide();
     		$("#personlist").hide();
@@ -736,6 +737,7 @@
     			$("#send-note textarea").val('');
 			})
 		});
+    	*/
 			
 		$(window).scroll(function() {
 			var scroll = $(window).scrollTop();
