@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
 <style>
 	.sidebar > div {
 		padding: 0px;
@@ -72,9 +72,25 @@
     a, a:hover, a:link {
         text-decoration: none;   
     }
-    .profile-img-padding{padding:10px;}
-	.profile-padding{padding-left: 22px; padding-right: 21px;}
-	#student-info-table td {text-align: left;}
+    
+    .profile-img-padding{
+    	padding:10px;
+    }
+    
+	.profile-padding{
+		padding-left: 22px; 
+		padding-right: 21px;
+	}
+	
+	#student-info-table td {
+		text-align: left;
+	}
+	
+	.message-over {
+		text-overflow: ellipsis;
+		overflow: hidden; 
+		white-space: nowrap;
+	}
 </style>
 <div class="sidebar" style="height: 100vh;">
 
@@ -165,6 +181,7 @@
 				<p class="text-center">
 					<strong>${LOGIN_PROFESSOR.name }</strong>님 환영합니다.
 					<a href="/ju/logout" class="btn btn-default btn-xs">로그아웃</a>
+                    <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#note-modal">쪽지</button>
 				</p>
 			</div>
 		</div>
@@ -231,6 +248,7 @@
 				<p class="center">
 					<strong>${LOGIN_EMPLOYEE.name }</strong>님 환영합니다.
 					<a href="/ju/logout" class="btn btn-default btn-xs">로그아웃</a>
+                    <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#note-modal">쪽지</button>
 				</p>
 			</div>
 		</div>
@@ -288,7 +306,7 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="send-note">
-                                <form class="form" id="sendNote" method="POST" action="/ju/sendmessage">
+                                <form class="form" id="sendNote">
                                     <table class="table">
                                     	<colgroup>
                                     		<col width="30%">
@@ -309,7 +327,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                            	<td id="personlist" colspan="2">
+                                            	<td id="personlist" colspan="2" >
                                             		<span></span>
                                             		<div class="text-line">
 	                                            		<table class="table"></table>                                            		
@@ -320,7 +338,7 @@
                                             	<td colspan="2"><textarea class="form-control" name="contents"></textarea></td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2"><button type="submit" id="sendMessage" class="btn btn-info">전송</button>
+                                                <td colspan="2"><button type="button" id="sendMessage" class="btn btn-info">전송</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button></td>
                                             </tr>
                                         </tbody>
@@ -339,13 +357,15 @@
                                         <colgroup>
                                             <col width="10%" />
                                             <col width="20%" />
-                                            <col width="50%" />
+                                            <col width="10%" />
+                                            <col width="40%" />
                                             <col width="20%" />
                                         </colgroup>
                                         <thead>
                                             <tr>
                                                 <th></th>
                                                 <th>보낸 사람</th>
+                                                <th>구분</th>
                                                 <th>내용</th>
                                                 <th>날짜</th>
                                             </tr>
@@ -367,13 +387,15 @@
                                         <colgroup>
                                             <col width="10%" />
                                             <col width="20%" />
-                                            <col width="45%" />
-                                            <col width="25%" />
+                                            <col width="10%" />
+                                            <col width="40%" />
+                                            <col width="20%" />
                                         </colgroup>
                                         <thead>
                                             <tr>
                                                 <th></th>
                                                 <th>받는 사람</th>
+                                                <th>구분</th>
                                                 <th>내용</th>
                                                 <th>날짜</th>
                                             </tr>
@@ -410,12 +432,13 @@
     		
     		$("#send-note input:radio[name='type']").change(function() {
     			$("#selectTypeDetail option:eq(0)").prop("selected", true);
+    			$("#personlist").hide();
     			$("#personlist table").empty();
     		})
     		
     		$("#send-note input:radio[name='type']").click(function() {
 	    		var checkedType = $(this).val();
-    			
+	    		$("#selectTypeDetail").empty();
 	    		if(checkedType == '학생' || checkedType == '교수') {
 		    		$.ajax({
 		    			type:"POST",
@@ -556,40 +579,162 @@
     			})
     		})
     		
-    		/* $("#sendMessage").click (function() {
-    			var contents = $("[name=contents]").val();
-    			var receiver = $("[name=receiver]").val();
-    			var type = $("#send-note input:radio[name='type']:checked").val();
-    			
-    			console.log(contents, "con");
-    			console.log(receiver, "rec");
-    			console.log(type, "type");
-    			
+    		$("#sendMessage").click (function() {
     			$.ajax({
     				type:"POST",
     				url:"/ju/sendmessage",
-    				data:{contents:contents, receiver:receiver, receiverType:type},
+    				data:$("#send-note form").serialize(),
     				dataType:"json",
     				success:function(map) {
-    					console.log("!!!");
+    					alert("쪽지를 성공적으로 보냈습니다.");
+    					
+    	       			$("#send-note input:radio[name='type']").prop("checked", false);
+    	       			$("#selectTypeDetail option:eq(0)").prop("selected", true);
+    	      			$("#selectTypeDetail").hide();
+    	    			$("#personlist").hide();
+    	    			$("#send-note textarea").val('');
     				}
     			})
-    		}) */
+    		})
     		
+    		$.ajax({
+    			type:"POST",
+    			url:"/ju/message",
+    			success:function(map) {
+    				var receive = map.receiveMessage;
+    				var call = map.callMessage;
+    				
+    				$.each(call, function(index, c) {
+    					var row = "<tr>";
+    					row += "<td><input type='checkbox' value='"+c.no+"' name='no'></td>";
+    					row += "<td>"+c.caller.name+"</td>";
+    					row += "<td>"+c.caller.gubun+"</td>";
+    					row += "<td class='message-over'>";
+    					if(c.caller.gubun == '학생') {
+	    					row += "<a href='#note-detail' aria-controls='note-detail' role='tab' data-toggle='tab' data-no='"+c.no+"' data-mtype='받은' data-name='"+c.caller.name+"' data-content='"+c.contents+"' data-pno='"+c.caller.no+"' data-major='"+c.caller.major.name+"' data-type='"+c.caller.gubun+"'>"+c.contents+"</a></td>";
+    					} else if(c.caller.gubun == '교수') {
+    						row += "<a href='#note-detail' aria-controls='note-detail' role='tab' data-toggle='tab' data-no='"+c.no+"' data-mtype='받은' data-name='"+c.caller.name+"' data-content='"+c.contents+"' data-pno='"+c.caller.no+"' data-position='"+c.caller.position.name+"' data-major='"+c.caller.major.name+"' data-type='"+c.caller.gubun+"'>"+c.contents+"</a></td>";
+    					} else if(c.caller.gubun == '직원') {
+    						row += "<a href='#note-detail' aria-controls='note-detail' role='tab' data-toggle='tab' data-no='"+c.no+"' data-mtype='받은' data-name='"+c.caller.name+"' data-content='"+c.contents+"' data-pno='"+c.caller.no+"' data-position='"+c.caller.position.name+"' data-dept='"+c.caller.department.name+"' data-type='"+c.caller.gubun+"'>"+c.contents+"</a></td>";
+    					}
+    					row += "<td>"+c.createDateStr+"</td>";
+    					row += "</tr>";
+    					
+    					$("#received-note table tbody").append(row);
+    				})
+    				
+    				$.each(receive, function(index, r) {
+    					var row = "<tr>";
+    					row += "<td><input type='checkbox' value='"+r.no+"' name='no'></td>";
+    					row += "<td>"+r.receiver.name+"</td>";
+    					row += "<td>"+r.receiver.gubun+"</td>";
+    					row += "<td class='message-over'>";
+    					if(r.receiver.gubun == '학생') {
+	    					row += "<a href='#note-detail' aria-controls='note-detail' role='tab' data-toggle='tab' data-no='"+r.no+"' data-mtype='보낸' data-name='"+r.receiver.name+"' data-content='"+r.contents+"' data-pno='"+r.receiver.no+"' data-major='"+r.receiver.major.name+"' data-type='"+r.receiver.gubun+"'>"+r.contents+"</a></td>";
+    					} else if(r.receiver.gubun == '교수') {
+    						row += "<a href='#note-detail' aria-controls='note-detail' role='tab' data-toggle='tab' data-no='"+r.no+"' data-mtype='보낸' data-name='"+r.receiver.name+"' data-content='"+r.contents+"' data-pno='"+r.receiver.no+"' data-position='"+r.receiver.position.name+"' data-major='"+r.receiver.major.name+"' data-type='"+r.receiver.gubun+"'>"+r.contents+"</a></td>";
+    					} else if(r.receiver.gubun == '직원') {
+    						row += "<a href='#note-detail' aria-controls='note-detail' role='tab' data-toggle='tab' data-no='"+r.no+"' data-mtype='보낸' data-name='"+r.receiver.name+"' data-content='"+r.contents+"' data-pno='"+r.receiver.no+"' data-position='"+r.receiver.position.name+"' data-dept='"+r.receiver.department.name+"' data-type='"+r.receiver.gubun+"'>"+r.contents+"</a></td>";
+    					}
+    					row += "<td>"+r.createDateStr+"</td>";
+    					row += "</tr>";
+    					
+    					$("#sent-note table tbody").append(row);
+    				})
+    				
+    				$('a[href="#note-detail"]').click(function() {
+    					var no = $(this).data("no");
+    					var mtype = $(this).data("mtype");
+    					var name = $(this).data("name");
+    					var contents = $(this).data("content");
+    					var pno = $(this).data("pno");
+    					var position = $(this).data("position");
+    					var major = $(this).data("major");
+    					var dept = $(this).data("dept");
+    					var type = $(this).data("type");
+    					
+    					$("#note-detail tbody").empty();
+    					
+    					if(type == '학생') {
+	    					if(mtype == '받은') {
+	    						var row = "<tr>";
+	    						row += "<td>"+mtype+" 사람</td>";
+	    						row += "<td>"+pno+" "+major+" "+name+"</td>";
+	    						row += "</tr>";
+	    						row += "<tr>";
+	    						row += "<td colspan='2'>"+contents+"</td>";
+	    						row += "</tr>";
+	    						
+	    						$("#note-detail tbody").append(row);
+	    					} else if(mtype == '보낸') {
+	    						var row = "<tr>";
+	    						row += "<td>"+mtype+" 사람</td>";
+	    						row += "<td>"+pno+" "+major+" "+name+"</td>";
+	    						row += "</tr>";
+	    						row += "<tr>";
+	    						row += "<td colspan='2'>"+contents+"</td>";
+	    						row += "</tr>";
+	    						
+	    						$("#note-detail tbody").append(row);
+	    					}
+    					} else if(type == '교수') {
+    						if(mtype == '받은') {
+	    						var row = "<tr>";
+	    						row += "<td>"+mtype+" 사람</td>";
+	    						row += "<td>"+position+" "+cmajor+" "+name+"</td>";
+	    						row += "</tr>";
+	    						row += "<tr>";
+	    						row += "<td colspan='2'>"+contents+"</td>";
+	    						row += "</tr>";
+	    						
+	    						$("#note-detail tbody").append(row);
+	    					} else if(mtype == '보낸') {
+	    						var row = "<tr>";
+	    						row += "<td>"+mtype+" 사람</td>";
+	    						row += "<td>"+position+" "+major+" "+name+"</td>";
+	    						row += "</tr>";
+	    						row += "<tr>";
+	    						row += "<td colspan='2'>"+contents+"</td>";
+	    						row += "</tr>";
+	    						
+	    						$("#note-detail tbody").append(row);
+	    					}
+    					} else if(type == '직원') {
+    						if(mtype == '받은') {
+	    						var row = "<tr>";
+	    						row += "<td>"+mtype+" 사람</td>";
+	    						row += "<td>"+position+" "+dept+" "+name+"</td>";
+	    						row += "</tr>";
+	    						row += "<tr>";
+	    						row += "<td colspan='2'>"+contents+"</td>";
+	    						row += "</tr>";
+	    						
+	    						$("#note-detail tbody").append(row);
+	    					} else if(mtype == '보낸') {
+	    						var row = "<tr>";
+	    						row += "<td>"+mtype+" 사람</td>";
+	    						row += "<td>"+position+" "+dept+" "+name+"</td>";
+	    						row += "</tr>";
+	    						row += "<tr>";
+	    						row += "<td colspan='2'>"+contents+"</td>";
+	    						row += "</tr>";
+	    						
+	    						$("#note-detail tbody").append(row);
+	    					}
+    					}
+    				})
+    			}
+    		})
+    		    		    		
        		$('#note-modal').on('hidden.bs.modal', function (e) {
        			$("#send-note").addClass('active').siblings().removeClass('active');
        			$('.nav-tabs li:nth-child(1)').addClass('active').siblings().removeClass('active');
-       			
+       			$("#send-note input:radio[name='type']").prop("checked", false);
        			$("#selectTypeDetail option:eq(0)").prop("selected", true);
       			$("#selectTypeDetail").hide();
     			$("#personlist").hide();
+    			$("#send-note textarea").val('');
 			})
-			
-			$("#sendMessage").submit(function(event) {
-				event.preventDefault();
-			});
-
-			$("#sendMessage").submit();
 		});
 			
 		$(window).scroll(function() {

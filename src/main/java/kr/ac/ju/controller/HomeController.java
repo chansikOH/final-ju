@@ -77,30 +77,38 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/message", method=RequestMethod.POST)
-	public @ResponseBody Map<String, Object> message(Model model, int no) {
+	public @ResponseBody Map<String, Object> message(Model model, HttpSession session) {
+		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
+		Employee employee = (Employee) session.getAttribute("LOGIN_EMPLOYEE");
+		Professor professor = (Professor) session.getAttribute("LOGIN_PROFESSOR");
+		
+		int no = 0;
+		if(student.getNo() != null) {
+			no = student.getNo();
+		} else if (employee.getNo() != null) {
+			no = employee.getNo();
+		} else if (professor.getNo() != null) {
+			no = professor.getNo();
+		}
+		
+		List<Message> receiveMessage = homeService.getReceiveMessageByNo(no);
+		List<Message> callMessage = homeService.getCallMessageByNo(no);
 
-		Person p = homeService.getPersonByNo(no);
-		
-		List<Message> receiveMessage = homeService.getReceiveMessageByNo(p.getNo());
-		System.out.println(receiveMessage.get(0).getCaller() + " CALLER");
-		System.out.println(receiveMessage.get(0).getReceiver() + " RECEIVER");
-		
-		List<Message> callMessage = homeService.getCallMessageByNo(p.getNo());
-		System.out.println(callMessage.get(0).getCaller() + "-CALLER");
-		System.out.println(callMessage.get(0).getReceiver() + "-RECEIVER");
-		
-		for(Message m : receiveMessage) {
-			Person person = homeService.getPersonByNo(no);
-		}
-		
-		for(Message c : callMessage) {
-			Person person = homeService.getPersonByNo(no);
-		}
-		
 		Map<String, Object> map = new HashMap<String, Object>();
+		
+		Person p = new Person();
+		for (Message rm: receiveMessage) {
+			p = homeService.getPersonByNo(rm.getReceiver().getNo());
+			rm.setReceiver(p);
+		}
 		map.put("receiveMessage", receiveMessage);
+		
+		for (Message cm : callMessage) {
+			p = homeService.getPersonByNo(cm.getCaller().getNo());
+			cm.setCaller(p);
+		}
 		map.put("callMessage", callMessage);
-				
+		
 		return map;
 	}
 	
