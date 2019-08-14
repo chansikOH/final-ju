@@ -47,9 +47,6 @@ public class TestController {
 		Test test = testService.getTestByCourseNoAndStatus(map);
 
 		List<Question> questions = reader.xlsxToQuestionList(ResourceUtils.getFile(testfileSaveDirectory + "\\" + test.getFileName()).getAbsolutePath());
-		for(Question q : questions ) {
-			System.out.println(q.getQuestion());
-		}
 		model.addAttribute("questions", questions);
 
 		Course course = studentService.getCourseByCourseNo(cno);
