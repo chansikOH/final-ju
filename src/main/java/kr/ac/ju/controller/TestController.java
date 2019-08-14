@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
@@ -26,6 +27,9 @@ import kr.ac.ju.vo.Test;
 @RequestMapping("/student")
 public class TestController {
 
+	@Value("${dir.file.testfile}")
+	private String testfileSaveDirectory;
+	
 	@Autowired
 	private StudentService studentService;
 	
@@ -42,7 +46,10 @@ public class TestController {
 		
 		Test test = testService.getTestByCourseNoAndStatus(map);
 
-		List<Question> questions = reader.xlsxToQuestionList(ResourceUtils.getFile("classpath:/META-INF/tests/" + test.getFileName()).getAbsolutePath());
+		List<Question> questions = reader.xlsxToQuestionList(ResourceUtils.getFile(testfileSaveDirectory + "\\" + test.getFileName()).getAbsolutePath());
+		for(Question q : questions ) {
+			System.out.println(q.getQuestion());
+		}
 		model.addAttribute("questions", questions);
 
 		Course course = studentService.getCourseByCourseNo(cno);
@@ -66,7 +73,7 @@ public class TestController {
 		
 		Test test = testService.getTestByCourseNoAndStatus(map);
 
-		List<Question> questions = reader.xlsxToQuestionList("C:\\Users\\DAYUN\\git\\final-ju\\src\\main\\webapp\\resources\\files\\tests\\" + test.getFileName());
+		List<Question> questions = reader.xlsxToQuestionList(testfileSaveDirectory  + "\\" + test.getFileName());
 
 		int score = testService.getTestScore(questions, answers);
 		map.put("testNo", test.getNo());
