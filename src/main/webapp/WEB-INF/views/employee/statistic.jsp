@@ -43,7 +43,7 @@
 				  	<div class="row">
 				  		<div class="col-sm-6">
 				  			<div class="panel panel-default">
-				  				<div class="panel-heading"> 2019 입학생 성비</div>
+				  				<div class="panel-heading"> 입학생 성비</div>
 				  				<div class="panel-body">
 				  					<div id="chart-div1"></div>
 				  				</div>
@@ -51,7 +51,7 @@
 				  		</div>
 				  		<div class="col-sm-6">
 				  			<div class="panel panel-default">
-				  				<div class="panel-heading">2019 재ㆍ편입생 비율</div>
+				  				<div class="panel-heading"> 재ㆍ편입생 비율</div>
 				  				<div class="panel-body">
 				  					<div id="chart-div2"></div>
 				  				</div>
@@ -61,7 +61,7 @@
 				  	<div class="row">
 				  		<div class="col-sm-6">
 				  			<div class="panel panel-default">
-				  				<div class="panel-heading">2019 학과별 신입생</div>
+				  				<div class="panel-heading"> 학과별 신입생</div>
 				  				<div class="panel-body">
 				  					<div id="chart-div3"></div>
 				  				</div> 
@@ -69,7 +69,7 @@
 				  		</div>
 				  		<div class="col-sm-6">
 				  			<div class="panel panel-default">
-				  				<div class="panel-heading">2019 신입생 연령비</div>
+				  				<div class="panel-heading"> 신입생 연령비</div>
 				  				<div class="panel-body">
 				  					<div id="chart-div4"></div>
 				  				</div> 

@@ -7,7 +7,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%
 
-String path = "C:\\Users\\Yang\\git\\final-ju\\src\\main\\webapp\\resources\\images\\photo";
+String path = "C:\\Users\\RealBird\\git\\camping-project1\\src\\main\\webapp\\resources\\images\\community"; // 이미지가 저장될 주소
 String filename = "";
 
 if(request.getContentLength() > 10*1024*1024 ){

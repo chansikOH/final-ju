@@ -1,0 +1,25 @@
+사원정보 조회
+	1. Employee.java와 Department.java를 작성한다.
+	2. employees.xml와 departments.xml을 작성한다.
+	3. EmployeeDao.java와 DepartmentDao.java를 작성한다.
+	4. EmployeeController를 작성한다.
+		- 모든 부서정보를 응답으로 제공하는 핸들러 메소드를 작성한다.
+		- 선택한 부서에 소속된 사원리스트를 응답으로 제공하는 핸들러 메소드를 작성한다.
+		- 선택한 사원의 상세정보를 응답으로 제공하는 핸들러 메소드를 작성한다.
+		- 새로운 사원을 등록하는 폼을 응답으로 제공하는 핸들러 메소드를 작성한다.
+		- 새로운 사원정보를 저장하는 핸들러 메소드를 작성한다.
+	5. WEB-INF/views/emp 폴더에
+		depts.jsp	<-- 모든 부서정보를 표현한다.
+		employees.jsp	<-- 특정 부서에 소속된 사원을 표현한다.
+		employee.jsp	<-- 사원의 상세정보를 표현한다.
+		form.jsp	<-- 사원정보 입력폼을 표현한다.
+
+	6. 요청 URL
+		jhta/emp/depts.do			<-- 모든 부서정보 요청
+		jhta/emp/employees.do?deptid=10		<-- 부서에 소속된 사원리스트 요청
+		jhta/emp/employee.do?empid=101		<-- 사원아이디에 해당하는 사원상세정보 요청
+		jhta/emp/form.do			<-- 사원정보 입력폼 요청
+		jhta/emp/add.do				<-- 사원정보 추가 요청                                                                                                                                                                                                                                                                                                -4
+	
+	
+	
