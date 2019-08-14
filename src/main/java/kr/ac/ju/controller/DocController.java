@@ -169,8 +169,11 @@ public class DocController {
 	@RequestMapping("/retire/addform")
 	public String retireaddform(Model model) {
 		List<Employee> employees = docService.getAllEmployees();
-		
+		List<Employee> middleId = docService.getMiddleId();
+		List<Employee> finalId = docService.getFinalId(); 
 		model.addAttribute("employees", employees);
+		model.addAttribute("middleId", middleId);
+		model.addAttribute("finalId", finalId);
 		return "doc/retire/addform";
 	}
 	//퇴직서 등록
@@ -237,8 +240,11 @@ public class DocController {
 	@RequestMapping("/vacation/addform")
 	public String vacationaddform(Model model) {
 		List<Employee> employees = docService.getAllEmployees();
-		
+		List<Employee> middleId = docService.getMiddleId();
+		List<Employee> finalId = docService.getFinalId(); 
 		model.addAttribute("employees", employees);
+		model.addAttribute("middleId", middleId);
+		model.addAttribute("finalId", finalId);
 		return "doc/vacation/addform";
 	}
 	
