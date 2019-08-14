@@ -179,7 +179,7 @@
 	
 	<script type="text/javascript">
 		$(function() {
-			var webSocket = new WebSocket("ws://localhost/ju/applicant.do");
+			var webSocket = new WebSocket("ws://192.168.10.11/ju/applicant.do");
 			
 			webSocket.onmessage = function(event) {
 				var code = event.data.split(":")[0];

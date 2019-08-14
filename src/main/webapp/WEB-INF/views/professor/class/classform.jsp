@@ -152,7 +152,7 @@
 		var check6 = $(".check-text6").text();
 		var check7 = $(".check-text7").text();
 		
-		if (cno == "" ) {
+		if (cno == "" || cno.length >7 ) {
 			if(check1 == ""){
 				$("#cno").after("<span class='check-text check-text1'>* 교과목번호를 입력하세요.</span>");
 			}
