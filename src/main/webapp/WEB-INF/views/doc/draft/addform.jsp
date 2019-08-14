@@ -29,15 +29,15 @@
 		    		<div class="form-group">
 		    			<label>중간결재자</label>
 						<select class="form-control" name="middlePersonNo">
-						<c:forEach var="emp" items="${employees }">
-                            <option value="${emp.no }"> ${emp.name } ${emp.position.name }</option>
+						<c:forEach var="empM" items="${middleId }">
+                            <option value="${empM.no }"> ${empM.name } ${empM.position.name }</option>
 						</c:forEach> 
                         </select>
 		    			<br/>
 		    			<label>최종결재자</label>
 		    			<select class="form-control" name="finalPersonNo"> 
-		    			<c:forEach var="emp" items="${employees }">
-                            <option value="${emp.no }"> ${emp.name } ${emp.position.name }</option>
+		    			<c:forEach var="empF" items="${finalId }">
+                            <option value="${empF.no }"> ${empF.name } ${empF.position.name }</option>
 		    			</c:forEach>
                         </select>
 		    			<br/>

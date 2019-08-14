@@ -59,9 +59,11 @@ public class DocController {
 	@RequestMapping("/draft/addform")
 	public String addform(Model model) {
 		List<Employee> employees = docService.getAllEmployees();
-		
+		List<Employee> middleId = docService.getMiddleId();
+		List<Employee> finalId = docService.getFinalId(); 
 		model.addAttribute("employees", employees);
-		
+		model.addAttribute("middleId", middleId);
+		model.addAttribute("finalId", finalId);
 		return "doc/draft/addform";
 	}
 	

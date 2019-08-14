@@ -27,14 +27,13 @@
 			<div class="row" id="doclist">
 				<div class="col-sm-10">
 					<div class="button-righ">
-						<a href="" class="btn btn-warning btn-doc">결재중(2)</a>
-						<a href="" class="btn btn-warning btn-doc">결재대기(2)</a>
-						<a href="" class="btn btn-info btn-doc">반려(1)</a>
-						<a href="" class="btn btn-default btn-doc">완료(1)</a>
+						<a href="" class="btn btn-info btn-doc">결재중</a>
+						<a href="" class="btn btn-danger btn-doc">반려</a>
+						<a href="" class="btn btn-default btn-doc">결재완료</a>
 					</div>
 				</div>
 				<div class="col-sm-2 tetxt-right">
-					<a href="deleteDocs?no=${doc.no }" class="btn btn-danger  btn-doc"  >선택삭제</a>
+					<a href="deleteDocs?no=${doc.DOC_NO }" class="btn btn-danger  btn-doc"  >선택삭제</a>
 				</div>
 				<br/>
 			<div class="row" style="maring-top:20px;">
@@ -55,7 +54,7 @@
 								<th>제목</th>
 								<th>파일</th>
 								<th>작성자</th>
-								<th>결재자</th>
+								<th>최종결재자</th>
 								<th>등록일</th>
 								<th>결재상태</th>
 							</tr>
@@ -78,10 +77,10 @@
 														<span class="label label-warning">결재대기</span><a href="changeDocMiddleStatus?docNo=${doc.DOC_NO }" class="btn  btn-success btn-xs" >결재하기</a>
 													</c:when>
 													<c:when test="${doc.DOC_MIDDLE_STATUS eq 'Y' and doc.DOC_FINAL_STATUS eq 'N' and doc.DOC_FINAL_PERSON eq LOGIN_EMPLOYEE.no}">
-														<span class="label label-warning">결재대기</span> <a href="changeDocMiddleStatus?docNo=${doc.DOC_NO }" class="btn  btn-success btn-xs" >결재하기</a>
+														<span class="label label-warning">결재대기</span> <a href="changeDocFinalStatus?docNo=${doc.DOC_NO }" class="btn  btn-success btn-xs" >결재하기</a>
 													</c:when>
 													<c:otherwise>
-														<span class="label label-info">결재중</span> 
+														<span class="label label-success">결재중</span> 
 													</c:otherwise>
 												</c:choose>
 											</c:if>
@@ -104,10 +103,10 @@
 														<span class="label label-warning">결재대기</span><a href="changeDocMiddleStatus?docNo=${doc.DOC_NO }" class="btn  btn-success btn-xs" >결재하기</a>
 													</c:when>
 													<c:when test="${doc.DOC_MIDDLE_STATUS eq 'Y' and doc.DOC_FINAL_STATUS eq 'N' and doc.DOC_FINAL_PERSON eq LOGIN_EMPLOYEE.no}">
-														<span class="label label-warning">결재대기</span> <a href="changeDocMiddleStatus?docNo=${doc.DOC_NO }" class="btn  btn-success btn-xs" >결재하기</a>
+														<span class="label label-warning">결재대기</span> <a href="changeDocFinalStatus?docNo=${doc.DOC_NO }" class="btn  btn-success btn-xs" >결재하기</a>
 													</c:when>
 													<c:otherwise>
-														<span class="label label-info">결재중</span> 
+														<span class="label label-success">결재중</span> 
 													</c:otherwise>
 												</c:choose>
 											</c:if>
@@ -130,10 +129,10 @@
 														<span class="label label-warning">결재대기</span><a href="changeDocMiddleStatus?docNo=${doc.DOC_NO }" class="btn  btn-success btn-xs" >결재하기</a>
 													</c:when>
 													<c:when test="${doc.DOC_MIDDLE_STATUS eq 'Y' and doc.DOC_FINAL_STATUS eq 'N' and doc.DOC_FINAL_PERSON eq LOGIN_EMPLOYEE.no}">
-														<span class="label label-warning">결재대기</span> <a href="changeDocMiddleStatus?docNo=${doc.DOC_NO }" class="btn  btn-success btn-xs" >결재하기</a>
+														<span class="label label-warning">결재대기</span> <a href="changeDocFinalStatus?docNo=${doc.DOC_NO }" class="btn  btn-success btn-xs" >결재하기</a>
 													</c:when>
 													<c:otherwise>
-														<span class="label label-info">결재중</span> 
+														<span class="label label-success">결재중</span> 
 													</c:otherwise>
 												</c:choose>
 											</c:if>

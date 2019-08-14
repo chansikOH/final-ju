@@ -178,7 +178,18 @@ public class DocServiceImpl implements DocService {
 
 		@Override
 		public void changeDocFinalStatus(Doc doc) {
-			docDao.deleteDocs(doc);
+			docDao.changeDocFinalStatus(doc);
 		}
 
+		@Override
+		public List<Employee> getMiddleId() {
+			List<Employee> middleId = docDao.getMiddleId();
+			return middleId; 
+		}
+
+		@Override
+		public List<Employee> getFinalId() {
+			List<Employee> finalId = docDao.getFinalId();
+			return finalId; 
+		}
 }

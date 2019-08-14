@@ -147,7 +147,7 @@
 		SELECT 
 			A.employee_no as no, 
 			B.position_id as "position.id",
-			A.employee_name as "name" , 
+			A.employee_name as "name" ,
 			B.POSITION_NAME as "position.name"
 		FROM 
 			employees A, position B
@@ -156,6 +156,38 @@
 		order by B.position_level desc, A.employee_name asc
 	</select>
 	
+	<!-- 중간결재자(과장) 조회 -->
+	<select id="getMiddleId" resultType="employee">
+		select
+		    E.employee_no as no, 
+		    P.position_id as "position.id",
+		    E.employee_name as "name", 
+		    P.POSITION_NAME as "position.name"
+		from 
+		    employees E, position P
+		where
+		    e.position_id = p.position_id
+		and
+		    e.position_id = 'SEC CHIEF'
+		order by P.position_level desc, E.employee_name asc
+	</select>
+	
+	<!-- 최종결재자 조회 -->
+	<select id="getFinalId" resultType="employee">
+	select
+	    E.employee_no as no, 
+	    P.position_id as "position.id",
+	    E.employee_name as "name", 
+	    P.POSITION_NAME as "position.name"
+	from 
+	    employees E, position P
+	
+	where
+	    e.position_id = p.position_id
+	and
+	    e.position_id in ( 'DIRECTOR', 'PRESIDENT')
+	order by P.position_level desc, E.employee_name asc
+	</select>
 	<!-- 중간결재자 결재상태 변경 -->
 	<update id="changeDocMiddleStatus" parameterType="doc">
 		update 
@@ -170,7 +202,8 @@
 		update
 			docs
 		set
-			doc_final_status = 'Y'
+			doc_final_status = 'Y',
+			doc_state = '완료'
 		where doc_no = #{no}
 	</update>
 	
@@ -192,7 +225,7 @@
 			 #{fileYn})
 	</insert>
 	
-	<!-- docs_no 가져오기?? -->
+	<!-- docs_no 가져오기 -->
 	<select id="getdocs" parameterType="int" resultType="doc">
 		select 
 			doc_no as no, 
@@ -403,6 +436,14 @@
 		where
 			doc_no = #{value}
 	</update>
+	
+	<!-- 결재문서 총갯수 -->
+	<select id="getAlldocs" parameterType="int" resultType="int">
+		select	
+			count(*)
+		from
+			docs
+	</select>
 	
 	
 </mapper>

@@ -36,8 +36,10 @@ public interface DocDao {
 	Map<String, Object> getRetireByNo(int retireNo);
 	Map<String, Object> getVacationByNo(int vacationNo);
 	
-	int getDocSeq();
+	int getDocSeq();       
 	DocFile getFileName(int no);
 	List<Employee> getAllEmployees();
+	List<Employee> getMiddleId();
+	List<Employee> getFinalId();
 	
 }
