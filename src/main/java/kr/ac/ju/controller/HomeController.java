@@ -76,6 +76,7 @@ public class HomeController {
 		return "redirect:/";
 	}
 	
+	/*
 	@RequestMapping(value="/message", method=RequestMethod.POST)
 	public @ResponseBody Map<String, Object> message(Model model, HttpSession session) {
 		Student student = (Student) session.getAttribute("LOGIN_STUDENT");
@@ -111,6 +112,7 @@ public class HomeController {
 		
 		return map;
 	}
+	*/
 	
 	@RequestMapping(value="/findgubun", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> findgubun() {

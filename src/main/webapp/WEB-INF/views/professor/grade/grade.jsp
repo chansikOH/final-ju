@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 	<fmt:parseDate value="0810" pattern="MMdd" var="sDate" />
-	<fmt:parseDate value="0812" pattern="MMdd" var="eDate"/> 
+	<fmt:parseDate value="0830" pattern="MMdd" var="eDate"/> 
 	
 	<fmt:formatDate value="${sDate }" pattern="MMdd" var="startDate" />
 	<fmt:formatDate value="${eDate }" pattern="MMdd" var="endDate" />
@@ -143,7 +143,7 @@
 	                                    <td>${course.no}</td>
 	                                    <td><a href="#" class="course-modal" data-value="${course.no }">${course.name }</a></td>
 	                                    <td>${course.credit}</td>
-	                                   	<td class="date" data-sdate="${startDate }" data-edate="${endDate }" data-ndate="${nowDate }"> 2019-08-01 ~ 2019-08-07</td>
+	                                   	<td class="date" data-sdate="${startDate }" data-edate="${endDate }" data-ndate="${nowDate }"> 2019-08-01 ~ 2019-08-30</td>
                                 	</tr>
                             	</c:forEach>
                             </tbody>
