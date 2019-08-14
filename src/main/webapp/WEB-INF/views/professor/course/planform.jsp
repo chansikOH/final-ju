@@ -272,7 +272,7 @@
 				var check6 = $(".check-text6").text();
 				var check7 = $(".check-text7").text();
 				
-				if (cno == "" || cno.length >7) {
+				if (cno == "") {
 					if(check1 == ""){
 						$("#cno").after("<span class='check-text check-text1'>* 교과목을 선택하세요.</span>");
 					}
@@ -282,7 +282,7 @@
 					$("#cno").siblings().empty();
 				}
 				
-				if (cpno == "" ) {
+				if (cpno == "" || cpno.length >7) {
 					if(check2 == ""){
 						$("#cpno").after("<span class='check-text check-text2'>* 강의계획서 번호를 입력하세요.</span>");
 					}
