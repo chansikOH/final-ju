@@ -289,38 +289,38 @@
 						row += "<td>"+c.term+"</td>";
 						$("#opinion .course-info tbody").append(row);
 						
-						$(".q1-avg").text(avg.Q1);
-						$(".q2-avg").text(avg.Q2);
-						$(".q3-avg").text(avg.Q3);
-						$(".q4-avg").text(avg.Q4);
-						$(".q5-avg").text(avg.Q5);
-						$(".q6-avg").text(avg.Q6);
-						$(".q7-avg").text(avg.Q7);
-						$(".q8-avg").text(avg.Q8);
-						$(".q9-avg").text(avg.Q9);
-						$(".q10-avg").text(avg.Q10);
-						
-						$(".q1-min").text(min.Q1);
-						$(".q2-min").text(min.Q2);
-						$(".q3-min").text(min.Q3);
-						$(".q4-min").text(min.Q4);
-						$(".q5-min").text(min.Q5);
-						$(".q6-min").text(min.Q6);
-						$(".q7-min").text(min.Q7);
-						$(".q8-min").text(min.Q8);
-						$(".q9-min").text(min.Q9);
-						$(".q10-min").text(min.Q10);
-						
-						$(".q1-max").text(max.Q1);
-						$(".q2-max").text(max.Q2);
-						$(".q3-max").text(max.Q3);
-						$(".q4-max").text(max.Q4);
-						$(".q5-max").text(max.Q5);
-						$(".q6-max").text(max.Q6);
-						$(".q7-max").text(max.Q7);
-						$(".q8-max").text(max.Q8);
-						$(".q9-max").text(max.Q9);
-						$(".q10-max").text(max.Q10);
+						$(".q1-avg").text(Math.round(avg.Q1));
+		                $(".q2-avg").text(Math.round(avg.Q2));
+		                $(".q3-avg").text(Math.round(avg.Q3));
+		                $(".q4-avg").text(Math.round(avg.Q4));
+		                $(".q5-avg").text(Math.round(avg.Q5));
+		                $(".q6-avg").text(Math.round(avg.Q6));
+		                $(".q7-avg").text(Math.round(avg.Q7));
+		                $(".q8-avg").text(Math.round(avg.Q8));
+		                $(".q9-avg").text(Math.round(avg.Q9));
+		                $(".q10-avg").text(Math.round(avg.Q10));
+		                
+		                $(".q1-min").text(Math.round(min.Q1));
+		                $(".q2-min").text(Math.round(min.Q2));
+		                $(".q3-min").text(Math.round(min.Q3));
+		                $(".q4-min").text(Math.round(min.Q4));
+		                $(".q5-min").text(Math.round(min.Q5));
+		                $(".q6-min").text(Math.round(min.Q6));
+		                $(".q7-min").text(Math.round(min.Q7));
+		                $(".q8-min").text(Math.round(min.Q8));
+		                $(".q9-min").text(Math.round(min.Q9));
+		                $(".q10-min").text(Math.round(min.Q10));
+		                
+		                $(".q1-max").text(Math.round(max.Q1));
+		                $(".q2-max").text(Math.round(max.Q2));
+		                $(".q3-max").text(Math.round(max.Q3));
+		                $(".q4-max").text(Math.round(max.Q4));
+		                $(".q5-max").text(Math.round(max.Q5));
+		                $(".q6-max").text(Math.round(max.Q6));
+		                $(".q7-max").text(Math.round(max.Q7));
+		                $(".q8-max").text(Math.round(max.Q8));
+		                $(".q9-max").text(Math.round(max.Q9));
+		                $(".q10-max").text(Math.round(max.Q10));
 						
 						$.each(comments, function(index, comment){
 							var commentRow = "<tr class='comments'>"
